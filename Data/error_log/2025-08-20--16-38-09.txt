@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-08-20--16-38-09
+
+2025-08-20--16-38-35 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 1920, in experiment_setting_create
+    self.nps_window.setCentralWidget(self.newPlotSettingWid)
+    ^^^^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'nps_window'. Did you mean: 'esu_window'?
+
+

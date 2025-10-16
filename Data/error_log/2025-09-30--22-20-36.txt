@@ -1,0 +1,40 @@
+Szkopek Lab Error Log Book - 2025-09-30--22-20-36
+
+2025-09-30--22-21-36 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'time'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\PlotUi.py", line 681, in multidataset_update_all
+    self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.x_datasetLink, self.addMultiDataPlotWid.x_channel_list, self.addMultiDataPlotWid.xAxisChannelComboBox,
+  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\AddMultidataPlotUi.py", line 173, in update_data
+    empty_set[AxisChannel] = dataset[axis][AxisChannel].to_list()
+                             ~~~~~~~^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pandas\core\frame.py", line 4101, in __getitem__
+    return self._getitem_multilevel(key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pandas\core\frame.py", line 4159, in _getitem_multilevel
+    loc = self.columns.get_loc(key)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pandas\core\indexes\multi.py", line 3040, in get_loc
+    loc = self._get_level_indexer(key, level=0)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pandas\core\indexes\multi.py", line 3391, in _get_level_indexer
+    idx = self._get_loc_single_level_index(level_index, key)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pandas\core\indexes\multi.py", line 2980, in _get_loc_single_level_index
+    return level_index.get_loc(key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'time'
+
+

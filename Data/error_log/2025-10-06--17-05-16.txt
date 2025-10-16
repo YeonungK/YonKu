@@ -1,0 +1,11 @@
+Szkopek Lab Error Log Book - 2025-10-06--17-05-16
+
+2025-10-06--17-08-04 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\PlotUi.py", line 677, in open_multidataset_plot
+    self.plot_item.scene().addItem(viewBox)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\GraphicsScene\GraphicsScene.py", line 391, in addItem
+    ret = QtWidgets.QGraphicsScene.addItem(self, item)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: addItem(self, item: Optional[QGraphicsItem]): argument 2 has unexpected type 'sip.wrappertype'
+
+

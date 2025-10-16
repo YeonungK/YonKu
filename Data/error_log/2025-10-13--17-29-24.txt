@@ -1,0 +1,27 @@
+Szkopek Lab Error Log Book - 2025-10-13--17-29-24
+
+2025-10-13--17-31-12 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\PlotUi.py", line 755, in multidataset_update_all_time
+    self.plots[plot_channels] = pg.PlotDataItem(self.xAxisData[xAxisChannel_name],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (239614,) and (91511,).
+
+
+
+
+2025-10-13--17-32-17 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\PlotUi.py", line 765, in multidataset_update_all_time
+    self.main_layout.setRowStretchFactor(2+self.plot_count, 1.2)
+TypeError: setRowStretchFactor(self, row: int, stretch: int): argument 2 has unexpected type 'float'
+
+

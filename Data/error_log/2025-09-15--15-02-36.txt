@@ -1,0 +1,38 @@
+Szkopek Lab Error Log Book - 2025-09-15--15-02-36
+
+2025-09-15--15-03-33 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 808, in start_experiment_thread
+    self.magnetPowerSupplyWid.fieldXLineEdit, self.magnetPowerSupplyWid.fieldYLineEdit, self.magnetPowerSupplyWid.fieldZLineEdit,
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'magnetPowerSupply_widget' object has no attribute 'fieldXLineEdit'. Did you mean: 'fieldZLineEdit'?
+
+
+
+
+2025-09-15--15-03-44 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 829, in end_experiment_worker
+    self.plot_worker.end_experiment()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'plot_worker'
+
+
+
+
+2025-09-15--15-04-03 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 808, in start_experiment_thread
+    self.magnetPowerSupplyWid.fieldXLineEdit, self.magnetPowerSupplyWid.fieldYLineEdit, self.magnetPowerSupplyWid.fieldZLineEdit,
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'magnetPowerSupply_widget' object has no attribute 'fieldXLineEdit'. Did you mean: 'fieldZLineEdit'?
+
+
+
+
+2025-09-15--15-07-10 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 2033, in closeEvent
+    self.instruments[name].close()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\Instrument.py", line 125, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

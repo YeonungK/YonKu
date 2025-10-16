@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-09-30--18-42-45
+
+2025-09-30--18-43-27 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\PlotUi.py", line 632, in open_multidataset_plot
+    self.xAxis_unit_key, self.yAxis_unit_key, self.xAxisData, self.yAxisData, self.experiment_parameters)
+    ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'oldPlotWidget' object has no attribute 'xAxis_unit_key'. Did you mean: 'yAxis_unit_key'?
+
+

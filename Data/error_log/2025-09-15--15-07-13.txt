@@ -1,0 +1,30 @@
+Szkopek Lab Error Log Book - 2025-09-15--15-07-13
+
+2025-09-15--15-07-40 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 809, in start_experiment_thread
+    self.magnetPowerSupplyWid.currentLineEdit, self.experimentSettingWid)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'experimentSettingWid'. Did you mean: 'experiment_setting_close'?
+
+
+
+
+2025-09-15--15-07-53 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 829, in end_experiment_worker
+    self.plot_worker.end_experiment()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'plot_worker'
+
+
+
+
+2025-09-15--15-09-18 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 2033, in closeEvent
+    if reply == QMessageBox.Yes:
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\Instrument.py", line 125, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

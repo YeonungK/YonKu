@@ -1,0 +1,16 @@
+Szkopek Lab Error Log Book - 2025-10-13--14-08-43
+
+2025-10-13--14-09-24 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 1622, in create_old_plot
+    self.old_plot_window()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 1631, in old_plot_window
+    self.plot_widgets[self.plot_widget_count] = PlotUi.oldPlotWidget(self.plot_setting)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\PlotUi.py", line 641, in __init__
+    self.plot_item.setAxisItems(axisItems = {'bottom': self.date_axis})
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 312, in setAxisItems
+    oldAxis.scene().removeItem(oldAxis)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'removeItem'
+
+

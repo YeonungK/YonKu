@@ -1,0 +1,31 @@
+Szkopek Lab Error Log Book - 2025-08-16--16-18-01
+
+2025-08-16--16-18-26 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 226, in start_reading
+    self.pressureDevice.pressure_read()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure.split()
+               ^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'split'
+
+
+
+
+2025-08-18--10-21-32 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 1915, in closeEvent
+    self.instruments[name].close()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\Instrument.py", line 124, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+
+
+
+2025-08-18--10-21-32 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 239, in finish
+    self.timer.stop()
+    ^^^^^^^^^^
+AttributeError: 'PressureWorker' object has no attribute 'timer'
+
+

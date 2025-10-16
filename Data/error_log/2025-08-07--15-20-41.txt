@@ -1,0 +1,34 @@
+Szkopek Lab Error Log Book - 2025-08-07--15-20-41
+
+2025-08-07--15-21-12 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 1347, in query_all
+    self.inpConf_qry()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 1434, in inpConf_qry
+    value = str(self.lockInAmplifier2.get_input())
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\SRS_844.py", line 100, in get_input
+    return self.query('ISRC?')
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\Instrument.py", line 157, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 647, in query
+    return self.read()
+           ^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 485, in read
+    message = self._read_raw().decode(enco)
+              ^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 441, in _read_raw
+    chunk, status = self.visalib.read(self.session, size)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2336, in read
+    ret = library.viRead(session, buffer, count, byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+

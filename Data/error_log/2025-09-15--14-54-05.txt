@@ -1,0 +1,23 @@
+Szkopek Lab Error Log Book - 2025-09-15--14-54-05
+
+2025-09-15--14-54-40 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 2001, in experiment_setting_create
+    self.experimentSettingWid = esu.ExperimentSettingUi()
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\ExperimentSettingUi.py", line 19, in __init__
+    self.saveButton.clicked_connect(self.update_values)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'QPushButton' object has no attribute 'clicked_connect'
+
+
+
+
+2025-09-15--14-56-37 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 2033, in closeEvent
+    self.instruments[name].close()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\Instrument.py", line 125, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

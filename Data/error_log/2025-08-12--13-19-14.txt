@@ -1,0 +1,444 @@
+Szkopek Lab Error Log Book - 2025-08-12--13-19-14
+
+2025-08-12--13-19-49 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-19-50 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-19-51 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-19-52 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-19-53 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-19-54 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-19-55 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-19-56 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-19-57 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-19-58 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-19-59 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-00 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-01 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-02 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-03 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-04 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-05 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-06 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-07 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-08 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-09 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-10 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-11 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-12 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-13 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-14 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-15 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-16 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-17 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-18 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-19 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-20 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-21 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-22 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-23 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-24 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
+2025-08-12--13-20-25 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 233, in read_pressure
+    pressure = self.pressureDevice.pressure_read()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\INFICON_VGC401.py", line 32, in pressure_read
+    pressure = pressure[1]
+               ~~~~~~~~^^^
+IndexError: list index out of range
+
+

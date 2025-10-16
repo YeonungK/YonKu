@@ -1,0 +1,101 @@
+Szkopek Lab Error Log Book - 2025-09-15--15-18-45
+
+2025-09-15--15-19-12 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 170, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 177, in instrument_read_data
+    temp_list = self.instruments['Lakeshore_336'].temp_read_all()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\Lakeshore_336.py", line 38, in temp_read_all
+    temp = self.query(command)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\Instrument.py", line 111, in query
+    self.write(command)
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\Instrument.py", line 107, in write
+    self.device.write(message.encode('ascii'))
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'write'
+
+
+
+
+2025-09-15--15-19-13 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 170, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 177, in instrument_read_data
+    temp_list = self.instruments['Lakeshore_336'].temp_read_all()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\Lakeshore_336.py", line 38, in temp_read_all
+    temp = self.query(command)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\Instrument.py", line 111, in query
+    self.write(command)
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\Instrument.py", line 107, in write
+    self.device.write(message.encode('ascii'))
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'write'
+
+
+
+
+2025-09-15--15-19-14 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 170, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 177, in instrument_read_data
+    temp_list = self.instruments['Lakeshore_336'].temp_read_all()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\saved_instruments\Lakeshore_336.py", line 38, in temp_read_all
+    temp = self.query(command)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\Instrument.py", line 111, in query
+    self.write(command)
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\Instrument.py", line 107, in write
+    self.device.write(message.encode('ascii'))
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'write'
+
+
+
+
+2025-09-15--15-19-14 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 837, in pause_resume_experiment_thread
+    self.plot_worker.pause_resume_experiment()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 259, in pause_resume_experiment
+    pauseTime = datetime.strftime("%Y-%m-%d--%H-%M-%S")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: descriptor 'strftime' for 'datetime.date' objects doesn't apply to a 'str' object
+
+
+
+
+2025-09-15--15-19-27 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 837, in pause_resume_experiment_thread
+    self.plot_worker.pause_resume_experiment()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 264, in pause_resume_experiment
+    resumeTime = datetime.strftime("%Y-%m-%d--%H-%M-%S")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: descriptor 'strftime' for 'datetime.date' objects doesn't apply to a 'str' object
+
+
+
+
+2025-09-15--15-19-31 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 840, in end_experiment_worker
+    self.plot_worker.end_experiment()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 275, in end_experiment
+    endTime = datetime().strftime("%Y-%m-%d--%H-%M-%S")
+              ^^^^^^^^^^
+TypeError: function missing required argument 'year' (pos 1)
+
+
+
+
+2025-09-15--15-20-15 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 2044, in closeEvent
+    self.instruments[name].close()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\Tools\Instrument.py", line 125, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

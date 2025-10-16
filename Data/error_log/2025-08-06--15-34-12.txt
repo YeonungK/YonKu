@@ -1,0 +1,8 @@
+Szkopek Lab Error Log Book - 2025-08-06--15-34-12
+
+Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 1652, in closeEvent
+    os.remove(self.error_logger.file_path)
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\szkop\\Desktop\\YonKu_Editing\\Data\\error_log\\2025-08-06--15-34-12.txt'
+
+

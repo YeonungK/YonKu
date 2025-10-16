@@ -1,0 +1,12 @@
+Szkopek Lab Error Log Book - 2025-10-01--17-19-12
+
+2025-10-01--17-23-57 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\AddMultidataPlotUi.py", line 62, in x_dataset_search
+    self.x_expParam = self.set_names(self.x_experimentParamLink, self.xAxisChannelComboBox, self.xAxis_name_key, self.xData)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\AddMultidataPlotUi.py", line 101, in set_names
+    param_file = open(experimentParamLink)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:/Users/szkop/Desktop/YonKu_Editing/Data/experiment_parameters/2025-08-08--13-04-25_ML12G_cooldown.txt'
+
+

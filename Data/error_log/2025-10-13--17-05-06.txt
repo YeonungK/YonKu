@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-10-13--17-05-06
+
+2025-10-13--17-05-48 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\PlotUi.py", line 771, in multidataset_update_all_time
+    main_viewbox.sigResized.connect(self.updateViews)
+    ^^^^^^^^^^^^
+NameError: name 'main_viewbox' is not defined. Did you mean: 'self.main_viewbox'?
+
+

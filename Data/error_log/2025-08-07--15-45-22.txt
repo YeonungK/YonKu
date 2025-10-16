@@ -1,0 +1,323 @@
+Szkopek Lab Error Log Book - 2025-08-07--15-45-22
+
+2025-08-07--15-45-54 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-45-55 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-45-56 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-45-57 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-45-58 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-45-59 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-00 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-01 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-02 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-03 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-04 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-05 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-06 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-07 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-08 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-09 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-10 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-11 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-12 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-13 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-14 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-15 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-16 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-17 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-18 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-19 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-20 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-21 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-22 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, field_list, current_list, now)
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-23 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, lockIn2_list, field_list, current_list, now)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-24 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, lockIn2_list, field_list, current_list, now)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+
+
+
+2025-08-07--15-46-25 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 98, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 183, in instrument_read_data
+    self.logger.append(temp_list, resist_list, lockIn_list, lockIn2_list, field_list, current_list, now)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: DataLogger.append() missing 1 required positional argument: 'now'
+
+

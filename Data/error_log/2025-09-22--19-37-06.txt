@@ -1,0 +1,14 @@
+Szkopek Lab Error Log Book - 2025-09-22--19-37-06
+
+2025-09-22--19-37-59 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 1622, in create_old_plot
+    self.old_plot_window()
+  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 1630, in old_plot_window
+    self.plot_widgets[self.plot_widget_count] = PlotUi.oldPlotWidget(self.plot_setting)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\PlotUi.py", line 532, in __init__
+    self.newPlotB.clicked.connect(self.open_multidataset_plot)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'oldPlotWidget' object has no attribute 'open_multidataset_plot'
+
+

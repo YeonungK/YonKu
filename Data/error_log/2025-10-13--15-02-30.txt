@@ -1,0 +1,12 @@
+Szkopek Lab Error Log Book - 2025-10-13--15-02-30
+
+2025-10-13--15-05-13 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\AddMultidataPlotUi.py", line 62, in x_dataset_search
+    self.x_expParam = self.set_names(self.x_experimentParamLink, self.xAxisChannelComboBox, self.xAxis_name_key, self.xData)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\AddMultidataPlotUi.py", line 175, in set_names
+    combo_box.addItem(experiment_parameters[name_key][ch])
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'first_plot_Ch_A'
+
+
