@@ -5,7 +5,7 @@ import sys
 
 import sys
 
-sys.path.append('C:/Users/szkop/Desktop/YonKu_Editing')
+sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 
 class lockInAmplifier2_widget(QWidget):

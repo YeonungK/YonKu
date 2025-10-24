@@ -34,32 +34,32 @@ class add_multidata_plot_ui(QWidget):
         
 
         self.experimentParamLink = ""
-        self.xBrowseDatasetButton.clicked.connect(self.x_dataset_search)
-        self.yBrowseDatasetButton.clicked.connect(self.y_dataset_search)
+        self.BrowseDatasetButton.clicked.connect(self.dataset_search)
+
 
         
         
-    def x_dataset_search(self):
+    def dataset_search(self):
         
         try:
-            x_fname = QFileDialog.getOpenFileName(self, "Open File", "C:/Users/szkop/Desktop/YonKu_Editing/Data/experiment_data", "CSV Files (*.csv)")
-            self.x_datasetLink = x_fname[0]
-            self.x_paramLink = self.x_datasetLink[:-3] + "txt"
-            self.x_paramLink = self.x_paramLink.split("/")
+            fname = QFileDialog.getOpenFileName(self, "Open File", "C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_data", "CSV Files (*.csv)")
+            self.datasetLink = fname[0]
+            self.paramLink = self.datasetLink[:-3] + "txt"
+            self.paramLink = self.paramLink.split("/")
             
-            self.x_paramLink[6] = "experiment_parameters"
+            self.paramLink[6] = "experiment_parameters"
             
-            self.x_experimentParamLink = self.x_paramLink[0]
+            self.experimentParamLink = self.paramLink[0]
             
             for n in range(1,8):
-                self.x_experimentParamLink = self.x_experimentParamLink + "/" + self.x_paramLink[n]
-                print(self.x_experimentParamLink)
+                self.experimentParamLink = self.experimentParamLink + "/" + self.paramLink[n]
+                print(self.experimentParamLink)
                 
-            if x_fname:
-                self.xAxisDatasetLineEdit.setText(x_fname[0])
-                self.x_datasetLink = x_fname[0]
-                self.x_expParam = self.set_names(self.x_experimentParamLink, self.xAxisChannelComboBox, self.xAxis_name_key, self.xData)
-                print(f"x_parameter: {self.x_expParam}")
+            if fname:
+                self.AxisDatasetLineEdit.setText(fname[0])
+                self.datasetLink = fname[0]
+                self.expParam = self.set_names(self.experimentParamLink, self.xAxisChannelComboBox, self.yAxisChannelComboBox, self.xAxis_name_key, self.yAxis_name_key, self.xData, self.yData)
+                print(f"parameter: {self.expParam}")
             else:
                 pass
             
@@ -67,35 +67,7 @@ class add_multidata_plot_ui(QWidget):
             pass
             
         
-        
-    def y_dataset_search(self):
-        
-        try:
-            y_fname = QFileDialog.getOpenFileName(self, "Open File", "C:/Users/szkop/Desktop/YonKu_Editing/Data/experiment_data", "CSV Files (*.csv)")
-            
-            self.y_datasetLink = y_fname[0]
-            self.y_paramLink = self.y_datasetLink[:-3] + "txt"
-            self.y_paramLink = self.y_paramLink.split("/")
-            
-            self.y_paramLink[6] = "experiment_parameters"
-            
-            self.y_experimentParamLink = self.y_paramLink[0]
-            
-            for n in range(1,8):
-                self.y_experimentParamLink = self.y_experimentParamLink + "/" + self.y_paramLink[n]
-                print(self.y_experimentParamLink)
-            if y_fname:
-                self.yAxisDatasetLineEdit.setText(y_fname[0])
-                self.y_datasetLink = y_fname[0]
-                self.y_expParam = self.set_names(self.y_experimentParamLink, self.yAxisChannelComboBox, self.yAxis_name_key, self.yData)
-                print(f"y_parameter: {self.y_expParam}")
-            else:
-                pass
-        
-        except IndexError:
-            pass
-        
-    def set_names(self, experimentParamLink, combo_box, name_key, data):
+    def set_names(self, experimentParamLink, x_combo_box, y_combo_box, x_name_key, y_name_key, x_data, y_data):
         
         try:
             param_file = open(experimentParamLink)
@@ -169,11 +141,15 @@ class add_multidata_plot_ui(QWidget):
                                     'currents_name':{"current":"current"}, 'currents_unit':{"current":"A"},
                                     'times_name':{"time":"time"}}
         
-        channels_list = list(data.keys())[0:len(experiment_parameters[name_key].keys())]
+        x_channels_list = list(x_data.keys())[0:len(experiment_parameters[x_name_key].keys())]
+        y_channels_list = list(y_data.keys())[0:len(experiment_parameters[y_name_key].keys())]
         
 
-        for ch in channels_list:
-            combo_box.addItem(experiment_parameters[name_key][ch])
+        for ch in x_channels_list:
+            x_combo_box.addItem(experiment_parameters[x_name_key][ch])
+        
+        for ch in y_channels_list:
+            y_combo_box.addItem(experiment_parameters[y_name_key][ch])
 
             
             

@@ -1,6 +1,6 @@
 import sys
 
-sys.path.append('C:/Users/szkop/Desktop/YonKu_Editing')
+sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 import numpy as np
 import h5py
@@ -63,7 +63,12 @@ class plotWidget(QWidget):
         
         self.experimentSettingWid = plot_setting[9]
         
-        self.date_axis = pg.DateAxisItem(orientation='bottom',
+        self.x_date_axis = pg.DateAxisItem(orientation='bottom',
+                                        utcOffset=14400,               # set to your timezone offset if desired
+                                        showValues=True,
+                                        autoScale=True)
+        
+        self.y_date_axis = pg.DateAxisItem(orientation='left',
                                         utcOffset=14400,               # set to your timezone offset if desired
                                         showValues=True,
                                         autoScale=True)
@@ -169,7 +174,7 @@ class plotWidget(QWidget):
         self.settingB = QPushButton()
         self.settingB.setText("Setting")
         self.newPlotB = QPushButton()
-        self.newPlotB.setText("Add a new plot")
+        self.newPlotB.setText("Add a new trace")
         # self.showHideB = QPushButton()
         # self.showHideB.setText("Show/Hide plots")
         
@@ -191,7 +196,9 @@ class plotWidget(QWidget):
         
         
         if self.xAxis == 'time':
-            self.plot_widget.setAxisItems(axisItems = {'bottom': self.date_axis})
+            self.plot_widget.setAxisItems(axisItems = {'bottom': self.x_date_axis})
+        if self.yAxis == 'time':
+            self.plot_widget.setAxisItems(axisItems = {'left': self.y_date_axis})
         
         self.plot_widget.setTitle(self.title)
         self.plot_widget.addLegend(offset = [-1,20])
@@ -329,18 +336,6 @@ class oldPlotWidget(QWidget):
         self.plots = {}
         self.plot_count = 0
         
-        # show/hide plot ui
-        self.showHidePlotUi = shp.ShowHidePlotUi()
-        
-        self.showlabel = QLabel("Show")
-        self.showlabel.setAlignment(Qt.AlignTop)
-        
-        self.layout0 = QVBoxLayout()
-        self.layout0.addWidget(self.showlabel)
-        
-        self.showHidePlotUi.setLayout(self.layout0)
-        
-        self.plotCheckBoxes = {}
         
         # plot setting values
         self.xAxis = plot_setting[0]
@@ -492,12 +487,15 @@ class oldPlotWidget(QWidget):
                                         'times_name':{"time":""}}
             
 
-        self.date_axis = pg.DateAxisItem(orientation='bottom',
+        self.x_date_axis = pg.DateAxisItem(orientation='bottom',
                                         utcOffset=14400,               # set to your timezone offset if desired
                                         showValues=True,
                                         autoScale=True)
         
-        
+        self.y_date_axis = pg.DateAxisItem(orientation='left',
+                                        utcOffset=14400,               # set to your timezone offset if desired
+                                        showValues=True,
+                                        autoScale=True)
 
         
         self.title = self.yAxis.upper() + " vs " + self.xAxis.upper()
@@ -617,17 +615,13 @@ class oldPlotWidget(QWidget):
         self.settingB = QPushButton()
         self.settingB.setText("Setting")
         self.newPlotB = QPushButton()
-        self.newPlotB.setText("Add a new plot")
-        self.showHideB = QPushButton()
-        self.showHideB.setText("Show/Hide plots")
+        self.newPlotB.setText("Add a new trace")
         
         self.layout3 = QVBoxLayout()
         self.layout3.addWidget(self.settingB)
         self.layout3.addWidget(self.newPlotB)
-        self.layout3.addWidget(self.showHideB)
         
-        self.showHideB.clicked.connect(self.showHidePlotUi_show)
-        
+
         # more layouts
         self.layout4 = QHBoxLayout()
         self.layout4.addLayout(self.layout1)
@@ -640,12 +634,14 @@ class oldPlotWidget(QWidget):
         self.graphics_layout = pg.GraphicsLayout()
         self.graphics_view.setCentralWidget(self.graphics_layout)
         self.plot_item = pg.PlotItem()
-        self.plot_item.addLegend(offset = [-1,20])
+        self.plot_legend = self.plot_item.addLegend(offset = [-1,20])
         self.graphics_layout.addItem(self.plot_item, row=1, col=1)
         
 
         if self.xAxis == 'time':
-          self.plot_item.setAxisItems(axisItems = {'bottom': self.date_axis})
+            self.plot_item.setAxisItems(axisItems = {'bottom': self.x_date_axis})
+        if self.yAxis == 'time':
+            self.plot_item.setAxisItems(axisItems = {'left': self.y_date_axis})
         
         self.plot_item.setTitle(self.title)
         self.layout.addLayout(self.layout4)
@@ -684,24 +680,28 @@ class oldPlotWidget(QWidget):
 
         
         self.amp_window.setCentralWidget(self.addMultiDataPlotWid)
-        self.amp_window.setWindowTitle("Add a new plot")
+        self.amp_window.setWindowTitle("Add a new trace")
         self.amp_window.resize(550, 213)
+        self.addMultiDataPlotWid.xAxisLabel.setText(self.xAxis.upper())
+        self.addMultiDataPlotWid.yAxisLabel.setText(self.yAxis.upper())
         self.amp_window.show()
+        
+        
             
-        if not self.xAxis == 'time' or self.yAxis == 'time':    
-            self.addMultiDataPlotWid.addPlotButton.clicked.connect(self.multidataset_update_all)
+        if self.xAxis == 'time' or self.yAxis == 'time':
+            self.addMultiDataPlotWid.addPlotButton.clicked.connect(self.multidataset_update_all_time)
             
         else:
-            self.addMultiDataPlotWid.addPlotButton.clicked.connect(self.multidataset_update_all_time)
+            self.addMultiDataPlotWid.addPlotButton.clicked.connect(self.multidataset_update_all)
             
             
             
     def multidataset_update_all_time(self):
-        xAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.x_datasetLink, self.addMultiDataPlotWid.x_channel_list, self.addMultiDataPlotWid.xAxisChannelComboBox, 
-                                             self.xAxisData, self.addMultiDataPlotWid.xAxis, self.experiment_parameters, self.addMultiDataPlotWid.x_expParam,
+        xAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.x_channel_list, self.addMultiDataPlotWid.xAxisChannelComboBox, 
+                                             self.xAxisData, self.addMultiDataPlotWid.xAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
                                              self.addMultiDataPlotWid.xAxis_name_key, self.addMultiDataPlotWid.xAxis_unit_key)
-        yAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.y_datasetLink, self.addMultiDataPlotWid.y_channel_list, self.addMultiDataPlotWid.yAxisChannelComboBox, 
-                                             self.yAxisData, self.addMultiDataPlotWid.yAxis, self.experiment_parameters, self.addMultiDataPlotWid.y_expParam,
+        yAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.y_channel_list, self.addMultiDataPlotWid.yAxisChannelComboBox, 
+                                             self.yAxisData, self.addMultiDataPlotWid.yAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
                                              self.addMultiDataPlotWid.yAxis_name_key, self.addMultiDataPlotWid.yAxis_unit_key)
 
         self.amp_window.hide()
@@ -716,7 +716,6 @@ class oldPlotWidget(QWidget):
         else:
             xAxisChannel_unit = "-"
             
-            
         if not self.yAxis == 'time':    
             yAxisChannel_unit = self.experiment_parameters[self.yAxis_unit_key][yAxisChannel_name]
         else:
@@ -725,9 +724,10 @@ class oldPlotWidget(QWidget):
         plot_name = yAxisChannel_name + " (" + yAxisChannel_unit + ")" + " vs " + xAxisChannel_name + " (" + xAxisChannel_unit + ")"
         plot_channels = xAxisChannel_name + " vs " + yAxisChannel_name
         
+        
         if self.plot_count == 0:
             main_x_axis = self.plot_item.getAxis("bottom")
-            main_x_axis.setLabel(xAxisChannel_name + " (" + xAxisChannel_unit + ")")
+            
             main_y_axis = self.plot_item.getAxis("left")
             
             self.main_viewbox.setMouseMode(pg.ViewBox.RectMode)
@@ -735,24 +735,36 @@ class oldPlotWidget(QWidget):
             self.main_layout.removeItem(main_y_axis) # remove items created in PlotItem from its layout
             self.main_layout.removeItem(main_x_axis)
             self.main_layout.removeItem(self.main_viewbox)
-            
+
             self.main_layout.addItem(main_y_axis, 1, 0)  # shift them to the right, making space for secondary axes
             self.main_layout.addItem(self.main_viewbox, 1, 1)
             self.main_layout.addItem(main_x_axis,  2, 1)
+                
+            if self.xAxis == 'time':
+                print("This is executing")
+                main_x_axis.setLabel(xAxisChannel_name + " (" + xAxisChannel_unit + ")")
+                self.main_layout.setRowStretchFactor(2, 0)
+                
+            print(self.yAxis)
+            if self.yAxis == 'time':
+                print("This is executing")
+                main_y_axis.setLabel(yAxisChannel_name + " (" + yAxisChannel_unit + ")")
+                self.main_layout.setRowStretchFactor(2, 0)
             
-            self.main_layout.setRowStretchFactor(2, 0)
             viewbox = self.previous_viewbox = self.main_viewbox
-            
+                
             self.plots[plot_channels] = pg.PlotDataItem(self.xAxisData[xAxisChannel_name], 
-                                                            self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
+                                                                self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
+            self.plot_legend.addItem(self.plots[plot_channels], self.plots[plot_channels].name())
+                
             
             
         else:
             if self.xAxis == 'time':
-                xAxisChannel_unit = "-"
                 
                 self.plots[plot_channels] = pg.PlotDataItem(self.xAxisData[xAxisChannel_name], 
                                                             self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
+                self.plot_legend.addItem(self.plots[plot_channels], self.plots[plot_channels].name())
                 
                 self.axes[plot_channels] = pg.DateAxisItem(orientation='bottom',
                                                             utcOffset=14400,               # set to your timezone offset if desired
@@ -765,6 +777,31 @@ class oldPlotWidget(QWidget):
                 
                 viewbox = pg.ViewBox()  # create ViewBox
                 viewbox.setYLink(self.main_viewbox)  # link to previous
+                self.previous_viewbox = viewbox
+                self.axes[plot_channels].linkToView(viewbox)  # link axis with viewbox
+                self.graphics_layout.scene().addItem(viewbox)  # add viewbox to layout
+                viewbox.enableAutoRange(axis=pg.ViewBox.XYAxes, enable=True)  # autorange once to fit views at start
+
+                self.secondary_viewboxes.append(viewbox)
+            
+            if self.yAxis == 'time':
+                
+                self.plots[plot_channels] = pg.PlotDataItem(self.xAxisData[xAxisChannel_name], 
+                                                            self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
+                self.plot_legend.addItem(self.plots[plot_channels], self.plots[plot_channels].name())
+                
+                self.axes[plot_channels] = pg.DateAxisItem(orientation='left',
+                                                            utcOffset=14400,               # set to your timezone offset if desired
+                                                            showValues=True,
+                                                            autoScale=True)
+                self.axes[plot_channels].setTextPen(self.colors[self.plot_count % 5])
+                
+                self.axes[plot_channels].setLabel(plot_name)
+                self.main_layout.addItem(self.axes[plot_channels], 1, 1+self.plot_count)
+                #self.main_layout.setColumnStretchFactor(-1, 2)
+                
+                viewbox = pg.ViewBox()  # create ViewBox
+                viewbox.setXLink(self.main_viewbox)  # link to previous
                 self.previous_viewbox = viewbox
                 self.axes[plot_channels].linkToView(viewbox)  # link axis with viewbox
                 self.graphics_layout.scene().addItem(viewbox)  # add viewbox to layout
@@ -788,13 +825,13 @@ class oldPlotWidget(QWidget):
             
     def multidataset_update_all(self):
         
-        xAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.x_datasetLink, self.addMultiDataPlotWid.x_channel_list, self.addMultiDataPlotWid.xAxisChannelComboBox, 
-                                             self.xAxisData, self.addMultiDataPlotWid.xAxis, self.experiment_parameters, self.addMultiDataPlotWid.x_expParam,
+        xAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.x_channel_list, self.addMultiDataPlotWid.xAxisChannelComboBox, 
+                                             self.xAxisData, self.addMultiDataPlotWid.xAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
                                              self.addMultiDataPlotWid.xAxis_name_key, self.addMultiDataPlotWid.xAxis_unit_key)
-        yAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.y_datasetLink, self.addMultiDataPlotWid.y_channel_list, self.addMultiDataPlotWid.yAxisChannelComboBox, 
-                                             self.yAxisData, self.addMultiDataPlotWid.yAxis, self.experiment_parameters, self.addMultiDataPlotWid.y_expParam,
+        yAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.y_channel_list, self.addMultiDataPlotWid.yAxisChannelComboBox, 
+                                             self.yAxisData, self.addMultiDataPlotWid.yAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
                                              self.addMultiDataPlotWid.yAxis_name_key, self.addMultiDataPlotWid.yAxis_unit_key)
-        self.name_count += self.addMultiDataPlotWid.internal_count
+        #self.name_count += self.addMultiDataPlotWid.internal_count
         self.amp_window.hide()
         
         
@@ -821,8 +858,6 @@ class oldPlotWidget(QWidget):
             self.plots[plot_channels] = self.plot_item.plot(self.xAxisData[xAxisChannel_name], 
                                                                 self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
             
-            self.plotCheckBoxes[plot_channels] = self.create_check_box(plot_channels, self.colors[self.plot_count % 5], self.plots[plot_channels])
-            self.layout0.addWidget(self.plotCheckBoxes[plot_channels])
 
             self.plot_count += 1
         else:
@@ -863,9 +898,6 @@ class oldPlotWidget(QWidget):
         if not plot_channels in self.plots:
             self.plots[plot_channels] = self.plot_item.plot(self.xAxisData[xAxisChannel], 
                                                                 self.yAxisData[yAxisChannel], name = plot_name, pen = self.colors[self.plot_count % 5])
-            
-            self.plotCheckBoxes[plot_channels] = self.create_check_box(plot_channels, self.colors[self.plot_count % 5], self.plots[plot_channels])
-            self.layout0.addWidget(self.plotCheckBoxes[plot_channels])
 
             self.plot_count += 1
         else:

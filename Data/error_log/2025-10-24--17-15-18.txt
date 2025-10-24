@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-10-24--17-15-18
+
+2025-10-24--17-15-39 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 806, in multidataset_update_all_time
+    for channel, axis in self.axes:
+        ^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 2)
+
+

@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-10-24--16-38-48
+
+2025-10-24--16-39-16 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 834, in multidataset_update_all
+    self.plotCheckBoxes[plot_channels] = self.create_check_box(plot_channels, self.colors[self.plot_count % 5], self.plots[plot_channels])
+    ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'oldPlotWidget' object has no attribute 'plotCheckBoxes'
+
+

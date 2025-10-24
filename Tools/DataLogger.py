@@ -23,7 +23,7 @@ class DataLogger:
             print(self.result)
         # self.path = Path(f'C:/Users/szkop/Desktop/YonKu/Data/{self.title}.csv')
         
-            self.result.to_csv(f'C:/Users/szkop/Desktop/YonKu_Editing/Data/experiment_data/{self.title}.csv', index=False)
+            self.result.to_csv(f'C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_data/{self.title}.csv', index=False)
         
         except KeyError:
             print("Check the keys in the dataset.")
@@ -76,14 +76,14 @@ class DataLogger:
         
         result = pd.concat([df_a_temperatures, df_a_resistances, df_a_lockIn, df_a_lockIn2, df_a_fields, df_a_currents, df_a_times], axis=1, keys=['temperatures', 'resistances', 'lockIn', 'lockIn2', 'fields', 'currents', 'times'])
         
-        result.to_csv(f'C:/Users/szkop/Desktop/YonKu_Editing/Data/experiment_data/{self.title}.csv', mode = 'a', index=False, header = False)
+        result.to_csv(f'C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_data/{self.title}.csv', mode = 'a', index=False, header = False)
 
 
 class ErrorLogger:
     def __init__(self, heading, title):
         self.title = title
         self.heading = heading
-        self.file_path = Path(f"C:/Users/szkop/Desktop/YonKu_Editing/Data/error_log/{self.title}.txt")
+        self.file_path = Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Data/error_log/{self.title}.txt")
         # self.file_path.mkdir(parents=True, exist_ok=True)
         # self.file = open(self.file_path, "x")
         with open(self.file_path, "w") as f:

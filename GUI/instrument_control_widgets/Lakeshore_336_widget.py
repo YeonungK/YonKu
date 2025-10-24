@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QM
 from PyQt5 import uic
 import sys
 
-sys.path.append('C:/Users/szkop/Desktop/YonKu_Editing')
+sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 
 class temperatureController_widget(QWidget):

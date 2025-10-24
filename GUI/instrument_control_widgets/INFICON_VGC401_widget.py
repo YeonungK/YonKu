@@ -1,6 +1,6 @@
 import sys
 
-sys.path.append('C:/Users/szkop/Desktop/YonKu_Editing')
+sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QLabel, QComboBox

@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-10-24--12-17-00
+
+2025-10-24--12-20-16 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 799, in multidataset_update_all
+    if not self.xAxis == 'time':
+    ^^^^^^^^^^^^^^^
+AttributeError: 'oldPlotWidget' object has no attribute 'name_count'. Did you mean: 'axes_count'?
+
+

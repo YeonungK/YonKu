@@ -43,7 +43,7 @@ class create_plot_setting_ui(QWidget):
     def dataset_search(self):
         try:
             
-            fname = QFileDialog.getOpenFileName(self, "Open File", "C:/Users/szkop/Desktop/YonKu_Editing/Data/experiment_data", "CSV Files (*.csv)")
+            fname = QFileDialog.getOpenFileName(self, "Open File", "C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_data", "CSV Files (*.csv)")
             
             self.datasetLink = fname[0]
             self.datasetLink = self.datasetLink[:-3] + "txt"

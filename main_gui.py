@@ -97,7 +97,7 @@ class PlotWorker(QObject):
         
     def log_experiment_parameters(self):
 
-        self.file_path = Path(f"C:/Users/szkop/Desktop/YonKu_Editing/Data/experiment_parameters/{self.experiment_title}.txt")
+        self.file_path = Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_parameters/{self.experiment_title}.txt")
         self.experimentSettingWid.save_all_values()
         
         self.experiment_parameters = f"""startDatetime:{self.experiment_datetime}
@@ -625,7 +625,7 @@ class UI(QMainWindow):
     
     
     def instruments_setup(self):
-        folder_path = 'C:/Users/szkop/Desktop/YonKu_Editing/Tools/saved_instruments'
+        folder_path = 'C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments'
         file_pattern = "*.py"
         
         file_paths = glob.glob(f"{folder_path}/{file_pattern}")
@@ -1725,7 +1725,7 @@ self.{data_list['name']}_initial_function()"""
         
         self.serial_inst_create_wid.update_parameters()
         
-        directory_path = "C:/Users/szkop/Desktop/YonKu_Editing/Tools/saved_instruments"
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments"
         file_name = self.serial_inst_create_wid.data_list['model'] + '.py'
         
         full_file_path = os.path.join(directory_path, file_name)
@@ -1789,7 +1789,7 @@ else:
         
         self.gpib_inst_create_wid.update_parameters()
         
-        directory_path = "C:/Users/szkop/Desktop/YonKu_Editing/Tools/saved_instruments"
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments"
         file_name = self.gpib_inst_create_wid.data_list['model'] + '.py'
         
         full_file_path = os.path.join(directory_path, file_name)
@@ -1852,7 +1852,7 @@ else:
         
         self.ethernet_inst_create_wid.update_parameters()
         
-        directory_path = "C:/Users/szkop/Desktop/YonKu_Editing/Tools/saved_instruments"
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments"
         file_name = self.ethernet_inst_create_wid.data_list['model'] + '.py'
         
         full_file_path = os.path.join(directory_path, file_name)
@@ -1915,7 +1915,7 @@ else:
         
         self.usb_6525_inst_create_wid.update_parameters()
         
-        directory_path = "C:/Users/szkop/Desktop/YonKu_Editing/Tools/saved_device"
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_device"
         file_name = self.usb_6525_inst_create_wid.data_list['model'] + '.py'
         
         full_file_path = os.path.join(directory_path, file_name)
