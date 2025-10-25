@@ -68,28 +68,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="frame_3">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QLabel" name="dateLabel">
-               <property name="text">
-                <string>Date:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QDateTimeEdit" name="dateTimeEdit"/>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
            <widget class="QFrame" name="frame_4">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>

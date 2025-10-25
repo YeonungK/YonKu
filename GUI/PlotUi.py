@@ -688,22 +688,25 @@ class oldPlotWidget(QWidget):
         
         
             
-        if self.xAxis == 'time' or self.yAxis == 'time':
-            self.addMultiDataPlotWid.addPlotButton.clicked.connect(self.multidataset_update_all_time)
+        if self.xAxis == 'time' or self.yAxis == 'time' or self.xAxis == 'field' or self.yAxis == 'field':
+            self.addMultiDataPlotWid.addPlotButton.clicked.connect(self.multidataset_update_all_multiaxes)
             
         else:
             self.addMultiDataPlotWid.addPlotButton.clicked.connect(self.multidataset_update_all)
             
             
             
-    def multidataset_update_all_time(self):
+    def multidataset_update_all_multiaxes(self):
         xAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.x_channel_list, self.addMultiDataPlotWid.xAxisChannelComboBox, 
                                              self.xAxisData, self.addMultiDataPlotWid.xAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
                                              self.addMultiDataPlotWid.xAxis_name_key, self.addMultiDataPlotWid.xAxis_unit_key)
         yAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.y_channel_list, self.addMultiDataPlotWid.yAxisChannelComboBox, 
                                              self.yAxisData, self.addMultiDataPlotWid.yAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
                                              self.addMultiDataPlotWid.yAxis_name_key, self.addMultiDataPlotWid.yAxis_unit_key)
-
+        if xAxisChannel_name == None or yAxisChannel_name == None:
+            return None
+        
+        
         self.amp_window.hide()
         
         self.secondary_viewboxes = []
@@ -740,13 +743,13 @@ class oldPlotWidget(QWidget):
             self.main_layout.addItem(self.main_viewbox, 1, 1)
             self.main_layout.addItem(main_x_axis,  2, 1)
                 
-            if self.xAxis == 'time':
+            if self.xAxis == 'time' or self.xAxis == 'field':
                 print("This is executing")
                 main_x_axis.setLabel(xAxisChannel_name + " (" + xAxisChannel_unit + ")")
                 self.main_layout.setRowStretchFactor(2, 0)
                 
             print(self.yAxis)
-            if self.yAxis == 'time':
+            if self.yAxis == 'time' or self.yAxis == 'field':
                 print("This is executing")
                 main_y_axis.setLabel(yAxisChannel_name + " (" + yAxisChannel_unit + ")")
                 self.main_layout.setRowStretchFactor(2, 0)
@@ -760,16 +763,21 @@ class oldPlotWidget(QWidget):
             
             
         else:
-            if self.xAxis == 'time':
+            if self.xAxis == 'time' or self.xAxis == 'field':
                 
                 self.plots[plot_channels] = pg.PlotDataItem(self.xAxisData[xAxisChannel_name], 
                                                             self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
                 self.plot_legend.addItem(self.plots[plot_channels], self.plots[plot_channels].name())
                 
-                self.axes[plot_channels] = pg.DateAxisItem(orientation='bottom',
-                                                            utcOffset=14400,               # set to your timezone offset if desired
-                                                            showValues=True,
-                                                            autoScale=True)
+                if self.xAxis == 'time':
+                    self.axes[plot_channels] = pg.DateAxisItem(orientation='bottom',
+                                                                utcOffset=14400,               # set to your timezone offset if desired
+                                                                showValues=True,
+                                                                autoScale=True)
+                elif self.xAxis == 'field':
+                    self.axes[plot_channels] = pg.AxisItem(orientation='bottom',
+                                                                showValues=True,
+                                                                autoScale=True)
                 self.axes[plot_channels].setTextPen(self.colors[self.plot_count % 5])
                 self.axes[plot_channels].setLabel(plot_name)
                 self.main_layout.addItem(self.axes[plot_channels], 2+self.plot_count, 1)
@@ -784,16 +792,21 @@ class oldPlotWidget(QWidget):
 
                 self.secondary_viewboxes.append(viewbox)
             
-            if self.yAxis == 'time':
+            if self.yAxis == 'time' or self.yAxis == 'field':
                 
                 self.plots[plot_channels] = pg.PlotDataItem(self.xAxisData[xAxisChannel_name], 
                                                             self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
                 self.plot_legend.addItem(self.plots[plot_channels], self.plots[plot_channels].name())
                 
-                self.axes[plot_channels] = pg.DateAxisItem(orientation='left',
-                                                            utcOffset=14400,               # set to your timezone offset if desired
-                                                            showValues=True,
-                                                            autoScale=True)
+                if self.yAxis == 'time':
+                    self.axes[plot_channels] = pg.DateAxisItem(orientation='right',
+                                                                utcOffset=14400,               # set to your timezone offset if desired
+                                                                showValues=True,
+                                                                autoScale=True)
+                elif self.yAxis == 'field':
+                    self.axes[plot_channels] = pg.AxisItem(orientation='right',
+                                                                showValues=True,
+                                                                autoScale=True)
                 self.axes[plot_channels].setTextPen(self.colors[self.plot_count % 5])
                 
                 self.axes[plot_channels].setLabel(plot_name)

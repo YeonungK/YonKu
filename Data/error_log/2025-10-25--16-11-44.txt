@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-10-25--16-11-44
+
+2025-10-25--16-12-26 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 756, in multidataset_update_all_multiaxes
+    self.plots[plot_channels] = pg.PlotDataItem(self.xAxisData[xAxisChannel_name],
+                                               ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'first_trace_field'
+
+

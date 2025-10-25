@@ -41,7 +41,7 @@ class PlotWorker(QObject):
     error = pyqtSignal()
 
     def __init__(self, instruments, plot_widgets, dataset, period, pausePushButton, 
-                 dateTimeEdit, titleLineEdit, xLineEdit, yLineEdit, rLineEdit, thetaLineEdit,
+                 titleLineEdit, xLineEdit, yLineEdit, rLineEdit, thetaLineEdit,
                  xLineEdit2, yLineEdit2, rLineEdit2, thetaLineEdit2, 
                  chALineEdit, chBLineEdit, chCLineEdit, chDLineEdit,
                  chABigLine, chBBigLine, chCBigLine, chDBigLine, unitButton,
@@ -52,7 +52,6 @@ class PlotWorker(QObject):
         self.plot_widgets = plot_widgets
         self.period = period
         self.pausePushButton = pausePushButton
-        self.dateTimeEdit = dateTimeEdit
         self.titleLineEdit = titleLineEdit
         self.dataset = dataset
         self.xLineEdit = xLineEdit
@@ -88,7 +87,7 @@ class PlotWorker(QObject):
         self.timer.timeout.connect(self.plot_update)
         self.timer.start(self.period)  # 1Hz
         
-        self.experiment_datetime = self.dateTimeEdit.dateTime().toString("yyyy-MM-dd--hh-mm-ss")
+        self.experiment_datetime = datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
         self.experiment_name = self.titleLineEdit.text()
         self.experiment_title = self.experiment_datetime + "_" + self.experiment_name
         self.logger = DataLogger.DataLogger(self.dataset, self.experiment_title)
@@ -430,7 +429,6 @@ class UI(QMainWindow):
         
         # [main - EXPERIMENT]
         
-        self.dateTimeEdit.setDateTime(datetime.now())
         self.startPushButton.clicked.connect(self.start_experiment_thread)
         self.pausePushButton.clicked.connect(self.pause_resume_experiment_thread)
         self.endAndSavePushButton.clicked.connect(self.end_experiment_worker) 
@@ -814,7 +812,7 @@ self.{data_list['name']}_initial_function()"""
                 self.experiment_period = int(self.MeasureFreqLineEdit.text()) * 1000
            
             self.plot_worker = PlotWorker(self.instruments, self.plot_widgets, self.datasets['primary'].set, self.experiment_period, 
-                                        self.pausePushButton, self.dateTimeEdit, self.experimentNameLineEdit,
+                                        self.pausePushButton, self.experimentNameLineEdit,
                                         self.lockInAmplifier1Wid.xLineEdit, self.lockInAmplifier1Wid.yLineEdit, self.lockInAmplifier1Wid.rLineEdit, self.lockInAmplifier1Wid.thetaLineEdit, 
                                         self.lockInAmplifier2Wid.xLineEdit, self.lockInAmplifier2Wid.yLineEdit, self.lockInAmplifier2Wid.rLineEdit, self.lockInAmplifier2Wid.thetaLineEdit, 
                                         self.temperatureControllerWid.chALineEdit, self.temperatureControllerWid.chBLineEdit, self.temperatureControllerWid.chCLineEdit, self.temperatureControllerWid.chDLineEdit,
@@ -1634,7 +1632,11 @@ self.{data_list['name']}_initial_function()"""
         self.plot_widgets[self.plot_widget_count] = PlotUi.oldPlotWidget(self.plot_setting)
         self.plot_sub = QMdiSubWindow()
         self.plot_sub.setWidget(self.plot_widgets[self.plot_widget_count])
-        self.plot_sub.setWindowTitle(self.openPlotSettingWid.dataset)
+        
+        if self.openPlotSettingWid.multipleDataset:
+            self.plot_sub.setWindowTitle("MultiDataset Plot")
+        else:
+            self.plot_sub.setWindowTitle(self.openPlotSettingWid.dataset)
         self.plot_sub.resize(700,700)
         self.mdi_plot.addSubWindow(self.plot_sub)
         self.plot_sub.move(0,0)

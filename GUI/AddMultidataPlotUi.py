@@ -161,7 +161,11 @@ class add_multidata_plot_ui(QWidget):
         AxisChannel = channel_list[comboBox.currentIndex()]
         AxisName = self.plotNameLineEdit.text() + "_" + comboBox.currentText()
         
-        empty_set[AxisName] = dataset[axis][AxisChannel].to_list()
+        try:
+            empty_set[AxisName] = dataset[axis][AxisChannel].to_list()
+        except KeyError:
+            self.AxisDatasetLineEdit.setText("This dataset doesn't contain the chosen data types.")
+            return None
 
         empty_experiment_parameters[name_key][AxisName] = full_experiment_parameters[name_key][AxisChannel]
         print(empty_experiment_parameters[name_key])
