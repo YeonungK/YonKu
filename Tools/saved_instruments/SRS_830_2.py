@@ -84,7 +84,6 @@ class lockInAmplifier2(GPIBInstrument):
     def auto_offset(self,channel):
         self.write('AOFF %i' % channel )
         
-        
     #get settings
     def get_tau(self):
         return self.query('OFLT?')   
@@ -114,8 +113,6 @@ class lockInAmplifier2(GPIBInstrument):
         return self.query('DDEF? %i' % channel)
     def get_exp_off(self,channel):
         return self.query('OEXP? %i' % channel)
-
-
 
     #set settings        
     def set_freq(self,freq):
@@ -156,8 +153,6 @@ class lockInAmplifier2(GPIBInstrument):
         self.write('SYNC %i' % sync)
     def set_harm(self,harm):
         self.write('HARM %i' % harm)        
-        
-        
         
     #get data    
     def get_all(self):

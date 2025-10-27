@@ -25,9 +25,9 @@ class pressureGauge(SerialInstrument):
         return self.query("*IDN?")
     
     def pressure_read(self): 
-        command = "COM,1"
+        command = "PR1"
         pressure = self.query(command)
-        time.sleep(1)
+        return pressure
         # try:
         #     pressure = pressure.split()
         #     pressure = pressure[1]
@@ -45,10 +45,15 @@ class pressureGauge(SerialInstrument):
 if __name__ == "__main__":
     device = pressureGauge('test', 'COM5')
 
-    device.pressure_read()
-    time.sleep(1)
-    for i in range(30):
-        print(device.read())
-        time.sleep(1)
+    print(device.pressure_read())
+    print(device.pressure_read())
+    print(device.pressure_read())
+    #for i in range(10):
+      #  print(device.read())
+      #  device.device.write(b'\x05\n')
+      #  time.sleep(0.9)
+        
+        
+
     
     device.close()

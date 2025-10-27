@@ -118,12 +118,6 @@ class magnetPowerSupply(EthernetInstrument):
         return response
     
     
-#     Hi :) 
-    
-# if __student__ == "stud"    
-#     student = DropOut('model', '???', 'profit')
-#     print(student.success())
-    
 if __name__ == "__main__":
     device = magnetPowerSupply('test', '192.169.10.100', 7020)
     print(device.read_all_field())

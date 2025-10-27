@@ -18,8 +18,6 @@ class gasValve(NidaqmxInstrument):
         # if self.connected:
         #     self.turn_off_all()
         
-        
-        
     def turn_on_SV1(self):
         self.data[0] = True
         self.write(self.data)

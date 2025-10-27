@@ -33,9 +33,7 @@ class ExceptionForwarder(QObject):
         print(error_msg)
         self.exception_occurred.emit(error_msg)
 
-
 """worker class for plotting for each experiment (thread)"""
-
 class PlotWorker(QObject):
     finished = pyqtSignal()
     error = pyqtSignal()
@@ -291,68 +289,60 @@ time_name:{self.experimentSettingWid.experiment_parameters['times_name']['time']
         
         self.finished.emit()
         
-
-    
-        
-
+"""worker class for measuring pressureGauge (thread)"""
 class PressureWorker(QObject):
     def __init__(self, pressureDevice, period, pressureLineEdit):
         super().__init__()
         
         self.pressureDevice = pressureDevice
         self.period = period
-        self.pressureLineEdit = pressureLineEdit      
+        self.pressureLineEdit = pressureLineEdit
         
     
     def start_reading(self):
         #self.pressureDevice.pressure_read_start()
-        #self.timer = QTimer()
-        #self.timer.timeout.connect(self.read_pressure)
-        #self.timer.start(self.period)  # 1Hz  
-        pass
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.read_pressure)
+        self.timer.start(self.period)  # 1Hz  
+
         
     
     def read_pressure(self):
-        #pressure = self.pressureDevice.pressure_read()
-       # print("yes")
-        #self.pressureLineEdit.setText(pressure)
-        pass
+        pressure = self.pressureDevice.pressure_read()
+       #print("yes")
+        self.pressureLineEdit.setText(pressure)
+        
         
         
     def finish(self):
-        #print("worker_finished")
-        #self.timer.stop()
-        pass
+        print("worker_finished")
+        self.timer.stop()
         
-
-
-
+        
 """main gui window class"""
 class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
         
+        # [Error log creation & Error Centralization]
+        
         now = datetime.now()
         self.error_log_title = now.strftime("%Y-%m-%d--%H-%M-%S")
         self.error_log_heading = "Szkopek Lab Error Log Book - " + self.error_log_title
-        self.error_logger = DataLogger.ErrorLogger(self.error_log_heading, self.error_log_title)
+        self.error_logger = DataLogger.ErrorLogger(self.error_log_heading, self.error_log_title) 
         
+        self.exception_forwarder = ExceptionForwarder()
+        sys.excepthook = self.exception_forwarder.handle_exception
+        self.exception_forwarder.exception_occurred.connect(self.show_error_in_main_thread) # [/]
+        
+        # [System Setup]
         
         uic.loadUi("GUI/ui_files/graphene.ui", self)
         self.mdi = self.mdiArea_2
         self.mdi_plot = self.mdiArea
         
-        # self.mdi_size = self.mdi.size()
-        # self.mdi_plot_size = self.mdi_plot.size()
-        # self.mdi_width = self.mdi_size.width()
-        # self.mdi_height = self.mdi_size.height()
-        
-        # print(self.mdi_plot_size, self.mdi_size, self.mdi_width, self.mdi_height)
-        
         self._initial_mdi_size = None
         self._initial_sub_sizes = {}
-        
-        """system setup"""
         
         self.instrument_wid = {}
         self.instruments = {}
@@ -362,37 +352,20 @@ class UI(QMainWindow):
         self.plot_widgets = {}
         self.plot_widget_count = 0
         
-        self.exception_forwarder = ExceptionForwarder()
-        sys.excepthook = self.exception_forwarder.handle_exception
-        self.exception_forwarder.exception_occurred.connect(self.show_error_in_main_thread)
-
+        
+        # [Instruments & Widgets & Signals]
+        
+        # [=========instruments=========]
+        
         self.instruments_setup()  # connect and query identifications from each instrument
-        self.dataset_setup() # make an empty dataset according to the instruments used for this system
-        
+        self.dataset_setup() # make an empty dataset according to the instruments used for this system # [/]
              
-        # [---------widgets---------]
+        # [==========widgets==========]
         
-        # self.temperatureControllerWid = tc.tempControlUi()
-        # self.experimentWid = eu.ExperimentUi()
-        # self.gasValveWid = gv.GasUi()
-        # self.lockInAmplifier1Wid = li.LockInAmpUi()
-        # self.pressureGaugeWid = pg.PressureUi()
-        # self.magnetPowerSupplyWid = ms.MagnetPowerUi()
-        
-        self.add_windows() # [/]
-        
-        self.connect_instrument_windows()
+        self.add_windows() 
+        self.connect_instrument_windows()  # [/]
        
-        
-        
-        
-        
-
-        
-        
-
-                
-        # [---------graphene ui menu signals---------]
+        # [=======graphene ui menu signals=======]
 
         # [menu bar - PLOT]
         self.action_Add_Plot_Window.triggered.connect(self.new_plot_setting)
@@ -442,22 +415,10 @@ class UI(QMainWindow):
         
         
         # [/]
-        
-        
-# [/]
-        
-        
-        
-        # # [---------experiment ui output signals---------]
-        # self.experimentWid.dateTimeEdit.setDateTime(datetime.now())
-        # self.experimentWid.startPushButton.clicked.connect(self.start_experiment_thread)
-        # self.experimentWid.pausePushButton.clicked.connect(self.pause_resume_experiment_thread)
-        # self.experimentWid.endAndSavePushButton.clicked.connect(self.end_experiment_worker) # [/]
-        
-        
-        
-        
+        # [/]
 
+        # [======instrument ui output signals======]
+        
         # [----------lock in amplifier ui output signals----------]
 
         # [######set buttons######]
@@ -485,8 +446,6 @@ class UI(QMainWindow):
         self.lockInAmplifier1Wid.inputLnFilSet.clicked.connect(self.inputLnFil_set) # [/]
 # [/]
         
-        
-        
         # [#######query buttons#######]
         
         self.lockInAmplifier1Wid.qryAllButton.clicked.connect(self.query_all)
@@ -513,7 +472,6 @@ class UI(QMainWindow):
 # [/]
  # [/]
         
-        
         # [----------lock in amplifier 2 ui output signals----------]
 
         # [######set buttons######]
@@ -534,8 +492,6 @@ class UI(QMainWindow):
         
 # [/]
         
-        
-        
         # [#######query buttons#######]
         
         self.lockInAmplifier2Wid.qryAllButton.clicked.connect(self.query_all)
@@ -555,8 +511,6 @@ class UI(QMainWindow):
 # [/]
  # [/]
         
-        
-
         # [---------temperature controller ui output signals---------]
         
         self.temperatureControllerWid.chAExpandButton.clicked.connect(self.expand_chA_line)
@@ -564,7 +518,9 @@ class UI(QMainWindow):
         self.temperatureControllerWid.chCExpandButton.clicked.connect(self.expand_chC_line)
         self.temperatureControllerWid.chDExpandButton.clicked.connect(self.expand_chD_line) # [/]
         
+        # [---------pressure gauge ui output signals---------]
         
+        self.pressureGaugeWid.startButton.clicked.connect(self.pressure_function) # [/]
         
         # [----------gas valve and pressure gauge ui signals---------]
         
@@ -573,8 +529,6 @@ class UI(QMainWindow):
         self.gasValveWid.hePushButton.toggled.connect(self.he_change)
         self.gasValveWid.allOffPushButton.clicked.connect(self.gas_all_off)
         self.gasValveWid.allOnPushButton.clicked.connect(self.gas_all_on) # [/]
-        
-        
         
         # [----------magnet power supply ui signals---------]
         
@@ -588,15 +542,16 @@ class UI(QMainWindow):
 
 # [/]
         
-        
-        
-        
+         # [/]
+         # [/]
         
         self.showMaximized()
-        self.show()
+        self.show()  # [/]
         
 
-    # [+++++++++Error Handling++++++++++]
+    # [Functions]
+        
+    # [+++++++++Error Handling functions++++++++++]
     
     def show_error_in_main_thread(self, msg):
         now = datetime.now()
@@ -605,22 +560,12 @@ class UI(QMainWindow):
         self.error_logger.append(message)
         self.errorDisplay.setText(f"<b style='color:red;'>Exception:</b>\n{msg}")
         
-    # def custom_excepthook(self, exc_type, exc_value, exc_traceback):
-    #     import traceback
-    #     tb = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))
-    #     self.errorDisplay.setText(f"<b style='color:red;'>Exception:</b>\n{tb}")
-    
-    # def custom_thread_excepthook(self, args):
-    #     pass 
-    # self.errorDisplay.setText(f"<b style='color:red;'>Exception:</b>\n{args.thread.name}: {args.exc_value}")
-        
     def testError(self):
         raise ValueError("This is stimulated Error.")
      # [/]
      
      
-    # [+++++++++GUI system setup functions+++++++++]
-    
+    # [+++++++++System setup functions+++++++++]
     
     def instruments_setup(self):
         folder_path = 'C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments'
@@ -639,7 +584,6 @@ class UI(QMainWindow):
                 
                 device_key = "Device_" + str(self.device_count)
                 self.devices[device_key] = data_list
-                
                 
                 # actually instantiating each instrument
                 match data_list['interface']:
@@ -671,7 +615,6 @@ class UI(QMainWindow):
         self.datasets = {}
         self.datasets['primary'] = Dataset.Dataset() 
         
-      
     def add_windows(self):
         
         for device_key, data_list in self.devices.items():
@@ -679,6 +622,7 @@ class UI(QMainWindow):
 
 self.{data_list['name']}Wid = {data_list['model']}_widget.{data_list['name']}_widget()
 self.{data_list['name']}Sub = NewQMdiSubWindow.NewQMdiSubWindow(self.action_{data_list['name']})
+self.{data_list['name']}Sub.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)
 self.{data_list['name']}Sub.setWidget(self.{data_list['name']}Wid)
 self.{data_list['name']}Sub.setWindowTitle("{data_list['name']}")
 self.{data_list['name']}Sub.resize(100,100)
@@ -713,8 +657,6 @@ self.{data_list['name']}Sub.show()
         
         self.esu_window = QMainWindow()
         self.experimentSettingWid = esu.ExperimentSettingUi()
-        # self.Wid = QWidget()
-        # uic.loadUi("GUI/create_plot_setting.ui", self.Wid)
         self.esu_window.setCentralWidget(self.experimentSettingWid)
         self.esu_window.setWindowTitle("Plot Setting")
         self.esu_window.resize(570, 300)
@@ -726,8 +668,41 @@ self.{data_list['name']}Sub.show()
             self.deviceListSub.widget.tabWidget.addTab(list, device_key)
         
         QTimer.singleShot(0, self._store_initial_sizes)  
-          
+    
+    def _store_initial_sizes(self):
+        self._initial_mdi_size = self.mdi.size()
+        for sub in self.mdi.subWindowList():
+            self._initial_sub_sizes[sub] = sub.size()
+    
+    # will be executed automatically
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
         
+        if not self._initial_mdi_size:
+            return
+
+        # Current size of mdiArea
+        new_size = self.mdi.size()
+        print(new_size)
+        wid_width = int(new_size.width()/2)
+        wid_height = int(new_size.height()/2)
+
+
+        self.gasValveSub.resize(wid_width, wid_height)
+        self.lockInAmplifier1Sub.resize(new_size.width(), new_size.height())
+        self.lockInAmplifier2Sub.resize(new_size.width(), new_size.height())
+        self.magnetPowerSupplySub.resize(new_size.width(), new_size.height())
+        self.temperatureControllerSub.resize(wid_width,new_size.height())
+        self.pressureGaugeSub.resize(wid_width,wid_height)
+        
+        self.gasValveSub.move(wid_width, 0)
+        self.temperatureControllerSub.move(0, 0)
+        self.pressureGaugeSub.move(wid_width,wid_height)
+
+        self.lockInAmplifier1Sub.hide()
+        self.lockInAmplifier2Sub.hide()
+        self.magnetPowerSupplySub.hide()
+         
     def connect_instrument_windows(self):
         
         for device_key, data_list in self.devices.items():
@@ -743,11 +718,10 @@ self.{data_list['name']}_initial_function()"""
         # [/]
 
     
-    
     # [++++++++++Instrument inital function++++++++++++]
     
     def pressureGauge_initial_function(self):
-        self.start_reading_pressure()
+        pass
         
     def magnetPowerSupply_initial_function(self):
         self.set_switch_heater_status()
@@ -765,45 +739,8 @@ self.{data_list['name']}_initial_function()"""
         pass     # [/]
 
       
-    # [+++++++++(Thread) pressure gauge functions ++++++++++]
-    
-    def start_reading_pressure(self):
-        print("pressure reading start")
-        
-        self.pressure_worker = PressureWorker(self.pressureGauge, 1500, self.pressureGaugeWid.pressureGaugeLineEdit)
-        self.pressure_worker_thread = QThread()
-        self.pressure_worker.moveToThread(self.pressure_worker_thread)
-        
-        self.pressure_worker_thread.started.connect(self.pressure_worker.start_reading)
-        self.pressure_worker_thread.finished.connect(self.pressure_worker.finish)
-        self.pressure_worker_thread.finished.connect(self.pressure_worker.deleteLater)
-        self.pressure_worker_thread.finished.connect(self.pressure_worker_thread.deleteLater)
-        
-        self.pressure_worker_thread.start()
-        
-    def pressure_thread_finished(self):
-        print("pressure thread_finished")
-        
-        self.pressure_worker_thread.quit()
-        self.pressure_worker_thread.wait()
-    
-    def pressure_thread(self):
-        self.pressure_timer = QTimer()
-        self.pressure_timer.timeout.connect(self.pressure_update)
-        self.pressure_timer.start(1000)
-        
-    def pressure_update(self):
-        pressure = self.pressureGauge.pressure_read()
-        self.gasValveWid.pressureGaugeLineEdit.setText(pressure)
-    
-    # [/]
-
-
-    # [+++++++++(Thread) plotting & experiment functions++++++++]
-    
+    # [+++++++++(Thread) experiment functions++++++++]
     def start_experiment_thread(self):
-
-        print("open plot")
         
         try:
             if self.MeasureFreqLineEdit.text() == "":
@@ -850,7 +787,7 @@ self.{data_list['name']}_initial_function()"""
      # [/]
 
 
-    # [+++++++++experiment functions+++++++++]
+    # [+++++++++experiment UI functions+++++++++]
     
     def valid_period_check(self):
         try:
@@ -903,8 +840,33 @@ self.{data_list['name']}_initial_function()"""
              # [/]
     
     
-    # [+++++++++lock in amplifier functions+++++++++]
+    # [+++++++++Instrument UI Interface functions+++++++++++]
     
+    # [...........(Thread) pressure gauge...........]
+    
+    def pressure_function(self):
+        if self.pressureGaugeWid.startButton.isChecked():
+            self.start_reading_pressure()
+        else:
+            self.pressure_worker_thread.exit()
+    
+    def start_reading_pressure(self):
+        print("pressure reading start")
+        
+        self.pressure_worker = PressureWorker(self.pressureGauge, 10, self.pressureGaugeWid.pressureGaugeLineEdit)
+        self.pressure_worker_thread = QThread()
+        self.pressure_worker.moveToThread(self.pressure_worker_thread)
+        
+        self.pressure_worker_thread.started.connect(self.pressure_worker.start_reading)
+        self.pressure_worker_thread.finished.connect(self.pressure_worker.finish)
+        self.pressure_worker_thread.finished.connect(self.pressure_worker.deleteLater)
+        self.pressure_worker_thread.finished.connect(self.pressure_worker_thread.deleteLater)
+        
+        self.pressure_worker_thread.start()
+        
+    # [/]
+    
+    # [...........lock in amplifier...........]
     
     # [#######setting functions#######]
     
@@ -924,7 +886,6 @@ self.{data_list['name']}_initial_function()"""
         self.inputCoup_set()
         self.inputLnFil_set()
         
-    
     # REFERENCE AND PHASE
     def phase_set(self):
         value = self.lockInAmplifier1Wid.phaseLineEdit.text()
@@ -981,7 +942,6 @@ self.{data_list['name']}_initial_function()"""
         except:
             self.lockInAmplifier1Wid.ampLineEdit.setText("Invalid input")
             
-
     # GAIN AND TIME CONSTANT
     def sens_set(self):
         value = self.lockInAmplifier1Wid.sensComboBox.currentText()
@@ -1038,7 +998,6 @@ self.{data_list['name']}_initial_function()"""
             case _:
                 pass
     
-
     # INPUT FILTER
     def inpConf_set(self):
         value = self.lockInAmplifier1Wid.inpConfComboBox.currentText()
@@ -1092,7 +1051,6 @@ self.{data_list['name']}_initial_function()"""
             case _:
                 pass
      # [/]
-    
     
     # [#######quering functions#######]
     
@@ -1272,9 +1230,7 @@ self.{data_list['name']}_initial_function()"""
    # [/] 
     # [/]
    
-   
-    # [+++++++++lock in amplifier 2 functions+++++++++]
-    
+    # [...........lock in amplifier 2...........]
     
     # [#######setting functions#######]
     
@@ -1288,7 +1244,6 @@ self.{data_list['name']}_initial_function()"""
         self.timeCnst_set()
         self.lpFil_set()
         
-    
     # REFERENCE AND PHASE
     def phase_set(self):
         value = self.lockInAmplifier2Wid.phaseLineEdit.text()
@@ -1334,7 +1289,6 @@ self.{data_list['name']}_initial_function()"""
         except:
             self.lockInAmplifier2Wid.dhLineEdit.setText("Invalid input")
             
-
     # GAIN AND TIME CONSTANT
     def sens_set(self):
         value = self.lockInAmplifier2Wid.sensComboBox.currentText()
@@ -1394,7 +1348,6 @@ self.{data_list['name']}_initial_function()"""
         self.timeCnst_qry()
         self.lpFil_qry()
     
-    
     # REFERENCE AND PHASE
     def phase_qry(self):
         value = str(self.lockInAmplifier2.get_phase())
@@ -1421,7 +1374,6 @@ self.{data_list['name']}_initial_function()"""
         value = str(self.lockInAmplifier2.get_harm())
         self.lockInAmplifier2Wid.dhLineEdit.setText(value)
         
-    
     # GAIN AND TIME CONSTANT
     def sens_qry(self):
         index = str(self.lockInAmplifier2.get_sens())
@@ -1478,8 +1430,7 @@ self.{data_list['name']}_initial_function()"""
     # [/]
 # [/]
    
-   
-    # [+++++++++++temperature controller functions++++++++++]
+    # [...........temperature controller...........]
         
     def expand_chA_line(self):
         self.chA_line_sub.show()
@@ -1494,8 +1445,7 @@ self.{data_list['name']}_initial_function()"""
         self.chD_line_sub.show()
       # [/]
    
-
-    # [++++++++++gas valve functions+++++++++]
+    # [...........gas valve...........]
     
     def pump_change(self):
         if self.gasValveWid.pumpPushButton.isChecked():
@@ -1522,8 +1472,7 @@ self.{data_list['name']}_initial_function()"""
         self.gasValve.turn_on_all()
          # [/]
 
-
-    # [++++++++++magnet supply functions+++++++]
+    # [...........magnet supply...........]
     
     def switch_heater_power(self):
         pass 
@@ -1556,9 +1505,12 @@ self.{data_list['name']}_initial_function()"""
         self.magnetPowerSupplyWid.switchHeaterXLineEdit.setText('')
         self.magnetPowerSupplyWid.switchHeaterYLineEdit.setText('')
         self.magnetPowerSupplyWid.switchHeaterZLineEdit.setText('') # [/]
-        
+         # [/]
     
-    # [+++++++++++new plots functions++++++++++++]
+    
+    # [+++++++++Plot UI Interface functions]
+    
+    # [...........new plots...........]
     
     def new_plot_setting(self):
         self.nps_window = QMainWindow()
@@ -1585,6 +1537,7 @@ self.{data_list['name']}_initial_function()"""
         self.plot_widgets[self.plot_widget_count] = PlotUi.plotWidget(self.plot_setting, self.datasets['primary'].set, self.experimentSettingWid.experiment_parameters)
         
         self.plot_sub = QMdiSubWindow()
+        self.plot_sub.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint) # disable maximize button
         self.plot_sub.setWidget(self.plot_widgets[self.plot_widget_count])
         self.plot_sub.setWindowTitle("Plot")
         self.plot_sub.resize(700,700)
@@ -1598,8 +1551,7 @@ self.{data_list['name']}_initial_function()"""
         
         self.plot_widget_count += 1 # [/]
     
-    
-    # [++++++++++old plots functions+++++++++++]
+    # [...........old plots...........]
     
     def open_plot_setting(self):
         self.ops_window = QMainWindow()
@@ -1631,6 +1583,7 @@ self.{data_list['name']}_initial_function()"""
     def old_plot_window(self):
         self.plot_widgets[self.plot_widget_count] = PlotUi.oldPlotWidget(self.plot_setting)
         self.plot_sub = QMdiSubWindow()
+        self.plot_sub.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint) # disable maximize button
         self.plot_sub.setWidget(self.plot_widgets[self.plot_widget_count])
         
         if self.openPlotSettingWid.multipleDataset:
@@ -1642,67 +1595,15 @@ self.{data_list['name']}_initial_function()"""
         self.plot_sub.move(0,0)
         self.plot_sub.show()
         
-        # self.check_newPlotB_clicked(self.plot_count)
-        
-        # print(self.plot_widgets)
-        
         self.plot_widget_count += 1
+        
+     # [/]
      # [/]
     
     
-    # [++++++++++windows set up+++++++++]
-    
+    # [++++++++++Menu Bar UI Interface functions++++++++++]
         
-    
-
-        
-    def _store_initial_sizes(self):
-        # self.splitter.setStretchFactor(0, 1)
-        # self.splitter.setStretchFactor(1, 1)
-        # self.splitter.setSizes([1,1])
-        self._initial_mdi_size = self.mdi.size()
-        for sub in self.mdi.subWindowList():
-            self._initial_sub_sizes[sub] = sub.size()
-        
-    def resizeEvent(self, event):
-        super().resizeEvent(event)
-        
-        if not self._initial_mdi_size:
-            return
-
-        # Current size of mdiArea
-        new_size = self.mdi.size()
-        print(new_size)
-        wid_width = int(new_size.width()/2)
-        wid_height = int(new_size.height()/2)
-        
-
-        # # Compute scale ratios
-        # w_ratio = new_size.width() / self._initial_mdi_size.width()
-        # h_ratio = new_size.height() / self._initial_mdi_size.height()
-
-        self.gasValveSub.resize(wid_width, wid_height)
-        self.lockInAmplifier1Sub.resize(new_size.width(), new_size.height())
-        self.lockInAmplifier2Sub.resize(new_size.width(), new_size.height())
-        self.magnetPowerSupplySub.resize(new_size.width(), new_size.height())
-        self.temperatureControllerSub.resize(wid_width,new_size.height())
-        self.pressureGaugeSub.resize(wid_width,wid_height)
-        # self.experimentSub.resize(wid_width,wid_height)
-        
-        self.gasValveSub.move(wid_width, 0)
-        self.temperatureControllerSub.move(0, 0)
-        self.pressureGaugeSub.move(wid_width,wid_height)
-        
-
-        self.lockInAmplifier1Sub.hide()
-        self.lockInAmplifier2Sub.hide()
-        self.magnetPowerSupplySub.hide()
-        # self.experimentSub.hide()
-     
-    # [/]    
-        
-        
-    # [+++++++++menu bar DEVICE functions++++++++++]
+    # [...........menu bar DEVICE...........]
     
     def serial_instrument_create(self):
         self.serial_inst_create_wid = sic.SerialInstCreateUi()
@@ -1963,15 +1864,8 @@ else:
  
     # [/]
 
+    # [...........menu bar VIEW...........]
 
-    # [++++++++++menu bar VIEW functions+++++++]
-    
-    # def experiment_sub_view(self):
-    #     if self.actionExperiment.isChecked():
-    #         self.experimentSub.show()
-    #     else:
-            # self.experimentSub.hide()
-            
     def gas_sub_view(self):
         if self.action_pressureGauge.isChecked():
             self.gasValveSub.show()
@@ -1989,7 +1883,6 @@ else:
             self.lockInAmplifier2Sub.show()
         else:
             self.lockInAmplifier2Sub.hide()
-    
     
     def pressure_sub_view(self):
         if self.action_pressureGauge.isChecked():
@@ -2011,19 +1904,17 @@ else:
             
      # [/]
     
-    
-    # [++++++++++menu bar EXPERIMENT functions++++++++]
+    # [...........menu bar EXPERIMENT...........]
     
     def experiment_setting_create(self):
         self.esu_window.show()
-        
         self.experimentSettingWid.cancelButton.clicked.connect(self.experiment_setting_close)
     
     def experiment_setting_close(self):
         self.esu_window.hide() # [/]
+     # [/]
     
-    
-    # Experiment functions
+
     # [++++++++++closeEvent functions++++++++]
     
     def closeEvent(self, event:QCloseEvent):
@@ -2059,7 +1950,7 @@ else:
             event.ignore()
          # [/]
         
-        
+         # [/]
         
         
 

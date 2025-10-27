@@ -114,11 +114,13 @@ class SerialInstrument(ScientificInstrument):
     
     def queryB(self, command:str):
         self.write(command)
-        time.sleep(1)
+        time.sleep(0.5)
         response1 = self.read()
+        
         self.device.write(b'\x05\n')
-        time.sleep(1)
+        time.sleep(0.5)
         response2 = self.read()
+        print(response2)
         return response2
     
     def close(self):

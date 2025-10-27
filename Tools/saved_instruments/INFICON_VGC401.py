@@ -46,7 +46,7 @@ class pressureGauge(SerialInstrument):
     def identification(self):
         return self.query("*IDN?")
     
-    def pressure_read_start(self): 
+    def pressure_read_start(self): #unused
         command = "COM,1"
         pressure = self.query(command)
         try:
@@ -55,7 +55,8 @@ class pressureGauge(SerialInstrument):
             pressure = float(pressure)
             pressure = str(pressure)
             return pressure
-        except AttributeError:
+        except AttributeError as e:
+            print(e)
             msg = "Device Not Connected"
             return msg
         except ValueError:
@@ -66,14 +67,18 @@ class pressureGauge(SerialInstrument):
             return msg
     
     def pressure_read(self):
-        pressure = self.read()
+        command = "PR1"
+        pressure = self.query(command)
+        
+        #pressure = self.read()
         try:
             pressure = pressure.split()
             pressure = pressure[1]
             pressure = float(pressure)
             pressure = str(pressure)
             return pressure
-        except AttributeError:
+        except AttributeError as e:
+            print(e)
             msg = "Device Not Connected"
             return msg
         except ValueError:
