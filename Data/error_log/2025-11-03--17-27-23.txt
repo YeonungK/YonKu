@@ -1,0 +1,15 @@
+Szkopek Lab Error Log Book - 2025-11-03--17-27-23
+
+2025-11-03--17-27-47 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1985, in <module>
+    UIWindow = UI()
+               ^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 366, in __init__
+    self.connect_instrument_windows()  # [/]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 716, in connect_instrument_windows
+    exec(script)
+  File "<string>", line 2, in <module>
+AttributeError: 'UI' object has no attribute 'test_initial_function'. Did you mean: 'gasValve_initial_function'?
+
+

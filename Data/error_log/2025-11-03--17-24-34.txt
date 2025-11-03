@@ -1,0 +1,14 @@
+Szkopek Lab Error Log Book - 2025-11-03--17-24-34
+
+2025-11-03--17-24-58 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1985, in <module>
+    UIWindow = UI()
+               ^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 365, in __init__
+    self.add_windows()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 638, in add_windows
+    exec(script)
+  File "<string>", line 3, in <module>
+NameError: name 'QAction' is not defined
+
+

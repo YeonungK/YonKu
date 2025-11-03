@@ -1,0 +1,25 @@
+Szkopek Lab Error Log Book - 2025-11-03--15-54-50
+
+2025-11-03--15-55-39 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1651, in serial_save_device
+    self.serial_instantiate(data_list, device_key)
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1690, in serial_instantiate
+    exec(script)
+  File "<string>", line 1, in <module>
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\TEST.py", line 14
+    super().__init__(name, 'TEST', port, baudrate = , 
+                                         ^^^^^^^^^^
+SyntaxError: expected argument value expression
+
+
+
+
+2025-11-03--15-56-59 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1955, in closeEvent
+    self.instruments[name].close()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 127, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

@@ -6,7 +6,7 @@ import threading
 import traceback
 from pathlib import Path
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QMessageBox, QAction
 from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot, QTimer, Qt, QSize
 from PyQt5.QtGui import QCloseEvent
 from PyQt5 import uic
@@ -620,6 +620,11 @@ class UI(QMainWindow):
         for device_key, data_list in self.devices.items():
             script = f"""from GUI.instrument_control_widgets import {data_list['model']}_widget
 
+self.action_{data_list['name']} = QAction("action_{data_list['name']}", self)
+self.action_{data_list['name']}.setText("{data_list['name']}")
+self.action_{data_list['name']}.setCheckable(True)
+self.menuView.addAction(self.action_{data_list['name']})
+
 self.{data_list['name']}Wid = {data_list['model']}_widget.{data_list['name']}_widget()
 self.{data_list['name']}Sub = NewQMdiSubWindow.NewQMdiSubWindow(self.action_{data_list['name']})
 self.{data_list['name']}Sub.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)
@@ -629,6 +634,11 @@ self.{data_list['name']}Sub.resize(100,100)
 self.mdi.addSubWindow(self.{data_list['name']}Sub)
 self.{data_list['name']}Sub.move(0, 0)
 self.{data_list['name']}Sub.show()
+
+if self.action_{data_list['name']}.isChecked():
+    self.{data_list['name']}Sub.show()
+else:
+    self.{data_list['name']}Sub.hide()
         
 # """
             exec(script)
@@ -694,6 +704,7 @@ self.{data_list['name']}Sub.show()
         self.magnetPowerSupplySub.resize(new_size.width(), new_size.height())
         self.temperatureControllerSub.resize(wid_width,new_size.height())
         self.pressureGaugeSub.resize(wid_width,wid_height)
+        self.testSub.resize(new_size.width(), new_size.height())
         
         self.gasValveSub.move(wid_width, 0)
         self.temperatureControllerSub.move(0, 0)
@@ -702,9 +713,10 @@ self.{data_list['name']}Sub.show()
         self.lockInAmplifier1Sub.hide()
         self.lockInAmplifier2Sub.hide()
         self.magnetPowerSupplySub.hide()
+        self.testSub.hide()
          
     def connect_instrument_windows(self):
-        
+
         for device_key, data_list in self.devices.items():
             if self.instruments[data_list['model']].connected:
                 script = f"""self.{data_list['name']}Wid.setEnabled(True)
@@ -738,6 +750,8 @@ self.{data_list['name']}_initial_function()"""
     def gasValve_initial_function(self):
         pass     # [/]
 
+    def test_initial_function(self):
+        pass
       
     # [+++++++++(Thread) experiment functions++++++++]
     def start_experiment_thread(self):
@@ -1656,6 +1670,26 @@ self.{data_list['name']}_initial_function()"""
             self.device_count += 1
             
         self.deviceListSub.widget.tabWidget.addTab(self.instrument_wid[device_key], device_key)
+        
+        self.serial_device_wid_create()
+    
+    def serial_device_wid_create(self):
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
+        file_name = self.serial_inst_create_wid.data_list['model'] + '_ui' + '.ui'
+        
+        full_file_path = os.path.join(directory_path, file_name)
+        os.makedirs(directory_path, exist_ok=True)
+        with open(full_file_path, "w") as f:
+            f.write(self.serial_inst_create_wid.device_ui_script())
+        
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/instrument_control_widgets"
+        file_name = self.serial_inst_create_wid.data_list['model'] + '_widget' + '.py'
+        
+        full_file_path = os.path.join(directory_path, file_name)
+        os.makedirs(directory_path, exist_ok=True)
+        with open(full_file_path, "w") as f:
+            f.write(self.serial_inst_create_wid.device_wid_script())
+        
 
     def serial_instantiate(self, data_list, device_key):
         script = f"""from Tools.saved_instruments import {data_list['model']}
@@ -1866,6 +1900,7 @@ else:
 
     # [...........menu bar VIEW...........]
 
+    """
     def gas_sub_view(self):
         if self.action_pressureGauge.isChecked():
             self.gasValveSub.show()
@@ -1903,6 +1938,8 @@ else:
             self.magnetPowerSupplySub.hide()        
             
      # [/]
+    """
+    
     
     # [...........menu bar EXPERIMENT...........]
     

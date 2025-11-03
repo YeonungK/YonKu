@@ -1,0 +1,23 @@
+Szkopek Lab Error Log Book - 2025-11-03--16-00-05
+
+2025-11-03--16-00-38 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1650, in serial_save_device
+    self.instrument_wid[device_key] = sidu.SerialInstDeviceUi(data_list)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\SerialInstDeviceUi.py", line 14, in __init__
+    self.baudrateLabel.setText("Baudrate: " + data_list['baudrate'])
+                               ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+TypeError: can only concatenate str (not "int") to str
+
+
+
+
+2025-11-03--16-00-52 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1955, in closeEvent
+    self.instruments[name].close()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 127, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+
