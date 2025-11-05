@@ -1,0 +1,15 @@
+Szkopek Lab Error Log Book - 2025-11-05--17-20-20
+
+2025-11-05--17-20-44 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2009, in <module>
+    UIWindow = UI()
+               ^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 365, in __init__
+    self.add_windows()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 655, in add_windows
+    exec(script)
+  File "<string>", line 18
+    def pressureGaugeSub_view(self):
+IndentationError: unexpected indent
+
+

@@ -1,0 +1,12 @@
+Szkopek Lab Error Log Book - 2025-11-05--17-17-52
+
+2025-11-05--17-18-16 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2009, in <module>
+    UIWindow = UI()
+               ^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 383, in __init__
+    exec(script)
+  File "<string>", line 4, in <module>
+AttributeError: 'UI' object has no attribute 'pressureGaugeSub_view'. Did you mean: 'pressureGaugeSub'?
+
+

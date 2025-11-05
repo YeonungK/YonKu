@@ -372,21 +372,31 @@ class UI(QMainWindow):
         self.action_Open_Old_Plot.triggered.connect(self.open_plot_setting) # [/]
         
         # [menu bar - VIEW]
-        # self.actionExperiment.setChecked(not self.experimentSub.isHidden())
-        self.action_gasValve.setChecked(not self.gasValveSub.isHidden())
-        self.action_pressureGauge.setChecked(not self.pressureGaugeSub.isHidden())
-        self.action_lockInAmplifier1.setChecked(not self.lockInAmplifier1Sub.isHidden())
-        self.action_lockInAmplifier2.setChecked(not self.lockInAmplifier1Sub.isHidden())
-        self.action_temperatureController.setChecked(not self.temperatureControllerSub.isHidden())
-        self.action_magnetPowerSupply.setChecked(not self.magnetPowerSupplySub.isHidden())
         
-        # self.actionExperiment.triggered.connect(self.testError)
-        self.action_gasValve.triggered.connect(self.gas_sub_view)
-        self.action_pressureGauge.triggered.connect(self.pressure_sub_view)
-        self.action_lockInAmplifier1.triggered.connect(self.lockIn_sub_view)
-        self.action_lockInAmplifier2.triggered.connect(self.lockIn2_sub_view)
-        self.action_temperatureController.triggered.connect(self.temp_sub_view) 
-        self.action_magnetPowerSupply.triggered.connect(self.magnet_sub_view)# [/]
+        for device_key, data_list in self.devices.items():
+            script = f"""
+self.action_{data_list['name']}.setChecked(not self.{data_list['name']}Sub.isHidden())
+
+self.action_{data_list['name']}.triggered.connect(self.{data_list['name']}Sub_view)
+        
+# """
+            exec(script)
+        
+        # # self.actionExperiment.setChecked(not self.experimentSub.isHidden())
+        # self.action_gasValve.setChecked(not self.gasValveSub.isHidden())
+        # self.action_pressureGauge.setChecked(not self.pressureGaugeSub.isHidden())
+        # self.action_lockInAmplifier1.setChecked(not self.lockInAmplifier1Sub.isHidden())
+        # self.action_lockInAmplifier2.setChecked(not self.lockInAmplifier1Sub.isHidden())
+        # self.action_temperatureController.setChecked(not self.temperatureControllerSub.isHidden())
+        # self.action_magnetPowerSupply.setChecked(not self.magnetPowerSupplySub.isHidden())
+        
+        # # self.actionExperiment.triggered.connect(self.testError)
+        # self.action_gasValve.triggered.connect(self.gas_sub_view)
+        # self.action_pressureGauge.triggered.connect(self.pressure_sub_view)
+        # self.action_lockInAmplifier1.triggered.connect(self.lockIn_sub_view)
+        # self.action_lockInAmplifier2.triggered.connect(self.lockIn2_sub_view)
+        # self.action_temperatureController.triggered.connect(self.temp_sub_view) 
+        # self.action_magnetPowerSupply.triggered.connect(self.magnet_sub_view)# [/]
         
         # [menu bar - DEVICE]
         
@@ -635,10 +645,11 @@ self.mdi.addSubWindow(self.{data_list['name']}Sub)
 self.{data_list['name']}Sub.move(0, 0)
 self.{data_list['name']}Sub.show()
 
-if self.action_{data_list['name']}.isChecked():
-    self.{data_list['name']}Sub.show()
-else:
-    self.{data_list['name']}Sub.hide()
+def {data_list['name']}Sub_view(self):
+    if self.action_{data_list['name']}.isChecked():
+        self.{data_list['name']}Sub.show()
+    else:
+        self.{data_list['name']}Sub.hide()
         
 # """
             exec(script)
