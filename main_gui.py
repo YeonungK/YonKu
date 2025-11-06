@@ -4,6 +4,7 @@ import os
 import glob
 import threading
 import traceback
+import importlib
 from pathlib import Path
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QMessageBox, QAction
@@ -11,10 +12,11 @@ from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot, QTimer, Qt, QSi
 from PyQt5.QtGui import QCloseEvent
 from PyQt5 import uic
 
-from GUI import ChsBigLineUi as chs, NewPlotSettingUi as nps, OpenPlotSettingUi as ops, PlotUi, ExperimentSettingUi as esu
+from GUI import ChsBigLineUi as chs, NewPlotSettingUi as nps, OpenPlotSettingUi as ops, PlotUi, ExperimentSettingUi as esu, instrument_control_widgets
 from GUI import SerialInstCreateUi as sic, GpibInstCreateUi as gic, EthernetInstCreateUi as eic, USB6525InstCreateUi as bic
 from GUI import DeviceListUi as dlu, SerialInstDeviceUi as sidu, GpibInstDeviceUi as gidu, EthernetInstDeviceUi as eidu, USB6525InstDeviceUi as uidu
 from Tools import LakeShore_336, INFICON_VGC401, GasValve, SRS_830, Oxford_MercuryiPS, DataLogger, Dataset, NewQMdiSubWindow
+
 
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -374,29 +376,24 @@ class UI(QMainWindow):
         # [menu bar - VIEW]
         
         for device_key, data_list in self.devices.items():
-            script = f"""
-self.action_{data_list['name']}.setChecked(not self.{data_list['name']}Sub.isHidden())
+            device_name = data_list["name"]
 
-self.action_{data_list['name']}.triggered.connect(self.{data_list['name']}Sub_view)
-        
-# """
-            exec(script)
-        
-        # # self.actionExperiment.setChecked(not self.experimentSub.isHidden())
-        # self.action_gasValve.setChecked(not self.gasValveSub.isHidden())
-        # self.action_pressureGauge.setChecked(not self.pressureGaugeSub.isHidden())
-        # self.action_lockInAmplifier1.setChecked(not self.lockInAmplifier1Sub.isHidden())
-        # self.action_lockInAmplifier2.setChecked(not self.lockInAmplifier1Sub.isHidden())
-        # self.action_temperatureController.setChecked(not self.temperatureControllerSub.isHidden())
-        # self.action_magnetPowerSupply.setChecked(not self.magnetPowerSupplySub.isHidden())
-        
-        # # self.actionExperiment.triggered.connect(self.testError)
-        # self.action_gasValve.triggered.connect(self.gas_sub_view)
-        # self.action_pressureGauge.triggered.connect(self.pressure_sub_view)
-        # self.action_lockInAmplifier1.triggered.connect(self.lockIn_sub_view)
-        # self.action_lockInAmplifier2.triggered.connect(self.lockIn2_sub_view)
-        # self.action_temperatureController.triggered.connect(self.temp_sub_view) 
-        # self.action_magnetPowerSupply.triggered.connect(self.magnet_sub_view)# [/]
+            # Retrieve dynamic attributes
+            action = getattr(self, f"action_{device_name}", None)
+            subwindow = getattr(self, f"{device_name}Sub", None)
+            view_func = getattr(self, f"{device_name}Sub_view", None)
+
+            # Ensure all exist before connecting
+            if not all([action, subwindow, view_func]):
+                print(f"Warning: Missing attributes for device '{device_name}'. Skipping connection.")
+                continue
+
+            # Set the checked state based on subwindow visibility
+            action.setChecked(not subwindow.isHidden())
+
+            # Connect the QAction’s triggered signal to the toggle function
+            action.triggered.connect(view_func)
+        # [/]
         
         # [menu bar - DEVICE]
         
@@ -626,33 +623,51 @@ self.action_{data_list['name']}.triggered.connect(self.{data_list['name']}Sub_vi
         self.datasets['primary'] = Dataset.Dataset() 
         
     def add_windows(self):
-        
+    
         for device_key, data_list in self.devices.items():
-            script = f"""from GUI.instrument_control_widgets import {data_list['model']}_widget
+            model_name = data_list["model"]
+            device_name = data_list["name"]
+            
+            # 1. Dynamically import the widget module
+            module_path = f"GUI.instrument_control_widgets.{model_name}_widget"
+            widget_module = importlib.import_module(module_path)
+            
+            # 2. Create the QAction
+            action = QAction(f"action_{device_name}", self)
+            action.setText(device_name)
+            action.setCheckable(True)
+            self.menuView.addAction(action)
+            
+            # 3. Create the widget instance
+            widget_class = getattr(widget_module, f"{device_name}_widget")
+            widget_instance = widget_class()
+            
+            # 4. Create the subwindow
+            subwindow = NewQMdiSubWindow.NewQMdiSubWindow(action)
+            subwindow.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)
+            subwindow.setWidget(widget_instance)
+            subwindow.setWindowTitle(device_name)
+            subwindow.resize(100, 100)
+            self.mdi.addSubWindow(subwindow)
+            subwindow.move(0, 0)
+            subwindow.show()
+            
+            # 5. Store references as attributes (like exec did)
+            setattr(self, f"action_{device_name}", action)
+            setattr(self, f"{device_name}Wid", widget_instance)
+            setattr(self, f"{device_name}Sub", subwindow)
+            
+            def make_view_func(subwindow=subwindow, action=action):
+                def view_func():
+                    if action.isChecked():
+                        subwindow.show()
+                    else:
+                        subwindow.hide()
+                return view_func
 
-self.action_{data_list['name']} = QAction("action_{data_list['name']}", self)
-self.action_{data_list['name']}.setText("{data_list['name']}")
-self.action_{data_list['name']}.setCheckable(True)
-self.menuView.addAction(self.action_{data_list['name']})
-
-self.{data_list['name']}Wid = {data_list['model']}_widget.{data_list['name']}_widget()
-self.{data_list['name']}Sub = NewQMdiSubWindow.NewQMdiSubWindow(self.action_{data_list['name']})
-self.{data_list['name']}Sub.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)
-self.{data_list['name']}Sub.setWidget(self.{data_list['name']}Wid)
-self.{data_list['name']}Sub.setWindowTitle("{data_list['name']}")
-self.{data_list['name']}Sub.resize(100,100)
-self.mdi.addSubWindow(self.{data_list['name']}Sub)
-self.{data_list['name']}Sub.move(0, 0)
-self.{data_list['name']}Sub.show()
-
-def {data_list['name']}Sub_view(self):
-    if self.action_{data_list['name']}.isChecked():
-        self.{data_list['name']}Sub.show()
-    else:
-        self.{data_list['name']}Sub.hide()
-        
-# """
-            exec(script)
+            # 7. Bind the view function dynamically
+            setattr(self, f"{device_name}Sub_view", make_view_func())
+    
             print(f"self.{data_list['name']}Sub")
         
         self.chA_line_sub = chs.chABigLineUi()
@@ -1863,7 +1878,7 @@ else:
         
         self.usb_6525_inst_create_wid.update_parameters()
         
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_device"
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments"
         file_name = self.usb_6525_inst_create_wid.data_list['model'] + '.py'
         
         full_file_path = os.path.join(directory_path, file_name)
@@ -1893,64 +1908,44 @@ else:
         self.deviceListSub.widget.tabWidget.addTab(self.instrument_wid[device_key], device_key)
         
     def usb_6525_instantiate(self, data_list, device_key):
-        script = f"""from Tools.saved_instruments import {data_list['model']}
+        model_name = data_list["model"]
+        device_name = data_list["name"]
         
-self.{data_list['name']} = {data_list['model']}.{data_list['name']}('{data_list['name']}', 'Dev{data_list['deviceNumber']}', 'port{data_list['port']}', 'line{data_list['range1']}:{data_list['range2']}')
-self.instruments['{data_list['model']}'] = self.{data_list['name']}
-if self.{data_list['name']}.connected:
-    self.instrument_wid['{device_key}'].connectionLineEdit.setText("Connected")
-else:  
-    self.instrument_wid['{device_key}'].connectionLineEdit.setText("Not Connected")"""
+        module_path = f"Tools.saved_instruments.{model_name}"
+        try:
+            instrument_module = importlib.import_module(module_path)
+        except ImportError as e:
+            print(f"Warning: Could not import module '{module_path}': {e}")
         
-        exec(script)
+        try:
+            instrument_class = getattr(instrument_module, device_name)
+        except AttributeError:
+            print(f"Warning: '{device_name}' not found in module '{module_path}'.")
+            
+        try:
+            usb_instrument = instrument_class(device_name, 
+                                            f'Dev{data_list['deviceNumber']}', 
+                                            f'port{data_list['port']}', 
+                                            f'line{data_list['range1']}:{data_list['range2']}')
+        except Exception as e:
+            print(f"Error instantiating '{device_name}': {e}")
+        
+        setattr(self, device_name, usb_instrument)
+        self.instruments[model_name] = usb_instrument
+            
+        if self.instruments[model_name].connected:
+            self.instrument_wid[device_key].connectionLineEdit.setText("Connected")
+        else:
+            self.instrument_wid['{device_key}'].connectionLineEdit.setText("Not Connected")
+           
+        
+        
 
     def device_list_show(self):
         self.deviceListSub.show()
  
     # [/]
 
-    # [...........menu bar VIEW...........]
-
-    """
-    def gas_sub_view(self):
-        if self.action_pressureGauge.isChecked():
-            self.gasValveSub.show()
-        else:
-            self.gasValveSub.hide()
-    
-    def lockIn_sub_view(self):
-        if self.action_lockInAmplifier1.isChecked():
-            self.lockInAmplifier1Sub.show()
-        else:
-            self.lockInAmplifier1Sub.hide()
-            
-    def lockIn2_sub_view(self):
-        if self.action_lockInAmplifier2.isChecked():
-            self.lockInAmplifier2Sub.show()
-        else:
-            self.lockInAmplifier2Sub.hide()
-    
-    def pressure_sub_view(self):
-        if self.action_pressureGauge.isChecked():
-            self.pressureGaugeSub.show()
-        else:
-            self.pressureGaugeSub.hide()
-    
-    def temp_sub_view(self):
-        if self.action_temperatureController.isChecked():
-            self.temperatureControllerSub.show()
-        else:
-            self.temperatureControllerSub.hide()
-    
-    def magnet_sub_view(self):
-        if self.action_magnetPowerSupply.isChecked():
-            self.magnetPowerSupplySub.show()
-        else:
-            self.magnetPowerSupplySub.hide()        
-            
-     # [/]
-    """
-    
     
     # [...........menu bar EXPERIMENT...........]
     

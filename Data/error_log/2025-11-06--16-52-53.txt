@@ -1,0 +1,14 @@
+Szkopek Lab Error Log Book - 2025-11-06--16-52-53
+
+2025-11-06--16-53-20 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2054, in <module>
+    UIWindow = UI()
+               ^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 366, in __init__
+    self.add_windows()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 636, in add_windows
+    widget_module = getattr(instrument_control_widgets, f"{model_name}_widget")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'GUI.instrument_control_widgets' has no attribute 'INFICON_VGC401_widget'
+
+

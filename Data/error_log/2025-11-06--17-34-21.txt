@@ -1,0 +1,44 @@
+Szkopek Lab Error Log Book - 2025-11-06--17-34-21
+
+2025-11-06--17-36-14 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1901, in usb_6525_save_device
+    self.usb_6525_instantiate(data_list, device_key)
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1933, in usb_6525_instantiate
+    setattr(self, device_name, usb_instrument)
+                               ^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'usb_instrument' where it is not associated with a value
+
+
+
+
+2025-11-06--17-37-36 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1901, in usb_6525_save_device
+    self.usb_6525_instantiate(data_list, device_key)
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1933, in usb_6525_instantiate
+    setattr(self, device_name, usb_instrument)
+                               ^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'usb_instrument' where it is not associated with a value
+
+
+
+
+2025-11-06--17-38-55 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1901, in usb_6525_save_device
+    self.usb_6525_instantiate(data_list, device_key)
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1921, in usb_6525_instantiate
+    instrument_class = getattr(instrument_module, device_name)
+                               ^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'instrument_module' where it is not associated with a value
+
+
+
+
+2025-11-06--17-41-09 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1978, in closeEvent
+    self.instruments[name].close()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 127, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+
