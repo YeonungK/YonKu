@@ -27,7 +27,7 @@ class plotWidget(QWidget):
         self.lockIn2 = dataset['lockIn2']
         self.field = dataset['field']
         self.current = dataset['current']
-        self.current = dataset['current']
+        self.time = dataset['time']
         
         self.dataset = dataset
         
@@ -103,8 +103,8 @@ class plotWidget(QWidget):
                 self.xAxis_name_key = 'current_name'
                 self.xAxis_unit_key = 'current_unit'
             case "time":
-                self.xAxisData = self.current
-                self.xAxis_name_key = 'current_name'
+                self.xAxisData = self.time
+                self.xAxis_name_key = 'time_name'
         
         match self.yAxis:
             case "lockIn":
@@ -132,8 +132,8 @@ class plotWidget(QWidget):
                 self.yAxis_name_key = 'current_name'
                 self.yAxis_unit_key = 'current_unit'
             case "time":
-                self.yAxisData = self.current
-                self.yAxis_name_key = 'current_name'
+                self.yAxisData = self.time
+                self.yAxis_name_key = 'time_name'
         
         """create plot widget"""
         
@@ -383,13 +383,13 @@ class oldPlotWidget(QWidget):
                 self.field = {'field':self.dataset['field']['field'].to_list(),}
                 self.current = {'current':self.dataset['current']['current'].to_list()}
                 
-                self.current = {'time':self.dataset['current']['time'].to_list()}
+                self.time = {'time':self.dataset['time']['time'].to_list()}
             
                 self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'field': self.field, 'current':self.current, 'current':self.current}
             
             except KeyError:
-                self.current = {'time':self.dataset['current']['time'].to_list()}
-                self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'current':self.current}
+                self.time = {'time':self.dataset['time']['time'].to_list()}
+                self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'time':self.time}
             
         else:
             self.temperature = {'ch_A':[],'ch_B':[],'ch_C':[],'ch_D':[]}
@@ -398,9 +398,9 @@ class oldPlotWidget(QWidget):
             self.lockIn2 = {'x':[],'y':[],'r':[],'theta':[]}
             self.field = {'field':[]}
             self.current = {'current':[]}
-            self.current = {'time':[]}
+            self.time = {'time':[]}
             
-            self.set = self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'field': self.field, 'current':self.current, 'current':self.current}
+            self.set = self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'field': self.field, 'current':self.current, 'time':self.time}
             
         # experiment_parameters
         
@@ -416,7 +416,7 @@ class oldPlotWidget(QWidget):
                                         'lockIn2_name':{"x":"","y":"","r":"","theta":""}, 'lockIn2_unit':{"x":"","y":"","r":"","theta":""},
                                         'field_name':{"field":""}, 'field_unit':{"field":""},
                                         'current_name':{"current":""}, 'current_unit':{"current":""},
-                                        'current_name':{"time":""}}
+                                        'time_name':{"time":""}}
                 
                 print(self.param_file_list)
                 
@@ -466,7 +466,7 @@ class oldPlotWidget(QWidget):
                 self.experiment_parameters['current_name']["current"] = self.param_file_list[53].split(":")[1].replace("\n","")
                 self.experiment_parameters['current_unit']["current"] = self.param_file_list[54].split(":")[1].replace("\n","")
                 
-                self.experiment_parameters['current_name']["current"] = self.param_file_list[57].split(":")[1].replace("\n","")
+                self.experiment_parameters['time_name']["time"] = self.param_file_list[57].split(":")[1].replace("\n","")
                 
             except FileNotFoundError:
                 self.experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
@@ -475,7 +475,7 @@ class oldPlotWidget(QWidget):
                                       'lockIn2_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn2_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
                                       'field_name':{"field":"field"}, 'field_unit':{"field":"T"},
                                       'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
-                                      'current_name':{"time":"time"}}
+                                      'time_name':{"time":"time"}}
                 
         else:
             self.experiment_parameters = {'temperature_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'temperature_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
@@ -484,7 +484,7 @@ class oldPlotWidget(QWidget):
                                         'lockIn2_name':{"x":"","y":"","r":"","theta":""}, 'lockIn2_unit':{"x":"","y":"","r":"","theta":""},
                                         'field_name':{"field":""}, 'field_unit':{"field":""},
                                         'current_name':{"current":""}, 'current_unit':{"current":""},
-                                        'current_name':{"time":""}}
+                                        'time_name':{"time":""}}
             
 
         self.x_date_axis = pg.DateAxisItem(orientation='bottom',
@@ -534,10 +534,10 @@ class oldPlotWidget(QWidget):
                 self.xAxis_name_key = 'current_name'
                 self.xAxis_unit_key = 'current_unit'
             case "time":
-                self.xAxisData = self.current
-                self.x_set_name = 'current'
-                self.xAxis_name_key = 'current_name'
-                self.xAxis_unit_key = 'current_unit'
+                self.xAxisData = self.time
+                self.x_set_name = 'time'
+                self.xAxis_name_key = 'time_name'
+                self.xAxis_unit_key = 'time_unit'
         
         match self.yAxis:
             case "lockIn":
@@ -571,10 +571,10 @@ class oldPlotWidget(QWidget):
                 self.yAxis_name_key = 'current_name'
                 self.yAxis_unit_key = 'current_unit'
             case "time":
-                self.yAxisData = self.current
-                self.y_set_name = 'current'
-                self.yAxis_name_key = 'current_name'
-                self.yAxis_unit_key = 'current_unit'
+                self.yAxisData = self.time
+                self.y_set_name = 'time'
+                self.yAxis_name_key = 'time_name'
+                self.yAxis_unit_key = 'time_unit'
         
         """create plot widget"""
         

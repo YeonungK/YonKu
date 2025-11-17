@@ -1,0 +1,44 @@
+Szkopek Lab Error Log Book - 2025-11-17--17-36-01
+
+2025-11-17--17-36-36 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 179, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 196, in instrument_read_data
+    self.dataset[data_type][data_ch].append(data_list[index])
+                                            ~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+
+
+
+2025-11-17--17-36-37 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 179, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 196, in instrument_read_data
+    self.dataset[data_type][data_ch].append(data_list[index])
+                                            ~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+
+
+
+2025-11-17--17-36-38 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 179, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 196, in instrument_read_data
+    self.dataset[data_type][data_ch].append(data_list[index])
+                                            ~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+
+
+
+2025-11-17--17-38-44 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2142, in closeEvent
+    self.instruments[name].close()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 165, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

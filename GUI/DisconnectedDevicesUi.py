@@ -31,10 +31,9 @@ class disconnected_devices_widget(QWidget):
         instrument = self.dict[model_name]
         
         for data_type, data_ch in instrument.data_type.items():
-            text = f"{data_type} "
-        for data_type, unit in instrument.data_unit.items():
-            text = text + f"({unit})"
+            text = f"{data_type} ({instrument.data_unit[data_type]})"
+            self.sup_data_type_comboBox.addItem(text)
         
-        self.sup_data_type_comboBox.addItem(text)
+        
         
         

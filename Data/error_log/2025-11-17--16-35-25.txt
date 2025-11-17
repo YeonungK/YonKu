@@ -1,0 +1,54 @@
+Szkopek Lab Error Log Book - 2025-11-17--16-35-25
+
+2025-11-17--16-36-08 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 168, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in instrument_read_data
+    self.dataset[data_type][data_ch].append(data_list[index])
+    ~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'pressure'
+
+
+
+
+2025-11-17--16-36-10 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 168, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in instrument_read_data
+    self.dataset[data_type][data_ch].append(data_list[index])
+    ~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'pressure'
+
+
+
+
+2025-11-17--16-36-12 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 168, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in instrument_read_data
+    self.dataset[data_type][data_ch].append(data_list[index])
+    ~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'pressure'
+
+
+
+
+2025-11-17--16-36-14 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 168, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in instrument_read_data
+    self.dataset[data_type][data_ch].append(data_list[index])
+    ~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'pressure'
+
+
+
+
+2025-11-17--16-38-05 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2129, in closeEvent
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 165, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

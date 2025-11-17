@@ -1,0 +1,24 @@
+Szkopek Lab Error Log Book - 2025-11-17--16-46-12
+
+2025-11-17--16-46-48 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 890, in start_experiment_thread
+    self.plot_worker = PlotWorker(self.connected_instuments, self.plot_widgets, self.datasets['primary'].set, self.experiment_period,
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 55, in __init__
+    for device_model, instrument in self.instruments.items():
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: dictionary changed size during iteration
+
+
+
+
+2025-11-17--16-48-41 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2134, in closeEvent
+    except:
+        ^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 165, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

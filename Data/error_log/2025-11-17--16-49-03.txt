@@ -1,0 +1,32 @@
+Szkopek Lab Error Log Book - 2025-11-17--16-49-03
+
+2025-11-17--16-49-39 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 894, in start_experiment_thread
+    self.plot_worker = PlotWorker(self.connected_instuments, self.plot_widgets, self.datasets['primary'].set, self.experiment_period,
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 57, in __init__
+    if not instrument.data_type:
+           ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'gasValve' object has no attribute 'data_type'
+
+
+
+
+2025-11-17--16-49-43 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 922, in end_experiment_worker
+    self.plot_worker.end_experiment()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'plot_worker'
+
+
+
+
+2025-11-17--16-49-59 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2138, in closeEvent
+    self.instruments[name].close()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 165, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

@@ -1,0 +1,54 @@
+Szkopek Lab Error Log Book - 2025-11-17--17-38-50
+
+2025-11-17--17-39-24 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 179, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 196, in instrument_read_data
+    self.dataset[data_type][data_ch].append(self.data_list[index])
+                                            ~~~~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+
+
+
+2025-11-17--17-39-25 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 179, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 196, in instrument_read_data
+    self.dataset[data_type][data_ch].append(self.data_list[index])
+                                            ~~~~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+
+
+
+2025-11-17--17-39-26 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 179, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 196, in instrument_read_data
+    self.dataset[data_type][data_ch].append(self.data_list[index])
+                                            ~~~~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+
+
+
+2025-11-17--17-40-22 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\widgets\GraphicsView.py", line 135, in paintEvent
+    def paintEvent(self, ev):
+    
+KeyboardInterrupt
+
+
+
+
+2025-11-17--17-40-23 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2142, in closeEvent
+    for name, device in self.instruments.items():
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 165, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

@@ -1,0 +1,56 @@
+Szkopek Lab Error Log Book - 2025-11-17--16-54-24
+
+2025-11-17--16-55-07 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 178, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    self.dataset[data_type][data_ch].append(data_list[int(index)])
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+TypeError: unhashable type: 'list'
+
+
+
+
+2025-11-17--16-55-08 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 178, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    self.dataset[data_type][data_ch].append(data_list[int(index)])
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+TypeError: unhashable type: 'list'
+
+
+
+
+2025-11-17--16-55-09 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 178, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    self.dataset[data_type][data_ch].append(data_list[int(index)])
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+TypeError: unhashable type: 'list'
+
+
+
+
+2025-11-17--16-55-10 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 178, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    self.dataset[data_type][data_ch].append(data_list[int(index)])
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+TypeError: unhashable type: 'list'
+
+
+
+
+2025-11-17--16-56-32 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2139, in closeEvent
+    for name, device in self.instruments.items():
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 165, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

@@ -1,0 +1,32 @@
+Szkopek Lab Error Log Book - 2025-11-17--16-32-23
+
+2025-11-17--16-33-04 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 169, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 180, in instrument_read_data
+    for device_model, instrument in self.instruments.items():
+                                    ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'bool' object has no attribute 'items'
+
+
+
+
+2025-11-17--16-33-05 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 169, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 180, in instrument_read_data
+    for device_model, instrument in self.instruments.items():
+                                    ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'bool' object has no attribute 'items'
+
+
+
+
+2025-11-17--16-35-23 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2131, in closeEvent
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 165, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

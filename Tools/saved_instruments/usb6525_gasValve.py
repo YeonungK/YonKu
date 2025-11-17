@@ -14,6 +14,9 @@ class gasValve(NidaqmxInstrument):
         super().__init__(name, 'usb6525_gasValve', device_number, port, range)
         
         self.data = [False, False, False]
+        self.data_type = {}
+        self.data_unit = {}
+        self.data_function = {}
         
         # if self.connected:
         #     self.turn_off_all()

@@ -48,9 +48,21 @@ class PlotWorker(QObject):
                  chALineEdit, chBLineEdit, chCLineEdit, chDLineEdit,
                  chABigLine, chBBigLine, chCBigLine, chDBigLine, unitButton,
                  magnetzLineEdit, currentLineEdit, experimentSettingWid):
+        
         super().__init__()
         
         self.instruments = instruments
+        self.omitted_instruments = []
+        for device_model, instrument in self.instruments.items():
+            if not instrument.data_type:
+                self.omitted_instruments.append(device_model)
+            if device_model == "INFICON_VGC401":
+                self.omitted_instruments.append(device_model)
+        
+        for device_model in self.omitted_instruments:
+            del self.instruments[device_model]
+        print(self.instruments)
+        
         self.plot_widgets = plot_widgets
         self.period = period
         self.pausePushButton = pausePushButton
@@ -172,86 +184,136 @@ time_name:{self.experimentSettingWid.experiment_parameters['time_name']['time']}
     
     def instrument_read_data(self):
         
+        now = datetime.now(ZoneInfo('America/New_York')).timestamp()
+        self.dataset['time']['time'].append(now)
+        
         for device_model, instrument in self.instruments.items():
             for data_type, function in instrument.data_function.items():
+                self.data_list = setattr(self, f"{data_type}_list", function())
+                self.data_list = getattr(self, f"{data_type}_list")
                 
-        temp_list = self.instruments['Lakeshore_336'].temp_read_all()
-        resist_list = self.instruments['Lakeshore_336'].resist_read_all()
-        lockIn_list = self.instruments['SRS_830'].get_all()
-        lockIn2_list = self.instruments['SRS_830_2'].get_all()
-        field_list = self.instruments['Oxford_MercuryiPS'].read_all_field()
-        current_list = self.instruments['Oxford_MercuryiPS'].read_current()
-        now = datetime.now(ZoneInfo('America/New_York')).timestamp()
-        
-        self.dataset['temperature']['ch_A'].append(temp_list[0])
-        self.dataset['temperature']['ch_B'].append(temp_list[1])
-        self.dataset['temperature']['ch_C'].append(temp_list[2])
-        self.dataset['temperature']['ch_D'].append(temp_list[3])
-        
-        if self.unitButton.isChecked():
-            self.chALineEdit.setText(str(temp_list[0]))
-            self.chBLineEdit.setText(str(temp_list[1]))
-            self.chCLineEdit.setText(str(temp_list[2]))
-            self.chDLineEdit.setText(str(temp_list[3]))
+                index = 0
+                for data_ch in instrument.data_type[data_type]:
+                    self.dataset[data_type][data_ch].append(self.data_list[index])
+                    index += 1
+
+                if data_type == 'temperature':
+                    if self.unitButton.isChecked():
+                        self.chALineEdit.setText(str(self.data_list[0]))
+                        self.chBLineEdit.setText(str(self.data_list[1]))
+                        self.chCLineEdit.setText(str(self.data_list[2]))
+                        self.chDLineEdit.setText(str(self.data_list[3]))
+                        
+                        self.chABigLine.setText(str(self.data_list[0]))
+                        self.chBBigLine.setText(str(self.data_list[1]))
+                        self.chCBigLine.setText(str(self.data_list[2]))
+                        self.chDBigLine.setText(str(self.data_list[3]))
+                    else:
+                        self.chALineEdit.setText(str(self.data_list[0]))
+                        self.chBLineEdit.setText(str(self.data_list[1]))
+                        self.chCLineEdit.setText(str(self.data_list[2]))
+                        self.chDLineEdit.setText(str(self.data_list[3]))
+                        
+                        self.chABigLine.setText(str(self.data_list[0]))
+                        self.chBBigLine.setText(str(self.data_list[1]))
+                        self.chCBigLine.setText(str(self.data_list[2]))
+                        self.chDBigLine.setText(str(self.data_list[3]))
+                
+                if data_type == 'lockIn':
+                    self.xLineEdit.setText(str(self.data_list[0]))
+                    self.yLineEdit.setText(str(self.data_list[1]))
+                    self.rLineEdit.setText(str(self.data_list[2]))
+                    self.thetaLineEdit.setText(str(self.data_list[3]))
+                
+                if data_type == 'lockIn2':
+                    self.xLineEdit2.setText(str(self.data_list[0]))
+                    self.yLineEdit2.setText(str(self.data_list[1]))
+                    self.rLineEdit2.setText(str(self.data_list[2]))
+                    self.thetaLineEdit2.setText(str(self.data_list[3]))
             
-            self.chABigLine.setText(str(temp_list[0]))
-            self.chBBigLine.setText(str(temp_list[1]))
-            self.chCBigLine.setText(str(temp_list[2]))
-            self.chDBigLine.setText(str(temp_list[3]))
+                    
+                
+                    
+        
+        
+                
+        # temp_list = self.instruments['Lakeshore_336'].temp_read_all()
+        # resist_list = self.instruments['Lakeshore_336'].resist_read_all()
+        # lockIn_list = self.instruments['SRS_830'].get_all()
+        # lockIn2_list = self.instruments['SRS_830_2'].get_all()
+        # field_list = self.instruments['Oxford_MercuryiPS'].read_all_field()
+        # current_list = self.instruments['Oxford_MercuryiPS'].read_current()
+        
+        
+        # self.dataset['temperature']['ch_A'].append(temp_list[0])
+        # self.dataset['temperature']['ch_B'].append(temp_list[1])
+        # self.dataset['temperature']['ch_C'].append(temp_list[2])
+        # self.dataset['temperature']['ch_D'].append(temp_list[3])
+        
+        # if self.unitButton.isChecked():
+        #     self.chALineEdit.setText(str(temp_list[0]))
+        #     self.chBLineEdit.setText(str(temp_list[1]))
+        #     self.chCLineEdit.setText(str(temp_list[2]))
+        #     self.chDLineEdit.setText(str(temp_list[3]))
             
-        else:
-            self.chALineEdit.setText(str(resist_list[0]))
-            self.chBLineEdit.setText(str(resist_list[1]))
-            self.chCLineEdit.setText(str(resist_list[2]))
-            self.chDLineEdit.setText(str(resist_list[3]))
+        #     self.chABigLine.setText(str(temp_list[0]))
+        #     self.chBBigLine.setText(str(temp_list[1]))
+        #     self.chCBigLine.setText(str(temp_list[2]))
+        #     self.chDBigLine.setText(str(temp_list[3]))
             
-            self.chABigLine.setText(str(resist_list[0]))
-            self.chBBigLine.setText(str(resist_list[1]))
-            self.chCBigLine.setText(str(resist_list[2]))
-            self.chDBigLine.setText(str(resist_list[3]))
+        # else:
+        #     self.chALineEdit.setText(str(resist_list[0]))
+        #     self.chBLineEdit.setText(str(resist_list[1]))
+        #     self.chCLineEdit.setText(str(resist_list[2]))
+        #     self.chDLineEdit.setText(str(resist_list[3]))
+            
+        #     self.chABigLine.setText(str(resist_list[0]))
+        #     self.chBBigLine.setText(str(resist_list[1]))
+        #     self.chCBigLine.setText(str(resist_list[2]))
+        #     self.chDBigLine.setText(str(resist_list[3]))
         
-        self.dataset['resistance']['ch_A'].append(resist_list[0])
-        self.dataset['resistance']['ch_B'].append(resist_list[1])
-        self.dataset['resistance']['ch_C'].append(resist_list[2])
-        self.dataset['resistance']['ch_D'].append(resist_list[3])
+        # self.dataset['resistance']['ch_A'].append(resist_list[0])
+        # self.dataset['resistance']['ch_B'].append(resist_list[1])
+        # self.dataset['resistance']['ch_C'].append(resist_list[2])
+        # self.dataset['resistance']['ch_D'].append(resist_list[3])
         
-        self.dataset['lockIn']['x'].append(lockIn_list[0])
-        self.dataset['lockIn']['y'].append(lockIn_list[1])
-        self.dataset['lockIn']['r'].append(lockIn_list[2])
-        self.dataset['lockIn']['theta'].append(lockIn_list[3])
+        # self.dataset['lockIn']['x'].append(lockIn_list[0])
+        # self.dataset['lockIn']['y'].append(lockIn_list[1])
+        # self.dataset['lockIn']['r'].append(lockIn_list[2])
+        # self.dataset['lockIn']['theta'].append(lockIn_list[3])
         
-        self.dataset['lockIn2']['x'].append(lockIn2_list[0])
-        self.dataset['lockIn2']['y'].append(lockIn2_list[1])
-        self.dataset['lockIn2']['r'].append(lockIn2_list[2])
-        self.dataset['lockIn2']['theta'].append(lockIn2_list[3])
+        # self.dataset['lockIn2']['x'].append(lockIn2_list[0])
+        # self.dataset['lockIn2']['y'].append(lockIn2_list[1])
+        # self.dataset['lockIn2']['r'].append(lockIn2_list[2])
+        # self.dataset['lockIn2']['theta'].append(lockIn2_list[3])
         
         
-        self.xLineEdit.setText(str(lockIn_list[0]))
-        self.yLineEdit.setText(str(lockIn_list[1]))
-        self.rLineEdit.setText(str(lockIn_list[2]))
-        self.thetaLineEdit.setText(str(lockIn_list[3]))
+        # self.xLineEdit.setText(str(lockIn_list[0]))
+        # self.yLineEdit.setText(str(lockIn_list[1]))
+        # self.rLineEdit.setText(str(lockIn_list[2]))
+        # self.thetaLineEdit.setText(str(lockIn_list[3]))
         
-        self.xLineEdit2.setText(str(lockIn2_list[0]))
-        self.yLineEdit2.setText(str(lockIn2_list[1]))
-        self.rLineEdit2.setText(str(lockIn2_list[2]))
-        self.thetaLineEdit2.setText(str(lockIn2_list[3]))
+        # self.xLineEdit2.setText(str(lockIn2_list[0]))
+        # self.yLineEdit2.setText(str(lockIn2_list[1]))
+        # self.rLineEdit2.setText(str(lockIn2_list[2]))
+        # self.thetaLineEdit2.setText(str(lockIn2_list[3]))
         
-        self.dataset['field']['field'].append(field_list)
+        # self.dataset['field']['field'].append(field_list)
         
 
-        self.magnetzLineEdit.setText(str(field_list))
+        # self.magnetzLineEdit.setText(str(field_list))
         
-        if not current_list == None:
-            self.dataset['current']['current'].append(current_list)
+        # if not current_list == None:
+        #     self.dataset['current']['current'].append(current_list)
             
-            self.currentLineEdit.setText(str(current_list))
+        #     self.currentLineEdit.setText(str(current_list))
         
-        else:
-            pass
+        # else:
+        #     pass
 
         
-        self.dataset['time']['time'].append(now)
-        self.logger.append(temp_list, resist_list, lockIn_list, lockIn2_list, field_list, current_list, now)
+        # self.dataset['time']['time'].append(now)
+        # self.logger.append(temp_list, resist_list, lockIn_list, lockIn2_list, field_list, current_list, now)
     
         
     def pause_resume_experiment(self):
@@ -590,14 +652,15 @@ class UI(QMainWindow):
      # [/]
     
     def check_instrument_connection(self):
-        disconnected_models = {}
+        disconnected_instr = {}
+        connected_instr = {}
         for device_model, instrument in self.instruments.items():
             if instrument.connected:
-                pass
+                connected_instr[device_model] = instrument
             else:
-                disconnected_models[device_model] = instrument
-        print(disconnected_models)
-        return disconnected_models
+                disconnected_instr[device_model] = instrument
+        print(disconnected_instr)
+        return connected_instr, disconnected_instr
 
      
     # [+++++++++System setup functions+++++++++]
@@ -813,12 +876,12 @@ class UI(QMainWindow):
         else:  
             return None
         # check instrument connection
-        disconnected_dict = self.check_instrument_connection()
-        if not disconnected_dict:
-            self.start_experiment_thread()
+        self.connected_instuments, self.disconnected_instuments = self.check_instrument_connection()
+        if not self.disconnected_instuments:
+            pass
         else:
             print("Some devices are disconnected")
-            self.disDevWid = ddu.disconnected_devices_widget(disconnected_dict)
+            self.disDevWid = ddu.disconnected_devices_widget(self.disconnected_instuments)
             self.disDevWid.show()
             self.disDevWid.yesButton.clicked.connect(self.start_experiment_thread)
             self.disDevWid.yesButton.clicked.connect(self.disDevWid.close)
@@ -832,7 +895,7 @@ class UI(QMainWindow):
             else:
                 self.experiment_period = int(self.MeasureFreqLineEdit.text()) * 1000
            
-            self.plot_worker = PlotWorker(self.instruments, self.plot_widgets, self.datasets['primary'].set, self.experiment_period, 
+            self.plot_worker = PlotWorker(self.connected_instuments, self.plot_widgets, self.datasets['primary'].set, self.experiment_period, 
                                         self.pausePushButton, self.experimentNameLineEdit,
                                         self.lockInAmplifier1Wid.xLineEdit, self.lockInAmplifier1Wid.yLineEdit, self.lockInAmplifier1Wid.rLineEdit, self.lockInAmplifier1Wid.thetaLineEdit, 
                                         self.lockInAmplifier2Wid.xLineEdit, self.lockInAmplifier2Wid.yLineEdit, self.lockInAmplifier2Wid.rLineEdit, self.lockInAmplifier2Wid.thetaLineEdit, 
@@ -1778,12 +1841,12 @@ class UI(QMainWindow):
             print(f"Warning: '{device_name}' not found in module '{module_path}'.")
             
         try:
-            ethernet_instrument = instrument_class(device_name, port)
+            serial_instrument = instrument_class(device_name, port)
         except Exception as e:
             print(f"Error instantiating '{device_name}': {e}")
         
-        setattr(self, device_name, ethernet_instrument)
-        self.instruments[model_name] = ethernet_instrument
+        setattr(self, device_name, serial_instrument)
+        self.instruments[model_name] = serial_instrument
             
         if self.instruments[model_name].connected:
             self.instrument_wid[device_key].connectionLineEdit.setText("Connected")
