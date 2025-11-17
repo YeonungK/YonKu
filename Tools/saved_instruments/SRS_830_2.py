@@ -13,6 +13,8 @@ class lockInAmplifier2(GPIBInstrument):
     def __init__(self, name, address):
         super().__init__(name, 'SRS_844', address)
         
+        self.data_type = {'LockIn2':'manual'}
+        
         
         self.tauset={
                 "10 u" : 0,

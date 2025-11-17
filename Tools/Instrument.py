@@ -29,7 +29,7 @@ class ScientificInstrument:
     
 class EthernetInstrument(ScientificInstrument):
     def __init__(self, name, model, ip, port):
-        super().__init__(name, model, 'etherent')
+        super().__init__(name, model, 'ethernet')
         self.ip = ip
         self.port = port
         self.connected = False

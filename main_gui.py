@@ -1,4 +1,6 @@
 import sys
+import re
+import keyword
 import time
 import os
 import glob
@@ -13,7 +15,7 @@ from PyQt5.QtGui import QCloseEvent
 from PyQt5 import uic
 
 from GUI import ChsBigLineUi as chs, NewPlotSettingUi as nps, OpenPlotSettingUi as ops, PlotUi, ExperimentSettingUi as esu, instrument_control_widgets
-from GUI import SerialInstCreateUi as sic, GpibInstCreateUi as gic, EthernetInstCreateUi as eic, USB6525InstCreateUi as bic
+from GUI import SerialInstCreateUi as sic, GpibInstCreateUi as gic, EthernetInstCreateUi as eic, USB6525InstCreateUi as bic, DisconnectedDevicesUi as ddu
 from GUI import DeviceListUi as dlu, SerialInstDeviceUi as sidu, GpibInstDeviceUi as gidu, EthernetInstDeviceUi as eidu, USB6525InstDeviceUi as uidu
 from Tools import LakeShore_336, INFICON_VGC401, GasValve, SRS_830, Oxford_MercuryiPS, DataLogger, Dataset, NewQMdiSubWindow
 
@@ -35,7 +37,7 @@ class ExceptionForwarder(QObject):
         print(error_msg)
         self.exception_occurred.emit(error_msg)
 
-"""worker class for plotting for each experiment (thread)"""
+"""worker class for Expriments and Real-time Plotting (thread)"""
 class PlotWorker(QObject):
     finished = pyqtSignal()
     error = pyqtSignal()
@@ -74,12 +76,7 @@ class PlotWorker(QObject):
         self.magnetzLineEdit = magnetzLineEdit
         self.currentLineEdit = currentLineEdit
         self.experimentSettingWid = experimentSettingWid
-        # self.errorDisplay = errorDisplay
-        
-        # for index, plot in self.plot_widgets.items():
-        #     for plot_ch, check_box in plot.plotCheckBoxes.items():
-        #         check_box.stateChanged.connect(lambda state: plot.show_hide_plot(state, plot_ch))
-                
+    
         
     def start_experiment(self):
 
@@ -409,7 +406,7 @@ class UI(QMainWindow):
         
         # [main - EXPERIMENT]
         
-        self.startPushButton.clicked.connect(self.start_experiment_thread)
+        self.startPushButton.clicked.connect(self.check_experiment_condition)
         self.pausePushButton.clicked.connect(self.pause_resume_experiment_thread)
         self.endAndSavePushButton.clicked.connect(self.end_experiment_worker) 
         
@@ -418,7 +415,6 @@ class UI(QMainWindow):
         self.startPushButton.setCheckable(False)
         self.startPushButton.setEnabled(True)
         self.endAndSavePushButton.setEnabled(False)
-        self.startPushButton.clicked.connect(self.valid_period_check)
         
         
         # [/]
@@ -569,8 +565,36 @@ class UI(QMainWindow):
         
     def testError(self):
         raise ValueError("This is stimulated Error.")
+    
+    def user_filename_filter(self, text):
+        print(text)
+        forbidden = r'[\\/:\*\?"<>\|]'  # Windows forbidden chars
+        if re.search(forbidden, text):
+            self.experiment_title_note.setText(r'NOTE: A file name cannot contain \ / : * ? " < > |.')
+            return False
+        if len(text) > 255:
+            self.experiment_title_note.setText('NOTE: Your file name is too long.')
+            return False
+        return True
+    
+    def user_pythonvariable_filter(self, text):
+        if not text.isidentifier():
+            return False
+        if keyword.iskeyword(text):
+            return False
+        return True
      # [/]
-     
+    
+    def check_instrument_connection(self):
+        disconnected_models = {}
+        for device_model, instrument in self.instruments.items():
+            if instrument.connected:
+                pass
+            else:
+                disconnected_models[device_model] = instrument
+        print(disconnected_models)
+        return disconnected_models
+
      
     # [+++++++++System setup functions+++++++++]
     
@@ -612,9 +636,7 @@ class UI(QMainWindow):
                 
                 self.device_count += 1
         
-        print(self.devices)
-                
-            
+        print(self.devices)   
         print("instrument setup done")
 
     def dataset_setup(self):
@@ -744,13 +766,12 @@ class UI(QMainWindow):
     def connect_instrument_windows(self):
 
         for device_key, data_list in self.devices.items():
+            device_name = data_list['name']
+            device_Wid = getattr(self, f'{device_name}Wid')
             if self.instruments[data_list['model']].connected:
-                script = f"""self.{data_list['name']}Wid.setEnabled(True)
-self.{data_list['name']}_initial_function()"""
-                exec(script)
+                device_Wid.setEnabled(True)
             else:
-                script = f"""self.{data_list['name']}Wid.setEnabled(False)"""
-                exec(script)
+                device_Wid.setEnabled(False)
         
         
         # [/]
@@ -780,8 +801,27 @@ self.{data_list['name']}_initial_function()"""
         pass
       
     # [+++++++++(Thread) experiment functions++++++++]
+    def check_experiment_condition(self):
+        # check error for filename
+        experiment_title = self.experimentNameLineEdit.text()
+        if self.user_filename_filter(experiment_title):
+            pass
+        else:  
+            return None
+        # check instrument connection
+        disconnected_dict = self.check_instrument_connection()
+        if not disconnected_dict:
+            self.start_experiment_thread()
+        else:
+            print("Some devices are disconnected")
+            self.disDevWid = ddu.disconnected_devices_widget(disconnected_dict)
+            self.disDevWid.show()
+            self.disDevWid.yesButton.clicked.connect(self.start_experiment_thread)
+            self.disDevWid.yesButton.clicked.connect(self.disDevWid.close)
+            self.disDevWid.cancelButton.clicked.connect(self.disDevWid.close)
+            
     def start_experiment_thread(self):
-        
+        self.valid_period_check()
         try:
             if self.MeasureFreqLineEdit.text() == "":
                 self.experiment_period = 1000
@@ -1718,16 +1758,34 @@ self.{data_list['name']}_initial_function()"""
         
 
     def serial_instantiate(self, data_list, device_key):
-        script = f"""from Tools.saved_instruments import {data_list['model']}
+        model_name = data_list["model"]
+        device_name = data_list["name"]
+        port = data_list['port']
         
-self.{data_list['name']} = {data_list['model']}.{data_list['name']}('{data_list['name']}', '{data_list['port']}')
-self.instruments['{data_list['model']}'] = self.{data_list['name']}
-if self.{data_list['name']}.connected:
-    self.instrument_wid['{device_key}'].connectionLineEdit.setText("Connected")
-else:  
-    self.instrument_wid['{device_key}'].connectionLineEdit.setText("Not Connected")"""
+        module_path = f"Tools.saved_instruments.{model_name}"
+        try:
+            instrument_module = importlib.import_module(module_path)
+        except ImportError as e:
+            print(f"Warning: Could not import module '{module_path}': {e}")
         
-        exec(script)
+        try:
+            instrument_class = getattr(instrument_module, device_name)
+        except AttributeError:
+            print(f"Warning: '{device_name}' not found in module '{module_path}'.")
+            
+        try:
+            ethernet_instrument = instrument_class(device_name, port)
+        except Exception as e:
+            print(f"Error instantiating '{device_name}': {e}")
+        
+        setattr(self, device_name, ethernet_instrument)
+        self.instruments[model_name] = ethernet_instrument
+            
+        if self.instruments[model_name].connected:
+            self.instrument_wid[device_key].connectionLineEdit.setText("Connected")
+        else:
+            self.instrument_wid[device_key].connectionLineEdit.setText("Not Connected")
+
 
     def gpib_instrument_create(self):
         self.gpib_inst_create_wid = gic.GpibInstCreateUi()
@@ -1781,16 +1839,34 @@ else:
         self.deviceListSub.widget.tabWidget.addTab(self.instrument_wid[device_key], device_key)
         
     def gpib_instantiate(self, data_list, device_key):
-        script = f"""from Tools.saved_instruments import {data_list['model']}
+        model_name = data_list["model"]
+        device_name = data_list["name"]
+        address = data_list['address']
         
-self.{data_list['name']} = {data_list['model']}.{data_list['name']}('{data_list['name']}', '{data_list['address']}')
-self.instruments['{data_list['model']}'] = self.{data_list['name']}
-if self.{data_list['name']}.connected:
-    self.instrument_wid['{device_key}'].connectionLineEdit.setText("Connected")
-else:  
-    self.instrument_wid['{device_key}'].connectionLineEdit.setText("Not Connected")"""
+        module_path = f"Tools.saved_instruments.{model_name}"
+        try:
+            instrument_module = importlib.import_module(module_path)
+        except ImportError as e:
+            print(f"Warning: Could not import module '{module_path}': {e}")
         
-        exec(script)
+        try:
+            instrument_class = getattr(instrument_module, device_name)
+        except AttributeError:
+            print(f"Warning: '{device_name}' not found in module '{module_path}'.")
+            
+        try:
+            ethernet_instrument = instrument_class(device_name, address)
+        except Exception as e:
+            print(f"Error instantiating '{device_name}': {e}")
+        
+        setattr(self, device_name, ethernet_instrument)
+        self.instruments[model_name] = ethernet_instrument
+            
+        if self.instruments[model_name].connected:
+            self.instrument_wid[device_key].connectionLineEdit.setText("Connected")
+        else:
+            self.instrument_wid[device_key].connectionLineEdit.setText("Not Connected")
+            
        
     def ethernet_instrument_create(self):
         self.ethernet_inst_create_wid = eic.EthernetInstCreateUi()
@@ -1844,16 +1920,37 @@ else:
         self.deviceListSub.widget.tabWidget.addTab(self.instrument_wid[device_key], device_key)
         
     def ethernet_instantiate(self, data_list, device_key):
-        script = f"""from Tools.saved_instruments import {data_list['model']}
+        model_name = data_list["model"]
+        device_name = data_list["name"]
+        inst_IP = data_list['instIP']
+        port = data_list['port']
         
-self.{data_list['name']} = {data_list['model']}.{data_list['name']}('{data_list['name']}', '{data_list['instIP']}', {data_list['port']})
-self.instruments['{data_list['model']}'] = self.{data_list['name']}
-if self.{data_list['name']}.connected:
-    self.instrument_wid['{device_key}'].connectionLineEdit.setText("Connected")
-else:  
-    self.instrument_wid['{device_key}'].connectionLineEdit.setText("Not Connected")"""
+        module_path = f"Tools.saved_instruments.{model_name}"
+        try:
+            instrument_module = importlib.import_module(module_path)
+        except ImportError as e:
+            print(f"Warning: Could not import module '{module_path}': {e}")
         
-        exec(script)    
+        try:
+            instrument_class = getattr(instrument_module, device_name)
+        except AttributeError:
+            print(f"Warning: '{device_name}' not found in module '{module_path}'.")
+            
+        try:
+            ethernet_instrument = instrument_class(device_name, 
+                                            inst_IP, 
+                                            int(port))
+        except Exception as e:
+            print(f"Error instantiating '{device_name}': {e}")
+        
+        setattr(self, device_name, ethernet_instrument)
+        self.instruments[model_name] = ethernet_instrument
+            
+        if self.instruments[model_name].connected:
+            self.instrument_wid[device_key].connectionLineEdit.setText("Connected")
+        else:
+            self.instrument_wid[device_key].connectionLineEdit.setText("Not Connected")
+  
         
     def usb_6525_instrument_create(self):
         self.usb_6525_inst_create_wid = bic.usb6525InstCreateUi()
@@ -1936,7 +2033,7 @@ else:
         if self.instruments[model_name].connected:
             self.instrument_wid[device_key].connectionLineEdit.setText("Connected")
         else:
-            self.instrument_wid['{device_key}'].connectionLineEdit.setText("Not Connected")
+            self.instrument_wid[device_key].connectionLineEdit.setText("Not Connected")
            
         
         

@@ -1,0 +1,29 @@
+Szkopek Lab Error Log Book - 2025-11-10--14-47-41
+
+2025-11-10--14-50-39 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 805, in start_experiment_thread
+    experiment_title = self.titleLineEdit.text()
+                       ^^^^^^^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'titleLineEdit'
+
+
+
+
+2025-11-10--14-50-45 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 844, in end_experiment_worker
+    self.plot_worker.end_experiment()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'plot_worker'
+
+
+
+
+2025-11-10--14-51-33 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2060, in closeEvent
+    self.instruments[name].close()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 127, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

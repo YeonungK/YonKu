@@ -17,7 +17,7 @@ class pressureGauge(SerialInstrument):
                                 stopbits = serial.STOPBITS_ONE)
         
         self.connected = self.check_connection()
-        
+        self.data_type = {'Pressure':'mBar'}
         
     def check_connection(self):
         try:

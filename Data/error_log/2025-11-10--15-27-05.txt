@@ -1,0 +1,18 @@
+Szkopek Lab Error Log Book - 2025-11-10--15-27-05
+
+2025-11-10--15-27-34 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 861, in end_experiment_worker
+    self.plot_worker.end_experiment()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'plot_worker'
+
+
+
+
+2025-11-10--15-29-44 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2062, in closeEvent
+    # [++++++++++closeEvent functions++++++++]
+    
+KeyboardInterrupt
+
+
