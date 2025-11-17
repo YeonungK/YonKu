@@ -76,33 +76,33 @@ class add_multidata_plot_ui(QWidget):
             
             print(param_file_list)
             
-            experiment_parameters = {'temperatures_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperatures_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
-                                        'resistances_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistances_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
+            experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
+                                        'resistance_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistance_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
                                         'lockIn_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
                                         'lockIn2_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn2_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-                                        'fields_name':{"field":"field"}, 'fields_unit':{"field":"T"},
-                                        'currents_name':{"current":"current"}, 'currents_unit':{"current":"A"},
-                                        'times_name':{"time":"time"}}
+                                        'field_name':{"field":"field"}, 'field_unit':{"field":"T"},
+                                        'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
+                                        'time_name':{"time":"time"}}
             
-            experiment_parameters['temperatures_name']["ch_A"] = param_file_list[5].split(":")[1].replace("\n","")
-            experiment_parameters['temperatures_name']["ch_B"] = param_file_list[6].split(":")[1].replace("\n","")
-            experiment_parameters['temperatures_name']["ch_C"] = param_file_list[7].split(":")[1].replace("\n","")
-            experiment_parameters['temperatures_name']["ch_D"] = param_file_list[8].split(":")[1].replace("\n","")
+            experiment_parameters['temperature_name']["ch_A"] = param_file_list[5].split(":")[1].replace("\n","")
+            experiment_parameters['temperature_name']["ch_B"] = param_file_list[6].split(":")[1].replace("\n","")
+            experiment_parameters['temperature_name']["ch_C"] = param_file_list[7].split(":")[1].replace("\n","")
+            experiment_parameters['temperature_name']["ch_D"] = param_file_list[8].split(":")[1].replace("\n","")
             
-            experiment_parameters['temperatures_unit']["ch_A"] = param_file_list[10].split(":")[1].replace("\n","")
-            experiment_parameters['temperatures_unit']["ch_B"] = param_file_list[11].split(":")[1].replace("\n","")
-            experiment_parameters['temperatures_unit']["ch_C"] = param_file_list[12].split(":")[1].replace("\n","")
-            experiment_parameters['temperatures_unit']["ch_D"] = param_file_list[13].split(":")[1].replace("\n","")
+            experiment_parameters['temperature_unit']["ch_A"] = param_file_list[10].split(":")[1].replace("\n","")
+            experiment_parameters['temperature_unit']["ch_B"] = param_file_list[11].split(":")[1].replace("\n","")
+            experiment_parameters['temperature_unit']["ch_C"] = param_file_list[12].split(":")[1].replace("\n","")
+            experiment_parameters['temperature_unit']["ch_D"] = param_file_list[13].split(":")[1].replace("\n","")
             
-            experiment_parameters['resistances_name']["ch_A"] = param_file_list[16].split(":")[1].replace("\n","")
-            experiment_parameters['resistances_name']["ch_B"] = param_file_list[17].split(":")[1].replace("\n","")
-            experiment_parameters['resistances_name']["ch_C"] = param_file_list[18].split(":")[1].replace("\n","")
-            experiment_parameters['resistances_name']["ch_D"] = param_file_list[19].split(":")[1].replace("\n","")
+            experiment_parameters['resistance_name']["ch_A"] = param_file_list[16].split(":")[1].replace("\n","")
+            experiment_parameters['resistance_name']["ch_B"] = param_file_list[17].split(":")[1].replace("\n","")
+            experiment_parameters['resistance_name']["ch_C"] = param_file_list[18].split(":")[1].replace("\n","")
+            experiment_parameters['resistance_name']["ch_D"] = param_file_list[19].split(":")[1].replace("\n","")
             
-            experiment_parameters['resistances_unit']["ch_A"] = param_file_list[21].split(":")[1].replace("\n","")
-            experiment_parameters['resistances_unit']["ch_B"] = param_file_list[22].split(":")[1].replace("\n","")
-            experiment_parameters['resistances_unit']["ch_C"] = param_file_list[23].split(":")[1].replace("\n","")
-            experiment_parameters['resistances_unit']["ch_D"] = param_file_list[24].split(":")[1].replace("\n","")
+            experiment_parameters['resistance_unit']["ch_A"] = param_file_list[21].split(":")[1].replace("\n","")
+            experiment_parameters['resistance_unit']["ch_B"] = param_file_list[22].split(":")[1].replace("\n","")
+            experiment_parameters['resistance_unit']["ch_C"] = param_file_list[23].split(":")[1].replace("\n","")
+            experiment_parameters['resistance_unit']["ch_D"] = param_file_list[24].split(":")[1].replace("\n","")
 
             experiment_parameters['lockIn_name']["x"] = param_file_list[27].split(":")[1].replace("\n","")
             experiment_parameters['lockIn_name']["y"] = param_file_list[28].split(":")[1].replace("\n","")
@@ -124,22 +124,22 @@ class add_multidata_plot_ui(QWidget):
             experiment_parameters['lockIn2_unit']["r"] = param_file_list[45].split(":")[1].replace("\n","")
             experiment_parameters['lockIn2_unit']["theta"] = param_file_list[46].split(":")[1].replace("\n","")
             
-            experiment_parameters['fields_name']["field"] = param_file_list[49].split(":")[1].replace("\n","")
-            experiment_parameters['fields_unit']["field"] = param_file_list[50].split(":")[1].replace("\n","")
+            experiment_parameters['field_name']["field"] = param_file_list[49].split(":")[1].replace("\n","")
+            experiment_parameters['field_unit']["field"] = param_file_list[50].split(":")[1].replace("\n","")
             
-            experiment_parameters['currents_name']["current"] = param_file_list[53].split(":")[1].replace("\n","")
-            experiment_parameters['currents_unit']["current"] = param_file_list[54].split(":")[1].replace("\n","")
+            experiment_parameters['current_name']["current"] = param_file_list[53].split(":")[1].replace("\n","")
+            experiment_parameters['current_unit']["current"] = param_file_list[54].split(":")[1].replace("\n","")
             
-            experiment_parameters['times_name']["times"] = param_file_list[57].split(":")[1].replace("\n","")
+            experiment_parameters['time_name']["time"] = param_file_list[57].split(":")[1].replace("\n","")
             
         except FileNotFoundError:
-            experiment_parameters = {'temperatures_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperatures_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
-                                    'resistances_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistances_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
+            experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
+                                    'resistance_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistance_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
                                     'lockIn_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
                                     'lockIn2_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn2_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-                                    'fields_name':{"field":"field"}, 'fields_unit':{"field":"T"},
-                                    'currents_name':{"current":"current"}, 'currents_unit':{"current":"A"},
-                                    'times_name':{"time":"time"}}
+                                    'field_name':{"field":"field"}, 'field_unit':{"field":"T"},
+                                    'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
+                                    'time_name':{"time":"time"}}
         
         x_channels_list = list(x_data.keys())[0:len(experiment_parameters[x_name_key].keys())]
         y_channels_list = list(y_data.keys())[0:len(experiment_parameters[y_name_key].keys())]
@@ -169,7 +169,7 @@ class add_multidata_plot_ui(QWidget):
 
         empty_experiment_parameters[name_key][AxisName] = full_experiment_parameters[name_key][AxisChannel]
         print(empty_experiment_parameters[name_key])
-        if axis == 'times':
+        if axis == 'time':
             pass
         else:
             empty_experiment_parameters[unit_key][AxisName] = full_experiment_parameters[unit_key][AxisChannel]

@@ -72,21 +72,21 @@ class ExperimentSettingUi(QWidget):
         
         self.time_name = "Time"
         
-        self.experiment_parameters_ui = {'temperatures_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'temperatures_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
-                                      'resistances_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'resistances_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
+        self.experiment_parameters_ui = {'temperature_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'temperature_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
+                                      'resistance_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'resistance_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
                                       'lockIn_name':{"x":"","y":"","r":"","theta":""}, 'lockIn_unit':{"x":"","y":"","r":"","theta":""},
                                       'lockIn2_name':{"x":"","y":"","r":"","theta":""}, 'lockIn2_unit':{"x":"","y":"","r":"","theta":""},
-                                      'fields_name':{"field":""}, 'fields_unit':{"field":""},
-                                      'currents_name':{"current":""}, 'currents_unit':{"current":""},
-                                      'times_name':{"time":""}}
+                                      'field_name':{"field":""}, 'field_unit':{"field":""},
+                                      'current_name':{"current":""}, 'current_unit':{"current":""},
+                                      'time_name':{"time":""}}
 
-        self.experiment_parameters = {'temperatures_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperatures_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
-                                      'resistances_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistances_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
+        self.experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
+                                      'resistance_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistance_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
                                       'lockIn_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
                                       'lockIn2_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn2_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-                                      'fields_name':{"field":"field"}, 'fields_unit':{"field":"T"},
-                                      'currents_name':{"current":"current"}, 'currents_unit':{"current":"A"},
-                                      'times_name':{"time":"time"}}
+                                      'field_name':{"field":"field"}, 'field_unit':{"field":"T"},
+                                      'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
+                                      'time_name':{"time":"time"}}
     
     
     def save_button(self):
@@ -336,27 +336,27 @@ class ExperimentSettingUi(QWidget):
         match self.dataComboBox.currentIndex():
             case 0:
                 
-                self.experiment_parameters_ui['temperatures_name']['ch_A'] = self.channel_1_name.text()
-                self.experiment_parameters_ui['temperatures_name']['ch_B'] = self.channel_2_name.text()
-                self.experiment_parameters_ui['temperatures_name']['ch_C'] = self.channel_3_name.text()
-                self.experiment_parameters_ui['temperatures_name']['ch_D'] = self.channel_4_name.text()
+                self.experiment_parameters_ui['temperature_name']['ch_A'] = self.channel_1_name.text()
+                self.experiment_parameters_ui['temperature_name']['ch_B'] = self.channel_2_name.text()
+                self.experiment_parameters_ui['temperature_name']['ch_C'] = self.channel_3_name.text()
+                self.experiment_parameters_ui['temperature_name']['ch_D'] = self.channel_4_name.text()
                 
-                self.experiment_parameters_ui['temperatures_unit']['ch_A'] = self.channel_1_unit.text()
-                self.experiment_parameters_ui['temperatures_unit']['ch_B'] = self.channel_2_unit.text()
-                self.experiment_parameters_ui['temperatures_unit']['ch_C'] = self.channel_3_unit.text()
-                self.experiment_parameters_ui['temperatures_unit']['ch_D'] = self.channel_4_unit.text()
+                self.experiment_parameters_ui['temperature_unit']['ch_A'] = self.channel_1_unit.text()
+                self.experiment_parameters_ui['temperature_unit']['ch_B'] = self.channel_2_unit.text()
+                self.experiment_parameters_ui['temperature_unit']['ch_C'] = self.channel_3_unit.text()
+                self.experiment_parameters_ui['temperature_unit']['ch_D'] = self.channel_4_unit.text()
                 
                 
             case 1:
-                self.experiment_parameters_ui['resistances_name']['ch_A'] = self.channel_1_name.text()
-                self.experiment_parameters_ui['resistances_name']['ch_B'] = self.channel_2_name.text()
-                self.experiment_parameters_ui['resistances_name']['ch_C'] = self.channel_3_name.text()
-                self.experiment_parameters_ui['resistances_name']['ch_D'] = self.channel_4_name.text()
+                self.experiment_parameters_ui['resistance_name']['ch_A'] = self.channel_1_name.text()
+                self.experiment_parameters_ui['resistance_name']['ch_B'] = self.channel_2_name.text()
+                self.experiment_parameters_ui['resistance_name']['ch_C'] = self.channel_3_name.text()
+                self.experiment_parameters_ui['resistance_name']['ch_D'] = self.channel_4_name.text()
                 
-                self.experiment_parameters_ui['resistances_unit']['ch_A'] = self.channel_1_unit.text()
-                self.experiment_parameters_ui['resistances_unit']['ch_B'] = self.channel_2_unit.text()
-                self.experiment_parameters_ui['resistances_unit']['ch_C'] = self.channel_3_unit.text()
-                self.experiment_parameters_ui['resistances_unit']['ch_D'] = self.channel_4_unit.text()
+                self.experiment_parameters_ui['resistance_unit']['ch_A'] = self.channel_1_unit.text()
+                self.experiment_parameters_ui['resistance_unit']['ch_B'] = self.channel_2_unit.text()
+                self.experiment_parameters_ui['resistance_unit']['ch_C'] = self.channel_3_unit.text()
+                self.experiment_parameters_ui['resistance_unit']['ch_D'] = self.channel_4_unit.text()
                 
             case 2:
                 self.experiment_parameters_ui['lockIn_name']['x'] = self.channel_1_name.text()
@@ -381,16 +381,16 @@ class ExperimentSettingUi(QWidget):
                 self.experiment_parameters_ui['lockIn2_unit']['theta'] = self.channel_4_unit.text()
             
             case 4:
-                self.experiment_parameters_ui['fields_name']['field'] = self.channel_1_name.text()
+                self.experiment_parameters_ui['field_name']['field'] = self.channel_1_name.text()
         
-                self.experiment_parameters_ui['fields_unit']['field'] = self.channel_1_unit.text()
+                self.experiment_parameters_ui['field_unit']['field'] = self.channel_1_unit.text()
                 
             case 5:
-                self.experiment_parameters_ui['currents_name']['current'] = self.channel_1_name.text()
+                self.experiment_parameters_ui['current_name']['current'] = self.channel_1_name.text()
         
-                self.experiment_parameters_ui['currents_unit']['current'] = self.channel_1_unit.text()
+                self.experiment_parameters_ui['current_unit']['current'] = self.channel_1_unit.text()
             case 6:
-                self.experiment_parameters_ui['times_name']['time'] = self.channel_1_name.text()
+                self.experiment_parameters_ui['time_name']['time'] = self.channel_1_name.text()
         
                 
             case _:
@@ -410,26 +410,26 @@ class ExperimentSettingUi(QWidget):
     def change_lineEdit(self):
         match self.dataComboBox.currentIndex():
             case 0:
-                self.channel_1_name.setText(self.experiment_parameters_ui['temperatures_name']['ch_A'])
-                self.channel_2_name.setText(self.experiment_parameters_ui['temperatures_name']['ch_B'])
-                self.channel_3_name.setText(self.experiment_parameters_ui['temperatures_name']['ch_C'])
-                self.channel_4_name.setText(self.experiment_parameters_ui['temperatures_name']['ch_D'])
+                self.channel_1_name.setText(self.experiment_parameters_ui['temperature_name']['ch_A'])
+                self.channel_2_name.setText(self.experiment_parameters_ui['temperature_name']['ch_B'])
+                self.channel_3_name.setText(self.experiment_parameters_ui['temperature_name']['ch_C'])
+                self.channel_4_name.setText(self.experiment_parameters_ui['temperature_name']['ch_D'])
                 
-                self.channel_1_unit.setText(self.experiment_parameters_ui['temperatures_unit']['ch_A'])
-                self.channel_2_unit.setText(self.experiment_parameters_ui['temperatures_unit']['ch_B'])
-                self.channel_3_unit.setText(self.experiment_parameters_ui['temperatures_unit']['ch_C'])
-                self.channel_4_unit.setText(self.experiment_parameters_ui['temperatures_unit']['ch_D'])
+                self.channel_1_unit.setText(self.experiment_parameters_ui['temperature_unit']['ch_A'])
+                self.channel_2_unit.setText(self.experiment_parameters_ui['temperature_unit']['ch_B'])
+                self.channel_3_unit.setText(self.experiment_parameters_ui['temperature_unit']['ch_C'])
+                self.channel_4_unit.setText(self.experiment_parameters_ui['temperature_unit']['ch_D'])
                 
             case 1:
-                self.channel_1_name.setText(self.experiment_parameters_ui['resistances_name']['ch_A'])
-                self.channel_2_name.setText(self.experiment_parameters_ui['resistances_name']['ch_B'])
-                self.channel_3_name.setText(self.experiment_parameters_ui['resistances_name']['ch_C'])
-                self.channel_4_name.setText(self.experiment_parameters_ui['resistances_name']['ch_D'])
+                self.channel_1_name.setText(self.experiment_parameters_ui['resistance_name']['ch_A'])
+                self.channel_2_name.setText(self.experiment_parameters_ui['resistance_name']['ch_B'])
+                self.channel_3_name.setText(self.experiment_parameters_ui['resistance_name']['ch_C'])
+                self.channel_4_name.setText(self.experiment_parameters_ui['resistance_name']['ch_D'])
                 
-                self.channel_1_unit.setText(self.experiment_parameters_ui['resistances_unit']['ch_A'])
-                self.channel_2_unit.setText(self.experiment_parameters_ui['resistances_unit']['ch_B'])
-                self.channel_3_unit.setText(self.experiment_parameters_ui['resistances_unit']['ch_C'])
-                self.channel_4_unit.setText(self.experiment_parameters_ui['resistances_unit']['ch_D'])
+                self.channel_1_unit.setText(self.experiment_parameters_ui['resistance_unit']['ch_A'])
+                self.channel_2_unit.setText(self.experiment_parameters_ui['resistance_unit']['ch_B'])
+                self.channel_3_unit.setText(self.experiment_parameters_ui['resistance_unit']['ch_C'])
+                self.channel_4_unit.setText(self.experiment_parameters_ui['resistance_unit']['ch_D'])
                 
             case 2:
                 self.channel_1_name.setText(self.experiment_parameters_ui['lockIn_name']['x'])
@@ -454,15 +454,15 @@ class ExperimentSettingUi(QWidget):
                 self.channel_4_unit.setText(self.experiment_parameters_ui['lockIn2_unit']['theta'])
             
             case 4:
-                self.channel_1_name.setText(self.experiment_parameters_ui['fields_name']['field'])
-                self.channel_1_unit.setText(self.experiment_parameters_ui['fields_name']['field'])
+                self.channel_1_name.setText(self.experiment_parameters_ui['field_name']['field'])
+                self.channel_1_unit.setText(self.experiment_parameters_ui['field_name']['field'])
             
             case 5:
-                self.channel_1_name.setText(self.experiment_parameters_ui['currents_name']['current'])
-                self.channel_1_unit.setText(self.experiment_parameters_ui['currents_name']['current'])
+                self.channel_1_name.setText(self.experiment_parameters_ui['current_name']['current'])
+                self.channel_1_unit.setText(self.experiment_parameters_ui['current_name']['current'])
             
             case 6:
-                self.channel_1_name.setText(self.experiment_parameters_ui['times_name']['time'])
+                self.channel_1_name.setText(self.experiment_parameters_ui['time_name']['time'])
                 
             case _:
                 pass

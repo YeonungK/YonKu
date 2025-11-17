@@ -16,7 +16,9 @@ class temperatureController(SerialInstrument):
                                 parity = serial.PARITY_ODD, 
                                 stopbits = serial.STOPBITS_ONE)
         
-        self.data_type = {'Temperature':'K', 'Resistance':'Ohms'}
+        self.data_type = {'temperature':['ch_A', 'ch_B', 'ch_C', 'ch_D'], 'resistance':['ch_A', 'ch_B', 'ch_C', 'ch_D']}
+        self.data_unit = {'temperature':'K', 'resistance':'Ohms'}
+        self.data_function = {'temperature':self.temp_read.all, 'resistance':self.resist_read_all}
         
     def clear(self):
         self.write("*CLS")

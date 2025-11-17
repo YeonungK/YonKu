@@ -12,7 +12,9 @@ from Tools.Instrument import EthernetInstrument
 class magnetPowerSupply(EthernetInstrument):
     def __init__(self, name, ip, port):
         super().__init__(name, 'Oxford_MercuryiPS', ip, port)
-        self.data_type = {'Field':'T', 'Current':'A'}
+        self.data_type = {'field':['ch_A'], 'current':['ch_A']}
+        self.data_unit = {'field':'T', 'current':'A'}
+        self.data_function = {'field':self.read_all_field, 'current': self.read_current}
     
     def identification(self):
         self.write("*IDN?")

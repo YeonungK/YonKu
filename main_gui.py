@@ -101,26 +101,26 @@ name:{self.experiment_name}
 measurementPeriod:{self.period}
 
 
-temperature_ch_A_name:{self.experimentSettingWid.experiment_parameters['temperatures_name']['ch_A']}
-temperature_ch_B_name:{self.experimentSettingWid.experiment_parameters['temperatures_name']['ch_B']}
-temperature_ch_C_name:{self.experimentSettingWid.experiment_parameters['temperatures_name']['ch_C']}
-temperature_ch_D_name:{self.experimentSettingWid.experiment_parameters['temperatures_name']['ch_D']}
+temperature_ch_A_name:{self.experimentSettingWid.experiment_parameters['temperature_name']['ch_A']}
+temperature_ch_B_name:{self.experimentSettingWid.experiment_parameters['temperature_name']['ch_B']}
+temperature_ch_C_name:{self.experimentSettingWid.experiment_parameters['temperature_name']['ch_C']}
+temperature_ch_D_name:{self.experimentSettingWid.experiment_parameters['temperature_name']['ch_D']}
 
-temperature_ch_A_unit:{self.experimentSettingWid.experiment_parameters['temperatures_unit']['ch_A']}
-temperature_ch_B_unit:{self.experimentSettingWid.experiment_parameters['temperatures_unit']['ch_B']}
-temperature_ch_C_unit:{self.experimentSettingWid.experiment_parameters['temperatures_unit']['ch_C']}
-temperature_ch_D_unit:{self.experimentSettingWid.experiment_parameters['temperatures_unit']['ch_D']}
+temperature_ch_A_unit:{self.experimentSettingWid.experiment_parameters['temperature_unit']['ch_A']}
+temperature_ch_B_unit:{self.experimentSettingWid.experiment_parameters['temperature_unit']['ch_B']}
+temperature_ch_C_unit:{self.experimentSettingWid.experiment_parameters['temperature_unit']['ch_C']}
+temperature_ch_D_unit:{self.experimentSettingWid.experiment_parameters['temperature_unit']['ch_D']}
 
 
-resistance_ch_A_name:{self.experimentSettingWid.experiment_parameters['resistances_name']['ch_A']}
-resistance_ch_B_name:{self.experimentSettingWid.experiment_parameters['resistances_name']['ch_B']}
-resistance_ch_C_name:{self.experimentSettingWid.experiment_parameters['resistances_name']['ch_C']}
-resistance_ch_D_name:{self.experimentSettingWid.experiment_parameters['resistances_name']['ch_D']}
+resistance_ch_A_name:{self.experimentSettingWid.experiment_parameters['resistance_name']['ch_A']}
+resistance_ch_B_name:{self.experimentSettingWid.experiment_parameters['resistance_name']['ch_B']}
+resistance_ch_C_name:{self.experimentSettingWid.experiment_parameters['resistance_name']['ch_C']}
+resistance_ch_D_name:{self.experimentSettingWid.experiment_parameters['resistance_name']['ch_D']}
 
-resistance_ch_A_unit:{self.experimentSettingWid.experiment_parameters['resistances_unit']['ch_A']}
-resistance_ch_B_unit:{self.experimentSettingWid.experiment_parameters['resistances_unit']['ch_B']}
-resistance_ch_C_unit:{self.experimentSettingWid.experiment_parameters['resistances_unit']['ch_C']}
-resistance_ch_D_unit:{self.experimentSettingWid.experiment_parameters['resistances_unit']['ch_D']}
+resistance_ch_A_unit:{self.experimentSettingWid.experiment_parameters['resistance_unit']['ch_A']}
+resistance_ch_B_unit:{self.experimentSettingWid.experiment_parameters['resistance_unit']['ch_B']}
+resistance_ch_C_unit:{self.experimentSettingWid.experiment_parameters['resistance_unit']['ch_C']}
+resistance_ch_D_unit:{self.experimentSettingWid.experiment_parameters['resistance_unit']['ch_D']}
 
 
 lockIn_x_name:{self.experimentSettingWid.experiment_parameters['lockIn_name']['x']}
@@ -145,15 +145,15 @@ lockIn2_r_unit:{self.experimentSettingWid.experiment_parameters['lockIn2_unit'][
 lockIn2_theta_unit:{self.experimentSettingWid.experiment_parameters['lockIn2_unit']['theta']}
 
 
-field_name:{self.experimentSettingWid.experiment_parameters['fields_name']['field']}
-field_unit:{self.experimentSettingWid.experiment_parameters['fields_unit']['field']}
+field_name:{self.experimentSettingWid.experiment_parameters['field_name']['field']}
+field_unit:{self.experimentSettingWid.experiment_parameters['field_unit']['field']}
 
 
-current_name:{self.experimentSettingWid.experiment_parameters['currents_name']['current']}
-current_unit:{self.experimentSettingWid.experiment_parameters['currents_unit']['current']}
+current_name:{self.experimentSettingWid.experiment_parameters['current_name']['current']}
+current_unit:{self.experimentSettingWid.experiment_parameters['current_unit']['current']}
 
 
-time_name:{self.experimentSettingWid.experiment_parameters['times_name']['time']}\n"""
+time_name:{self.experimentSettingWid.experiment_parameters['time_name']['time']}\n"""
         
         
         with open(self.file_path, "w") as f:
@@ -171,6 +171,10 @@ time_name:{self.experimentSettingWid.experiment_parameters['times_name']['time']
                 plt_wid.plot_data()
     
     def instrument_read_data(self):
+        
+        for device_model, instrument in self.instruments.items():
+            for data_type, function in instrument.data_function.items():
+                
         temp_list = self.instruments['Lakeshore_336'].temp_read_all()
         resist_list = self.instruments['Lakeshore_336'].resist_read_all()
         lockIn_list = self.instruments['SRS_830'].get_all()
@@ -179,10 +183,10 @@ time_name:{self.experimentSettingWid.experiment_parameters['times_name']['time']
         current_list = self.instruments['Oxford_MercuryiPS'].read_current()
         now = datetime.now(ZoneInfo('America/New_York')).timestamp()
         
-        self.dataset['temperatures']['ch_A'].append(temp_list[0])
-        self.dataset['temperatures']['ch_B'].append(temp_list[1])
-        self.dataset['temperatures']['ch_C'].append(temp_list[2])
-        self.dataset['temperatures']['ch_D'].append(temp_list[3])
+        self.dataset['temperature']['ch_A'].append(temp_list[0])
+        self.dataset['temperature']['ch_B'].append(temp_list[1])
+        self.dataset['temperature']['ch_C'].append(temp_list[2])
+        self.dataset['temperature']['ch_D'].append(temp_list[3])
         
         if self.unitButton.isChecked():
             self.chALineEdit.setText(str(temp_list[0]))
@@ -206,10 +210,10 @@ time_name:{self.experimentSettingWid.experiment_parameters['times_name']['time']
             self.chCBigLine.setText(str(resist_list[2]))
             self.chDBigLine.setText(str(resist_list[3]))
         
-        self.dataset['resistances']['ch_A'].append(resist_list[0])
-        self.dataset['resistances']['ch_B'].append(resist_list[1])
-        self.dataset['resistances']['ch_C'].append(resist_list[2])
-        self.dataset['resistances']['ch_D'].append(resist_list[3])
+        self.dataset['resistance']['ch_A'].append(resist_list[0])
+        self.dataset['resistance']['ch_B'].append(resist_list[1])
+        self.dataset['resistance']['ch_C'].append(resist_list[2])
+        self.dataset['resistance']['ch_D'].append(resist_list[3])
         
         self.dataset['lockIn']['x'].append(lockIn_list[0])
         self.dataset['lockIn']['y'].append(lockIn_list[1])
@@ -232,13 +236,13 @@ time_name:{self.experimentSettingWid.experiment_parameters['times_name']['time']
         self.rLineEdit2.setText(str(lockIn2_list[2]))
         self.thetaLineEdit2.setText(str(lockIn2_list[3]))
         
-        self.dataset['fields']['field'].append(field_list)
+        self.dataset['field']['field'].append(field_list)
         
 
         self.magnetzLineEdit.setText(str(field_list))
         
         if not current_list == None:
-            self.dataset['currents']['current'].append(current_list)
+            self.dataset['current']['current'].append(current_list)
             
             self.currentLineEdit.setText(str(current_list))
         
@@ -246,7 +250,7 @@ time_name:{self.experimentSettingWid.experiment_parameters['times_name']['time']
             pass
 
         
-        self.dataset['times']['time'].append(now)
+        self.dataset['time']['time'].append(now)
         self.logger.append(temp_list, resist_list, lockIn_list, lockIn2_list, field_list, current_list, now)
     
         

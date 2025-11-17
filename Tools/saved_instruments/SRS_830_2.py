@@ -13,7 +13,9 @@ class lockInAmplifier2(GPIBInstrument):
     def __init__(self, name, address):
         super().__init__(name, 'SRS_844', address)
         
-        self.data_type = {'LockIn2':'manual'}
+        self.data_type = {'lockIn2':['x', 'y', 'r', 'theta']}
+        self.data_unit = {'lockIn2':'manual'}
+        self.data_function = {'lockIn2': self.get_all}
         
         
         self.tauset={
