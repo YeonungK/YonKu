@@ -99,7 +99,7 @@ class PlotWorker(QObject):
         self.experiment_datetime = datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
         self.experiment_name = self.titleLineEdit.text()
         self.experiment_title = self.experiment_datetime + "_" + self.experiment_name
-        self.logger = DataLogger.DataLogger(self.dataset, self.experiment_title)
+        self.logger = DataLogger.DataLogger(self.instruments, self.dataset, self.experiment_title)
         
         self.log_experiment_parameters()
         
@@ -184,55 +184,57 @@ time_name:{self.experimentSettingWid.experiment_parameters['time_name']['time']}
     
     def instrument_read_data(self):
         
+        self.logging_data_list = []
         now = datetime.now(ZoneInfo('America/New_York')).timestamp()
         self.dataset['time']['time'].append(now)
         
         for device_model, instrument in self.instruments.items():
             for data_type, function in instrument.data_function.items():
-                self.data_list = setattr(self, f"{data_type}_list", function())
-                self.data_list = getattr(self, f"{data_type}_list")
-                
+                data_list = setattr(self, f"{data_type}_list", function())
+                data_list = getattr(self, f"{data_type}_list")
+                self.logging_data_list.append(data_list)
                 index = 0
                 for data_ch in instrument.data_type[data_type]:
-                    self.dataset[data_type][data_ch].append(self.data_list[index])
+                    self.dataset[data_type][data_ch].append(data_list[index])
                     index += 1
 
                 if data_type == 'temperature':
                     if self.unitButton.isChecked():
-                        self.chALineEdit.setText(str(self.data_list[0]))
-                        self.chBLineEdit.setText(str(self.data_list[1]))
-                        self.chCLineEdit.setText(str(self.data_list[2]))
-                        self.chDLineEdit.setText(str(self.data_list[3]))
+                        self.chALineEdit.setText(str(data_list[0]))
+                        self.chBLineEdit.setText(str(data_list[1]))
+                        self.chCLineEdit.setText(str(data_list[2]))
+                        self.chDLineEdit.setText(str(data_list[3]))
                         
-                        self.chABigLine.setText(str(self.data_list[0]))
-                        self.chBBigLine.setText(str(self.data_list[1]))
-                        self.chCBigLine.setText(str(self.data_list[2]))
-                        self.chDBigLine.setText(str(self.data_list[3]))
+                        self.chABigLine.setText(str(data_list[0]))
+                        self.chBBigLine.setText(str(data_list[1]))
+                        self.chCBigLine.setText(str(data_list[2]))
+                        self.chDBigLine.setText(str(data_list[3]))
                     else:
-                        self.chALineEdit.setText(str(self.data_list[0]))
-                        self.chBLineEdit.setText(str(self.data_list[1]))
-                        self.chCLineEdit.setText(str(self.data_list[2]))
-                        self.chDLineEdit.setText(str(self.data_list[3]))
+                        self.chALineEdit.setText(str(data_list[0]))
+                        self.chBLineEdit.setText(str(data_list[1]))
+                        self.chCLineEdit.setText(str(data_list[2]))
+                        self.chDLineEdit.setText(str(data_list[3]))
                         
-                        self.chABigLine.setText(str(self.data_list[0]))
-                        self.chBBigLine.setText(str(self.data_list[1]))
-                        self.chCBigLine.setText(str(self.data_list[2]))
-                        self.chDBigLine.setText(str(self.data_list[3]))
+                        self.chABigLine.setText(str(data_list[0]))
+                        self.chBBigLine.setText(str(data_list[1]))
+                        self.chCBigLine.setText(str(data_list[2]))
+                        self.chDBigLine.setText(str(data_list[3]))
                 
                 if data_type == 'lockIn':
-                    self.xLineEdit.setText(str(self.data_list[0]))
-                    self.yLineEdit.setText(str(self.data_list[1]))
-                    self.rLineEdit.setText(str(self.data_list[2]))
-                    self.thetaLineEdit.setText(str(self.data_list[3]))
+                    self.xLineEdit.setText(str(data_list[0]))
+                    self.yLineEdit.setText(str(data_list[1]))
+                    self.rLineEdit.setText(str(data_list[2]))
+                    self.thetaLineEdit.setText(str(data_list[3]))
                 
                 if data_type == 'lockIn2':
-                    self.xLineEdit2.setText(str(self.data_list[0]))
-                    self.yLineEdit2.setText(str(self.data_list[1]))
-                    self.rLineEdit2.setText(str(self.data_list[2]))
-                    self.thetaLineEdit2.setText(str(self.data_list[3]))
+                    self.xLineEdit2.setText(str(data_list[0]))
+                    self.yLineEdit2.setText(str(data_list[1]))
+                    self.rLineEdit2.setText(str(data_list[2]))
+                    self.thetaLineEdit2.setText(str(data_list[3]))
             
-                    
-                
+            self.logging_data_list.append(now)
+           
+            self.logger.append(self.logging_data_list)     
                     
         
         
