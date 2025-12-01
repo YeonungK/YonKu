@@ -8,39 +8,43 @@ from pathlib import Path
 class DataLogger:
     def __init__(self, instruments, data_set, title):
         
-        try:
-            self.title = title
-            self.instruments = instruments
-            self.concat_list = []
-            self.keys = []
-            
-            
-            for device_model, instrument in self.instruments.items():
-                for data_type in instrument.data_type.keys():
-                    logging_data = setattr(self, f"df_{data_type}", pd.DataFrame.from_dict(data_set[f'{data_type}']))
-                    self.concat_list.append(logging_data)
-                    self.keys.append(f'data_type')
-            
-            self.df_times = pd.DataFrame.from_dict(data_set['times'])        
-            self.concat_list.append(self.df_times)
-                    
-            # self.df_temperatures = pd.DataFrame.from_dict(data_set['temperatures'])
-            # self.df_resistances = pd.DataFrame.from_dict(data_set['resistances'])
-            # self.df_lockIn = pd.DataFrame.from_dict(data_set['lockIn'])
-            # self.df_lockIn2 = pd.DataFrame.from_dict(data_set['lockIn2'])
-            # self.df_fields = pd.DataFrame.from_dict(data_set['fields'])
-            # self.df_currents = pd.DataFrame.from_dict(data_set['currents'])
-            # self.df_times = pd.DataFrame.from_dict(data_set['times'])
-            
-            self.result = pd.concat(self.concat_list, axis=1, keys=self.keys)
+        # try:
+        self.title = title
+        self.instruments = instruments
+        self.concat_list = []
+        self.keys = []
+        
+        
+        for device_model, instrument in self.instruments.items():
+            for data_type in instrument.data_type.keys():
+                print(f"instrument data type: {data_type}")
+                logging_data = setattr(self, f"df_{data_type}", pd.DataFrame.from_dict(data_set[f'{data_type}']))
+                logging_data = getattr(self, f"df_{data_type}")
+                self.concat_list.append(logging_data)
+                self.keys.append(f'{data_type}')
+        
+        self.df_times = pd.DataFrame.from_dict(data_set['time'])        
+        self.concat_list.append(self.df_times)
+        self.keys.append('time')
+        print(self.keys)
+                
+        # self.df_temperatures = pd.DataFrame.from_dict(data_set['temperatures'])
+        # self.df_resistances = pd.DataFrame.from_dict(data_set['resistances'])
+        # self.df_lockIn = pd.DataFrame.from_dict(data_set['lockIn'])
+        # self.df_lockIn2 = pd.DataFrame.from_dict(data_set['lockIn2'])
+        # self.df_fields = pd.DataFrame.from_dict(data_set['fields'])
+        # self.df_currents = pd.DataFrame.from_dict(data_set['currents'])
+        # self.df_times = pd.DataFrame.from_dict(data_set['times'])
+        
+        self.result = pd.concat(self.concat_list, axis=1, keys=self.keys)
 
-            print(self.result)
-        # self.path = Path(f'C:/Users/szkop/Desktop/YonKu/Data/{self.title}.csv')
+        print(self.result)
+    # self.path = Path(f'C:/Users/szkop/Desktop/YonKu/Data/{self.title}.csv')
+    
+        self.result.to_csv(f'C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_data/{self.title}.csv', index=False)
         
-            self.result.to_csv(f'C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_data/{self.title}.csv', index=False)
-        
-        except KeyError:
-            print("Check the keys in the dataset.")
+        # except KeyError:
+        #     print("Check the keys in the dataset.")
         
         
         
@@ -48,17 +52,21 @@ class DataLogger:
     def append(self, logging_data_list):
         
         self.concat_list = []
-        self.keys = []
         list_index = 0
         data_index = 0
+        print(logging_data_list)
+        print(self.instruments)
         
         for device_model, instrument in self.instruments.items():
             for data_type in instrument.data_type.keys():
                 data_index = 0
                 appending_dict = setattr(self, f'appending_{data_type}', {})
+                appending_dict = getattr(self, f'appending_{data_type}')
+                print(appending_dict)
                 for data_ch in instrument.data_type[data_type]:
-                    appending_dict[data_ch] = [logging_data_list[list_index[data_index]]]
+                    appending_dict[data_ch] = [logging_data_list[list_index][data_index]]
                     data_index += 1
+                    print(appending_dict)
             
                 self.concat_list.append(pd.DataFrame.from_dict(appending_dict))
                 
@@ -66,9 +74,11 @@ class DataLogger:
         
         data_index = 0
         appending_times = {'time':[]}
-        appending_times['time'].append(logging_data_list[list_index[data_index]])         
+        appending_times['time'].append(logging_data_list[list_index])
+        print(appending_times)         
         self.df_times = pd.DataFrame.from_dict(appending_times)        
         self.concat_list.append(self.df_times)
+        print(self.concat_list)
                 
         # appending_temperatures = {'ch_A':[], 'ch_B':[], 'ch_C':[], 'ch_D':[]}
         # appending_resistances = {'ch_A':[], 'ch_B':[], 'ch_C':[], 'ch_D':[]}

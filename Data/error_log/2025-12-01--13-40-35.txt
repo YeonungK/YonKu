@@ -1,0 +1,22 @@
+Szkopek Lab Error Log Book - 2025-12-01--13-40-35
+
+2025-12-01--13-40-42 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 179, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 199, in instrument_read_data
+    self.dataset[data_type][data_ch].append(data_list[index])
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'ch_A'
+
+
+
+
+2025-12-01--13-40-43 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 179, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 199, in instrument_read_data
+    self.dataset[data_type][data_ch].append(data_list[index])
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'ch_A'
+
+

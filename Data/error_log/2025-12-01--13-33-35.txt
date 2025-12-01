@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-12-01--13-33-35
+
+2025-12-01--13-33-38 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 824, in resizeEvent
+    self.testSub.resize(new_size.width(), new_size.height())
+    ^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'testSub'
+
+

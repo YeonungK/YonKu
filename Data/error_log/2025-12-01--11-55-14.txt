@@ -1,0 +1,38 @@
+Szkopek Lab Error Log Book - 2025-12-01--11-55-14
+
+2025-12-01--11-56-13 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 179, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 237, in instrument_read_data
+    self.logger.append(self.logging_data_list)
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\DataLogger.py", line 73, in append
+    appending_times['time'].append(logging_data_list[list_index[data_index]])
+                                            ~~~~~~~~~~^^^^^^^^^^^^
+TypeError: 'int' object is not subscriptable
+
+
+
+
+2025-12-01--11-56-14 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 179, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 237, in instrument_read_data
+    self.logger.append(self.logging_data_list)
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\DataLogger.py", line 73, in append
+    appending_times['time'].append(logging_data_list[list_index[data_index]])
+                                            ~~~~~~~~~~^^^^^^^^^^^^
+TypeError: 'int' object is not subscriptable
+
+
+
+
+2025-12-01--11-59-44 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2144, in closeEvent
+    for name, device in self.instruments.items():
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 165, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

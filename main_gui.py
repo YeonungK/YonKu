@@ -192,6 +192,7 @@ time_name:{self.experimentSettingWid.experiment_parameters['time_name']['time']}
             for data_type, function in instrument.data_function.items():
                 data_list = setattr(self, f"{data_type}_list", function())
                 data_list = getattr(self, f"{data_type}_list")
+                print(data_list)
                 self.logging_data_list.append(data_list)
                 index = 0
                 for data_ch in instrument.data_type[data_type]:
@@ -232,9 +233,13 @@ time_name:{self.experimentSettingWid.experiment_parameters['time_name']['time']}
                     self.rLineEdit2.setText(str(data_list[2]))
                     self.thetaLineEdit2.setText(str(data_list[3]))
             
-            self.logging_data_list.append(now)
-           
-            self.logger.append(self.logging_data_list)     
+            
+        
+        
+        self.logging_data_list.append(now)   
+        self.logger.append(self.logging_data_list)     
+            
+        
                     
         
         
@@ -821,7 +826,6 @@ class UI(QMainWindow):
         self.magnetPowerSupplySub.resize(new_size.width(), new_size.height())
         self.temperatureControllerSub.resize(wid_width,new_size.height())
         self.pressureGaugeSub.resize(wid_width,wid_height)
-        self.testSub.resize(new_size.width(), new_size.height())
         
         self.gasValveSub.move(wid_width, 0)
         self.temperatureControllerSub.move(0, 0)
@@ -830,8 +834,7 @@ class UI(QMainWindow):
         self.lockInAmplifier1Sub.hide()
         self.lockInAmplifier2Sub.hide()
         self.magnetPowerSupplySub.hide()
-        self.testSub.hide()
-         
+
     def connect_instrument_windows(self):
 
         for device_key, data_list in self.devices.items():
@@ -880,7 +883,7 @@ class UI(QMainWindow):
         # check instrument connection
         self.connected_instuments, self.disconnected_instuments = self.check_instrument_connection()
         if not self.disconnected_instuments:
-            pass
+            self.start_experiment_thread()
         else:
             print("Some devices are disconnected")
             self.disDevWid = ddu.disconnected_devices_widget(self.disconnected_instuments)

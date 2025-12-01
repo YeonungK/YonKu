@@ -1,0 +1,26 @@
+Szkopek Lab Error Log Book - 2025-12-01--13-14-03
+
+2025-12-01--13-14-16 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 179, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 238, in instrument_read_data
+    self.logger.append(self.logging_data_list)
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\DataLogger.py", line 67, in append
+    appending_dict[data_ch] = [logging_data_list[list_index][data_index]]
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: 'float' object is not subscriptable
+
+
+
+
+2025-12-01--13-14-17 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 179, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 238, in instrument_read_data
+    self.logger.append(self.logging_data_list)
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\DataLogger.py", line 67, in append
+    appending_dict[data_ch] = [logging_data_list[list_index][data_index]]
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: 'float' object is not subscriptable
+
+

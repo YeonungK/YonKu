@@ -4,7 +4,7 @@ import serial
 import time
 import sys
 
-sys.path.append('C:/Users/szkop/Desktop/YonKu')
+sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 from Tools.Instrument import SerialInstrument
 
@@ -71,6 +71,7 @@ class pressureGauge(SerialInstrument):
     def pressure_read(self):
         command = "PR1"
         pressure = self.query(command)
+        pressure_list = []
         
         #pressure = self.read()
         try:
@@ -78,17 +79,21 @@ class pressureGauge(SerialInstrument):
             pressure = pressure[1]
             pressure = float(pressure)
             pressure = str(pressure)
-            return pressure
+            pressure_list.append(pressure)
         except AttributeError as e:
             print(e)
             msg = "Device Not Connected"
-            return msg
+            pressure_list.append(msg)
+        
         except ValueError:
             msg = "Communication Error"
-            return msg
+            pressure_list.append(msg)
+        
         except IndexError:
             msg = "still connecting"
-            return msg
+            pressure_list.append(msg)
+        
+        return pressure_list
         
         
         

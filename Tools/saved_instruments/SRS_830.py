@@ -4,7 +4,7 @@ import pyvisa
 import time
 import sys
 
-sys.path.append('C:/Users/szkop/Desktop/YonKu')
+sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 from Tools.Instrument import GPIBInstrument
 

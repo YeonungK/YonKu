@@ -4,7 +4,7 @@ import socket
 import time
 import sys
 
-sys.path.append('C:/Users/szkop/Desktop/YonKu')
+sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 from Tools.Instrument import EthernetInstrument
 
@@ -12,7 +12,7 @@ from Tools.Instrument import EthernetInstrument
 class magnetPowerSupply(EthernetInstrument):
     def __init__(self, name, ip, port):
         super().__init__(name, 'Oxford_MercuryiPS', ip, port)
-        self.data_type = {'field':['ch_A'], 'current':['ch_A']}
+        self.data_type = {'field':['field'], 'current':['current']}
         self.data_unit = {'field':'T', 'current':'A'}
         self.data_function = {'field':self.read_all_field, 'current': self.read_current}
     
@@ -67,9 +67,12 @@ class magnetPowerSupply(EthernetInstrument):
             command = 'READ:DEV:MB1.T1:TEMP:SIG:CURR?'
             self.write(command)
             response = self.read()
+            
         except:
             response = 0
-        return response
+        response_list = [response]
+        print(response_list)
+        return response_list
     
     def read_temperature(self):
         command = 'READ:DEV:MB1.T1:TEMP:SIG:TEMP?'
@@ -106,7 +109,9 @@ class magnetPowerSupply(EthernetInstrument):
             response = z
         except:
             response = 0
-        return response
+        response_list = [response]
+        print(response_list)
+        return response_list
     
     def read_field_factor(self, axis:str):
         command = 'READ:DEV:GRP' + axis.upper() + ':PSU:ATOB?'
