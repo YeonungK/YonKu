@@ -20,7 +20,9 @@ class plotWidget(QWidget):
     def __init__(self, plot_setting, dataset, experiment_parameters):
         super().__init__()
         
-        # measurements
+        # [PlotItem Related Variables (Dataset, Plot setting, Axes type, etc.)]
+
+        # data dictionaries
         self.temperature = dataset['temperature']
         self.resistance = dataset['resistance']
         self.lockIn = dataset['lockIn']
@@ -30,21 +32,7 @@ class plotWidget(QWidget):
         self.time = dataset['time']
         
         self.dataset = dataset
-        
         self.experiment_parameters = experiment_parameters
-        
-        # # show/hide plot ui
-        # self.showHidePlotUi = shp.ShowHidePlotUi()
-        
-        # self.showlabel = QLabel("Show")
-        # self.showlabel.setAlignment(Qt.AlignTop)
-        
-        # self.layout0 = QVBoxLayout()
-        # self.layout0.addWidget(self.showlabel)
-        
-        # self.showHidePlotUi.setLayout(self.layout0)
-        
-        # self.plotCheckBoxes = {}
         
         # plots
         self.plots = {}
@@ -60,23 +48,23 @@ class plotWidget(QWidget):
         self.ticVal = plot_setting[6]
         self.gridLine = plot_setting[7]
         self.symbol = plot_setting[8]
-        
         self.experimentSettingWid = plot_setting[9]
         
+        # Date axes initiation (required with pyqt date-and-time object)
         self.x_date_axis = pg.DateAxisItem(orientation='bottom',
                                         utcOffset=14400,               # set to your timezone offset if desired
                                         showValues=True,
                                         autoScale=True)
-        
         self.y_date_axis = pg.DateAxisItem(orientation='left',
                                         utcOffset=14400,               # set to your timezone offset if desired
                                         showValues=True,
                                         autoScale=True)
         
+        # plot title and trace colours
         self.title = self.yAxis.upper() + " vs " + self.xAxis.upper()
-        
         self.colors = ['r', 'g', 'y', 'c', 'w']
         
+        # set the xAxis and yAxis data type according to the exp setting ui & dataset
         match self.xAxis:
             case "lockIn":
                 self.xAxisData = self.lockIn
@@ -105,7 +93,6 @@ class plotWidget(QWidget):
             case "time":
                 self.xAxisData = self.time
                 self.xAxis_name_key = 'time_name'
-        
         match self.yAxis:
             case "lockIn":
                 self.yAxisData = self.lockIn
@@ -134,11 +121,10 @@ class plotWidget(QWidget):
             case "time":
                 self.yAxisData = self.time
                 self.yAxis_name_key = 'time_name'
+         # [/]
         
-        """create plot widget"""
-        
-        # labels and buttons
-        
+        # [Plot Window Related Variables (layouts, comboboxes, buttons)]
+
         # x axis stuff
         self.xAxisLabel = QLabel("x-Axis")
         self.xAxisLabel.setAlignment(Qt.AlignCenter)
@@ -152,7 +138,6 @@ class plotWidget(QWidget):
         self.layout1.addWidget(self.xAxisLabel)
         self.layout1.addWidget(self.xAxisUnitLabel)
         self.layout1.addWidget(self.xAxisUnitComboBox)
-        
         
         # y axis stuff
         self.yAxisLabel = QLabel("y-Axis")
@@ -168,32 +153,26 @@ class plotWidget(QWidget):
         self.layout2.addWidget(self.yAxisUnitLabel)
         self.layout2.addWidget(self.yAxisUnitComboBox)
         
-        
-        # buttons
-        
+        # New Plot button
         self.settingB = QPushButton()
         self.settingB.setText("Setting")
         self.newPlotB = QPushButton()
         self.newPlotB.setText("Add a new trace")
-        # self.showHideB = QPushButton()
-        # self.showHideB.setText("Show/Hide plots")
-        
-        # self.showHideB.clicked.connect(self.showHidePlotUi_show)
-        
+
         self.layout3 = QVBoxLayout()
         self.layout3.addWidget(self.settingB)
         self.layout3.addWidget(self.newPlotB)
-        # self.layout3.addWidget(self.showHideB)
         
-        # more layouts
+        # Wrapping layout
         self.layout4 = QHBoxLayout()
         self.layout4.addLayout(self.layout1)
         self.layout4.addLayout(self.layout2)
         self.layout4.addLayout(self.layout3)
         
-        self.layout = QVBoxLayout()
-        self.plot_widget = pg.PlotWidget()
+        self.layout = QVBoxLayout() # [/]
         
+        # [Created Plot Window]
+        self.plot_widget = pg.PlotWidget()
         
         if self.xAxis == 'time':
             self.plot_widget.setAxisItems(axisItems = {'bottom': self.x_date_axis})
@@ -207,70 +186,54 @@ class plotWidget(QWidget):
         self.setLayout(self.layout)
         
         # signals
-        
         self.newPlotB.clicked.connect(self.create_new_plot)
+         # [/]
+   
+    # [Functions]
+    
+    def create_new_plot(self): # trace == plot in this function
         
-        
-        # create plots
-        # self.plot = self.plot_widget.plot(pen=pg.mkPen(color='r', width=2), name='CH1')
-        
-        # # set buffer size and create data dict
-        # self.buffer_size = 60 * 60 * 7
-        # self.data = {'CH1': {'x': [], 'y': []}}
-        
-        # # make a data logger
-        # self.logger = dt.MultiChannelLogger("multichannel_log.h5", 'CH1')
-       
-    def create_new_plot(self):
-        
+        # [Trace Info Extraction (channel, name, etc.)]
+
+        # take the channel names of each Axis data type
         x_channel_list = list(self.xAxisData.keys())
         y_channel_list = list(self.yAxisData.keys())
         
+        # choose the current channel from the combobox(we aren't using the combobox txt directly since they are not keys)
         xAxisChannel = x_channel_list[self.xAxisUnitComboBox.currentIndex()]
         yAxisChannel = y_channel_list[self.yAxisUnitComboBox.currentIndex()]
         
+        # take the channel name from the experiment_parameters
         xAxisChannel_name = self.experiment_parameters[self.xAxis_name_key][xAxisChannel]
         yAxisChannel_name = self.experiment_parameters[self.yAxis_name_key][yAxisChannel]
         
+        # Editing the time unit (non-existent)
         if not self.xAxis == 'time':
             xAxisChannel_unit = self.experiment_parameters[self.xAxis_unit_key][xAxisChannel]
         else:
             xAxisChannel_unit = "-"
-            
-            
         if not self.yAxis == 'time':    
             yAxisChannel_unit = self.experiment_parameters[self.yAxis_unit_key][yAxisChannel]
         else:
             yAxisChannel_unit = "-"
         
-
-            
+        # plot and channel names
         plot_name = yAxisChannel_name + " (" + yAxisChannel_unit + ")" + " vs " + xAxisChannel_name + " (" + xAxisChannel_unit + ")"
-        plot_channels = yAxisChannel + " vs " + xAxisChannel
+        plot_channels = yAxisChannel + " vs " + xAxisChannel # [/]
             
-        # self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel], 
-        #                                                     self.yAxisData[yAxisChannel])
-        
+        # create a new trace with the extracted trace info
         if not plot_channels in self.plots:
             self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel], 
                                                                 self.yAxisData[yAxisChannel], name = plot_name, pen = self.colors[self.plot_count % 5])
-
-            # self.plotCheckBoxes[plot_channels] = self.create_check_box(plot_channels, self.colors[self.plot_count % 5], self.plots[plot_channels])
-            # self.layout0.addWidget(self.plotCheckBoxes[plot_channels])
-            
             self.plot_count += 1
         else:
             pass
         
-        
-        
-        print(self.plots.keys())
-     
+        #print(self.plots.keys())
+    
     def create_combo_box(self, Axis):
         
         combo_box = QComboBox()
-        
-        
         match Axis:
             case 'x':
                 for ch in self.xAxisData.keys():
@@ -281,61 +244,25 @@ class plotWidget(QWidget):
         
         return combo_box
     
-    # def showHidePlotUi_show(self):
-    #     self.showHidePlotUi.show()
-
-        
-    
-    # def create_check_box(self, text, colour, plot):
-        
-    #     check_box = QCheckBox(text)
-    #     # check_box.setIcon(QIcon(f'{colour}_icon.png'))
-    #     # check_box.setIconSize(QSize(24,24))
-        
-    #     check_box.setChecked(True)
-    #     # check_box.stateChanged.connect(self.show_hide_plot)
-        
-        
-    #     return check_box
-
-    # def show_hide_plot(self, signal_arg, key):
-    #     # if self.plotCheckBoxes[key].isChecked():
-    #     #     self.plots[key].show()
-    #     # else:
-    #     #     self.plots[key].hide()
-    #     pass
-        
-        
-
-    def plot_data(self):
-
-        # if len(self.data['CH1']['x']) > self.buffer_size:
-        #         self.data['CH1']['x'] = self.data['CH1']['x'][-self.buffer_size:]
-        #         self.data['CH1']['y'] = self.data['CH1']['y'][-self.buffer_size:]
-                
-        # self.plot.setData(self.data['CH1']['x'], self.data['CH1']['y'])
-        
+    def plot_data(self): # update data for each plot
         
         for plt_channels, plts in self.plots.items():
-            
             plt_channels = plt_channels.split(" vs ")
             print(plt_channels)
             plts.setData(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
-        
-        # self.logger.append(now, new_value)
-        pass
-        
+
+         # [/]
 
 
 class oldPlotWidget(QWidget):
     def __init__(self, plot_setting, instruments):
         super().__init__()
         
-        
+        # [PlotItem Related Variables (plot setting, title, axes, dataset, experiment parameters)]
+
         # plots
         self.plots = {}
         self.plot_count = 0
-        
         
         # plot setting values
         self.xAxis = plot_setting[0]
@@ -353,13 +280,26 @@ class oldPlotWidget(QWidget):
         
         print(self.connected_instruments, self.all_instruments)
 
-        
         # used for multiple time axes
         self.axes = {}
         self.axes_count = 1
         
-        # dataset
+        self.x_date_axis = pg.DateAxisItem(orientation='bottom',
+                                        utcOffset=14400,               # set to your timezone offset if desired
+                                        showValues=True,
+                                        autoScale=True)
+        self.y_date_axis = pg.DateAxisItem(orientation='left',
+                                        utcOffset=14400,               # set to your timezone offset if desired
+                                        showValues=True,
+                                        autoScale=True)
         
+        self.title = self.yAxis.upper() + " vs " + self.xAxis.upper()
+        self.colors = ['w', 'r', 'g', 'y', 'c']
+        
+        
+        # [Dataset Construction]
+
+        # if it's a normal old plot
         if not self.multipleDataset:
             self.datasetLink = plot_setting[8]
             self.dataset = pd.read_csv(self.datasetLink, header=[0,1])
@@ -378,7 +318,8 @@ class oldPlotWidget(QWidget):
             self.set['time'] = self.time
             
             print(self.set)
-            
+        
+        # if multiple dataset option is chosen    
         else:
             self.temperature = {'ch_A':[],'ch_B':[],'ch_C':[],'ch_D':[]}
             self.resistance = {'ch_A':[],'ch_B':[],'ch_C':[],'ch_D':[]}
@@ -389,9 +330,11 @@ class oldPlotWidget(QWidget):
             self.time = {'time':[]}
             
             self.set = self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'field': self.field, 'current':self.current, 'time':self.time}
-            
-        # experiment_parameters
+             # [/]
         
+        # [Experiment Parameters Construction]
+        
+        # if it's a normal old plot
         if not self.multipleDataset :
             try:
                 self.param_file = open(self.experimentParamLink)
@@ -464,7 +407,8 @@ class oldPlotWidget(QWidget):
                                       'field_name':{"field":"field"}, 'field_unit':{"field":"T"},
                                       'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
                                       'time_name':{"time":"time"}}
-                
+        
+        # if multiple dataset option is chosen, don't take any parameters yet        
         else:
             self.experiment_parameters = {'temperature_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'temperature_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
                                         'resistance_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'resistance_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
@@ -472,24 +416,9 @@ class oldPlotWidget(QWidget):
                                         'lockIn2_name':{"x":"","y":"","r":"","theta":""}, 'lockIn2_unit':{"x":"","y":"","r":"","theta":""},
                                         'field_name':{"field":""}, 'field_unit':{"field":""},
                                         'current_name':{"current":""}, 'current_unit':{"current":""},
-                                        'time_name':{"time":""}}
+                                        'time_name':{"time":""}} # [/]
             
-
-        self.x_date_axis = pg.DateAxisItem(orientation='bottom',
-                                        utcOffset=14400,               # set to your timezone offset if desired
-                                        showValues=True,
-                                        autoScale=True)
-        
-        self.y_date_axis = pg.DateAxisItem(orientation='left',
-                                        utcOffset=14400,               # set to your timezone offset if desired
-                                        showValues=True,
-                                        autoScale=True)
-
-        
-        self.title = self.yAxis.upper() + " vs " + self.xAxis.upper()
-        
-        self.colors = ['w', 'r', 'g', 'y', 'c']
-        
+        # set the xAxis and yAxis data type according to the exp setting ui & dataset
         match self.xAxis:
             case "lockIn":
                 self.xAxisData = self.lockIn
@@ -525,8 +454,7 @@ class oldPlotWidget(QWidget):
                 self.xAxisData = self.time
                 self.x_set_name = 'time'
                 self.xAxis_name_key = 'time_name'
-                self.xAxis_unit_key = 'time_unit'
-        
+                self.xAxis_unit_key = 'time_unit' 
         match self.yAxis:
             case "lockIn":
                 self.yAxisData = self.lockIn
@@ -563,11 +491,10 @@ class oldPlotWidget(QWidget):
                 self.y_set_name = 'time'
                 self.yAxis_name_key = 'time_name'
                 self.yAxis_unit_key = 'time_unit'
+         # [/]
         
-        """create plot widget"""
-        
-        # labels and buttons
-        
+        # [Plot Window Related Variables (layouts, comboboxes, buttons)]
+
         # x axis stuff
         self.xAxisLabel = QLabel("x-Axis")
         self.xAxisLabel.setAlignment(Qt.AlignCenter)
@@ -581,7 +508,6 @@ class oldPlotWidget(QWidget):
         self.layout1.addWidget(self.xAxisLabel)
         self.layout1.addWidget(self.xAxisUnitLabel) 
         self.layout1.addWidget(self.xAxisUnitComboBox)
-        
         
         # y axis stuff
         self.yAxisLabel = QLabel("y-Axis")
@@ -597,9 +523,7 @@ class oldPlotWidget(QWidget):
         self.layout2.addWidget(self.yAxisUnitLabel)
         self.layout2.addWidget(self.yAxisUnitComboBox)
         
-        
         # buttons
-        
         self.settingB = QPushButton()
         self.settingB.setText("Setting")
         self.newPlotB = QPushButton()
@@ -608,16 +532,18 @@ class oldPlotWidget(QWidget):
         self.layout3 = QVBoxLayout()
         self.layout3.addWidget(self.settingB)
         self.layout3.addWidget(self.newPlotB)
-        
-
-        # more layouts
+    
+        # wrapping layouts
         self.layout4 = QHBoxLayout()
         self.layout4.addLayout(self.layout1)
         self.layout4.addLayout(self.layout2)
         self.layout4.addLayout(self.layout3)
         
-        self.layout = QVBoxLayout()
+        self.layout = QVBoxLayout() # [/]
         
+        # [Plot Window Creation]
+
+        # instantiate a graphicsview instead of a plot widget (for multiple axes)
         self.graphics_view = pg.GraphicsView()
         self.graphics_layout = pg.GraphicsLayout()
         self.graphics_view.setCentralWidget(self.graphics_layout)
@@ -625,12 +551,13 @@ class oldPlotWidget(QWidget):
         self.plot_legend = self.plot_item.addLegend(offset = [-1,20])
         self.graphics_layout.addItem(self.plot_item, row=1, col=1)
         
-
+        # set time axes if needed
         if self.xAxis == 'time':
             self.plot_item.setAxisItems(axisItems = {'bottom': self.x_date_axis})
         if self.yAxis == 'time':
             self.plot_item.setAxisItems(axisItems = {'left': self.y_date_axis})
         
+        # set the layout or whatever
         self.plot_item.setTitle(self.title)
         self.layout.addLayout(self.layout4)
         self.layout.addWidget(self.graphics_view)
@@ -645,18 +572,19 @@ class oldPlotWidget(QWidget):
         
         # signals
         if not self.multipleDataset:
-            self.newPlotB.clicked.connect(self.create_new_plot)
+            self.newPlotB.clicked.connect(self.create_new_plot) # normal old plot
         else:
-            self.newPlotB.clicked.connect(self.open_multidataset_plot)
+            self.newPlotB.clicked.connect(self.open_multidataset_plot) # multi dataset plot # [/] 
         
-        
+    # [Functions]
+    
+    # [Multi dataset functions]
     def open_multidataset_plot(self):
         
         self.amp_window = QMainWindow()
         self.addMultiDataPlotWid = amp.add_multidata_plot_ui(self.x_set_name, self.y_set_name, self.xAxis_name_key, self.yAxis_name_key,
                                                             self.xAxis_unit_key, self.yAxis_unit_key, self.xAxisData, self.yAxisData, self.experiment_parameters, self.all_instruments)
 
-        
         self.amp_window.setCentralWidget(self.addMultiDataPlotWid)
         self.amp_window.setWindowTitle("Add a new trace")
         self.amp_window.resize(550, 213)
@@ -664,16 +592,11 @@ class oldPlotWidget(QWidget):
         self.addMultiDataPlotWid.yAxisLabel.setText(self.yAxis.upper())
         self.amp_window.show()
         
-        
-            
         if self.xAxis == 'time' or self.yAxis == 'time' or self.xAxis == 'field' or self.yAxis == 'field':
-            self.addMultiDataPlotWid.addPlotButton.clicked.connect(self.multidataset_update_all_multiaxes)
-            
+            self.addMultiDataPlotWid.addPlotButton.clicked.connect(self.multidataset_update_all_multiaxes) # those data types need multiple axes
         else:
-            self.addMultiDataPlotWid.addPlotButton.clicked.connect(self.multidataset_update_all)
-            
-            
-            
+            self.addMultiDataPlotWid.addPlotButton.clicked.connect(self.multidataset_update_all) # the rest don't
+         
     def multidataset_update_all_multiaxes(self):
         xAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.x_channel_list, self.addMultiDataPlotWid.xAxisChannelComboBox, 
                                              self.xAxisData, self.addMultiDataPlotWid.xAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
@@ -809,11 +732,6 @@ class oldPlotWidget(QWidget):
         viewbox.addItem(self.plots[plot_channels])
         self.plot_count += 1
         
-    def updateViews(self):
-        for vb in self.secondary_viewboxes:
-            vb.setGeometry(self.main_viewbox.sceneBoundingRect())
-
-            
     def multidataset_update_all(self):
         
         xAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.x_channel_list, self.addMultiDataPlotWid.xAxisChannelComboBox, 
@@ -822,7 +740,7 @@ class oldPlotWidget(QWidget):
         yAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.y_channel_list, self.addMultiDataPlotWid.yAxisChannelComboBox, 
                                              self.yAxisData, self.addMultiDataPlotWid.yAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
                                              self.addMultiDataPlotWid.yAxis_name_key, self.addMultiDataPlotWid.yAxis_unit_key)
-        #self.name_count += self.addMultiDataPlotWid.internal_count
+
         self.amp_window.hide()
         
         
@@ -840,11 +758,6 @@ class oldPlotWidget(QWidget):
         plot_name = yAxisChannel_name + " (" + yAxisChannel_unit + ")" + " vs " + xAxisChannel_name + " (" + xAxisChannel_unit + ")"
         plot_channels = xAxisChannel_name + " vs " + yAxisChannel_name
         
-        
-        # self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel], 
-        #                                                     self.yAxisData[yAxisChannel])
-        
-
         if not plot_channels in self.plots:
             self.plots[plot_channels] = self.plot_item.plot(self.xAxisData[xAxisChannel_name], 
                                                                 self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
@@ -853,7 +766,13 @@ class oldPlotWidget(QWidget):
             self.plot_count += 1
         else:
             pass
-       
+    
+    def updateViews(self):
+        for vb in self.secondary_viewboxes:
+            vb.setGeometry(self.main_viewbox.sceneBoundingRect())
+        # [/]
+    
+    # [Single dataset functions]
     def create_new_plot(self):
         
         x_channel_list = list(self.xAxisData.keys())
@@ -869,23 +788,15 @@ class oldPlotWidget(QWidget):
             xAxisChannel_unit = self.experiment_parameters[self.xAxis_unit_key][xAxisChannel]
         else:
             xAxisChannel_unit = "-"
-            
-            
+             
         if not self.yAxis == 'time':    
             yAxisChannel_unit = self.experiment_parameters[self.yAxis_unit_key][yAxisChannel]
         else:
             yAxisChannel_unit = "-"
         
-
-            
         plot_name = yAxisChannel_name + " (" + yAxisChannel_unit + ")" + " vs " + xAxisChannel_name + " (" + xAxisChannel_unit + ")"
         plot_channels = yAxisChannel + " vs " + xAxisChannel
-        
-        
-        # self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel], 
-        #                                                     self.yAxisData[yAxisChannel])
-        
-
+    
         if not plot_channels in self.plots:
             self.plots[plot_channels] = self.plot_item.plot(self.xAxisData[xAxisChannel], 
                                                                 self.yAxisData[yAxisChannel], name = plot_name, pen = self.colors[self.plot_count % 5])
@@ -893,32 +804,8 @@ class oldPlotWidget(QWidget):
             self.plot_count += 1
         else:
             pass
-        print(self.plots.keys())
         
-    
-    def showHidePlotUi_show(self):
-        self.showHidePlotUi.show()
-        
-         
-    def create_check_box(self, text, colour, plot):
-        
-        check_box = QCheckBox(text)
-        # check_box.setIcon(QIcon(f'{colour}_icon.png'))
-        # check_box.setIconSize(QSize(24,24))
-        
-        check_box.setChecked(True)
-        check_box.stateChanged.connect(self.show_hide_plot)
-        
-        
-        return check_box
-
-    def show_hide_plot(self):
-        for key, plot in self.plots.items():
-            if self.plotCheckBoxes[key].isChecked():
-                plot.show()
-            else:
-                plot.hide()
-     
+        #print(self.plots.keys())
      
     def create_combo_box(self, Axis):
         
@@ -936,6 +823,7 @@ class oldPlotWidget(QWidget):
             combo_box.setEnabled(False)
         
         return combo_box
-
+ # [/]
+ # [/]
         
     
