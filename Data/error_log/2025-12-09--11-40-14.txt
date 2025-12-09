@@ -1,0 +1,12 @@
+Szkopek Lab Error Log Book - 2025-12-09--11-40-14
+
+2025-12-09--11-40-36 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1729, in create_old_plot
+    connected_instruments = eval(param_file_content[59].split(":")[1].replace("\n",""))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 1
+    {'Lakeshore_336'
+    ^
+SyntaxError: '{' was never closed
+
+

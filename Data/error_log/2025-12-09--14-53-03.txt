@@ -1,0 +1,16 @@
+Szkopek Lab Error Log Book - 2025-12-09--14-53-03
+
+2025-12-09--14-53-14 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1737, in create_old_plot
+    connected_instruments = eval(param_file_content[59].replace("\n",""))
+                                 ^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'param_file_content' where it is not associated with a value
+
+
+
+
+2025-12-09--14-55-07 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2169, in closeEvent
+KeyboardInterrupt
+
+

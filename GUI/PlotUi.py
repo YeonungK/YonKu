@@ -328,7 +328,7 @@ class plotWidget(QWidget):
 
 
 class oldPlotWidget(QWidget):
-    def __init__(self, plot_setting):
+    def __init__(self, plot_setting, instruments):
         super().__init__()
         
         
@@ -348,6 +348,10 @@ class oldPlotWidget(QWidget):
         self.gridLine = plot_setting[7]
         self.multipleDataset = plot_setting[9]
         self.experimentParamLink = plot_setting[10]
+        self.connected_instruments = plot_setting[11]
+        self.all_instruments = instruments
+        
+        print(self.connected_instruments, self.all_instruments)
 
         
         # used for multiple time axes
@@ -359,37 +363,52 @@ class oldPlotWidget(QWidget):
         if not self.multipleDataset:
             self.datasetLink = plot_setting[8]
             self.dataset = pd.read_csv(self.datasetLink, header=[0,1])
+            self.set = {}
             
-            self.temperature = {'ch_A':self.dataset['temperature']['ch_A'].to_list(), 
-                                'ch_B':self.dataset['temperature']['ch_B'].to_list(), 
-                                'ch_C':self.dataset['temperature']['ch_C'].to_list(), 
-                                'ch_D':self.dataset['temperature']['ch_D'].to_list()}
-            self.resistance = {'ch_A':self.dataset['resistance']['ch_A'].to_list(), 
-                                'ch_B':self.dataset['resistance']['ch_B'].to_list(), 
-                                'ch_C':self.dataset['resistance']['ch_C'].to_list(), 
-                                'ch_D':self.dataset['resistance']['ch_D'].to_list()}
-            self.lockIn = {'x':self.dataset['lockIn']['x'].to_list(), 
-                                'y':self.dataset['lockIn']['y'].to_list(), 
-                                'r':self.dataset['lockIn']['r'].to_list(), 
-                                'theta':self.dataset['lockIn']['theta'].to_list()}
+            for instrument in self.connected_instruments:
+                for data_type, channel in self.all_instruments[instrument].data_type.items():
+                    self.data_dict = setattr(self, data_type, {})
+                    self.data_dict = getattr(self, data_type)
+                    for ch in channel:
+                        self.data_dict[ch] = self.dataset[data_type][ch].to_list()
+                    
+                    self.set[data_type] = self.data_dict
+            
+            self.time = {'time':self.dataset['time']['time'].to_list()}
+            self.set['time'] = self.time
+            
+            print(self.set)
+           
+            # self.temperature = {'ch_A':self.dataset['temperature']['ch_A'].to_list(), 
+            #                     'ch_B':self.dataset['temperature']['ch_B'].to_list(), 
+            #                     'ch_C':self.dataset['temperature']['ch_C'].to_list(), 
+            #                     'ch_D':self.dataset['temperature']['ch_D'].to_list()}
+            # self.resistance = {'ch_A':self.dataset['resistance']['ch_A'].to_list(), 
+            #                     'ch_B':self.dataset['resistance']['ch_B'].to_list(), 
+            #                     'ch_C':self.dataset['resistance']['ch_C'].to_list(), 
+            #                     'ch_D':self.dataset['resistance']['ch_D'].to_list()}
+            # self.lockIn = {'x':self.dataset['lockIn']['x'].to_list(), 
+            #                     'y':self.dataset['lockIn']['y'].to_list(), 
+            #                     'r':self.dataset['lockIn']['r'].to_list(), 
+            #                     'theta':self.dataset['lockIn']['theta'].to_list()}
             
             
-            try:
-                self.lockIn2 = {'x':self.dataset['lockIn2']['x'].to_list(), 
-                                'y':self.dataset['lockIn2']['y'].to_list(), 
-                                'r':self.dataset['lockIn2']['r'].to_list(), 
-                                'theta':self.dataset['lockIn2']['theta'].to_list()}
+            # try:
+            #     self.lockIn2 = {'x':self.dataset['lockIn2']['x'].to_list(), 
+            #                     'y':self.dataset['lockIn2']['y'].to_list(), 
+            #                     'r':self.dataset['lockIn2']['r'].to_list(), 
+            #                     'theta':self.dataset['lockIn2']['theta'].to_list()}
                 
-                self.field = {'field':self.dataset['field']['field'].to_list(),}
-                self.current = {'current':self.dataset['current']['current'].to_list()}
+            #     self.field = {'field':self.dataset['field']['field'].to_list(),}
+            #     self.current = {'current':self.dataset['current']['current'].to_list()}
                 
-                self.time = {'time':self.dataset['time']['time'].to_list()}
+            #     self.time = {'time':self.dataset['time']['time'].to_list()}
             
-                self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'field': self.field, 'current':self.current, 'current':self.current}
+            #     self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'field': self.field, 'current':self.current, 'current':self.current}
             
-            except KeyError:
-                self.time = {'time':self.dataset['time']['time'].to_list()}
-                self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'time':self.time}
+            # except KeyError:
+            #     self.time = {'time':self.dataset['time']['time'].to_list()}
+            #     self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'time':self.time}
             
         else:
             self.temperature = {'ch_A':[],'ch_B':[],'ch_C':[],'ch_D':[]}

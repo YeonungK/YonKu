@@ -165,7 +165,9 @@ current_name:{self.experimentSettingWid.experiment_parameters['current_name']['c
 current_unit:{self.experimentSettingWid.experiment_parameters['current_unit']['current']}
 
 
-time_name:{self.experimentSettingWid.experiment_parameters['time_name']['time']}\n"""
+time_name:{self.experimentSettingWid.experiment_parameters['time_name']['time']}
+
+{list(self.instruments.keys())}\n"""
         
         
         with open(self.file_path, "w") as f:
@@ -1719,21 +1721,60 @@ class UI(QMainWindow):
     
     def create_old_plot(self):
         try:
-            self.openPlotSettingWid.update_values()
-            self.plot_setting = [self.openPlotSettingWid.xAxisUnit, self.openPlotSettingWid.yAxisUnit, self.openPlotSettingWid.xAxisHiLim, 
-                        self.openPlotSettingWid.xAxisLoLim, self.openPlotSettingWid.yAxisHiLim, self.openPlotSettingWid.yAxisLoLim, 
-                        self.openPlotSettingWid.tickVal, self.openPlotSettingWid.gridLine, self.openPlotSettingWid.dataset, self.openPlotSettingWid.multipleDataset,
-                        self.openPlotSettingWid.experimentParam]
-            self.old_plot_window()
-            print(self.plot_setting)
-            self.ops_window.close()
+            self.openPlotSettingWid.update_values() #update the open plot setting values
+            
+            # Check if the selected dataset has the desired data type
+            self.xAxis_exists = False
+            self.yAxis_exists = False
+            
+            try:
+                param_file = open(self.openPlotSettingWid.experimentParam)    
+                param_file_content = param_file.readlines()
+                connected_instruments = eval(param_file_content[59].replace("\n",""))
+                print(connected_instruments)
+            except SyntaxError: # in case we are opening databases from before the latest version
+                print(e)
+                connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+            except FileNotFoundError as e:
+                print(e)
+                print("Error detected at the nested level")
+                connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+            except UnboundLocalError as e:
+                print(e)
+                connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+                
+            for instrument in connected_instruments:
+                for data_type in list(self.instruments[instrument].data_type.keys()):
+                    print(data_type)
+                    if data_type == self.openPlotSettingWid.xAxisUnit:
+                        self.xAxis_exists = True
+                    if data_type == self.openPlotSettingWid.yAxisUnit:
+                        self.yAxis_exists = True
+                    print([self.xAxis_exists,self.yAxis_exists])
+            
+            if self.openPlotSettingWid.xAxisUnit == 'time':
+                self.xAxis_exists = True
+            if self.openPlotSettingWid.yAxisUnit == 'time':
+                self.yAxis_exists = True
+            
+            if self.xAxis_exists and self.yAxis_exists:
+                self.plot_setting = [self.openPlotSettingWid.xAxisUnit, self.openPlotSettingWid.yAxisUnit, self.openPlotSettingWid.xAxisHiLim, 
+                            self.openPlotSettingWid.xAxisLoLim, self.openPlotSettingWid.yAxisHiLim, self.openPlotSettingWid.yAxisLoLim, 
+                            self.openPlotSettingWid.tickVal, self.openPlotSettingWid.gridLine, self.openPlotSettingWid.dataset, self.openPlotSettingWid.multipleDataset,
+                            self.openPlotSettingWid.experimentParam, connected_instruments]
+                self.old_plot_window()
+                print(self.plot_setting)
+                self.ops_window.close()
+            
+            else:
+                self.openPlotSettingWid.browseDatasetLineEdit.setText("This dataset doesn't include the chosen data types.")
             
         except FileNotFoundError as e:
             print(e)
             self.openPlotSettingWid.browseDatasetLineEdit.setText("You have to choose a databse to open.")
         
     def old_plot_window(self):
-        self.plot_widgets[self.plot_widget_count] = PlotUi.oldPlotWidget(self.plot_setting)
+        self.plot_widgets[self.plot_widget_count] = PlotUi.oldPlotWidget(self.plot_setting, self.instruments)
         self.plot_sub = QMdiSubWindow()
         self.plot_sub.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint) # disable maximize button
         self.plot_sub.setWidget(self.plot_widgets[self.plot_widget_count])
@@ -2143,9 +2184,13 @@ class UI(QMainWindow):
             except:
                 pass
             
+            try:
+                self.end_experiment_worker()
+            except:
+                pass
+            
             for name, device in self.instruments.items():
                 self.instruments[name].close()
-            
             
             with open(self.error_logger.file_path, "r") as f:
                 error_log = f.read()
@@ -2157,6 +2202,7 @@ class UI(QMainWindow):
                 pass
             
             event.accept()
+            QApplication.instance().closeAllWindows()
         else:
             # If you want to prevent the close event, call ignore()
             event.ignore()

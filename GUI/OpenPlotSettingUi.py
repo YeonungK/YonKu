@@ -49,11 +49,11 @@ class create_plot_setting_ui(QWidget):
             self.datasetLink = self.datasetLink[:-3] + "txt"
             self.datasetLink = self.datasetLink.split("/")
             
-            self.datasetLink[6] = "experiment_parameters"
+            self.datasetLink[7] = "experiment_parameters"
             
             self.experimentParam = self.datasetLink[0]
             
-            for n in range(1,8):
+            for n in range(1,9):
                 self.experimentParam = self.experimentParam + "/" + self.datasetLink[n]
                 print(self.experimentParam)
             if fname:

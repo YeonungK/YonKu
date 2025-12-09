@@ -1,0 +1,16 @@
+Szkopek Lab Error Log Book - 2025-12-09--12-44-37
+
+2025-12-09--12-44-51 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 927, in create_new_plot
+    self.plots[plot_channels] = self.plot_item.plot(self.xAxisData[xAxisChannel],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 630, in plot
+    item = PlotDataItem(*args, **kargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 741, in setData
+    raise TypeError('When passing two unnamed arguments, both must be a list or array of values. (got %s, %s)' % (str(type(args[0])), str(type(args[1]))))
+TypeError: When passing two unnamed arguments, both must be a list or array of values. (got <class 'list'>, <class 'method'>)
+
+
