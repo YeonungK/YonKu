@@ -378,37 +378,6 @@ class oldPlotWidget(QWidget):
             self.set['time'] = self.time
             
             print(self.set)
-           
-            # self.temperature = {'ch_A':self.dataset['temperature']['ch_A'].to_list(), 
-            #                     'ch_B':self.dataset['temperature']['ch_B'].to_list(), 
-            #                     'ch_C':self.dataset['temperature']['ch_C'].to_list(), 
-            #                     'ch_D':self.dataset['temperature']['ch_D'].to_list()}
-            # self.resistance = {'ch_A':self.dataset['resistance']['ch_A'].to_list(), 
-            #                     'ch_B':self.dataset['resistance']['ch_B'].to_list(), 
-            #                     'ch_C':self.dataset['resistance']['ch_C'].to_list(), 
-            #                     'ch_D':self.dataset['resistance']['ch_D'].to_list()}
-            # self.lockIn = {'x':self.dataset['lockIn']['x'].to_list(), 
-            #                     'y':self.dataset['lockIn']['y'].to_list(), 
-            #                     'r':self.dataset['lockIn']['r'].to_list(), 
-            #                     'theta':self.dataset['lockIn']['theta'].to_list()}
-            
-            
-            # try:
-            #     self.lockIn2 = {'x':self.dataset['lockIn2']['x'].to_list(), 
-            #                     'y':self.dataset['lockIn2']['y'].to_list(), 
-            #                     'r':self.dataset['lockIn2']['r'].to_list(), 
-            #                     'theta':self.dataset['lockIn2']['theta'].to_list()}
-                
-            #     self.field = {'field':self.dataset['field']['field'].to_list(),}
-            #     self.current = {'current':self.dataset['current']['current'].to_list()}
-                
-            #     self.time = {'time':self.dataset['time']['time'].to_list()}
-            
-            #     self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'field': self.field, 'current':self.current, 'current':self.current}
-            
-            # except KeyError:
-            #     self.time = {'time':self.dataset['time']['time'].to_list()}
-            #     self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'time':self.time}
             
         else:
             self.temperature = {'ch_A':[],'ch_B':[],'ch_C':[],'ch_D':[]}
@@ -681,21 +650,11 @@ class oldPlotWidget(QWidget):
             self.newPlotB.clicked.connect(self.open_multidataset_plot)
         
         
-        # create plots
-        # self.plot = self.plot_item.plot(pen=pg.mkPen(color='r', width=2), name='CH1')
-        
-        # # set buffer size and create data dict
-        # self.buffer_size = 60 * 60 * 7
-        # self.data = {'CH1': {'x': [], 'y': []}}
-        
-        # # make a data logger
-        # self.logger = dt.MultiChannelLogger("multichannel_log.h5", 'CH1')
-        
     def open_multidataset_plot(self):
         
         self.amp_window = QMainWindow()
         self.addMultiDataPlotWid = amp.add_multidata_plot_ui(self.x_set_name, self.y_set_name, self.xAxis_name_key, self.yAxis_name_key,
-                                                            self.xAxis_unit_key, self.yAxis_unit_key, self.xAxisData, self.yAxisData, self.experiment_parameters)
+                                                            self.xAxis_unit_key, self.yAxis_unit_key, self.xAxisData, self.yAxisData, self.experiment_parameters, self.all_instruments)
 
         
         self.amp_window.setCentralWidget(self.addMultiDataPlotWid)

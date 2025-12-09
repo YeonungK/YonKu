@@ -658,7 +658,6 @@ class UI(QMainWindow):
         if keyword.iskeyword(text):
             return False
         return True
-     # [/]
     
     def check_instrument_connection(self):
         disconnected_instr = {}
@@ -670,7 +669,8 @@ class UI(QMainWindow):
                 disconnected_instr[device_model] = instrument
         print(disconnected_instr)
         return connected_instr, disconnected_instr
-
+     
+     # [/]
      
     # [+++++++++System setup functions+++++++++]
     
@@ -844,6 +844,8 @@ class UI(QMainWindow):
             device_Wid = getattr(self, f'{device_name}Wid')
             if self.instruments[data_list['model']].connected:
                 device_Wid.setEnabled(True)
+                initial_function = getattr(self, f'{device_name}_initial_function')
+                initial_function()
             else:
                 device_Wid.setEnabled(False)
         
@@ -852,6 +854,7 @@ class UI(QMainWindow):
 
     
     # [++++++++++Instrument inital function++++++++++++]
+    
     
     def pressureGauge_initial_function(self):
         pass
@@ -869,10 +872,14 @@ class UI(QMainWindow):
         pass
     
     def gasValve_initial_function(self):
-        pass     # [/]
+        if self.gasValve.initial_state[0]:
+            self.gasValveWid.pumpPushButton.setChecked(True)
+        if self.gasValve.initial_state[1]:
+            self.gasValveWid.ivcPushButton.setChecked(True)
+        if self.gasValve.initial_state[2]:
+            self.gasValveWid.hePushButton.setChecked(True)
+            # [/]
 
-    def test_initial_function(self):
-        pass
       
     # [+++++++++(Thread) experiment functions++++++++]
     def check_experiment_condition(self):
@@ -1771,7 +1778,7 @@ class UI(QMainWindow):
             
         except FileNotFoundError as e:
             print(e)
-            self.openPlotSettingWid.browseDatasetLineEdit.setText("You have to choose a databse to open.")
+            self.openPlotSettingWid.browseDatasetLineEdit.setText("You have to choose a database to open.")
         
     def old_plot_window(self):
         self.plot_widgets[self.plot_widget_count] = PlotUi.oldPlotWidget(self.plot_setting, self.instruments)

@@ -17,6 +17,7 @@ class gasValve(NidaqmxInstrument):
         self.data_type = {}
         self.data_unit = {}
         self.data_function = {}
+        self.initial_state = self.read()
         
         # if self.connected:
         #     self.turn_off_all()
@@ -57,8 +58,7 @@ class gasValve(NidaqmxInstrument):
 if __name__ == "__main__":
     device = gasValve("gasValve", "Dev1", "port0", "line0:2")
     
-    device.turn_off_SV1()
-    device.turn_off_SV2()
-    device.turn_off_SV3()
+    
+    print(device.read())
     
     device.close()

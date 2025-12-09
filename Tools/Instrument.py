@@ -189,7 +189,8 @@ class NidaqmxInstrument(ScientificInstrument):
             return None
     
     def read(self):
-        pass
+        data = self.device.read()
+        return data
     
     def write(self, data): # data: a list of boolean for each pin
         self.device.write(data)

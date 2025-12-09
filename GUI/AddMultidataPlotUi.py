@@ -6,7 +6,7 @@ import pandas as pd
 
 
 class add_multidata_plot_ui(QWidget):
-    def __init__(self, xAxis, yAxis, xAxis_name_key, yAxis_name_key, xAxis_unit_key, yAxis_unit_key, xData, yData, experiment_parameters):
+    def __init__(self, xAxis, yAxis, xAxis_name_key, yAxis_name_key, xAxis_unit_key, yAxis_unit_key, xData, yData, experiment_parameters, all_instruments):
         super().__init__()
 
         uic.loadUi("GUI/ui_files/add_multidata_plot.ui", self)
@@ -29,9 +29,9 @@ class add_multidata_plot_ui(QWidget):
         
         self.x_channel_list = list(self.xData.keys())
         self.y_channel_list = list(self.yData.keys())
-    
         
-        
+        self.instruments = all_instruments
+
 
         self.experimentParamLink = ""
         self.BrowseDatasetButton.clicked.connect(self.dataset_search)
@@ -40,28 +40,63 @@ class add_multidata_plot_ui(QWidget):
         
         
     def dataset_search(self):
+        self.xAxis_exists = False
+        self.yAxis_exists = False
         
         try:
+            # find the experiment parameters file link
             fname = QFileDialog.getOpenFileName(self, "Open File", "C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_data", "CSV Files (*.csv)")
             self.datasetLink = fname[0]
             self.paramLink = self.datasetLink[:-3] + "txt"
             self.paramLink = self.paramLink.split("/")
             
-            self.paramLink[6] = "experiment_parameters"
+            self.paramLink[7] = "experiment_parameters"
             
             self.experimentParamLink = self.paramLink[0]
             
-            for n in range(1,8):
+            for n in range(1,9):
                 self.experimentParamLink = self.experimentParamLink + "/" + self.paramLink[n]
                 print(self.experimentParamLink)
-                
-            if fname:
+            
+            # check if the dataset includes the xaxis and yaxis data type
+            try:
+                param_file = open(self.experimentParamLink)    
+                param_file_content = param_file.readlines()
+                connected_instruments = eval(param_file_content[59].replace("\n",""))
+                print(connected_instruments)
+            except SyntaxError: # in case we are opening databases from before the latest version
+                print(e)
+                connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+            except FileNotFoundError as e:
+                print(e)
+                print("Error detected at the nested level")
+                connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+            except UnboundLocalError as e:
+                print(e)
+                connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+            
+            for instrument in connected_instruments:
+                for data_type in list(self.instruments[instrument].data_type.keys()):
+                    print(data_type)
+                    if data_type == self.xAxis:
+                        self.xAxis_exists = True
+                    if data_type == self.yAxis:
+                        self.yAxis_exists = True
+                    print([self.xAxis_exists,self.yAxis_exists])
+            
+            if self.xAxis == 'time':
+                self.xAxis_exists = True
+            if self.yAxis == 'time':
+                self.yAxis_exists = True
+            
+            # if they do, proceed to set names in the 
+            if self.xAxis_exists and self.yAxis_exists:
                 self.AxisDatasetLineEdit.setText(fname[0])
                 self.datasetLink = fname[0]
                 self.expParam = self.set_names(self.experimentParamLink, self.xAxisChannelComboBox, self.yAxisChannelComboBox, self.xAxis_name_key, self.yAxis_name_key, self.xData, self.yData)
                 print(f"parameter: {self.expParam}")
             else:
-                pass
+                self.AxisDatasetLineEdit.setText("This dataset doesn't include the chosen data types.")
             
         except IndexError:
             pass
