@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-12-15--14-34-00
+
+2025-12-15--14-34-08 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1123, in magnetPowerSupply_thread
+    self.magnet_worker = MagnetPowerSupplyWorker(self.magnetPowerSupply, 1000, self.magnetPowwerSupplyWid.stopDisplay,
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'magnetPowwerSupplyWid'. Did you mean: 'magnetPowerSupplyWid'?
+
+

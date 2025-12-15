@@ -1,0 +1,12 @@
+Szkopek Lab Error Log Book - 2025-12-15--14-33-36
+
+2025-12-15--14-33-40 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2352, in <module>
+    UIWindow = UI()
+               ^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 673, in __init__
+    self.pressureGaugeWid.startButton.clicked.connect(self.pressure_function) # [/]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'pressureGauge_widget' object has no attribute 'startButton'
+
+

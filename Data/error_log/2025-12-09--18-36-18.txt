@@ -1,0 +1,528 @@
+Szkopek Lab Error Log Book - 2025-12-09--18-36-18
+
+2025-12-09--18-37-24 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-37-28 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-37-32 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-37-36 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-37-40 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-37-44 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-37-48 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-37-52 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-37-56 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-38-00 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-38-04 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-38-08 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-38-12 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-38-16 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-38-20 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+
+
+
+2025-12-09--18-38-24 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 181, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 195, in instrument_read_data
+    data_list = setattr(self, f"{data_type}_list", function())
+                                                   ^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\saved_instruments\SRS_830_2.py", line 163, in get_all
+    result = self.query("SNAP? 1,2,3,4")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 160, in query
+    response = self.device.query(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 641, in query
+    self.write(message)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 196, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\resources\messagebased.py", line 156, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2795, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 226, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyvisa\highlevel.py", line 251, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+

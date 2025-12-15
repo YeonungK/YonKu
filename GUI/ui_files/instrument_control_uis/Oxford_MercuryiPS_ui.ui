@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>788</width>
-    <height>504</height>
+    <height>433</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,6 +32,38 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item alignment="Qt::AlignRight">
+          <widget class="QFrame" name="frame">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QPushButton" name="startDisplay">
+              <property name="text">
+               <string>Start Display</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="stopDisplay">
+              <property name="text">
+               <string>Stop Display</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
          <item>
           <widget class="QFrame" name="frame_20">
            <property name="frameShape">
@@ -106,7 +138,7 @@
                      <bool>true</bool>
                     </property>
                     <property name="decimals">
-                     <number>2</number>
+                     <number>5</number>
                     </property>
                     <property name="minimum">
                      <double>-360.000000000000000</double>
@@ -160,7 +192,7 @@
                   <item>
                    <widget class="QLabel" name="label_5">
                     <property name="text">
-                     <string>Field Rating</string>
+                     <string>Field Rate</string>
                     </property>
                    </widget>
                   </item>
@@ -170,7 +202,7 @@
                      <bool>true</bool>
                     </property>
                     <property name="decimals">
-                     <number>2</number>
+                     <number>5</number>
                     </property>
                     <property name="minimum">
                      <double>-360.000000000000000</double>
@@ -224,7 +256,7 @@
                   <item>
                    <widget class="QLabel" name="label_10">
                     <property name="text">
-                     <string>Temperature:</string>
+                     <string>Temperature (K):</string>
                     </property>
                    </widget>
                   </item>
@@ -359,86 +391,6 @@
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_11">
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_14">
-               <item>
-                <widget class="QLabel" name="label_26">
-                 <property name="text">
-                  <string>x-Axis:</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="switchHeaterXbutton">
-                 <property name="text">
-                  <string>OFF</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_27">
-                 <property name="text">
-                  <string>at</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="switchHeaterXLineEdit">
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QFrame" name="frame_7">
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_7">
-               <item>
-                <widget class="QLabel" name="label_17">
-                 <property name="text">
-                  <string>y-Axis:</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="switchHeaterYbutton">
-                 <property name="text">
-                  <string>OFF</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_25">
-                 <property name="text">
-                  <string>at</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="switchHeaterYLineEdit">
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
              <widget class="QFrame" name="frame_3">
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
@@ -472,32 +424,6 @@
                 <widget class="QLineEdit" name="switchHeaterZLineEdit">
                  <property name="readOnly">
                   <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QFrame" name="frame_18">
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_15">
-               <item>
-                <widget class="QPushButton" name="switchHeaterAllOnButton">
-                 <property name="text">
-                  <string>Turn on all</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="switchHeaterAllOffButton">
-                 <property name="text">
-                  <string>Turn off all</string>
                  </property>
                 </widget>
                </item>

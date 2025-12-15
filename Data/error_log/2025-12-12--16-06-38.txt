@@ -1,0 +1,1408 @@
+Szkopek Lab Error Log Book - 2025-12-12--16-06-38
+
+2025-12-12--16-12-20 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 226, in create_new_plot
+    self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 630, in plot
+    item = PlotDataItem(*args, **kargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (34,) and (33,).
+
+
+
+
+2025-12-12--16-12-26 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 226, in create_new_plot
+    self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 630, in plot
+    item = PlotDataItem(*args, **kargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (40,) and (39,).
+
+
+
+
+2025-12-12--16-12-58 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-13-27 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-13-28 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-13-29 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-13-30 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-13-31 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-13-32 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-13-33 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-14-53 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 226, in create_new_plot
+    self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 630, in plot
+    item = PlotDataItem(*args, **kargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (69,) and (70,).
+
+
+
+
+2025-12-12--16-14-55 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 226, in create_new_plot
+    self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 630, in plot
+    item = PlotDataItem(*args, **kargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (71,) and (72,).
+
+
+
+
+2025-12-12--16-14-59 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 226, in create_new_plot
+    self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 630, in plot
+    item = PlotDataItem(*args, **kargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (74,) and (75,).
+
+
+
+
+2025-12-12--16-15-00 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 226, in create_new_plot
+    self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 630, in plot
+    item = PlotDataItem(*args, **kargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (75,) and (76,).
+
+
+
+
+2025-12-12--16-15-03 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-04 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-04 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 226, in create_new_plot
+    self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 630, in plot
+    item = PlotDataItem(*args, **kargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (80,) and (81,).
+
+
+
+
+2025-12-12--16-15-05 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-06 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-07 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-08 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-09 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-10 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-11 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-19 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-20 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-21 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-22 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-23 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-24 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-25 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-26 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-27 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-28 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-29 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-30 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-31 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-32 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-33 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-34 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-35 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-36 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-37 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-38 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-39 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-40 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-41 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-42 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-43 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-44 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-45 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-46 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-47 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-48 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-49 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-50 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-51 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-52 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-15-53 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-02 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 226, in create_new_plot
+    self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 630, in plot
+    item = PlotDataItem(*args, **kargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (137,) and (138,).
+
+
+
+
+2025-12-12--16-16-08 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-09 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-10 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-11 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-12 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-13 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-14 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-15 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-16 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-17 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-18 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-19 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-20 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-21 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-22 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-23 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-24 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-25 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-26 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-27 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-28 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-29 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-30 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-31 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-32 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-33 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-34 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-35 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-36 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-37 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-38 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-39 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-40 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-41 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-42 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-43 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-44 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-45 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-46 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-47 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-48 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-49 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-50 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-51 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-52 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-53 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-54 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-55 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-56 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-57 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-58 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-16-59 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-17-00 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-17-01 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-17-02 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-17-03 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-17-04 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-17-05 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-17-06 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+
+
+
+2025-12-12--16-17-07 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+

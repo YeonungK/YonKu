@@ -25,6 +25,7 @@ from zoneinfo import ZoneInfo
 
 
 
+
 """Exception Handler"""
 class ExceptionForwarder(QObject):
     exception_occurred = pyqtSignal(str)
@@ -37,10 +38,48 @@ class ExceptionForwarder(QObject):
         print(error_msg)
         self.exception_occurred.emit(error_msg)
 
+# not used
+class PlotUpdateWorker(QObject):
+    finished = pyqtSignal()
+    def __init__(self, plot_widgets, dataset, pausePushButton):
+        
+        super().__init__()
+         
+        self.plot_widgets = plot_widgets
+        self.dataset = dataset
+        self.pausePushButton = pausePushButton
+        
+    def start_plot_update(self):
+        
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.plot_update)
+        self.timer.start(2000)  # 1Hz
+    
+    def plot_update(self):
+        for index, plt_wid in self.plot_widgets.items():
+            if isinstance(plt_wid, PlotUi.plotWidget):
+                plt_wid.plot_data()
+    
+    def pause_resume_experiment(self):
+        if self.pausePushButton.isChecked():
+            self.timer.stop()
+        else:
+            self.timer = QTimer()
+            self.timer.timeout.connect(self.plot_update)
+            self.timer.start(2000) 
+    
+    def end_experiment(self):
+        self.timer.stop()
+        
+        print("plot_update_worker_finished")
+        
+        self.finished.emit()
+            
 """worker class for Expriments and Real-time Plotting (thread)"""
 class PlotWorker(QObject):
     finished = pyqtSignal()
     error = pyqtSignal()
+    update = pyqtSignal()
 
     def __init__(self, instruments, plot_widgets, dataset, period, pausePushButton, 
                  titleLineEdit, xLineEdit, yLineEdit, rLineEdit, thetaLineEdit,
@@ -95,6 +134,7 @@ class PlotWorker(QObject):
         self.timer = QTimer()
         self.timer.timeout.connect(self.plot_update)
         self.timer.start(self.period)  # 1Hz
+        
         
         self.experiment_datetime = datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
         self.experiment_name = self.titleLineEdit.text()
@@ -180,15 +220,15 @@ time_name:{self.experimentSettingWid.experiment_parameters['time_name']['time']}
     
         self.instrument_read_data()
         
-        for index, plt_wid in self.plot_widgets.items():
-            if isinstance(plt_wid, PlotUi.plotWidget):
-                plt_wid.plot_data()
+        self.update.emit()
+        
+        # for index, plt_wid in self.plot_widgets.items():
+        #     if isinstance(plt_wid, PlotUi.plotWidget):
+        #         plt_wid.plot_data()
     
     def instrument_read_data(self):
         
         self.logging_data_list = []
-        now = datetime.now(ZoneInfo('America/New_York')).timestamp()
-        self.dataset['time']['time'].append(now)
         
         for device_model, instrument in self.instruments.items():
             for data_type, function in instrument.data_function.items():
@@ -236,7 +276,8 @@ time_name:{self.experimentSettingWid.experiment_parameters['time_name']['time']}
                     self.thetaLineEdit2.setText(str(data_list[3]))
             
             
-        
+        now = datetime.now(ZoneInfo('America/New_York')).timestamp()
+        self.dataset['time']['time'].append(now)
         
         self.logging_data_list.append(now)   
         self.logger.append(self.logging_data_list)     
@@ -365,32 +406,68 @@ time_name:{self.experimentSettingWid.experiment_parameters['time_name']['time']}
         
 """worker class for measuring pressureGauge (thread)"""
 class PressureWorker(QObject):
-    def __init__(self, pressureDevice, period, pressureLineEdit):
+    finished = pyqtSignal()
+    def __init__(self, pressureDevice, period, stopDisplayButton, pressureLineEdit):
         super().__init__()
         
         self.pressureDevice = pressureDevice
         self.period = period
+        self.stopDisplayButton = stopDisplayButton
         self.pressureLineEdit = pressureLineEdit
         
+        self.stopDisplayButton.clicked.connect(self.finish)
     
     def start_reading(self):
-        #self.pressureDevice.pressure_read_start()
         self.timer = QTimer()
         self.timer.timeout.connect(self.read_pressure)
-        self.timer.start(self.period)  # 1Hz  
+        self.timer.start(self.period)  # 0.5Hz  
 
-        
-    
     def read_pressure(self):
-        pressure = self.pressureDevice.pressure_read()
-       #print("yes")
+        pressure = self.pressureDevice.pressure_read()[0]
         self.pressureLineEdit.setText(pressure)
-        
-        
         
     def finish(self):
         print("worker_finished")
+        self.pressureLineEdit.setText("")
         self.timer.stop()
+        self.finished.emit()
+
+"""worker class for measuring magnetPowerSupply (thread)"""
+class MagnetPowerSupplyWorker(QObject):
+    finished = pyqtSignal()
+    def __init__(self, magnetDevice, period, magnetStopDisplayButton, temperatureLineEdit, currentLineEdit, fieldZLineEdit):
+        super().__init__()
+        
+        self.magnetDevice = magnetDevice
+        self.period = period
+        self.magnetStopDisplayButton = magnetStopDisplayButton
+        self.temperatureLineEdit = temperatureLineEdit
+        self.currentLineEdit = currentLineEdit
+        self.fieldZLineEdit = fieldZLineEdit
+        
+        self.magnetStopDisplayButton.clicked.connect(self.finish)
+        
+    def start_reading(self):
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.read_magnetPowerSupply)
+        self.timer.start(self.period)  # 1Hz  
+
+    def read_magnetPowerSupply(self):
+        temperature = self.magnetDevice.read_temperature()
+        current = self.magnetDevice.read_current()[0]
+        field = self.magnetDevice.read_all_field()[0]
+        
+        self.temperatureLineEdit.setText(str(temperature))
+        self.currentLineEdit.setText(str(current))
+        self.fieldZLineEdit.setText(str(field))
+        
+    def finish(self):
+        print("worker_finished")
+        self.temperatureLineEdit.setText("")
+        self.currentLineEdit.setText("")
+        self.fieldZLineEdit.setText("")
+        self.timer.stop()
+        self.finished.emit()
         
         
 """main gui window class"""
@@ -598,7 +675,7 @@ class UI(QMainWindow):
         
         # [---------pressure gauge ui output signals---------]
         
-        self.pressureGaugeWid.startButton.clicked.connect(self.pressure_function) # [/]
+        self.pressureGaugeWid.startDisplay.clicked.connect(self.pressureGauge_thread) # [/]
         
         # [----------gas valve and pressure gauge ui signals---------]
         
@@ -610,13 +687,14 @@ class UI(QMainWindow):
         
         # [----------magnet power supply ui signals---------]
         
-        # self.magnetPowerSupplyWid.switchHeaterButton.clicked.connect(self.switch_heater_power)
+        self.magnetPowerSupplyWid.switchHeaterZbutton.clicked.connect(self.switch_heater_power)
         # self.magnetPowerSupplyWid.currentLimitSet.clicked.connect(self.current_lim_set)
         # self.magnetPowerSupplyWid.currentLimitRead.clicked.connect(self.current_lim_read)
-        # self.magnetPowerSupplyWid.targetFieldLimitSet.clicked.connect(self.target_field_set)
-        # self.magnetPowerSupplyWid.targetFieldRead.clicked.connect(self.target_field_read)
-        # self.magnetPowerSupplyWid.fieldRatingSet.clicked.connect(self.field_rating_set)
-        # self.magnetPowerSupplyWid.fieldRatingRead.clicked.connect(self.field_rating_read)
+        self.magnetPowerSupplyWid.targetFieldLimitSet.clicked.connect(self.set_target_field)
+        self.magnetPowerSupplyWid.targetFieldRead.clicked.connect(self.read_target_field)
+        self.magnetPowerSupplyWid.fieldRatingSet.clicked.connect(self.set_field_rate)
+        self.magnetPowerSupplyWid.fieldRatingRead.clicked.connect(self.read_field_rate)
+        self.magnetPowerSupplyWid.startDisplay.clicked.connect(self.magnetPowerSupply_thread)
 
 # [/]
         
@@ -909,6 +987,7 @@ class UI(QMainWindow):
             else:
                 self.experiment_period = int(self.MeasureFreqLineEdit.text()) * 1000
            
+            # self.plot_worker for data acquisition
             self.plot_worker = PlotWorker(self.connected_instuments, self.plot_widgets, self.datasets['primary'].set, self.experiment_period, 
                                         self.pausePushButton, self.experimentNameLineEdit,
                                         self.lockInAmplifier1Wid.xLineEdit, self.lockInAmplifier1Wid.yLineEdit, self.lockInAmplifier1Wid.rLineEdit, self.lockInAmplifier1Wid.thetaLineEdit, 
@@ -929,21 +1008,39 @@ class UI(QMainWindow):
             self.plot_worker_thread.finished.connect(self.plot_worker_thread.deleteLater)
             
             self.plot_worker_thread.start()
+            
+            self.plot_worker.update.connect(self.update_plot)
         
         except ValueError:
             self.experimentWid.MeasureFreqLineEdit.setText("You can only put integers here.")
         
+        except Exception:
+            self.errorDisplay.setText("The X and Y array sizes are different. However, you can disregard this error as long as the traces are updating real-time.")
+            
     def pause_resume_experiment_thread(self):
         self.plot_worker.pause_resume_experiment()
+        # self.plot_update_worker.pause_resume_experiment()
     
     def end_experiment_worker(self):
         self.plot_worker.end_experiment()
+        # self.plot_update_worker.end_experiment()
         
     def plot_thread_finished(self):
         print("plot thread_finished")
         self.datasets['primary'].clear()
         self.plot_worker_thread.quit()
         self.plot_worker_thread.wait()
+    
+    def plot_update_thread_finished(self):
+        print("plot update_thread_finished")
+        self.datasets['primary'].clear()
+        self.plot_update_worker_thread.quit()
+        self.plot_update_worker_thread.wait()
+        
+    def update_plot(self):
+        for index, plt_wid in self.plot_widgets.items():
+            if isinstance(plt_wid, PlotUi.plotWidget):
+                plt_wid.plot_data()
         
      # [/]
 
@@ -1003,27 +1100,44 @@ class UI(QMainWindow):
     
     # [+++++++++Instrument UI Interface functions+++++++++++]
     
-    # [...........(Thread) pressure gauge...........]
+    # [...........Instrument Threads...........]
     
     def pressure_function(self):
-        if self.pressureGaugeWid.startButton.isChecked():
+        if self.pressureGaugeWid.startDisplay.isChecked():
             self.start_reading_pressure()
         else:
             self.pressure_worker_thread.exit()
     
-    def start_reading_pressure(self):
+    def pressureGauge_thread(self):
         print("pressure reading start")
         
-        self.pressure_worker = PressureWorker(self.pressureGauge, 10, self.pressureGaugeWid.pressureGaugeLineEdit)
+        self.pressure_worker = PressureWorker(self.pressureGauge, 2000, self.pressureGaugeWid.stopDisplay, self.pressureGaugeWid.pressureGaugeLineEdit)
         self.pressure_worker_thread = QThread()
         self.pressure_worker.moveToThread(self.pressure_worker_thread)
         
         self.pressure_worker_thread.started.connect(self.pressure_worker.start_reading)
-        self.pressure_worker_thread.finished.connect(self.pressure_worker.finish)
+        self.pressure_worker.finished.connect(self.pressure_worker_thread.quit)
         self.pressure_worker_thread.finished.connect(self.pressure_worker.deleteLater)
         self.pressure_worker_thread.finished.connect(self.pressure_worker_thread.deleteLater)
         
         self.pressure_worker_thread.start()
+        
+    def magnetPowerSupply_thread(self):
+        print("magnet reading start")
+        
+        self.magnet_worker = MagnetPowerSupplyWorker(self.magnetPowerSupply, 1000, self.magnetPowerSupplyWid.stopDisplay,
+                                                     self.magnetPowerSupplyWid.temperatureLineEdit,
+                                                     self.magnetPowerSupplyWid.currentLineEdit,
+                                                     self.magnetPowerSupplyWid.fieldZLineEdit)
+        self.magnet_worker_thread = QThread()
+        self.magnet_worker.moveToThread(self.magnet_worker_thread)
+        
+        self.magnet_worker_thread.started.connect(self.magnet_worker.start_reading)
+        self.magnet_worker.finished.connect(self.magnet_worker_thread.quit)
+        self.magnet_worker_thread.finished.connect(self.magnet_worker.deleteLater)
+        self.magnet_worker_thread.finished.connect(self.magnet_worker_thread.deleteLater)
+        
+        self.magnet_worker_thread.start()
         
     # [/]
     
@@ -1636,7 +1750,10 @@ class UI(QMainWindow):
     # [...........magnet supply...........]
     
     def switch_heater_power(self):
-        pass 
+        if self.magnetPowerSupplyWid.switchHeaterZbutton.isChecked():
+            self.magnetPowerSupply.set_switch_status('Z','ON')
+        else:
+            self.magnetPowerSupply.set_switch_status('Z','OFF')
     
     def set_switch_heater_status(self):
 
@@ -1647,25 +1764,35 @@ class UI(QMainWindow):
         z_status = switch_heater_status['z'].split(':')[-1]
         
         print(x_status, y_status, z_status)
-        # buttons = {x_status : self.magnetPowerSupplyWid.switchHeaterXbutton, y_status : self.magnetPowerSupplyWid.switchHeaterYbutton, z_status : self.magnetPowerSupplyWid.switchHeaterZbutton}
         
-        if x_status == 'ON':
-            self.magnetPowerSupplyWid.on_state(self.magnetPowerSupplyWid.switchHeaterXbutton)
-        else:
-            self.magnetPowerSupplyWid.off_state(self.magnetPowerSupplyWid.switchHeaterXbutton)
-        if y_status == 'ON':
-            self.magnetPowerSupplyWid.on_state(self.magnetPowerSupplyWid.switchHeaterYbutton)
-        else:
-            self.magnetPowerSupplyWid.off_state(self.magnetPowerSupplyWid.switchHeaterYbutton)
         if z_status == 'ON':
             self.magnetPowerSupplyWid.on_state(self.magnetPowerSupplyWid.switchHeaterZbutton)
         else:
             self.magnetPowerSupplyWid.off_state(self.magnetPowerSupplyWid.switchHeaterZbutton)
         
+        self.magnetPowerSupplyWid.switchHeaterZLineEdit.setText('')
         
-        self.magnetPowerSupplyWid.switchHeaterXLineEdit.setText('')
-        self.magnetPowerSupplyWid.switchHeaterYLineEdit.setText('')
-        self.magnetPowerSupplyWid.switchHeaterZLineEdit.setText('') # [/]
+    def set_target_field(self):
+        value = self.magnetPowerSupplyWid.targetFieldSpinBox.value()
+        response = self.magnetPowerSupply.set_target_field('Z', str(value))
+        print(response)
+    
+    def read_target_field(self):
+        value = self.magnetPowerSupply.read_target_field('Z')
+        print(value)
+        self.magnetPowerSupplyWid.targetFieldSpinBox.setValue(float(value))
+        
+    def set_field_rate(self):
+        value = self.magnetPowerSupplyWid.fieldRatingSpinBox.value()
+        response = self.magnetPowerSupply.set_field_rate('Z', str(value))
+        print(response)
+    
+    def read_field_rate(self):
+        value = self.magnetPowerSupply.read_field_rate('Z')
+        print(value)
+        self.magnetPowerSupplyWid.fieldRatingSpinBox.setValue(float(value))
+    
+    # [/]
          # [/]
     
     
@@ -1710,7 +1837,11 @@ class UI(QMainWindow):
         
         # print(self.plot_widgets)
         
-        self.plot_widget_count += 1 # [/]
+        self.plot_widget_count += 1 
+        
+        
+        
+        # [/]
     
     # [...........old plots...........]
     

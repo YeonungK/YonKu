@@ -120,7 +120,7 @@ class SerialInstrument(ScientificInstrument):
         self.device.write(b'\x05\n')
         time.sleep(0.5)
         response2 = self.read()
-        print(response2)
+        #print(response2)
         return response2
     
     def close(self):

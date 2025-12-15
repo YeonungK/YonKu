@@ -62,11 +62,23 @@ class magnetPowerSupply(EthernetInstrument):
         response = self.read()
         return response
     
+    def read_field_rate(self, axis:str): # axis = 'x', 'y', 'z', 's' 
+        command = 'READ:DEV:GRP' + axis.upper() + ':PSU:SIG:RFST?'
+        self.write(command)
+        response = self.read()
+        response = response.replace('T/m\n', "")
+        response = response.split(':')
+        response = response[-1]
+        return response
+    
     def read_current(self):
         try:
             command = 'READ:DEV:MB1.T1:TEMP:SIG:CURR?'
             self.write(command)
             response = self.read()
+            response = response.replace('K\n', "")
+            response = response.split(':')
+            response = response[-1]
             
         except:
             response = 0
@@ -78,6 +90,9 @@ class magnetPowerSupply(EthernetInstrument):
         command = 'READ:DEV:MB1.T1:TEMP:SIG:TEMP?'
         self.write(command)
         response = self.read()
+        response = response.replace('K\n', "")
+        response = response.split(':')
+        response = response[-1]
         return response
     
     def read_switch_status(self, axis:str):
@@ -85,6 +100,13 @@ class magnetPowerSupply(EthernetInstrument):
         self.write(command)
         response = self.read()
         return response
+    
+    def set_switch_status(self, axis:str, power:str):
+        command = 'SET:DEV:GRP' + axis.upper() + f':PSU:SIG:SWHT:{power.upper()}'
+        self.write(command)
+        response = self.read()
+        return response
+
 
     def read_all_switch_status(self):
         x = self.read_switch_status('x').replace('\n',"")
@@ -123,9 +145,14 @@ class magnetPowerSupply(EthernetInstrument):
         command = 'READ:DEV:GRP' + axis.upper() + ':PSU:SIG:FSET?'
         self.write(command)
         response = self.read()
+        response = response.replace('T\n', "")
+        response = response.split(':')
+        response = response[-1]
         return response
     
     
 if __name__ == "__main__":
     device = magnetPowerSupply('test', '192.169.10.100', 7020)
     print(device.read_all_field())
+    print(device.set_switch_status('Z','OFF'))
+    

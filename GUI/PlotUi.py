@@ -6,8 +6,8 @@ import numpy as np
 import h5py
 import time
 from datetime import datetime
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QLabel, QComboBox, QCheckBox
-from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QLabel, QComboBox, QCheckBox, QMdiSubWindow
+from PyQt5.QtGui import QIcon, QCloseEvent
 from PyQt5.QtCore import QTimer, Qt, QSize
 import pyqtgraph as pg
 import pandas as pd
@@ -223,6 +223,8 @@ class plotWidget(QWidget):
             
         # create a new trace with the extracted trace info
         if not plot_channels in self.plots:
+            # data = np.array([self.xAxisData[xAxisChannel],self.yAxisData[yAxisChannel]], dtype=float)
+            # data = data.transpose()
             self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel], 
                                                                 self.yAxisData[yAxisChannel], name = plot_name, pen = self.colors[self.plot_count % 5])
             self.plot_count += 1
@@ -249,8 +251,14 @@ class plotWidget(QWidget):
         for plt_channels, plts in self.plots.items():
             plt_channels = plt_channels.split(" vs ")
             print(plt_channels)
+            # data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
+            # data = data.transpose()
+            # plts.setData(data)
             plts.setData(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
 
+    def closeEvent(self, event:QCloseEvent):
+        self.plots.clear()
+        event.accept()
          # [/]
 
 
@@ -826,4 +834,3 @@ class oldPlotWidget(QWidget):
  # [/]
  # [/]
         
-    

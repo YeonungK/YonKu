@@ -1,0 +1,182 @@
+Szkopek Lab Error Log Book - 2025-12-12--17-37-44
+
+2025-12-12--17-38-08 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 59, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 257, in plot_data
+    plts.setData(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (4,) and (3,).
+
+
+
+
+2025-12-12--17-38-12 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 59, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 257, in plot_data
+    plts.setData(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (8,) and (7,).
+
+
+
+
+2025-12-12--17-38-49 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 228, in create_new_plot
+    self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 630, in plot
+    item = PlotDataItem(*args, **kargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (45,) and (44,).
+
+
+
+
+2025-12-12--17-38-52 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 228, in create_new_plot
+    self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 630, in plot
+    item = PlotDataItem(*args, **kargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (48,) and (47,).
+
+
+
+
+2025-12-12--17-39-00 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 228, in create_new_plot
+    self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 630, in plot
+    item = PlotDataItem(*args, **kargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (56,) and (55,).
+
+
+
+
+2025-12-12--17-39-01 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 228, in create_new_plot
+    self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 630, in plot
+    item = PlotDataItem(*args, **kargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (57,) and (56,).
+
+
+
+
+2025-12-12--17-39-05 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 228, in create_new_plot
+    self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotItem\PlotItem.py", line 630, in plot
+    item = PlotDataItem(*args, **kargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 375, in __init__
+    self.setData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (61,) and (60,).
+
+
+
+
+2025-12-12--17-39-16 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 59, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 257, in plot_data
+    plts.setData(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (72,) and (71,).
+
+
+
+
+2025-12-12--17-39-22 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 59, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 257, in plot_data
+    plts.setData(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 833, in setData
+    self.updateItems( styleUpdate = self.property('styleWasChanged') )
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotDataItem.py", line 905, in updateItems
+    self.curve.setData(x=x, y=y, **curveArgs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 479, in setData
+    self.updateData(*args, **kargs)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\pyqtgraph\graphicsItems\PlotCurveItem.py", line 535, in updateData
+    raise Exception("X and Y arrays must be the same shape--got %s and %s." % (self.xData.shape, self.yData.shape))
+Exception: X and Y arrays must be the same shape--got (78,) and (77,).
+
+

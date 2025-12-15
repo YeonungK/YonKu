@@ -1,0 +1,143 @@
+Szkopek Lab Error Log Book - 2025-12-12--15-48-13
+
+2025-12-12--15-49-07 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Field elements must be 2- or 3-tuples, got '4.1988'
+
+
+
+
+2025-12-12--15-49-08 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Field elements must be 2- or 3-tuples, got '4.1988'
+
+
+
+
+2025-12-12--15-49-09 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Field elements must be 2- or 3-tuples, got '4.1988'
+
+
+
+
+2025-12-12--15-49-10 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Field elements must be 2- or 3-tuples, got '4.1988'
+
+
+
+
+2025-12-12--15-49-11 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Field elements must be 2- or 3-tuples, got '4.1988'
+
+
+
+
+2025-12-12--15-49-12 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Field elements must be 2- or 3-tuples, got '4.1988'
+
+
+
+
+2025-12-12--15-49-13 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Field elements must be 2- or 3-tuples, got '4.1988'
+
+
+
+
+2025-12-12--15-49-14 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Field elements must be 2- or 3-tuples, got '4.1988'
+
+
+
+
+2025-12-12--15-49-15 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Field elements must be 2- or 3-tuples, got '4.1988'
+
+
+
+
+2025-12-12--15-49-16 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Field elements must be 2- or 3-tuples, got '4.1988'
+
+
+
+
+2025-12-12--15-49-17 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Field elements must be 2- or 3-tuples, got '4.1988'
+
+
+
+
+2025-12-12--15-49-18 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Field elements must be 2- or 3-tuples, got '4.1988'
+
+
+
+
+2025-12-12--15-49-19 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 185, in plot_update
+    plt_wid.plot_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\PlotUi.py", line 252, in plot_data
+    data = np.array(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Field elements must be 2- or 3-tuples, got '4.1988'
+
+

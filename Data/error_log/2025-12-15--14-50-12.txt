@@ -1,0 +1,16 @@
+Szkopek Lab Error Log Book - 2025-12-15--14-50-12
+
+2025-12-15--14-50-25 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 427, in read_pressure
+    self.pressureLineEdit.setText(pressure)
+TypeError: setText(self, a0: Optional[str]): argument 1 has unexpected type 'list'
+
+
+
+
+2025-12-15--14-50-27 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 427, in read_pressure
+    self.pressureLineEdit.setText(pressure)
+TypeError: setText(self, a0: Optional[str]): argument 1 has unexpected type 'list'
+
+

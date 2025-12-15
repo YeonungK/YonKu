@@ -14,13 +14,8 @@ class magnetPowerSupply_widget(QWidget):
         
         uic.loadUi("GUI/ui_files/instrument_control_uis/Oxford_MercuryiPS_ui.ui", self)
         
-        self.heaterButtons = [self.switchHeaterXbutton, self.switchHeaterYbutton, self.switchHeaterZbutton]
-        self.switchHeaterXbutton.setCheckable(True)
-        self.switchHeaterYbutton.setCheckable(True)
+
         self.switchHeaterZbutton.setCheckable(True)
-        
-        self.switchHeaterXbutton.toggled.connect(self.switch_x_change_state)
-        self.switchHeaterYbutton.toggled.connect(self.switch_y_change_state)
         self.switchHeaterZbutton.toggled.connect(self.switch_z_change_state)
         
     
@@ -39,43 +34,7 @@ class magnetPowerSupply_widget(QWidget):
         button.setStyleSheet(
             "background-color: green; color: black"
         )
-        
-    def switch_x_change_state(self):
-        
-        if self.switchHeaterXbutton.isChecked():
-            self.switchHeaterXbutton.setText("ON")
-            self.switchHeaterXbutton.setStyleSheet(
-                "background-color: green; color: black"
-            )
-
-        else:
-            self.switchHeaterXbutton.setText("OFF")
-            self.switchHeaterXbutton.setStyleSheet(
-                "background-color: red; color: black"
-            )
-        
-        now = datetime.now()
-        now.strftime('%Y-%m-%d %H:%M:%S')
-        self.switchHeaterXLineEdit.setText(str(now))
-    
-    def switch_y_change_state(self):
-        
-        if self.switchHeaterYbutton.isChecked():
-            self.switchHeaterYbutton.setText("ON")
-            self.switchHeaterYbutton.setStyleSheet(
-                "background-color: green; color: black"
-            )
-
-        else:
-            self.switchHeaterYbutton.setText("OFF")
-            self.switchHeaterYbutton.setStyleSheet(
-                "background-color: red; color: black"
-            )
-        
-        now = datetime.now()
-        now.strftime('%Y-%m-%d %H:%M:%S')
-        self.switchHeaterYLineEdit.setText(str(now))
-        
+             
     def switch_z_change_state(self):
         
         if self.switchHeaterZbutton.isChecked():

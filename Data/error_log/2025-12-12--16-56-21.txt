@@ -1,0 +1,12 @@
+Szkopek Lab Error Log Book - 2025-12-12--16-56-21
+
+2025-12-12--16-56-24 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2239, in <module>
+    UIWindow = UI()
+               ^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 617, in __init__
+    self.switchHeaterZbutton.clicked.connect(self.switch_heater_power)
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'switchHeaterZbutton'
+
+
