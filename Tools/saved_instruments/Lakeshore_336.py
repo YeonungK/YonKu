@@ -21,6 +21,7 @@ class temperatureController(SerialInstrument):
         self.data_unit = {'temperature':'K', 'resistance':'Ohms'}
         self.data_function = {'temperature':self.temp_read_all, 'resistance':self.resist_read_all}
         
+        
     def clear(self):
         self.write("*CLS")
         

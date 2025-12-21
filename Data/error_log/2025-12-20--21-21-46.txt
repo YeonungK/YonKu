@@ -1,0 +1,10 @@
+Szkopek Lab Error Log Book - 2025-12-20--21-21-46
+
+2025-12-20--21-21-58 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 217, in closeEvent
+    method_path.unlink()
+  File "C:\Users\szkop\anaconda3\Lib\pathlib.py", line 1342, in unlink
+    os.unlink(self)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\szkop\\OneDrive\\Desktop\\YonKu\\Tools\\saved_instruments\\Members\\INFICON_VGC401\\default_2_method.py'
+
+

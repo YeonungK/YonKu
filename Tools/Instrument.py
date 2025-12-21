@@ -150,7 +150,9 @@ class GPIBInstrument(ScientificInstrument):
         return device
     
     def read(self):
-        pass
+        response = self.device.read()
+        time.sleep(0.1)
+        return response
     
     def write(self, command:str):
         self.device.write(command)

@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-12-20--21-11-49
+
+2025-12-20--21-11-58 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 217, in closeEvent
+    method_path.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'close'
+
+

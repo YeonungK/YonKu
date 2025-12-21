@@ -1,0 +1,10 @@
+Szkopek Lab Error Log Book - 2025-12-20--20-54-54
+
+2025-12-20--20-55-38 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 215, in closeEvent
+    method_path.unlink()
+  File "C:\Users\szkop\anaconda3\Lib\pathlib.py", line 1342, in unlink
+    os.unlink(self)
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\szkop\\OneDrive\\Desktop\\YonKu\\Tools\\saved_intruments\\Members\\Lakeshore_336\\default_0_method.py'
+
+

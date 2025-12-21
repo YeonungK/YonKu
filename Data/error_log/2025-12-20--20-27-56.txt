@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-12-20--20-27-56
+
+2025-12-20--20-28-03 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\SerialInstDeviceUi.py", line 28, in new_command_setting
+    self.newCommandWin.setWidget(self.newCommandWid)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'QMainWindow' object has no attribute 'setWidget'. Did you mean: 'menuWidget'?
+
+

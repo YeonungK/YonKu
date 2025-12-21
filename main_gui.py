@@ -1989,7 +1989,7 @@ class UI(QMainWindow):
         self.deviceListSub.widget.tabWidget.addTab(self.instrument_wid[device_key], device_key)
         
         self.serial_device_wid_create()
-    
+
     def serial_device_wid_create(self):
         directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
         file_name = self.serial_inst_create_wid.data_list['model'] + '_ui' + '.ui'
@@ -2034,6 +2034,7 @@ class UI(QMainWindow):
             
         if self.instruments[model_name].connected:
             self.instrument_wid[device_key].connectionLineEdit.setText("Connected")
+            self.instrument_wid[device_key].instrument = serial_instrument
         else:
             self.instrument_wid[device_key].connectionLineEdit.setText("Not Connected")
 
@@ -2106,15 +2107,16 @@ class UI(QMainWindow):
             print(f"Warning: '{device_name}' not found in module '{module_path}'.")
             
         try:
-            ethernet_instrument = instrument_class(device_name, address)
+            gpib_instrument = instrument_class(device_name, address)
         except Exception as e:
             print(f"Error instantiating '{device_name}': {e}")
         
-        setattr(self, device_name, ethernet_instrument)
-        self.instruments[model_name] = ethernet_instrument
+        setattr(self, device_name, gpib_instrument)
+        self.instruments[model_name] = gpib_instrument
             
         if self.instruments[model_name].connected:
             self.instrument_wid[device_key].connectionLineEdit.setText("Connected")
+            self.instrument_wid[device_key].instrument = gpib_instrument
         else:
             self.instrument_wid[device_key].connectionLineEdit.setText("Not Connected")
             
@@ -2199,6 +2201,7 @@ class UI(QMainWindow):
             
         if self.instruments[model_name].connected:
             self.instrument_wid[device_key].connectionLineEdit.setText("Connected")
+            self.instrument_wid[device_key].instrument = ethernet_instrument
         else:
             self.instrument_wid[device_key].connectionLineEdit.setText("Not Connected")
   
@@ -2283,6 +2286,7 @@ class UI(QMainWindow):
             
         if self.instruments[model_name].connected:
             self.instrument_wid[device_key].connectionLineEdit.setText("Connected")
+            self.instrument_wid[device_key].instrument = usb_instrument
         else:
             self.instrument_wid[device_key].connectionLineEdit.setText("Not Connected")
            

@@ -1,0 +1,13 @@
+Szkopek Lab Error Log Book - 2025-12-20--21-29-53
+
+2025-12-20--21-30-01 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\EthernetInstDeviceUi.py", line 23, in new_command_setting
+    self.newCommandWid = ncsu.new_command_setting_ui(self.instrument)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 49, in __init__
+    self.create_member_folder()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 85, in create_member_folder
+    instrument_path.touch(parents=True, exist_ok=True)
+TypeError: Path.touch() got an unexpected keyword argument 'parents'
+
+
