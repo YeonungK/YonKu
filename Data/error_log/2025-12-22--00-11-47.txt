@@ -1,0 +1,5 @@
+Szkopek Lab Error Log Book - 2025-12-22--00-11-47
+
+2025-12-22--00-14-15 Exception: TypeError: new_command_setting_ui._default_button_method() takes 1 positional argument but 3 were given
+
+

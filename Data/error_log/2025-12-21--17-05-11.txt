@@ -1,0 +1,14 @@
+Szkopek Lab Error Log Book - 2025-12-21--17-05-11
+
+2025-12-21--17-05-19 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 406, in functionEdit_method
+    self.manualEditWid = meu.manual_edit_ui(self.new_function_code)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\ManualEditUi.py", line 23, in __init__
+    self._connect_pushbuttons()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\ManualEditUi.py", line 33, in _connect_pushbuttons
+    if not name or self._GENERIC_NAME_RE.match(name):
+                   ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'manual_edit_ui' object has no attribute '_GENERIC_NAME_RE'
+
+

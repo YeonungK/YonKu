@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>867</width>
-    <height>826</height>
+    <width>1007</width>
+    <height>897</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,12 +26,12 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>830</width>
-        <height>1189</height>
+        <y>-207</y>
+        <width>970</width>
+        <height>1239</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_21">
+      <layout class="QHBoxLayout" name="horizontalLayout_28">
        <item>
         <widget class="QFrame" name="frame_38">
          <property name="frameShape">
@@ -200,7 +200,7 @@
                    <property name="bottomMargin">
                     <number>0</number>
                    </property>
-                   <item alignment="Qt::AlignLeft">
+                   <item>
                     <widget class="QFrame" name="frame_40">
                      <property name="frameShape">
                       <enum>QFrame::StyledPanel</enum>
@@ -286,14 +286,14 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="dataTypeAddButton">
+                 <widget class="QPushButton" name="dataAddButton">
                   <property name="text">
                    <string>Add</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="dataTypeComboBox"/>
+                 <widget class="QComboBox" name="dataComboBox"/>
                 </item>
                 <item>
                  <widget class="QLineEdit" name="dataDefaultValue">
@@ -309,14 +309,14 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="dataTypeSaveButton">
+                 <widget class="QPushButton" name="dataSaveButton">
                   <property name="text">
                    <string>Save</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="dataTypeRemoveButton">
+                 <widget class="QPushButton" name="dataRemoveButton">
                   <property name="text">
                    <string>Remove</string>
                   </property>
@@ -393,24 +393,55 @@
                    <property name="bottomMargin">
                     <number>0</number>
                    </property>
-                   <item>
-                    <widget class="QComboBox" name="commandTypeComboBox">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
+                   <item alignment="Qt::AlignLeft">
+                    <widget class="QFrame" name="frame_42">
+                     <property name="frameShape">
+                      <enum>QFrame::StyledPanel</enum>
                      </property>
-                     <item>
-                      <property name="text">
-                       <string>READ</string>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <layout class="QHBoxLayout" name="horizontalLayout_26">
+                      <property name="leftMargin">
+                       <number>0</number>
                       </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>WRITE</string>
+                      <property name="topMargin">
+                       <number>0</number>
                       </property>
-                     </item>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QComboBox" name="commandTypeComboBox">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <item>
+                         <property name="text">
+                          <string>READ</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>WRITE</string>
+                         </property>
+                        </item>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="commandTypeSaveButton">
+                        <property name="text">
+                         <string>Save</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
                     </widget>
                    </item>
                    <item>
@@ -557,23 +588,54 @@
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QComboBox" name="comSystemComboBox">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
+                       <widget class="QFrame" name="frame_43">
+                        <property name="frameShape">
+                         <enum>QFrame::StyledPanel</enum>
                         </property>
-                        <item>
-                         <property name="text">
-                          <string>ASCII</string>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
+                        </property>
+                        <layout class="QHBoxLayout" name="horizontalLayout_27">
+                         <property name="leftMargin">
+                          <number>0</number>
                          </property>
-                        </item>
-                        <item>
-                         <property name="text">
-                          <string>Binary</string>
+                         <property name="topMargin">
+                          <number>0</number>
                          </property>
-                        </item>
+                         <property name="rightMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QComboBox" name="comSystemComboBox">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <item>
+                            <property name="text">
+                             <string>ASCII</string>
+                            </property>
+                           </item>
+                           <item>
+                            <property name="text">
+                             <string>Binary</string>
+                            </property>
+                           </item>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="comSystemSaveButton">
+                           <property name="text">
+                            <string>Save</string>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
                        </widget>
                       </item>
                       <item>
@@ -695,9 +757,12 @@
                              </widget>
                             </item>
                             <item>
-                             <widget class="QCheckBox" name="writeCommandButton">
+                             <widget class="QCheckBox" name="writeCommandCheckBox">
                               <property name="text">
                                <string>Command</string>
+                              </property>
+                              <property name="checkable">
+                               <bool>true</bool>
                               </property>
                              </widget>
                             </item>
@@ -739,6 +804,13 @@
                           <widget class="QLabel" name="label_10">
                            <property name="text">
                             <string>READ</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLineEdit" name="readVariableLineEdit">
+                           <property name="placeholderText">
+                            <string>Variable Name</string>
                            </property>
                           </widget>
                          </item>
@@ -808,7 +880,7 @@
                              <number>0</number>
                             </property>
                             <item>
-                             <widget class="QLineEdit" name="queryLineEdit">
+                             <widget class="QLineEdit" name="queryCommandLineEdit">
                               <property name="text">
                                <string/>
                               </property>
@@ -818,13 +890,20 @@
                              </widget>
                             </item>
                             <item>
-                             <widget class="QCheckBox" name="queryCommandButton">
+                             <widget class="QCheckBox" name="queryCommandCheckBox">
                               <property name="text">
                                <string>Command</string>
                               </property>
                              </widget>
                             </item>
                            </layout>
+                          </widget>
+                         </item>
+                         <item alignment="Qt::AlignTop">
+                          <widget class="QLineEdit" name="queryVariableLineEdit">
+                           <property name="placeholderText">
+                            <string>Variable Name</string>
+                           </property>
                           </widget>
                          </item>
                          <item alignment="Qt::AlignTop">
@@ -882,6 +961,51 @@
                         </layout>
                        </widget>
                       </item>
+                      <item>
+                       <widget class="QFrame" name="frame_44">
+                        <property name="frameShape">
+                         <enum>QFrame::StyledPanel</enum>
+                        </property>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
+                        </property>
+                        <layout class="QHBoxLayout" name="horizontalLayout_21">
+                         <property name="leftMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QLabel" name="label_28">
+                           <property name="text">
+                            <string>RETURN</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLineEdit" name="returnLineEdit">
+                           <property name="placeholderText">
+                            <string>Variable Name</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="returnAddButton">
+                           <property name="text">
+                            <string>Add</string>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
                      </layout>
                     </widget>
                    </item>
@@ -895,7 +1019,11 @@
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_9">
                       <item>
-                       <widget class="QPlainTextEdit" name="functionDisplay"/>
+                       <widget class="QPlainTextEdit" name="functionDisplay">
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
                       </item>
                       <item>
                        <widget class="QFrame" name="frame_18">
@@ -919,9 +1047,9 @@
                           <number>0</number>
                          </property>
                          <item>
-                          <widget class="QPushButton" name="functionSave">
+                          <widget class="QPushButton" name="functionDelete">
                            <property name="text">
-                            <string>Save</string>
+                            <string>Delete Last Line</string>
                            </property>
                           </widget>
                          </item>
@@ -963,6 +1091,13 @@
                          <property name="bottomMargin">
                           <number>0</number>
                          </property>
+                         <item>
+                          <widget class="QPushButton" name="functionSave">
+                           <property name="text">
+                            <string>Save</string>
+                           </property>
+                          </widget>
+                         </item>
                          <item>
                           <widget class="QPushButton" name="functionSaveAsTemplate">
                            <property name="text">
@@ -1248,6 +1383,9 @@
                    <enum>QFrame::Raised</enum>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_16">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
                    <property name="leftMargin">
                     <number>0</number>
                    </property>
@@ -1284,7 +1422,7 @@
                       <item alignment="Qt::AlignLeft">
                        <widget class="QLabel" name="label_25">
                         <property name="text">
-                         <string>Desired data type:</string>
+                         <string>Required data type:</string>
                         </property>
                        </widget>
                       </item>
@@ -1311,6 +1449,13 @@
                           <string>float</string>
                          </property>
                         </item>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="desiredDataInstr">
+                        <property name="text">
+                         <string>Current response meets the requirement.</string>
+                        </property>
                        </widget>
                       </item>
                      </layout>
@@ -1377,8 +1522,11 @@
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
+                        <property name="text">
+                         <string/>
+                        </property>
                         <property name="placeholderText">
-                         <string>default value</string>
+                         <string>from</string>
                         </property>
                        </widget>
                       </item>
@@ -1391,14 +1539,21 @@
                          </sizepolicy>
                         </property>
                         <property name="placeholderText">
-                         <string>default value</string>
+                         <string>to</string>
                         </property>
                        </widget>
                       </item>
                      </layout>
                     </widget>
                    </item>
-                   <item alignment="Qt::AlignLeft">
+                   <item>
+                    <widget class="QLabel" name="dataManInstr">
+                     <property name="text">
+                      <string>Fill out the old and new texts to replace.</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
                     <widget class="QFrame" name="frame_31">
                      <property name="frameShape">
                       <enum>QFrame::StyledPanel</enum>
@@ -1419,7 +1574,14 @@
                       <property name="bottomMargin">
                        <number>0</number>
                       </property>
-                      <item>
+                      <item alignment="Qt::AlignLeft">
+                       <widget class="QPushButton" name="dataManCheckButton">
+                        <property name="text">
+                         <string>Check</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item alignment="Qt::AlignLeft">
                        <widget class="QLabel" name="label_24">
                         <property name="text">
                          <string>Current Response:</string>
@@ -1429,7 +1591,7 @@
                       <item>
                        <widget class="QLineEdit" name="dataManCurrentResponse">
                         <property name="sizePolicy">
-                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
@@ -1479,9 +1641,9 @@
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QPushButton" name="dataManSave">
+                       <widget class="QPushButton" name="dataManDelete">
                         <property name="text">
-                         <string>Save</string>
+                         <string>Delete Last Line</string>
                         </property>
                        </widget>
                       </item>
@@ -1523,6 +1685,13 @@
                       <property name="bottomMargin">
                        <number>0</number>
                       </property>
+                      <item>
+                       <widget class="QPushButton" name="dataManSave">
+                        <property name="text">
+                         <string>Save</string>
+                        </property>
+                       </widget>
+                      </item>
                       <item>
                        <widget class="QPushButton" name="dataManSaveAsTemplate">
                         <property name="text">

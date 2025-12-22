@@ -23,7 +23,7 @@ class SerialInstDeviceUi(QWidget):
         # self.settingButton.clicked.connect(self.open_setting)
     
     def new_command_setting(self):
-        self.newCommandWid = ncsu.new_command_setting_ui(self.instrument)
+        self.newCommandWid = ncsu.new_command_setting_ui(self.instrument, "SERIAL")
         self.newCommandWin = QMainWindow()
         self.newCommandWin.setCentralWidget(self.newCommandWid)
         self.newCommandWin.closeEvent = self.newCommandWid.closeEvent

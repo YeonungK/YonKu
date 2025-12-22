@@ -68,7 +68,11 @@ class EthernetInstrument(ScientificInstrument):
             print(f"There is no response. {socket.error}")
         except:
             print('There is no resposne.')
-    
+            
+    def query(self, command:str):
+        self.write(command)
+        return self.read()
+        
 class SerialInstrument(ScientificInstrument):
     def __init__(self, name, model, port:str, baudrate=9600, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE):
         super().__init__(name, model, 'serial')
@@ -198,8 +202,9 @@ class NidaqmxInstrument(ScientificInstrument):
         self.device.write(data)
         
     
-    def query(self):
-        pass
+    def query(self, data):
+        self.write(data)
+        return self.read()
     
     def close(self):
         self.device.close()

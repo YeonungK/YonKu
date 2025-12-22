@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-12-21--23-44-05
+
+2025-12-21--23-44-27 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 573, in dataManCheckButton_method
+    exec(test_code)
+  File "<string>", line 1, in <module>
+TypeError: replace() argument 1 must be str, not int
+
+

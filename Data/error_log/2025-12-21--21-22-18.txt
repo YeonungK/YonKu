@@ -1,0 +1,34 @@
+Szkopek Lab Error Log Book - 2025-12-21--21-22-18
+
+2025-12-21--21-23-03 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 258, in change_data_default
+    self.dataDefaultValue.setText(self.old_data_list[self.dataComboBox.currentText()])
+                                  ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'Data0'
+
+
+
+
+2025-12-21--21-23-03 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 462, in change_test_data_default
+    self.testValue.setText(self.new_test_data_list[self.testComboBox.currentText()])
+                           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'Data0'
+
+
+
+
+2025-12-21--21-23-12 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 262, in dataRemoveButton_method
+    self.dataComboBox.removeItem(self.dataComboBox.currentIndex)
+TypeError: removeItem(self, index: int): argument 1 has unexpected type 'builtin_function_or_method'
+
+
+
+
+2025-12-21--21-23-14 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 262, in dataRemoveButton_method
+    self.dataComboBox.removeItem(self.dataComboBox.currentIndex)
+TypeError: removeItem(self, index: int): argument 1 has unexpected type 'builtin_function_or_method'
+
+

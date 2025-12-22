@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-12-21--16-27-58
+
+2025-12-21--16-28-53 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 389, in functionDelete_method
+    n = self.new_function_code.len() - 1
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'len'
+
+

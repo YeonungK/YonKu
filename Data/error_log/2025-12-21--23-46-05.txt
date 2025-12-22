@@ -1,0 +1,8 @@
+Szkopek Lab Error Log Book - 2025-12-21--23-46-05
+
+2025-12-21--23-48-53 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 574, in dataManCheckButton_method
+    self.dataManCurrentResponse.setText(self.man_response)
+TypeError: setText(self, a0: Optional[str]): argument 1 has unexpected type 'list'
+
+
