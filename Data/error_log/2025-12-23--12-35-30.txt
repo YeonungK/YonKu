@@ -1,0 +1,15 @@
+Szkopek Lab Error Log Book - 2025-12-23--12-35-30
+
+2025-12-23--12-38-15 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\CommandListUi.py", line 59, in <lambda>
+    edit_button.clicked.connect(lambda: self.edit_function(command_name))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\CommandListUi.py", line 74, in edit_function
+    self.newCommandWid = ncsu.edit_command_setting_ui(self.instrument, "ETHERNET", self.newCommandWin, command_name)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 904, in __init__
+    pass
+         
+UnboundLocalError: cannot access local variable 'read_functions_dict' where it is not associated with a value
+
+

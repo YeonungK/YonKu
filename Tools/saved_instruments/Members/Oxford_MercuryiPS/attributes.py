@@ -1,10 +1,10 @@
 import sys
 sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
-from Tools.saved_instruments.Members.Oxford_MercuryiPS import attributes, temp_method
+from Tools.saved_instruments.Members.Oxford_MercuryiPS import attributes
 data_type = {}
 data_unit = {}
-functions = {'temp': temp_method.temp}
-read_functions = {'temp': temp_method.temp}
+functions = {}
+read_functions = {}
 write_functions = {}
 data_functions = {}
 initial_state = {}

@@ -1,0 +1,18 @@
+Szkopek Lab Error Log Book - 2025-12-23--13-50-48
+
+2025-12-23--13-51-04 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\CommandListUi.py", line 98, in update_command_table
+    self.vertical_spacer.setPArent(None)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'QSpacerItem' object has no attribute 'setPArent'
+
+
+
+
+2025-12-23--13-51-49 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\CommandListUi.py", line 98, in update_command_table
+    self.vertical_spacer.setParent(None)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'QSpacerItem' object has no attribute 'setPArent'
+
+

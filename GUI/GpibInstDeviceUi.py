@@ -26,7 +26,7 @@ class GPIBInstDeviceUi(QWidget):
         
         self.newCommandWin.setWindowTitle("Build a new command")
         self.newCommandWin.resize(1000, 800)
-        self.newCommandWin.move(200, 200)
+        self.newCommandWin.move(50, 50)
         
         self.newCommandWin.show()
         

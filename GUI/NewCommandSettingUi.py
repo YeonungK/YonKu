@@ -43,8 +43,8 @@ class new_command_setting_ui(QWidget):
         self.command_type = self.commandTypeComboBox.currentText()
         self.communication_syntax = self.comSystemComboBox.currentText()
        
-        self.old_function_code = ""
-        self.new_function_code = ""
+        self.old_function_code = "return None"
+        self.new_function_code = "return None"
         
         self.old_data_manipulation_code = ""
         self.new_data_manipulation_code = ""
@@ -498,6 +498,7 @@ def {self.command_name}(self):
                 f.write(self.method_script)     
         except FileNotFoundError:
             print(f"Error: The file '{self.method_path}' was not found.")
+            self.testResponse.setText(f"The file '{self.method_path}' was not found. Did you save your method name?")
 # IMPORT AND RUN THE TEST FUNCTION
         try:
             module_path = f"Tools.saved_instruments.Members.{self.instrument.model}.{self.command_name}_method"
@@ -517,6 +518,7 @@ def {self.command_name}(self):
 
         except (ImportError, AttributeError) as e:
             print(f"Error: {e}")
+            self.testResponse.setText(f"The file '{self.method_path}' was not found. Did you save your method name?")
         except IndentationError:
             self.testResponse.setText("The function code is empty.")
         except Exception as e:
@@ -703,8 +705,7 @@ def {self.command_name}(self):
 # ADD THE TEST FUNCTION
         try:
             with open(self.method_path, "a") as f:
-                self.method_script = f"""
-def {self.command_name}(self):
+                self.method_script = f"""def {self.command_name}(self):
     try:
 {saving_function_code}
     except Exception as e:
@@ -893,6 +894,51 @@ class edit_command_setting_ui(QWidget):
         self.original_attribute_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/attributes_copy.py")
         self.attribute_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/attributes.py")
 
+# GET RID OF THIS FUNCTION IN THE NEW ATTRIBUTE FILE
+        attribute_module = importlib.import_module(f"Tools.saved_instruments.Members.{self.instrument.model}.attributes")
+        
+        functions_dict = getattr(attribute_module, "functions")
+        try:
+            del functions_dict[self.original_command_name]
+        except KeyError:
+            pass
+        functions_dict = "functions = " + str(functions_dict) + "\n"
+        
+        read_functions_dict = getattr(attribute_module, "read_functions")
+        try:
+            del read_functions_dict[self.original_command_name]
+        except KeyError:
+            pass
+        read_functions_dict = "read_functions = " + str(read_functions_dict) + "\n"
+        
+        write_functions_dict = getattr(attribute_module, "write_functions")
+        try:
+            del write_functions_dict[self.original_command_name]
+        except KeyError:
+            pass
+        write_functions_dict = "write_functions = " + str(write_functions_dict) + "\n"
+        
+        try:
+            with open(self.attribute_path, "r") as f:
+                current_content_list = f.readlines()
+                print(current_content_list)
+                current_content_list[5] = functions_dict
+                current_content_list[6] = read_functions_dict
+                current_content_list[7] = write_functions_dict
+                
+                new_content = ""
+                for i in range(0,len(current_content_list)):
+                    new_content = new_content + current_content_list[i] 
+                
+                print(f'Successfully changed.')
+            
+            with open(self.attribute_path, "w") as f:    
+                    f.write(new_content)
+        
+        except FileNotFoundError:
+            print(f"Error: The file '{self.attribute_path}' was not found.")
+
+
 # GET RID OF THE EXISTING FUNCTION
         try:
             with open(self.method_path, "r") as f:
@@ -983,6 +1029,9 @@ class edit_command_setting_ui(QWidget):
             
         except Exception as e:
             print(f"Error: {e}")
+        
+
+        
             
         self._connect_pushbuttons()
     
@@ -1563,8 +1612,7 @@ def {self.command_name}(self):
 # ADD THE TEST FUNCTION
         try:
             with open(self.method_path, "a") as f:
-                self.method_script = f"""
-def {self.command_name}(self):
+                self.method_script = f"""def {self.command_name}(self):
     try:
 {saving_function_code}
     except Exception as e:
@@ -1586,7 +1634,7 @@ def {self.command_name}(self):
                 print(current_content)
                 old_string = current_content_list[2]
                 old_string = old_string.replace("\n","")
-                new_string = old_string.replace(f", {self.original_command_name}_method", f", {self.original_command_name}_method{importing_line}")
+                new_string = old_string.replace(f", {self.original_command_name}_method", importing_line)
                 
                 if old_string not in current_content:
                         print(f'"{old_string}" not found. No changes made.')
@@ -1600,42 +1648,23 @@ def {self.command_name}(self):
                     f.write(new_content)
         
         except FileNotFoundError:
-            print(f"Error: The file '{self.method_path}' was not found.")
+            print(f"Error: The file '{self.attribute_path}' was not found.")
             
         # Modify functions list
         ### GET RID OF THE ORIGINAL FUNCTIONS AND REPLACE FUNCTION LIST
         attribute_module = importlib.import_module(f"Tools.saved_instruments.Members.{self.instrument.model}.attributes")
         
         functions_dict = getattr(attribute_module, "functions")
-        try:
-            del functions_dict[self.original_command_name]
-            functions_dict[self.command_name] = f"{self.command_name}_method.{self.command_name}"
-        except KeyError:
-            pass
-        functions_dict = "functions = " + str(read_functions_dict) + "\n"
+        
+        functions_dict[self.command_name] = f"{self.command_name}_method.{self.command_name}"
+        functions_dict = "functions = " + str(functions_dict) + "\n"
         functions_dict = functions_dict.replace(f"'{self.command_name}_method.{self.command_name}'", f"{self.command_name}_method.{self.command_name}")
-        
-        read_functions_dict = getattr(attribute_module, "read_functions")
-        try:
-            del read_functions_dict[self.original_command_name]
-        except KeyError:
-            pass
-        read_functions_dict = "read_functions = " + str(read_functions_dict) + "\n"
-        
-        write_functions_dict = getattr(attribute_module, "write_functions")
-        try:
-            del write_functions_dict[self.original_command_name]
-        except KeyError:
-            pass
-        write_functions_dict = "write_functions = " + str(write_functions_dict) + "\n"
         
         try:
             with open(self.attribute_path, "r") as f:
                 current_content_list = f.readlines()
                 print(current_content_list)
                 current_content_list[5] = functions_dict
-                current_content_list[6] = read_functions_dict
-                current_content_list[7] = write_functions_dict
                 
                 new_content = ""
                 for i in range(0,len(current_content_list)):
@@ -1703,31 +1732,6 @@ def {self.command_name}(self):
                         f.write(new_content)
             except FileNotFoundError:
                 print(f"Error: The file '{self.attribute_path}' was not found.")
-
-# get the right imports back(getting rid of copy)
-        actual_importing_line = f", {self.command_name}_method"
-        try:
-            with open(self.attribute_path, "r") as f:
-                current_content = f.read()
-                f.seek(0)
-                current_content_list = f.readlines()
-                print(current_content)
-                old_string = current_content_list[2]
-                old_string = old_string.replace("\n","")
-                new_string = old_string.replace(importing_line, actual_importing_line)
-                
-                if old_string not in current_content:
-                        print(f'"{old_string}" not found. No changes made.')
-                        return
-
-                new_content = current_content.replace(old_string, new_string)
-                print(f'Successfully changed.')
-            
-            with open(self.attribute_path, "w") as f:    
-                    f.write(new_content)
-        
-        except FileNotFoundError:
-            print(f"Error: The file '{self.method_path}' was not found.")
         
 #delete the original file
         self.original_method_path.unlink()
