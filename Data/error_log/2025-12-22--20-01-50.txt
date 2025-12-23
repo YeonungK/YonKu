@@ -1,0 +1,10 @@
+Szkopek Lab Error Log Book - 2025-12-22--20-01-50
+
+2025-12-22--20-02-06 Exception: TypeError: edit_command_setting_ui._default_button_method() takes 1 positional argument but 3 were given
+
+
+
+
+2025-12-22--20-03-32 Exception: TypeError: edit_command_setting_ui._default_button_method() takes 1 positional argument but 3 were given
+
+

@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-12-22--21-28-46
+
+2025-12-22--21-29-00 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 1622, in newCommandSaveButton_method
+    write_functions_dict = getattr(attribute_module, "write_functions")
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'Tools.saved_instruments.Members.Oxford_MercuryiPS.attributes' has no attribute 'write_functions'. Did you mean: 'data_functions'?
+
+

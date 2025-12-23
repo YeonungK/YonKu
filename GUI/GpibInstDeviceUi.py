@@ -19,13 +19,13 @@ class GPIBInstDeviceUi(QWidget):
         # self.settingButton.clicked.connect(self.open_setting)
     
     def new_command_setting(self):
-        self.newCommandWid = ncsu.new_command_setting_ui(self.instrument, "GPIB")
         self.newCommandWin = QMainWindow()
+        self.newCommandWid = ncsu.new_command_setting_ui(self.instrument, "GPIB", self.newCommandWin)
         self.newCommandWin.setCentralWidget(self.newCommandWid)
         self.newCommandWin.closeEvent = self.newCommandWid.closeEvent
         
         self.newCommandWin.setWindowTitle("Build a new command")
-        self.newCommandWin.resize(810, 800)
+        self.newCommandWin.resize(1000, 800)
         self.newCommandWin.move(200, 200)
         
         self.newCommandWin.show()

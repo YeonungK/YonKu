@@ -1,0 +1,10 @@
+Szkopek Lab Error Log Book - 2025-12-22--16-51-42
+
+2025-12-22--16-52-16 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 745, in newCommandSaveButton_method
+    functions_dict[self.command_name] = exec(f"{self.command_name}_method.{self.command_name}")
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 1, in <module>
+NameError: name 'read_method' is not defined. Did you mean: 'classmethod'?
+
+

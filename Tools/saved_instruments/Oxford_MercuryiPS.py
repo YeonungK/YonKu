@@ -16,6 +16,9 @@ class magnetPowerSupply(EthernetInstrument):
         self.data_unit = {'field':'T', 'current':'A'}
         self.data_function = {'field':self.read_all_field, 'current': self.read_current}
     
+    
+    
+    
     def identification(self):
         self.write("*IDN?")
         response = self.read()

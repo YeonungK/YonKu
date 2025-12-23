@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-12-22--16-38-08
+
+2025-12-22--16-39-11 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 744, in newCommandSaveButton_method
+    functions_dict[{self.command_name}] = f"{self.command_name}_method.{self.command_name}"
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+TypeError: unhashable type: 'set'
+
+

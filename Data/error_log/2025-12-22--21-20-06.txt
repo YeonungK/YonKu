@@ -1,0 +1,10 @@
+Szkopek Lab Error Log Book - 2025-12-22--21-20-06
+
+2025-12-22--21-20-22 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 1729, in newCommandSaveButton_method
+    self.original_method_path.rename(new_method_path)
+  File "C:\Users\szkop\anaconda3\Lib\pathlib.py", line 1363, in rename
+    os.rename(self, target)
+FileExistsError: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\szkop\\OneDrive\\Desktop\\YonKu\\Tools\\saved_instruments\\Members\\Oxford_MercuryiPS\\read_method_copy.py' -> 'C:\\Users\\szkop\\OneDrive\\Desktop\\YonKu\\Tools\\saved_instruments\\Members\\Oxford_MercuryiPS\\temp_method.py'
+
+

@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2025-12-22--20-22-33
+
+2025-12-22--20-24-04 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 1320, in testExecute_method
+    for data_name, data_value in self.new_test_data_list.items():
+                                 ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'edit_command_setting_ui' object has no attribute 'new_test_data_list'. Did you mean: 'new_data_list'?
+
+
