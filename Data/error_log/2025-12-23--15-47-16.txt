@@ -1,0 +1,18 @@
+Szkopek Lab Error Log Book - 2025-12-23--15-47-16
+
+2025-12-23--15-47-34 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 269, in change_data_default
+    self.dataDefaultValue.setText(self.old_data_list[self.dataComboBox.currentText()])
+                                  ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'Data0'
+
+
+
+
+2025-12-23--15-48-30 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 274, in dataRemoveButton_method
+    def dataRemoveButton_method(self):
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: removeItem(self, index: int): argument 1 has unexpected type 'str'
+
+

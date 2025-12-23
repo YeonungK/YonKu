@@ -43,8 +43,8 @@ class new_command_setting_ui(QWidget):
         self.command_type = self.commandTypeComboBox.currentText()
         self.communication_syntax = self.comSystemComboBox.currentText()
        
-        self.old_function_code = "return None"
-        self.new_function_code = "return None"
+        self.old_function_code = ""
+        self.new_function_code = ""
         
         self.old_data_manipulation_code = ""
         self.new_data_manipulation_code = ""
@@ -266,12 +266,16 @@ data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
             print(f"Error: The file '{self.method_path}' was not found.")
     
     def change_data_default(self):
-        self.dataDefaultValue.setText(self.old_data_list[self.dataComboBox.currentText()])
+        try:
+            self.dataDefaultValue.setText(self.old_data_list[self.dataComboBox.currentText()])
+        except KeyError:
+            pass
 
     def dataRemoveButton_method(self):
         data_name = self.dataComboBox.currentText()
         self.dataComboBox.removeItem(self.dataComboBox.currentIndex())
-        self.testComboBox.removeItem(self.dataComboBox.currentIndex())
+        index = self.testComboBox.findText(data_name)
+        self.testComboBox.removeItem(index)
         del self.new_data_list[data_name]
         try:
             with open(self.method_path, "r") as f:
@@ -471,10 +475,15 @@ data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
         self.new_test_data_list[data_name] = self.testValue.text()
     
     def change_test_data_default(self):
-        self.testValue.setText(self.new_test_data_list[self.testComboBox.currentText()])
+        try:
+            self.testValue.setText(self.new_test_data_list[self.testComboBox.currentText()])
+        except KeyError:
+            pass
 
     def testExecute_method(self):
         function_code = ""
+        if self.new_function_code == "":
+            self.new_function_code = "return None"
         function_code_list = self.new_function_code.split("\n")
         n = len(function_code_list)
         
@@ -686,6 +695,8 @@ def {self.command_name}(self):
     
     def newCommandSaveButton_method(self):
         saving_function_code = ""
+        if self.new_function_code == "":
+            self.new_function_code = "return None"
         saving_function_code_list = self.new_function_code.split("\n")
         
         data_manipulation_code_list = self.new_data_manipulation_code.split("\n")
@@ -1175,12 +1186,16 @@ class edit_command_setting_ui(QWidget):
             print(f"Error: The file '{self.method_path}' was not found.")
     
     def change_data_default(self):
-        self.dataDefaultValue.setText(self.old_data_list[self.dataComboBox.currentText()])
+        try:
+            self.dataDefaultValue.setText(self.old_data_list[self.dataComboBox.currentText()])
+        except KeyError:
+            pass
 
     def dataRemoveButton_method(self):
         data_name = self.dataComboBox.currentText()
         self.dataComboBox.removeItem(self.dataComboBox.currentIndex())
-        self.testComboBox.removeItem(self.dataComboBox.currentIndex())
+        index = self.testComboBox.findText(data_name)
+        self.testComboBox.removeItem(index)
         del self.new_data_list[data_name]
         try:
             with open(self.method_path, "r") as f:
@@ -1380,7 +1395,10 @@ class edit_command_setting_ui(QWidget):
         self.new_test_data_list[data_name] = self.testValue.text()
     
     def change_test_data_default(self):
-        self.testValue.setText(self.new_test_data_list[self.testComboBox.currentText()])
+        try:
+            self.testValue.setText(self.new_test_data_list[self.testComboBox.currentText()])
+        except KeyError:
+            pass
 
     def testExecute_method(self):
         function_code = ""

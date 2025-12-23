@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QFileDialog
 from PyQt5 import uic
 import sys
-from GUI import NewCommandSettingUi as ncsu
+from GUI import NewCommandSettingUi as ncsu, CommandListUi as clu
 
 class GPIBInstDeviceUi(QWidget):
     def __init__(self, data_list):
@@ -15,7 +15,7 @@ class GPIBInstDeviceUi(QWidget):
         self.addressLabel.setText("Address: " + data_list['address'])
         
         self.addCommandButton.clicked.connect(self.new_command_setting)
-        # self.commandListButton.clicked.connect(self.open_command_list)
+        self.commandListButton.clicked.connect(self.open_command_list)
         # self.settingButton.clicked.connect(self.open_setting)
     
     def new_command_setting(self):
@@ -30,3 +30,16 @@ class GPIBInstDeviceUi(QWidget):
         
         self.newCommandWin.show()
         
+        # self.newCommandWid.newCommandSaveButton.clicked.connect(self.save_new_command)
+    
+    
+    def open_command_list(self):
+        self.CommandListWin = QMainWindow()
+        self.CommandListWid = clu.command_list_ui(self.instrument, self.CommandListWin)
+        self.CommandListWin.setCentralWidget(self.CommandListWid)
+        
+        self.CommandListWin.setWindowTitle(f"{self.instrument.model} Command List")
+        self.CommandListWin.resize(600, 420)
+        self.CommandListWin.move(500, 200)
+        
+        self.CommandListWin.show()
