@@ -735,7 +735,7 @@ class oldPlotWidget(QWidget):
 
         
         self.main_viewbox.sigResized.connect(self.updateViews)
-        self.updateViews()
+        # self.updateViews()
         
         viewbox.addItem(self.plots[plot_channels])
         self.plot_count += 1
