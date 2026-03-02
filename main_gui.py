@@ -779,7 +779,7 @@ class UI(QMainWindow):
                         self.instrument_wid[device_key] = gidu.GPIBInstDeviceUi(data_list)
                         self.gpib_instantiate(data_list, device_key)
                     case 'ethernet':
-                        self.instrument_wid[device_key] = eidu.EthernetnstDeviceUi(data_list)
+                        self.instrument_wid[device_key] = eidu.EthernetInstDeviceUi(data_list)
                         self.ethernet_instantiate(data_list, device_key)
                     case 'usb6525':
                         self.instrument_wid[device_key] = uidu.usb6525InstDeviceUi(data_list)

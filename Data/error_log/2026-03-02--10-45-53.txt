@@ -1,0 +1,73 @@
+Szkopek Lab Error Log Book - 2026-03-02--10-45-53
+
+2026-03-02--10-46-11 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\SerialInstDeviceUi.py", line 42, in open_command_list
+    self.CommandListWid = clu.command_list_ui(self.instrument, self.CommandListWin)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\CommandListUi.py", line 26, in __init__
+    self.directory_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}")
+                                                                                                                ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'model'
+
+
+
+
+2026-03-02--10-46-18 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\EthernetInstDeviceUi.py", line 39, in open_command_list
+    self.CommandListWid = clu.command_list_ui(self.instrument, self.CommandListWin)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\CommandListUi.py", line 26, in __init__
+    self.directory_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}")
+                                                                                                                ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'model'
+
+
+
+
+2026-03-02--10-46-20 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\GpibInstDeviceUi.py", line 38, in open_command_list
+    self.CommandListWid = clu.command_list_ui(self.instrument, self.CommandListWin)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\CommandListUi.py", line 26, in __init__
+    self.directory_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}")
+                                                                                                                ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'model'
+
+
+
+
+2026-03-02--10-46-22 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\GpibInstDeviceUi.py", line 38, in open_command_list
+    self.CommandListWid = clu.command_list_ui(self.instrument, self.CommandListWin)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\CommandListUi.py", line 26, in __init__
+    self.directory_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}")
+                                                                                                                ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'model'
+
+
+
+
+2026-03-02--10-50-32 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\GpibInstDeviceUi.py", line 23, in new_command_setting
+    self.newCommandWid = ncsu.new_command_setting_ui(self.instrument, "GPIB", self.newCommandWin)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 65, in __init__
+    self.create_member_folder()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 71, in create_member_folder
+    instrument_folder = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}")
+                                                                                                              ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'model'
+
+
+
+
+2026-03-02--11-01-28 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2335, in closeEvent
+    self.instruments[name].close()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 131, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

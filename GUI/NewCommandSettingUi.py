@@ -343,8 +343,6 @@ data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
             
             with open(self.method_path, "w") as f:    
                     f.write(new_content)
-            
-            self.command_text = self.commandTypeComboBox.currentText()
         
         except FileNotFoundError:
             print(f"Error: The file '{self.method_path}' was not found.")
@@ -355,8 +353,7 @@ data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
             self.writeLineEdit.setEnabled(False)
         else:
             self.writeLineEdit.setEnabled(True)
-        
-        
+           
     def writeAddButton_method(self):
         code_line = 'self.write("' + self.writeLineEdit.text() + '")\n'
         self.new_function_code = self.new_function_code + code_line
@@ -417,7 +414,6 @@ data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
         self.new_function_code = ""
         self.functionDisplay.setPlainText(self.new_function_code)
         
-
     def functionEdit_method(self):
         self.manualEditWin = QMainWindow()
         self.manualEditWid = meu.manual_edit_ui(self.new_function_code)
