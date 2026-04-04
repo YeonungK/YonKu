@@ -1,0 +1,22 @@
+Szkopek Lab Error Log Book - 2026-04-04--15-45-15
+
+2026-04-04--16-24-40 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\UiEditUi.py", line 38, in load_current_ui
+    uic.loadUi(f"GUI/ui_files/instrument_control_uis/{self.data_list['model']}_ui.ui", self.mdiWidget)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\__init__.py", line 241, in loadUi
+    return DynamicUILoader(package).loadUi(uifile, baseinstance, resource_suffix)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\Loader\loader.py", line 66, in loadUi
+    return self.parse(filename, resource_suffix)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 1020, in parse
+    document = parse(filename)
+               ^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\xml\etree\ElementTree.py", line 1204, in parse
+    tree.parse(source, parser)
+  File "C:\Users\szkop\anaconda3\Lib\xml\etree\ElementTree.py", line 558, in parse
+    source = open(source, "rb")
+             ^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'GUI/ui_files/instrument_control_uis/test_model_ui.ui'
+
+

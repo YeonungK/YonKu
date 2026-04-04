@@ -14,7 +14,7 @@ from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot, QTimer, Qt, QSi
 from PyQt5.QtGui import QCloseEvent
 from PyQt5 import uic
 
-from GUI import ChsBigLineUi as chs, NewPlotSettingUi as nps, OpenPlotSettingUi as ops, PlotUi, ExperimentSettingUi as esu, instrument_control_widgets
+from GUI import ChsBigLineUi as chs, NewPlotSettingUi as nps, OpenPlotSettingUi as ops, PlotUi, ExperimentSettingUi as esu
 from GUI import SerialInstCreateUi as sic, GpibInstCreateUi as gic, EthernetInstCreateUi as eic, USB6525InstCreateUi as bic, DisconnectedDevicesUi as ddu
 from GUI import DeviceListUi as dlu, SerialInstDeviceUi as sidu, GpibInstDeviceUi as gidu, EthernetInstDeviceUi as eidu, USB6525InstDeviceUi as uidu
 from Tools import LakeShore_336, INFICON_VGC401, GasValve, SRS_830, Oxford_MercuryiPS, DataLogger, Dataset, NewQMdiSubWindow
@@ -958,6 +958,8 @@ class UI(QMainWindow):
             self.gasValveWid.hePushButton.setChecked(True)
             # [/]
 
+    def test_instrument_initial_function(self):
+        pass
       
     # [+++++++++(Thread) experiment functions++++++++]
     def check_experiment_condition(self):

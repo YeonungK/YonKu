@@ -1,0 +1,15 @@
+Szkopek Lab Error Log Book - 2026-04-04--15-15-03
+
+2026-04-04--15-15-27 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2361, in <module>
+    UIWindow = UI()
+               ^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 517, in __init__
+    self.connect_instrument_windows()  # [/]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 925, in connect_instrument_windows
+    initial_function = getattr(self, f'{device_name}_initial_function')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'test_instrument_initial_function'
+
+

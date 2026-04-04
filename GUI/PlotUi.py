@@ -12,7 +12,7 @@ from PyQt5.QtCore import QTimer, Qt, QSize
 import pyqtgraph as pg
 import pandas as pd
 
-from GUI import ShowHidePlotUi as shp, AddMultidataPlotUi as amp
+from GUI import AddMultidataPlotUi as amp
 
 
 

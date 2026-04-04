@@ -1,0 +1,25 @@
+Szkopek Lab Error Log Book - 2026-03-30--17-08-30
+
+2026-03-30--17-08-38 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\SerialInstDeviceUi.py", line 66, in ui_edit_setting
+    self.newUiWid = udu.ui_edit_setting_ui(self.instrument, self.data_list, "SERIAL", self.newUiWin)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\UiEditUi.py", line 33, in __init__
+    self.load_current_ui()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\UiEditUi.py", line 39, in load_current_ui
+    self.mdiWindow.setWidget(self.mdiWidget)
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'QMainWindow' object has no attribute 'setWidget'. Did you mean: 'menuWidget'?
+
+
+
+
+2026-03-30--17-08-57 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2335, in closeEvent
+    self.instruments[name].close()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\Instrument.py", line 131, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+
