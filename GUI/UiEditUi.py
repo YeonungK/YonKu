@@ -34,10 +34,8 @@ class ui_edit_setting_ui(QWidget):
         self.window = window
         self.instrument_name_label.setText(self.data_list['model'])
         
-
         # empty ui config
         self.ui_definition = {}
-        self.component_definition = {}
 
         # signals connect
         self.show_current_ui_pushButton.clicked.connect(self.load_current_ui)
@@ -69,12 +67,37 @@ class ui_edit_setting_ui(QWidget):
             self.mdiWindow.show()
             self.mdiWindow.move(0,0)
     
+    
+
     def remove_category(self):
-        pass
+        if self.choose_category_comboBox.count() == 0:
+            self.add_category_lineEdit.setText("No category to remove")
+            return
+        category_name = self.choose_category_comboBox.currentText()
+        del self.ui_definition[category_name]
+    
+    def add_category(self, category_name):
+        if category_name in self.ui_definition:
+            self.add_category_lineEdit.setText("The category name already exists.")
+            return
+        
+        self.ui_definition[category_name] = []
 
     def remove_component(self):
-        pass
-
+        if self.choose_category_comboBox.count() == 0:
+            self.add_category_lineEdit.setText("No category to remove")
+            return
+        if self.choose_component_comboBox.count() == 0:
+            self.add_category_lineEdit.setText("No component to remove")
+            return
+        category_name = self.choose_category_comboBox.currentText()
+        component_name = self.choose_component_comboBox.currentText()
+        components = self.ui_definition[category_name]
+        for i, component in enumerate(components):
+            if component["name"] == component_name:
+                del components[i]
+                return
+    
     def open_command_list_window(self):
         pass
 
@@ -84,15 +107,6 @@ class ui_edit_setting_ui(QWidget):
     def add_read_button(self):
         pass
 
-
-    
-    def add_category(self, category_name):
-        if category_name in self.ui_definition:
-            QMessageBox.warning(self, "Warning", f"Category '{category_name}' already exists.")
-            return
-        
-        self.ui_definition[category_name] = []
-    
     def add_component(self, category_name, component_name, component_type, command_name, read=True, write=True, exp_readonly=False):
         if category_name not in self.ui_definition:
             QMessageBox.warning(self, "Warning", f"Category '{category_name}' does not exist.")
@@ -113,13 +127,13 @@ class ui_edit_setting_ui(QWidget):
             "exp_readonly": exp_readonly
         }
         self.ui_definition[category_name].append(component_info)
+
+
     
-    def remove_category(self, category_name):
-        if category_name not in self.ui_definition:
-            QMessageBox.warning(self, "Warning", f"Category '{category_name}' does not exist.")
-            return
-        
-        del self.ui_definition[category_name]
+    
+    
+    
+    
     
     def remove_component(self, category_name, component_name):
         if category_name not in self.ui_definition:
