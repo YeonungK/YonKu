@@ -25,6 +25,7 @@ class ui_edit_setting_ui(QWidget):
         print("loadUi")
         uic.loadUi("GUI/ui_files/ui_edit.ui", self)
         
+        
         self.instrument = instrument
         self.data_list = data_list
         self.save_file = False
@@ -35,6 +36,16 @@ class ui_edit_setting_ui(QWidget):
         # empty ui config
         self.ui_definition = {}
 
+        # load ui config if exists
+        json_file_path = f"GUI/ui_files/instrument_control_uis/{self.data_list['model']}_ui.json"
+        if os.path.exists(json_file_path):
+            with open(json_file_path, "r") as f:
+                self.ui_definition = json.load(f)
+
+        # fill the category and component comboBoxes
+        self.update_category_combobox()
+        self.update_component_combobox()
+
         # signals connect
         self.show_current_ui_pushButton.clicked.connect(self.load_current_ui)
         self.category_remove_pushButton.clicked.connect(self.remove_category) # not complete
@@ -44,7 +55,21 @@ class ui_edit_setting_ui(QWidget):
         self.add_component_pushButton.clicked.connect(self.add_component)
         self.save_pushButton.clicked.connect(self.translate_instrument_definition_to_ui)
         
-        
+    def update_category_combobox(self):
+        self.choose_category_comboBox.clear()
+        self.choose_component_comboBox.clear()
+        for category in self.ui_definition.keys():
+            self.choose_category_comboBox.addItem(category)
+
+    def update_component_combobox(self):
+        self.choose_component_comboBox.clear()
+        category_name = self.choose_category_comboBox.currentText()
+        if category_name in self.ui_definition:
+            components = self.ui_definition[category_name]
+            for component in components:
+                self.choose_component_comboBox.addItem(component["name"])
+    
+
     def load_current_ui(self):
         self.mdiWindow = QMdiSubWindow()
         self.mdiWidget = QWidget()
@@ -73,6 +98,10 @@ class ui_edit_setting_ui(QWidget):
             return
         category_name = self.choose_category_comboBox.currentText()
         del self.ui_definition[category_name]
+
+        # update comboBoxes
+        self.update_category_combobox()
+        self.update_component_combobox()
     
     def add_category(self, category_name):
         if category_name in self.ui_definition:
@@ -80,6 +109,11 @@ class ui_edit_setting_ui(QWidget):
             return
         
         self.ui_definition[category_name] = []
+
+        # update comboBoxes
+        self.update_category_combobox()
+        self.update_component_combobox()
+    
 
     def remove_component(self):
         if self.choose_category_comboBox.count() == 0:
@@ -95,6 +129,9 @@ class ui_edit_setting_ui(QWidget):
             if component["name"] == component_name:
                 del components[i]
                 return
+        
+        # update component comboBox
+        self.update_component_combobox()
     
     def open_command_list_window(self):
         self.CommandListWin = QMainWindow()
@@ -141,149 +178,223 @@ class ui_edit_setting_ui(QWidget):
             "exp_readonly": exp_readonly
         }
         self.ui_definition[category_name].append(component_info)
+        print(self.ui_definition)
 
-    def save_instrument_definition(path, data):
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=4)
+        # update component comboBox
+        self.update_component_combobox()
     
-    def translate_instrument_definition_to_ui(instrument_definition):
-        """
-        Convert an instrument_definition dictionary into a Qt .ui XML string.
 
-        Expected input structure:
-        {
-            "window_title": str,
-            "instrument_name": str,
-            "rows": [
-                {
-                    "label": str,
-                    "line_edit_name": str,
-                    "button1_text": str,
-                    "button2_text": str
-                },
-                ...
-            ]
-        }
-        """
+    def save_instrument_definition(self):
+        # save the json config file
+        json_file_path = f"GUI/ui_files/instrument_control_uis/{self.data_list['model']}_ui.json"   
+        with open(json_file_path, "w", encoding="utf-8") as f:
+            json.dump(self.ui_definition, f, indent=4)
+
+        # save the .ui file
+        ui_xml = self.ui_definition_to_xml(save_path=f"GUI/ui_files/instrument_control_uis/{self.data_list['model']}_ui.ui")
+
+    
+
+    def ui_definition_to_xml(self, save_path=None):
+
+        def sanitize_name(name):
+            clean = "".join(ch if ch.isalnum() or ch == "_" else "_" for ch in str(name))
+            if not clean:
+                clean = "unnamed"
+            if clean[0].isdigit():
+                clean = "_" + clean
+            return clean
 
         def add_string_property(parent, name, value):
             prop = SubElement(parent, "property", {"name": name})
             string_elem = SubElement(prop, "string")
-            string_elem.text = value
-            return prop
+            string_elem.text = "" if value is None else str(value)
 
-        def add_geometry_property(parent, x, y, width, height):
+        def add_bool_property(parent, name, value):
+            prop = SubElement(parent, "property", {"name": name})
+            bool_elem = SubElement(prop, "bool")
+            bool_elem.text = "true" if value else "false"
+
+        def add_rect_property(parent, x, y, w, h):
             prop = SubElement(parent, "property", {"name": "geometry"})
             rect = SubElement(prop, "rect")
 
-            x_elem = SubElement(rect, "x")
-            x_elem.text = str(x)
+            for tag, val in zip(["x", "y", "width", "height"], [x, y, w, h]):
+                elem = SubElement(rect, tag)
+                elem.text = str(val)
 
-            y_elem = SubElement(rect, "y")
-            y_elem.text = str(y)
+        def add_number_property(parent, name, value):
+            prop = SubElement(parent, "property", {"name": name})
+            number_elem = SubElement(prop, "number")
+            number_elem.text = str(value)
 
-            w_elem = SubElement(rect, "width")
-            w_elem.text = str(width)
+        def add_layout_item(parent_layout, row=None, column=None):
+            attrs = {}
+            if row is not None:
+                attrs["row"] = str(row)
+            if column is not None:
+                attrs["column"] = str(column)
+            return SubElement(parent_layout, "item", attrs)
 
-            h_elem = SubElement(rect, "height")
-            h_elem.text = str(height)
+        def create_component_row(parent_layout, category_name, component):
+            component_name = component.get("name", "component")
+            comp_type = component.get("type", 1)
+            allow_write = component.get("write", False)
+            allow_read = component.get("read", False)
+            exp_readonly = component.get("exp_readonly", False)
 
-            return prop
-    
-        # Root <ui>
-        ui = Element("ui", {"version": "4.0"})
+            cat = sanitize_name(category_name)
+            comp = sanitize_name(component_name)
+            base = f"{cat}_{comp}"
 
-        # <class>Form</class>
-        class_elem = SubElement(ui, "class")
-        class_elem.text = "Form"
+            row_item = SubElement(parent_layout, "item")
+            row_widget = SubElement(row_item, "widget", {
+                "class": "QWidget",
+                "name": f"{base}_rowWidget"
+            })
 
-        # Main widget
-        form = SubElement(ui, "widget", {"class": "QWidget", "name": "Form"})
-        add_geometry_property(form, 0, 0, 600, 400)
-        add_string_property(form, "windowTitle", instrument_definition.get("window_title", "Form"))
+            row_layout = SubElement(row_widget, "layout", {
+                "class": "QHBoxLayout",
+                "name": f"{base}_rowLayout"
+            })
 
-        # Main vertical layout
-        main_layout = SubElement(form, "layout", {"class": "QVBoxLayout", "name": "verticalLayout"})
-
-        # Instrument container item
-        container_item = SubElement(main_layout, "item")
-        container = SubElement(container_item, "widget", {"class": "QWidget", "name": "instrumentContainer"})
-        container_layout = SubElement(container, "layout", {"class": "QVBoxLayout", "name": "instrumentContainerLayout"})
-
-        # Instrument name label
-        title_item = SubElement(container_layout, "item")
-        title_label = SubElement(title_item, "widget", {"class": "QLabel", "name": "instrumentTitleLabel"})
-        add_string_property(title_label, "text", instrument_definition.get("instrument_name", "Instrument"))
-
-        # Content widget
-        content_item = SubElement(container_layout, "item")
-        content_widget = SubElement(content_item, "widget", {"class": "QWidget", "name": "instrumentContent"})
-        content_layout = SubElement(content_widget, "layout", {"class": "QVBoxLayout", "name": "instrumentContentLayout"})
-
-        # Add rows
-        rows = instrument_definition.get("rows", [])
-        for index, row in enumerate(rows, start=1):
-            row_item = SubElement(content_layout, "item")
-
-            row_widget = SubElement(
-                row_item,
-                "widget",
-                {"class": "QWidget", "name": f"parameterRowWidget{index}"}
-            )
-
-            row_layout = SubElement(
-                row_widget,
-                "layout",
-                {"class": "QHBoxLayout", "name": f"parameterRowLayout{index}"}
-            )
-
-            # Label
+            # Component label
             label_item = SubElement(row_layout, "item")
-            label_widget = SubElement(
-                label_item,
-                "widget",
-                {"class": "QLabel", "name": f"parameterLabel{index}"}
-            )
-            add_string_property(label_widget, "text", row.get("label", f"Parameter {index}"))
+            label = SubElement(label_item, "widget", {
+                "class": "QLabel",
+                "name": f"{base}_label"
+            })
+            add_string_property(label, "text", component_name)
 
-            # Line edit
-            line_item = SubElement(row_layout, "item")
-            SubElement(
-                line_item,
-                "widget",
-                {
+            # Component widget
+            input_item = SubElement(row_layout, "item")
+
+            if comp_type == 1:
+                widget = SubElement(input_item, "widget", {
                     "class": "QLineEdit",
-                    "name": row.get("line_edit_name", f"parameterLineEdit{index}")
-                }
-            )
+                    "name": f"{base}_lineEdit"
+                })
+                add_bool_property(widget, "readOnly", exp_readonly)
 
-            # Button 1
-            button1_item = SubElement(row_layout, "item")
-            button1_widget = SubElement(
-                button1_item,
-                "widget",
-                {"class": "QPushButton", "name": f"button1_{index}"}
-            )
-            add_string_property(button1_widget, "text", row.get("button1_text", "Apply"))
+            elif comp_type == 2:
+                widget = SubElement(input_item, "widget", {
+                    "class": "QComboBox",
+                    "name": f"{base}_comboBox"
+                })
 
-            # Button 2
-            button2_item = SubElement(row_layout, "item")
-            button2_widget = SubElement(
-                button2_item,
-                "widget",
-                {"class": "QPushButton", "name": f"button2_{index}"}
-            )
-            add_string_property(button2_widget, "text", row.get("button2_text", "Reset"))
+            else:
+                widget = SubElement(input_item, "widget", {
+                    "class": "QLineEdit",
+                    "name": f"{base}_lineEdit"
+                })
+                add_bool_property(widget, "readOnly", exp_readonly)
 
-        # Required empty tags
+            # Read button
+            if allow_read:
+                read_item = SubElement(row_layout, "item")
+                read_btn = SubElement(read_item, "widget", {
+                    "class": "QPushButton",
+                    "name": f"{base}_readButton"
+                })
+                add_string_property(read_btn, "text", "Read")
+
+            # Write button
+            if allow_write:
+                write_item = SubElement(row_layout, "item")
+                write_btn = SubElement(write_item, "widget", {
+                    "class": "QPushButton",
+                    "name": f"{base}_writeButton"
+                })
+                add_string_property(write_btn, "text", "Write")
+
+        # Root UI
+        ui = Element("ui", {"version": "4.0"})
+        SubElement(ui, "class").text = "Form"
+
+        # Main form
+        form = SubElement(ui, "widget", {"class": "QWidget", "name": "Form"})
+        add_rect_property(form, 0, 0, 1000, 700)
+        add_string_property(form, "windowTitle", "Instrument Control")
+
+        # Main layout of the whole form
+        main_layout = SubElement(form, "layout", {
+            "class": "QVBoxLayout",
+            "name": "verticalLayout"
+        })
+
+        # Scroll area
+        scroll_item = SubElement(main_layout, "item")
+        scroll_area = SubElement(scroll_item, "widget", {
+            "class": "QScrollArea",
+            "name": "scrollArea"
+        })
+        add_bool_property(scroll_area, "widgetResizable", True)
+
+        # Scroll content widget
+        scroll_content = SubElement(scroll_area, "widget", {
+            "class": "QWidget",
+            "name": "scrollAreaWidgetContents"
+        })
+        add_rect_property(scroll_content, 0, 0, 960, 660)
+
+        # Grid layout inside the scroll area
+        grid_layout = SubElement(scroll_content, "layout", {
+            "class": "QGridLayout",
+            "name": "gridLayout"
+        })
+
+        # Stretch properties for equal-width columns
+        add_number_property(grid_layout, "horizontalSpacing", 12)
+        add_number_property(grid_layout, "verticalSpacing", 12)
+
+        column_stretch = SubElement(grid_layout, "property", {"name": "columnStretch"})
+        stretch_string = SubElement(column_stretch, "string")
+        stretch_string.text = "1,1"
+
+        # Categories
+        for index, (category_name, components) in enumerate(self.ui_definition.items(), start=1):
+            cat = sanitize_name(category_name)
+
+            row = (index - 1) // 2
+            column = 0 if index % 2 == 1 else 1
+
+            item = add_layout_item(grid_layout, row=row, column=column)
+
+            container = SubElement(item, "widget", {
+                "class": "QWidget",
+                "name": f"{cat}_container"
+            })
+
+            layout = SubElement(container, "layout", {
+                "class": "QVBoxLayout",
+                "name": f"{cat}_layout"
+            })
+
+            # Category label
+            title_item = SubElement(layout, "item")
+            title = SubElement(title_item, "widget", {
+                "class": "QLabel",
+                "name": f"{cat}_label"
+            })
+            add_string_property(title, "text", category_name)
+
+            # Component rows
+            for comp in components:
+                create_component_row(layout, category_name, comp)
+
         SubElement(ui, "resources")
         SubElement(ui, "connections")
 
-        # Pretty-print XML
-        rough_xml = tostring(ui, encoding="utf-8")
-        pretty_xml = minidom.parseString(rough_xml).toprettyxml(indent=" ")
+        xml = minidom.parseString(tostring(ui, encoding="utf-8")).toprettyxml(indent=" ")
 
-        return pretty_xml
-            
+        if save_path:
+            directory = os.path.dirname(save_path)
+            if directory:
+                os.makedirs(directory, exist_ok=True)
+            with open(save_path, "w", encoding="utf-8") as f:
+                f.write(xml)
+
+        return xml
+                
             
             
