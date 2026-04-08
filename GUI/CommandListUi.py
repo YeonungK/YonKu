@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QTableWidgetItem, QVBoxLayout, QSpacerItem, QSizePolicy
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QTableWidgetItem, QVBoxLayout, QSpacerItem, QSizePolicy, QLineEdit
 from PyQt5.QtGui import QCloseEvent
 from PyQt5 import uic
 import sys
@@ -12,13 +12,15 @@ sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 
 class command_list_ui(QWidget):
-    def __init__(self, instrument, window):
+    def __init__(self, instrument, window, ui_edit_list=False, ui_command_lineEdit = None):
         super().__init__()
         print("This works.")
         uic.loadUi("GUI/ui_files/command_list.ui", self)
         
         self.instrument = instrument
         self.window = window
+        self.ui_edit_list = ui_edit_list
+        self.ui_command_lineEdit = ui_command_lineEdit
         self.column_count = self.commandListTable.columnCount()
         self.row_count = self.commandListTable.rowCount()
         
@@ -27,13 +29,20 @@ class command_list_ui(QWidget):
         self.attribute_path =  pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/attributes.py")
         self.edit_button_list = {}
         self.remove_button_list = {}
+        self.pick_button_list = {}
         
-        self.edit_layout = QVBoxLayout(self.editFrame)
-        self.edit_layout.setContentsMargins(0, 23, 0, 0)
-        self.edit_layout.setSpacing(9)
-        self.remove_layout = QVBoxLayout(self.removeFrame)
-        self.remove_layout.setContentsMargins(0, 23, 0, 0)
-        self.remove_layout.setSpacing(9)
+        if self.ui_edit_list:
+            self.pick_layout = QVBoxLayout(self.editFrame)
+            self.pick_layout.setContentsMargins(0, 23, 0, 0)
+            self.pick_layout.setSpacing(9)
+            
+        else:
+            self.edit_layout = QVBoxLayout(self.editFrame)
+            self.edit_layout.setContentsMargins(0, 23, 0, 0)
+            self.edit_layout.setSpacing(9)
+            self.remove_layout = QVBoxLayout(self.removeFrame)
+            self.remove_layout.setContentsMargins(0, 23, 0, 0)
+            self.remove_layout.setSpacing(9)
         
         self.fill_command_table()
 
@@ -56,28 +65,41 @@ class command_list_ui(QWidget):
             self.commandListTable.setItem(0, 0, command_name_item)
             self.commandListTable.setItem(0, 1, command_text_item)
             
+            if self.ui_edit_list: # if you opened the list from ui_edit_setting
+                
+                pick_button = QPushButton("Pick")
+                setattr(self, f"{command_name}_pick_button", pick_button)
+                self.pick_layout.addWidget(pick_button)
+                self.pick_button_list[f"{command_name}_pick_button"] = pick_button
+                
+                
+                pick_button.clicked.connect(lambda: self.pick_function(command_name))
             
-            edit_button = QPushButton("Edit")
-            setattr(self, f"{command_name}_edit_button", edit_button)
-            self.edit_layout.addWidget(edit_button)
-            self.edit_button_list[f"{command_name}_edit_button"] = edit_button
-            
-            
-            edit_button.clicked.connect(lambda: self.edit_function(command_name))
-            
-            
-            remove_button = QPushButton("Remove")
-            setattr(self, f"{command_name}_cancel_button", remove_button)
-            self.remove_layout.addWidget(remove_button)
-            self.remove_button_list[f"{command_name}_edit_button"] = remove_button
-            
-            remove_button.clicked.connect(lambda: self.remove_function(command_name))
+            else:
+                edit_button = QPushButton("Edit")
+                setattr(self, f"{command_name}_edit_button", edit_button)
+                self.edit_layout.addWidget(edit_button)
+                self.edit_button_list[f"{command_name}_edit_button"] = edit_button
+                
+                
+                edit_button.clicked.connect(lambda: self.edit_function(command_name))
+                
+                
+                remove_button = QPushButton("Remove")
+                setattr(self, f"{command_name}_cancel_button", remove_button)
+                self.remove_layout.addWidget(remove_button)
+                self.remove_button_list[f"{command_name}_edit_button"] = remove_button
+                
+                remove_button.clicked.connect(lambda: self.remove_function(command_name))
             
         self.vertical_spacer = QSpacerItem(15, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         # Add the spacer item to the layout
-        self.edit_layout.addItem(self.vertical_spacer)
-        self.remove_layout.addItem(self.vertical_spacer)
+        if self.ui_edit_list:
+            self.pick_layout.addItem(self.vertical_spacer)
+        else:
+            self.edit_layout.addItem(self.vertical_spacer)
+            self.remove_layout.addItem(self.vertical_spacer)
             
     def edit_function(self, command_name):
         self.newCommandWin = QMainWindow()
@@ -186,6 +208,10 @@ class command_list_ui(QWidget):
             print(e)
             
         self.update_command_table()
+        
+    def pick_function(self, command_name):
+        self.ui_command_lineEdit.setText(command_name)
+        self.window.close()
             
         
     

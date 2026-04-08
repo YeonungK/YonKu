@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QMessageBox, QAction
 from PyQt5.QtGui import QCloseEvent
 from PyQt5 import uic
 import sys
@@ -11,10 +11,8 @@ import os
 import json
 from xml.etree.ElementTree import Element, SubElement, tostring
 from xml.dom import minidom
-from GUI import ManualEditUi as meu
+from GUI import ManualEditUi as meu, CommandListUi as clu
 
-
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QMessageBox, QAction
 
 sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
@@ -39,9 +37,9 @@ class ui_edit_setting_ui(QWidget):
 
         # signals connect
         self.show_current_ui_pushButton.clicked.connect(self.load_current_ui)
-        self.category_remove_pushButton.clicked.connect(lambda: self.remove_category(self.choose_category_comboBox.currentText())) # not complete
+        self.category_remove_pushButton.clicked.connect(self.remove_category) # not complete
         self.category_add_pushButton.clicked.connect(lambda: self.add_category(self.add_category_lineEdit.text()))
-        self.component_remove_pushButton.clicked.connect(lambda: self.remove_component(self.choose_category_comboBox.currentText(), self.choose_component_comboBox.currentText())) # not complete
+        self.component_remove_pushButton.clicked.connect(self.remove_component) # not complete
         self.command_list_pushButton.clicked.connect(self.open_command_list_window)
         self.add_component_pushButton.clicked.connect(self.add_component)
         self.save_pushButton.clicked.connect(self.translate_instrument_definition_to_ui)
@@ -85,10 +83,10 @@ class ui_edit_setting_ui(QWidget):
 
     def remove_component(self):
         if self.choose_category_comboBox.count() == 0:
-            self.add_category_lineEdit.setText("No category to remove")
+            self.component_lineEdit.setText("Choose a category to remove")
             return
         if self.choose_component_comboBox.count() == 0:
-            self.add_category_lineEdit.setText("No component to remove")
+            self.component_lineEdit.setText("No component to remove")
             return
         category_name = self.choose_category_comboBox.currentText()
         component_name = self.choose_component_comboBox.currentText()
@@ -99,54 +97,50 @@ class ui_edit_setting_ui(QWidget):
                 return
     
     def open_command_list_window(self):
-        pass
+        self.CommandListWin = QMainWindow()
+        self.CommandListWid = clu.command_list_ui(self.instrument, self.CommandListWin, True, self.command_name_label)
+        self.CommandListWin.setCentralWidget(self.CommandListWid)
+        
+        self.CommandListWin.setWindowTitle(f"{self.instrument.model} Command List")
+        self.CommandListWin.resize(600, 420)
+        self.CommandListWin.move(500, 200)
+        
+        self.CommandListWin.show()
+        
+    
 
-    def add_write_button(self):
-        pass
-
-    def add_read_button(self):
-        pass
-
-    def add_component(self, category_name, component_name, component_type, command_name, read=True, write=True, exp_readonly=False):
+    def add_component(self):
+        if self.choose_category_comboBox.count() == 0:
+            self.component_lineEdit.setText("Make a category to add a component to")
+            return
+        
+        category_name = self.choose_category_comboBox.currentText()
+        component_name = self.component_lineEdit.text()
+        component_type = self.widget_type_comboBox.currentIndex()
+        command_name = self.command_name_label.text()
+        add_write = self.add_write_checkBox.isChecked()
+        add_read = self.add_read_checkBox.isChecked()
+        exp_readonly = self.read_only_checkBox.isChecked()
+        
         if category_name not in self.ui_definition:
-            QMessageBox.warning(self, "Warning", f"Category '{category_name}' does not exist.")
+            self.add_category_lineEdit.setText("The category doesn't exist. Something is wrong.")
             return
         
         components = self.ui_definition[category_name]
         for i, component in enumerate(components):
             if component["name"] == component_name:
-                QMessageBox.warning(self, "Warning", f"Component '{component_name}' already exists in category '{category_name}'.")
+                self.component_lineEdit.setText("This component name already exists")
                 return
             
         component_info = {
             "name": component_name,
             "type": component_type,
             "command": command_name,
-            "read": read,
-            "write": write,
+            "write": add_write,
+            "read": add_read,
             "exp_readonly": exp_readonly
         }
         self.ui_definition[category_name].append(component_info)
-
-
-    
-    
-    
-    
-    
-    
-    def remove_component(self, category_name, component_name):
-        if category_name not in self.ui_definition:
-            QMessageBox.warning(self, "Warning", f"Category '{category_name}' does not exist.")
-            return
-        
-        components = self.ui_definition[category_name]
-        for i, component in enumerate(components):
-            if component["name"] == component_name:
-                del components[i]
-                return
-        
-        QMessageBox.warning(self, "Warning", f"Component '{component_name}' not found in category '{category_name}'.")
 
     def save_instrument_definition(path, data):
         with open(path, "w", encoding="utf-8") as f:

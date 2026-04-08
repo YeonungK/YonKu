@@ -17,22 +17,16 @@
    <item>
     <widget class="QFrame" name="frame_18">
      <property name="frameShape">
-      <enum>QFrame::Shape::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Shadow::Raised</enum>
+      <enum>QFrame::NoFrame</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_10">
       <item>
        <widget class="QFrame" name="frame_15">
         <property name="layoutDirection">
-         <enum>Qt::LayoutDirection::LeftToRight</enum>
+         <enum>Qt::LeftToRight</enum>
         </property>
         <property name="frameShape">
-         <enum>QFrame::Shape::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Shadow::Raised</enum>
+         <enum>QFrame::NoFrame</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_7">
          <item>
@@ -44,10 +38,7 @@
             </sizepolicy>
            </property>
            <property name="frameShape">
-            <enum>QFrame::Shape::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Shadow::Raised</enum>
+            <enum>QFrame::NoFrame</enum>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout">
             <property name="leftMargin">
@@ -88,10 +79,7 @@
             </sizepolicy>
            </property>
            <property name="frameShape">
-            <enum>QFrame::Shape::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Shadow::Raised</enum>
+            <enum>QFrame::NoFrame</enum>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <property name="leftMargin">
@@ -128,10 +116,7 @@
                </sizepolicy>
               </property>
               <property name="frameShape">
-               <enum>QFrame::Shape::Box</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Shadow::Raised</enum>
+               <enum>QFrame::Box</enum>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout">
                <item>
@@ -156,10 +141,7 @@
                   </sizepolicy>
                  </property>
                  <property name="frameShape">
-                  <enum>QFrame::Shape::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Shadow::Raised</enum>
+                  <enum>QFrame::NoFrame</enum>
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_2">
                   <property name="leftMargin">
@@ -209,10 +191,7 @@
                   </sizepolicy>
                  </property>
                  <property name="frameShape">
-                  <enum>QFrame::Shape::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Shadow::Raised</enum>
+                  <enum>QFrame::NoFrame</enum>
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_3">
                   <property name="leftMargin">
@@ -256,13 +235,10 @@
                   </sizepolicy>
                  </property>
                  <property name="layoutDirection">
-                  <enum>Qt::LayoutDirection::RightToLeft</enum>
+                  <enum>Qt::LeftToRight</enum>
                  </property>
                  <property name="frameShape">
-                  <enum>QFrame::Shape::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Shadow::Raised</enum>
+                  <enum>QFrame::NoFrame</enum>
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_13">
                   <property name="leftMargin">
@@ -289,10 +265,7 @@
          <item>
           <widget class="QFrame" name="frame_10">
            <property name="frameShape">
-            <enum>QFrame::Shape::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Shadow::Raised</enum>
+            <enum>QFrame::NoFrame</enum>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <property name="leftMargin">
@@ -323,10 +296,7 @@
             <item>
              <widget class="QFrame" name="frame_8">
               <property name="frameShape">
-               <enum>QFrame::Shape::Box</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Shadow::Raised</enum>
+               <enum>QFrame::Box</enum>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_2">
                <item>
@@ -338,10 +308,7 @@
                   </sizepolicy>
                  </property>
                  <property name="frameShape">
-                  <enum>QFrame::Shape::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Shadow::Raised</enum>
+                  <enum>QFrame::NoFrame</enum>
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_6">
                   <property name="leftMargin">
@@ -392,10 +359,7 @@
                <item>
                 <widget class="QFrame" name="frame_4">
                  <property name="frameShape">
-                  <enum>QFrame::Shape::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Shadow::Raised</enum>
+                  <enum>QFrame::NoFrame</enum>
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_4">
                   <property name="leftMargin">
@@ -426,10 +390,7 @@
                <item>
                 <widget class="QFrame" name="frame_5">
                  <property name="frameShape">
-                  <enum>QFrame::Shape::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Shadow::Raised</enum>
+                  <enum>QFrame::NoFrame</enum>
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_5">
                   <property name="leftMargin">
@@ -485,10 +446,7 @@
                <item>
                 <widget class="QFrame" name="frame_11">
                  <property name="frameShape">
-                  <enum>QFrame::Shape::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Shadow::Raised</enum>
+                  <enum>QFrame::NoFrame</enum>
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_7">
                   <property name="leftMargin">
@@ -530,10 +488,7 @@
                <item>
                 <widget class="QFrame" name="frame_12">
                  <property name="frameShape">
-                  <enum>QFrame::Shape::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Shadow::Raised</enum>
+                  <enum>QFrame::NoFrame</enum>
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_8">
                   <property name="leftMargin">
@@ -549,14 +504,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QCheckBox" name="checkBox_2">
+                   <widget class="QCheckBox" name="add_write_checkBox">
                     <property name="text">
                      <string>Add a WRITE Button</string>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QCheckBox" name="checkBox">
+                   <widget class="QCheckBox" name="add_read_checkBox">
                     <property name="text">
                      <string>Add a READ Button</string>
                     </property>
@@ -581,13 +536,10 @@
                   </sizepolicy>
                  </property>
                  <property name="layoutDirection">
-                  <enum>Qt::LayoutDirection::RightToLeft</enum>
+                  <enum>Qt::RightToLeft</enum>
                  </property>
                  <property name="frameShape">
-                  <enum>QFrame::Shape::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Shadow::Raised</enum>
+                  <enum>QFrame::NoFrame</enum>
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_9">
                   <property name="leftMargin">
@@ -611,7 +563,7 @@
                      </sizepolicy>
                     </property>
                     <property name="layoutDirection">
-                     <enum>Qt::LayoutDirection::LeftToRight</enum>
+                     <enum>Qt::LeftToRight</enum>
                     </property>
                     <property name="text">
                      <string>Add the component</string>
@@ -636,13 +588,10 @@
             </sizepolicy>
            </property>
            <property name="layoutDirection">
-            <enum>Qt::LayoutDirection::RightToLeft</enum>
+            <enum>Qt::RightToLeft</enum>
            </property>
            <property name="frameShape">
-            <enum>QFrame::Shape::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Shadow::Raised</enum>
+            <enum>QFrame::NoFrame</enum>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_14">
             <property name="leftMargin">
@@ -673,19 +622,13 @@
       <item>
        <widget class="QFrame" name="frame_16">
         <property name="frameShape">
-         <enum>QFrame::Shape::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Shadow::Raised</enum>
+         <enum>QFrame::NoFrame</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_8">
          <item>
           <widget class="QFrame" name="frame_19">
            <property name="frameShape">
-            <enum>QFrame::Shape::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Shadow::Raised</enum>
+            <enum>QFrame::NoFrame</enum>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_11">
             <item>
