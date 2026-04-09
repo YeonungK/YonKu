@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" ?>
 <ui version="4.0">
  <class>Form</class>
  <widget class="QWidget" name="Form">
@@ -6,15 +6,118 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>656</width>
-    <height>497</height>
+    <width>1000</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>test_model</string>
+   <string>Instrument Control</string>
   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>960</width>
+        <height>660</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QWidget" name="category1_container">
+         <layout class="QVBoxLayout" name="category1_layout">
+          <item>
+           <widget class="QLabel" name="category1_label">
+            <property name="text">
+             <string>category1</string>
+            </property>
+           </widget>
+          </item>
+          <widget class="QLabel" name="category1_emptyLabel">
+           <property name="text">
+            <string>No components</string>
+           </property>
+          </widget>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QWidget" name="category2_container">
+         <layout class="QVBoxLayout" name="category2_layout">
+          <item>
+           <widget class="QLabel" name="category2_label">
+            <property name="text">
+             <string>category2</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="category2_component1_rowWidget">
+            <layout class="QHBoxLayout" name="category2_component1_rowLayout">
+             <item>
+              <widget class="QLabel" name="category2_component1_label">
+               <property name="text">
+                <string>component1</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="category2_component1_lineEdit">
+               <property name="readOnly">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="category2_component1_readButton">
+               <property name="text">
+                <string>Read</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="category2_component1_writeButton">
+               <property name="text">
+                <string>Write</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QWidget" name="category3_container">
+         <layout class="QVBoxLayout" name="category3_layout">
+          <item>
+           <widget class="QLabel" name="category3_label">
+            <property name="text">
+             <string>category3</string>
+            </property>
+           </widget>
+          </item>
+          <widget class="QLabel" name="category3_emptyLabel">
+           <property name="text">
+            <string>No components</string>
+           </property>
+          </widget>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
 </ui>
-        

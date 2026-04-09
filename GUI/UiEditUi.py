@@ -31,15 +31,16 @@ class ui_edit_setting_ui(QWidget):
         self.save_file = False
         self.interface = str(interface)
         self.window = window
+        self.mdiWindow = None
         self.instrument_name_label.setText(self.data_list['model'])
         
         # empty ui config
         self.ui_definition = {}
 
         # load ui config if exists
-        json_file_path = f"GUI/ui_files/instrument_control_uis/{self.data_list['model']}_ui.json"
-        if os.path.exists(json_file_path):
-            with open(json_file_path, "r") as f:
+        self.json_file_path = f"GUI/ui_files/instrument_control_uis/{self.data_list['model']}_ui.json"
+        if os.path.exists(self.json_file_path):
+            with open(self.json_file_path, "r") as f:
                 self.ui_definition = json.load(f)
 
         # fill the category and component comboBoxes
@@ -53,13 +54,15 @@ class ui_edit_setting_ui(QWidget):
         self.component_remove_pushButton.clicked.connect(self.remove_component) # not complete
         self.command_list_pushButton.clicked.connect(self.open_command_list_window)
         self.add_component_pushButton.clicked.connect(self.add_component)
-        self.save_pushButton.clicked.connect(self.translate_instrument_definition_to_ui)
+        self.save_pushButton.clicked.connect(self.save_instrument_definition)
+        self.choose_category_comboBox.currentTextChanged.connect(self.update_component_combobox)
         
     def update_category_combobox(self):
         self.choose_category_comboBox.clear()
-        self.choose_component_comboBox.clear()
         for category in self.ui_definition.keys():
             self.choose_category_comboBox.addItem(category)
+        
+        self.update_component_combobox()
 
     def update_component_combobox(self):
         self.choose_component_comboBox.clear()
@@ -71,15 +74,16 @@ class ui_edit_setting_ui(QWidget):
     
 
     def load_current_ui(self):
+        if self.mdiWindow != None:
+            self.mdiWindow.close()
+        
         self.mdiWindow = QMdiSubWindow()
         self.mdiWidget = QWidget()
         
-        json_file_path = f"GUI/ui_files/instrument_control_uis/{self.data_list['model']}_ui.json"
-        if not os.path.exists(json_file_path):
+        if not os.path.exists(self.json_file_path):
+            print(self.json_file_path)
             print("You can't edit this UI")
         else:
-            with open(json_file_path, "r") as f:
-                self.ui_definition = json.load(f)
             uic.loadUi(f"GUI/ui_files/instrument_control_uis/{self.data_list['model']}_ui.ui", self.mdiWidget)
             self.mdiWindow.setWidget(self.mdiWidget)
             self.mdiWindow.setWindowTitle("Current Ui")
@@ -128,8 +132,7 @@ class ui_edit_setting_ui(QWidget):
         for i, component in enumerate(components):
             if component["name"] == component_name:
                 del components[i]
-                return
-        
+                
         # update component comboBox
         self.update_component_combobox()
     
@@ -306,6 +309,9 @@ class ui_edit_setting_ui(QWidget):
                     "name": f"{base}_writeButton"
                 })
                 add_string_property(write_btn, "text", "Write")
+                
+        def add_spacer(parent_layout):
+            pass
 
         # Root UI
         ui = Element("ui", {"version": "4.0"})
@@ -343,13 +349,6 @@ class ui_edit_setting_ui(QWidget):
             "name": "gridLayout"
         })
 
-        # Stretch properties for equal-width columns
-        add_number_property(grid_layout, "horizontalSpacing", 12)
-        add_number_property(grid_layout, "verticalSpacing", 12)
-
-        column_stretch = SubElement(grid_layout, "property", {"name": "columnStretch"})
-        stretch_string = SubElement(column_stretch, "string")
-        stretch_string.text = "1,1"
 
         # Categories
         for index, (category_name, components) in enumerate(self.ui_definition.items(), start=1):
@@ -379,15 +378,25 @@ class ui_edit_setting_ui(QWidget):
             add_string_property(title, "text", category_name)
 
             # Component rows
-            for comp in components:
-                create_component_row(layout, category_name, comp)
+            
+            if not components:
+                
+                add_spacer(layout)
+
+            else:
+                for comp in components:
+                    create_component_row(layout, category_name, comp)
+            
+            
 
         SubElement(ui, "resources")
         SubElement(ui, "connections")
 
         xml = minidom.parseString(tostring(ui, encoding="utf-8")).toprettyxml(indent=" ")
+        print(xml)
 
         if save_path:
+            print("path received")
             directory = os.path.dirname(save_path)
             if directory:
                 os.makedirs(directory, exist_ok=True)

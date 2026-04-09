@@ -1,0 +1,14 @@
+{
+    "category1": [],
+    "category2": [
+        {
+            "name": "component1",
+            "type": 0,
+            "command": "ser",
+            "write": true,
+            "read": true,
+            "exp_readonly": false
+        }
+    ],
+    "category3": []
+}

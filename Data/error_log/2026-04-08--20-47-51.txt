@@ -1,0 +1,63 @@
+Szkopek Lab Error Log Book - 2026-04-08--20-47-51
+
+2026-04-08--20-48-15 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2361, in <module>
+    UIWindow = UI()
+               ^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 516, in __init__
+    self.add_windows()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 819, in add_windows
+    widget_instance = widget_class()
+                      ^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\instrument_control_widgets\test_model_widget.py", line 14, in __init__
+    uic.loadUi('GUI/ui_files/instrument_control_uis/test_model_ui.ui', self)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\__init__.py", line 241, in loadUi
+    return DynamicUILoader(package).loadUi(uifile, baseinstance, resource_suffix)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\Loader\loader.py", line 66, in loadUi
+    return self.parse(filename, resource_suffix)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 1037, in parse
+    actor(elem)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 828, in createUserInterface
+    self.traverseWidgetTree(elem)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 806, in traverseWidgetTree
+    handler(self, child)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 503, in createLayout
+    self.traverseWidgetTree(elem)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 806, in traverseWidgetTree
+    handler(self, child)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 546, in handleItem
+    self.traverseWidgetTree(elem)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 806, in traverseWidgetTree
+    handler(self, child)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 273, in createWidget
+    self.traverseWidgetTree(elem)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 806, in traverseWidgetTree
+    handler(self, child)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 273, in createWidget
+    self.traverseWidgetTree(elem)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 806, in traverseWidgetTree
+    handler(self, child)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 503, in createLayout
+    self.traverseWidgetTree(elem)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 806, in traverseWidgetTree
+    handler(self, child)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 546, in handleItem
+    self.traverseWidgetTree(elem)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 806, in traverseWidgetTree
+    handler(self, child)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 273, in createWidget
+    self.traverseWidgetTree(elem)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 806, in traverseWidgetTree
+    handler(self, child)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 503, in createLayout
+    self.traverseWidgetTree(elem)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 806, in traverseWidgetTree
+    handler(self, child)
+  File "C:\Users\szkop\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 327, in createWidget
+    lp = elem.attrib['layout-position']
+         ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'layout-position'
+
+
