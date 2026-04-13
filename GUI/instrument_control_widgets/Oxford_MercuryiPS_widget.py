@@ -20,7 +20,62 @@ class magnetPowerSupply_widget(QWidget):
         self.switchHeaterZbutton.setCheckable(True)
         self.switchHeaterZbutton.toggled.connect(self.switch_z_change_state)
         
+    # [----------magnet power supply ui signals---------]
+        
+        self.switchHeaterZbutton.clicked.connect(self.switch_heater_power)
+        self.targetFieldLimitSet.clicked.connect(self.set_target_field)
+        self.targetFieldRead.clicked.connect(self.read_target_field)
+        self.fieldRatingSet.clicked.connect(self.set_field_rate)
+        self.fieldRatingRead.clicked.connect(self.read_field_rate)
+        # self.startDisplay.clicked.connect(self.magnetPowerSupply_thread) # [/]
     
+    
+    
+    # [...........functions...........]
+    
+    def switch_heater_power(self):
+        if self.switchHeaterZbutton.isChecked():
+            self.instrument.set_switch_status('Z','ON')
+        else:
+            self.instrument.set_switch_status('Z','OFF')
+    
+    def set_switch_heater_status(self):
+
+        switch_heater_status = self.instrument.read_all_switch_status()
+        
+        x_status = switch_heater_status['x'].split(':')[-1]
+        y_status = switch_heater_status['y'].split(':')[-1]
+        z_status = switch_heater_status['z'].split(':')[-1]
+        
+        print(x_status, y_status, z_status)
+        
+        if z_status == 'ON':
+            self.on_state(self.switchHeaterZbutton)
+        else:
+            self.off_state(self.switchHeaterZbutton)
+        
+        self.switchHeaterZLineEdit.setText('')
+        
+    def set_target_field(self):
+        value = self.targetFieldSpinBox.value()
+        response = self.instrument.set_target_field('Z', str(value))
+        print(response)
+    
+    def read_target_field(self):
+        value = self.instrument.read_target_field('Z')
+        print(value)
+        self.targetFieldSpinBox.setValue(float(value))
+        
+    def set_field_rate(self):
+        value = self.fieldRatingSpinBox.value()
+        response = self.instrument.set_field_rate('Z', str(value))
+        print(response)
+    
+    def read_field_rate(self):
+        value = self.instrument.read_field_rate('Z')
+        print(value)
+        self.fieldRatingSpinBox.setValue(float(value))
+        
     def off_state(self, button):
         
         button.setChecked(False)
@@ -54,3 +109,7 @@ class magnetPowerSupply_widget(QWidget):
         now = datetime.now()
         now.strftime('%Y-%m-%d %H:%M:%S')
         self.switchHeaterZLineEdit.setText(str(now))
+    
+    # [/]
+
+    

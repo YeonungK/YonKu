@@ -1,0 +1,17 @@
+Szkopek Lab Error Log Book - 2026-04-13--16-18-24
+
+2026-04-13--16-18-48 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 2445, in <module>
+    UIWindow = UI()
+               ^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 517, in __init__
+    self.add_windows()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 929, in add_windows
+    widget_instance = widget_class(instrument)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\instrument_control_widgets\usb6525_gasValve_widget.py", line 32, in __init__
+    self.gasValveWid.pumpPushButton.toggled.connect(self.pump_change)
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'gasValve_widget' object has no attribute 'gasValveWid'
+
+

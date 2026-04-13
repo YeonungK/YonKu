@@ -14,13 +14,10 @@ class pressureGauge_widget(QWidget):
         self.instrument = instrument
         uic.loadUi('GUI/ui_files/instrument_control_uis/INFICON_VGC401_ui.ui', self)
         
-
-    # def change_state(self):
         
-    #     if self.startButton.isChecked():
-    #         self.startButton.setText("Stop Measurement")
-
-    #     else:
-    #         self.startButton.setText("Start Measurement")
+        # [---------pressure gauge ui output signals---------]
+        
+        # self.pressureGaugeWid.startDisplay.clicked.connect(self.pressureGauge_thread) # [/]
+        
         
         

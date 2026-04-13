@@ -67,6 +67,7 @@ class lockInAmplifier1(GPIBInstrument):
                 "200 m" :  24,
                 "500 m" : 25,
                 "1" : 26}
+   
         
     def reset(self):
         self.write('*RST')
