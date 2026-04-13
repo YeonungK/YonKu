@@ -40,10 +40,37 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="category1_emptyLabel">
-            <property name="text">
-             <string>No components</string>
-            </property>
+           <widget class="QWidget" name="category1_add_one_rowWidget">
+            <layout class="QHBoxLayout" name="category1_add_one_rowLayout">
+             <item>
+              <widget class="QLabel" name="category1_add_one_label">
+               <property name="text">
+                <string>add_one</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="category1_add_one_lineEdit">
+               <property name="readOnly">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="category1_add_one_readButton">
+               <property name="text">
+                <string>Read</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="category1_add_one_writeButton">
+               <property name="text">
+                <string>Write</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -110,6 +137,9 @@
            <widget class="QLabel" name="category3_emptyLabel">
             <property name="text">
              <string>No components</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>

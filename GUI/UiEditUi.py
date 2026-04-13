@@ -199,6 +199,7 @@ class ui_edit_setting_ui(QWidget):
         ui_xml = self.ui_definition_to_xml(save_path=f"GUI/ui_files/instrument_control_uis/{self.data_list['model']}_ui.ui")
 
     
+    # translates the ui_config json data(python dict data) to xml and saves it
 
     def ui_definition_to_xml(self, save_path=None):
 

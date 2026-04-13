@@ -1,5 +1,14 @@
 {
-    "category1": [],
+    "category1": [
+        {
+            "name": "add_one",
+            "type": 0,
+            "command": "Choose a command from the command list",
+            "write": true,
+            "read": true,
+            "exp_readonly": false
+        }
+    ],
     "category2": [
         {
             "name": "component1",

@@ -97,8 +97,6 @@ class lockInAmplifier1(GPIBInstrument):
         return self.query('FMOD?')
     def get_trigshape(self):
         return self.query('RSLP?')
-    def get_harm(self):
-        return self.query('HARM?')
     def get_input(self):
         return self.query('ISRC?')
     def get_ground(self):

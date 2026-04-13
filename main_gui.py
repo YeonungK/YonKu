@@ -631,37 +631,37 @@ class UI(QMainWindow):
 
         # [######set buttons######]
         
-        self.lockInAmplifier2Wid.setAllButton.clicked.connect(self.set_all)
+        self.lockInAmplifier2Wid.setAllButton.clicked.connect(self.set_all2)
         
         # [REFERENCE AND PHASE]
-        self.lockInAmplifier2Wid.phaseSet.clicked.connect(self.phase_set)
-        self.lockInAmplifier2Wid.rsSet.clicked.connect(self.rs_set)
-        self.lockInAmplifier2Wid.rfSet.clicked.connect(self.rf_set)
-        self.lockInAmplifier2Wid.dhSet.clicked.connect(self.dh_set) # [/]
+        self.lockInAmplifier2Wid.phaseSet.clicked.connect(self.phase_set2)
+        self.lockInAmplifier2Wid.rsSet.clicked.connect(self.rs_set2)
+        self.lockInAmplifier2Wid.rfSet.clicked.connect(self.rf_set2)
+        self.lockInAmplifier2Wid.dhSet.clicked.connect(self.dh_set2) # [/]
         
         # [GAIN AND TIME CONSTANT]
-        self.lockInAmplifier2Wid.sensSet.clicked.connect(self.sens_set)
-        self.lockInAmplifier2Wid.reservSet.clicked.connect(self.reserv_set)
-        self.lockInAmplifier2Wid.timeCnstSet.clicked.connect(self.timeCnst_set)
-        self.lockInAmplifier2Wid.lpFilSet.clicked.connect(self.lpFil_set) # [/]
+        self.lockInAmplifier2Wid.sensSet.clicked.connect(self.sens_set2)
+        self.lockInAmplifier2Wid.reservSet.clicked.connect(self.reserv_set2)
+        self.lockInAmplifier2Wid.timeCnstSet.clicked.connect(self.timeCnst_set2)
+        self.lockInAmplifier2Wid.lpFilSet.clicked.connect(self.lpFil_set2) # [/]
         
 # [/]
         
         # [#######query buttons#######]
         
-        self.lockInAmplifier2Wid.qryAllButton.clicked.connect(self.query_all)
+        self.lockInAmplifier2Wid.qryAllButton.clicked.connect(self.query_all2)
         
         # [REFERENCE AND PHASE]
-        self.lockInAmplifier2Wid.phaseQry.clicked.connect(self.phase_qry)
-        self.lockInAmplifier2Wid.rsQry.clicked.connect(self.rs_qry)
-        self.lockInAmplifier2Wid.rfQry.clicked.connect(self.rf_qry)
-        self.lockInAmplifier2Wid.dhQry.clicked.connect(self.dh_qry) # [/]
+        self.lockInAmplifier2Wid.phaseQry.clicked.connect(self.phase_qry2)
+        self.lockInAmplifier2Wid.rsQry.clicked.connect(self.rs_qry2)
+        self.lockInAmplifier2Wid.rfQry.clicked.connect(self.rf_qry2)
+        self.lockInAmplifier2Wid.dhQry.clicked.connect(self.dh_qry2) # [/]
         
         # [GAIN AND TIME CONSTANT]
-        self.lockInAmplifier2Wid.sensQry.clicked.connect(self.sens_qry)
-        self.lockInAmplifier2Wid.reservQry.clicked.connect(self.reserv_qry)
-        self.lockInAmplifier2Wid.timeCnstQry.clicked.connect(self.timeCnst_qry)
-        self.lockInAmplifier2Wid.lpFilQry.clicked.connect(self.lpFil_qry) # [/]
+        self.lockInAmplifier2Wid.sensQry.clicked.connect(self.sens_qry2)
+        self.lockInAmplifier2Wid.reservQry.clicked.connect(self.reserv_qry2)
+        self.lockInAmplifier2Wid.timeCnstQry.clicked.connect(self.timeCnst_qry2)
+        self.lockInAmplifier2Wid.lpFilQry.clicked.connect(self.lpFil_qry2) # [/]
         
 # [/]
  # [/]
@@ -1511,18 +1511,18 @@ class UI(QMainWindow):
     
     # [#######setting functions#######]
     
-    def set_all(self):
-        self.phase_set()
-        self.rs_set()
-        self.rf_set()
-        self.dh_set()
-        self.sens_set()
-        self.reserv_set()
-        self.timeCnst_set()
-        self.lpFil_set()
+    def set_all2(self):
+        self.phase_set2()
+        self.rs_set2()
+        self.rf_set2()
+        self.dh_set2()
+        self.sens_set2()
+        self.reserv_set2()
+        self.timeCnst_set2()
+        self.lpFil_set2()
         
     # REFERENCE AND PHASE
-    def phase_set(self):
+    def phase_set2(self):
         value = self.lockInAmplifier2Wid.phaseLineEdit.text()
         try:
             value = float(value)
@@ -1531,7 +1531,7 @@ class UI(QMainWindow):
         except:
             self.lockInAmplifier2Wid.phaseLineEdit.setText("Type a valid input")
 
-    def rs_set(self):
+    def rs_set2(self):
         value = self.lockInAmplifier2Wid.rsComboBox.currentText()
         
         if value == "Internal":
@@ -1541,7 +1541,7 @@ class UI(QMainWindow):
             self.lockInAmplifier2.set_trigsource(0)
             self.lockInAmplifier2Wid.rfLineEdit.setEnabled(False)
             
-    def rf_set(self):
+    def rf_set2(self):
         value = self.lockInAmplifier2Wid.rfLineEdit.text()
         try:
             value = float(value)
@@ -1555,7 +1555,7 @@ class UI(QMainWindow):
         except:
             self.lockInAmplifier2Wid.rfLineEdit.setText("Disabled / Invalid input")
     
-    def dh_set(self):
+    def dh_set2(self):
         value = self.lockInAmplifier2Wid.dhLineEdit.text()
         try:
             value = float(value)
@@ -1567,7 +1567,7 @@ class UI(QMainWindow):
             self.lockInAmplifier2Wid.dhLineEdit.setText("Invalid input")
             
     # GAIN AND TIME CONSTANT
-    def sens_set(self):
+    def sens_set2(self):
         value = self.lockInAmplifier2Wid.sensComboBox.currentText()
         
         try: 
@@ -1575,7 +1575,7 @@ class UI(QMainWindow):
         except KeyError:
             print("can't find the key")
             
-    def reserv_set(self):
+    def reserv_set2(self):
         value = self.lockInAmplifier2Wid.reservComboBox.currentText()
         
         match value:
@@ -1588,7 +1588,7 @@ class UI(QMainWindow):
             case _:
                 pass
                 
-    def timeCnst_set(self):
+    def timeCnst_set2(self):
         value = self.lockInAmplifier2Wid.timeCnstComboBox.currentText()
         
         try: 
@@ -1596,7 +1596,7 @@ class UI(QMainWindow):
         except KeyError:
             print("can't find the key")          
         
-    def lpFil_set(self):
+    def lpFil_set2(self):
         value = self.lockInAmplifier2Wid.lpFilComboBox.currentText()
         
         match value:
@@ -1615,7 +1615,7 @@ class UI(QMainWindow):
     
     # [#######quering functions#######]
     
-    def query_all(self):
+    def query_all2(self):
         self.phase_qry()
         self.rs_qry()
         self.rf_qry()
@@ -1626,11 +1626,11 @@ class UI(QMainWindow):
         self.lpFil_qry()
     
     # REFERENCE AND PHASE
-    def phase_qry(self):
+    def phase_qry2(self):
         value = str(self.lockInAmplifier2.get_phase())
         self.lockInAmplifier2Wid.phaseLineEdit.setText(value)
         
-    def rs_qry(self):
+    def rs_qry2(self):
         value = str(self.lockInAmplifier2.get_trigsource())
         print(value)
         match value:
@@ -1643,16 +1643,16 @@ class UI(QMainWindow):
             case _:
                 pass
     
-    def rf_qry(self):
+    def rf_qry2(self):
         value = str(self.lockInAmplifier2.get_freq())
         self.lockInAmplifier2Wid.rfLineEdit.setText(value)
         
-    def dh_qry(self):
+    def dh_qry2(self):
         value = str(self.lockInAmplifier2.get_harm())
         self.lockInAmplifier2Wid.dhLineEdit.setText(value)
         
     # GAIN AND TIME CONSTANT
-    def sens_qry(self):
+    def sens_qry2(self):
         index = str(self.lockInAmplifier2.get_sens())
         print(index)
         
@@ -1660,7 +1660,7 @@ class UI(QMainWindow):
         
         self.lockInAmplifier2Wid.sensComboBox.setCurrentText(value)
         
-    def reserv_qry(self):
+    def reserv_qry2(self):
         value = str(self.lockInAmplifier2.get_reserve())
         print(value)
         match value:
@@ -1676,7 +1676,7 @@ class UI(QMainWindow):
             case _:
                 pass
             
-    def timeCnst_qry(self):
+    def timeCnst_qry2(self):
         index = str(self.lockInAmplifier2.get_tau())
         print(index)
         
@@ -1684,7 +1684,7 @@ class UI(QMainWindow):
         
         self.lockInAmplifier2Wid.timeCnstComboBox.setCurrentText(value)
         
-    def lpFil_qry(self):
+    def lpFil_qry2(self):
         value = str(self.lockInAmplifier2.get_slope())
         print(value)
         match value:
