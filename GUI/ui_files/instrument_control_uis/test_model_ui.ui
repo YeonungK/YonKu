@@ -39,11 +39,13 @@
             </property>
            </widget>
           </item>
-          <widget class="QLabel" name="category1_emptyLabel">
-           <property name="text">
-            <string>No components</string>
-           </property>
-          </widget>
+          <item>
+           <widget class="QLabel" name="category1_emptyLabel">
+            <property name="text">
+             <string>No components</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -104,11 +106,13 @@
             </property>
            </widget>
           </item>
-          <widget class="QLabel" name="category3_emptyLabel">
-           <property name="text">
-            <string>No components</string>
-           </property>
-          </widget>
+          <item>
+           <widget class="QLabel" name="category3_emptyLabel">
+            <property name="text">
+             <string>No components</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

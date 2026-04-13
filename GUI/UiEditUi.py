@@ -324,6 +324,10 @@ class ui_edit_setting_ui(QWidget):
 
             add_string_property(label, "text", "No components")
 
+            prop = SubElement(label, "property", {"name": "alignment"})
+            align = SubElement(prop, "set")
+            align.text = "Qt::AlignCenter"
+
         # Root UI
         ui = Element("ui", {"version": "4.0"})
         SubElement(ui, "class").text = "Form"
