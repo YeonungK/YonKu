@@ -8,8 +8,9 @@ import threading
 import traceback
 import importlib
 from pathlib import Path
+from functools import partial
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QMessageBox, QAction
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QMessageBox, QAction, QLineEdit, QComboBox
 from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot, QTimer, Qt, QSize
 from PyQt5.QtGui import QCloseEvent
 from PyQt5 import uic
@@ -706,6 +707,119 @@ class UI(QMainWindow):
         
 
     # [Functions]
+
+    def sanitize_name(self, name: str) -> str:
+        clean = "".join(ch if ch.isalnum() or ch == "_" else "_" for ch in str(name))
+        if not clean:
+            clean = "unnamed"
+        if clean[0].isdigit():
+            clean = "_" + clean
+        return clean
+
+    def bind_dynamic_signals(self):
+        """
+        Automatically connect every read/write button using self.ui_definition.
+        """
+        for category_name, components in self.ui_definition.items():
+            safe_category = self.sanitize_name(category_name)
+
+            for component in components:
+                component_name = component.get("name", "component")
+                safe_component = self.sanitize_name(component_name)
+                base = f"{safe_category}_{safe_component}"
+
+                # Read button
+                if component.get("read", False):
+                    read_button = self.findChild(QPushButton, f"{base}_readButton")
+                    if read_button is not None:
+                        read_button.clicked.connect(
+                            partial(self.handle_read, category_name, component)
+                        )
+
+                # Write button
+                if component.get("write", False):
+                    write_button = self.findChild(QPushButton, f"{base}_writeButton")
+                    if write_button is not None:
+                        write_button.clicked.connect(
+                            partial(self.handle_write, category_name, component)
+                        )
+
+    def get_component_widget(self, category_name: str, component: dict):
+        """
+        Find the main input widget for a component.
+        Returns either QLineEdit, QComboBox, or None.
+        """
+        safe_category = self.sanitize_name(category_name)
+        safe_component = self.sanitize_name(component.get("name", "component"))
+        base = f"{safe_category}_{safe_component}"
+
+        comp_type = component.get("type", 1)
+
+        if comp_type == 1:
+            return self.findChild(QLineEdit, f"{base}_lineEdit")
+        if comp_type == 2:
+            return self.findChild(QComboBox, f"{base}_comboBox")
+
+        return self.findChild(QLineEdit, f"{base}_lineEdit")
+    def handle_read(self, category_name: str, component: dict):
+        """
+        Called when a Read button is pressed.
+        Reads from the instrument and updates the UI widget.
+        """
+        widget = self.get_component_widget(category_name, component)
+        command = component.get("command", "")
+
+        if widget is None:
+            print(f"Read failed: widget not found for {category_name} / {component.get('name')}")
+            return
+
+        try:
+            # Replace this with your real instrument read/query logic
+            value = self.instrument.query(command)
+
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+
+            elif isinstance(widget, QComboBox):
+                text_value = str(value)
+                index = widget.findText(text_value)
+                if index >= 0:
+                    widget.setCurrentIndex(index)
+                else:
+                    widget.addItem(text_value)
+                    widget.setCurrentIndex(widget.count() - 1)
+
+        except Exception as e:
+            print(f"Read failed for {category_name} / {component.get('name')}: {e}")
+
+    def handle_write(self, category_name: str, component: dict):
+        """
+        Called when a Write button is pressed.
+        Gets the current UI value and sends it to the instrument.
+        """
+        widget = self.get_component_widget(category_name, component)
+        command = component.get("command", "")
+
+        if widget is None:
+            print(f"Write failed: widget not found for {category_name} / {component.get('name')}")
+            return
+
+        try:
+            if isinstance(widget, QLineEdit):
+                value = widget.text()
+
+            elif isinstance(widget, QComboBox):
+                value = widget.currentText()
+
+            else:
+                print(f"Write failed: unsupported widget for {category_name} / {component.get('name')}")
+                return
+
+            # Replace this with your real instrument write logic
+            self.instrument.write(f"{command} {value}")
+
+        except Exception as e:
+            print(f"Write failed for {category_name} / {component.get('name')}: {e}")
         
     # [+++++++++Error Handling functions++++++++++]
     
