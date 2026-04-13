@@ -10,7 +10,7 @@ function_code = """"""
 data_manipulation_code = """"""
 def ser(self):
     try:
-        
+        print("This is the ser method. You can replace this with your own code to read from the instrument.")
         return None
 
     except Exception as e:
