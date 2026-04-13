@@ -1,3 +1,5 @@
+from cProfile import label
+
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QMessageBox, QAction
 from PyQt5.QtGui import QCloseEvent
 from PyQt5 import uic
@@ -310,8 +312,17 @@ class ui_edit_setting_ui(QWidget):
                 })
                 add_string_property(write_btn, "text", "Write")
                 
-        def add_spacer(parent_layout):
-            pass
+        def add_empty_label(parent_layout, category_name):
+            cat = sanitize_name(category_name)
+
+            item = SubElement(parent_layout, "item")
+
+            label = SubElement(item, "widget", {
+                "class": "QLabel",
+                "name": f"{cat}_emptyLabel"
+            })
+
+            add_string_property(label, "text", "No components")
 
         # Root UI
         ui = Element("ui", {"version": "4.0"})
@@ -380,8 +391,7 @@ class ui_edit_setting_ui(QWidget):
             # Component rows
             
             if not components:
-                
-                add_spacer(layout)
+                add_empty_label(layout, category_name)
 
             else:
                 for comp in components:
