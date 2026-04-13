@@ -3,7 +3,7 @@ import sys
 sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QLabel, QComboBox, QLineEdit, QCombobox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QLabel, QComboBox, QLineEdit
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5 import uic
 from functools import partial
@@ -20,6 +20,8 @@ class test_instrument_widget(QWidget):
         self.instrument_name = self.instrument.name
         uic.loadUi('GUI/ui_files/instrument_control_uis/test_model_ui.ui', self)
         
+        self.bind_dynamic_signals()
+        
     def sanitize_name(self, name: str) -> str:
         clean = "".join(ch if ch.isalnum() or ch == "_" else "_" for ch in str(name))
         if not clean:
@@ -30,7 +32,7 @@ class test_instrument_widget(QWidget):
 
     def bind_dynamic_signals(self):
         
-        json_path = f"GUI/instrument_control_widgets/ui_files/instrument_control_uis/{self.instrument_model}_ui.json"
+        json_path = f"GUI/ui_files/instrument_control_uis/{self.instrument_model}_ui.json"
         
         if not os.path.exists(json_path):
             print(f"[ERROR] UI definition file not found: {json_path}")
@@ -100,7 +102,7 @@ class test_instrument_widget(QWidget):
         Reads from the instrument and updates the UI widget.
         """
         widget = self.get_component_widget(category_name, component)
-        command = component.get("command", "")
+        command_name = component.get("read_command", "")
 
         if widget is None:
             print(f"Read failed: widget not found for {category_name} / {component.get('name')}")
@@ -114,9 +116,9 @@ class test_instrument_widget(QWidget):
             else:
                 method_module = importlib.import_module(module_path)
             # 2. Get the specific function/attribute from the module using getattr
-            method_function = getattr(method_module, f"read_functions[{self.command_name}]")
+            method_function = method_module.read_functions[command_name]
             value = method_function(self.instrument)
-            print("This is the respone: " + value)
+            print(f"This is the respone: {value}")
             
             # print it on component widget
             if isinstance(widget, QLineEdit):
@@ -138,7 +140,7 @@ class test_instrument_widget(QWidget):
             print("IndentationError: Please check the indentation of your method code.")
             # self.testResponse.setText("The function code is empty.")
         except Exception as e:
-            print(f"Read failed for {category_name} / {component.get('name')}: {e}")
+            print(e)
 
     def handle_write(self, category_name: str, component: dict):
         """
@@ -146,7 +148,7 @@ class test_instrument_widget(QWidget):
         Gets the current UI value and sends it to the instrument.
         """
         widget = self.get_component_widget(category_name, component)
-        command = component.get("command", "")
+        command_name = component.get("write_command", "")
 
         if widget is None:
             print(f"Write failed: widget not found for {category_name} / {component.get('name')}")
@@ -170,7 +172,7 @@ class test_instrument_widget(QWidget):
             else:
                 method_module = importlib.import_module(module_path)
             # 2. Get the specific function/attribute from the module using getattr
-            method_function = getattr(method_module, f"write_functions[{self.command_name}]")
+            method_function = method_module.write_functions[command_name]
             method_function(self.instrument)
             
         except (ImportError, AttributeError) as e:

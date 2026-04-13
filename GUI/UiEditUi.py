@@ -44,20 +44,43 @@ class ui_edit_setting_ui(QWidget):
         if os.path.exists(self.json_file_path):
             with open(self.json_file_path, "r") as f:
                 self.ui_definition = json.load(f)
+        else:
+            print(self.json_file_path)
+            print("You can't edit this UI")
+            self.save_pushButton.setEnabled(False)
 
         # fill the category and component comboBoxes
         self.update_category_combobox()
         self.update_component_combobox()
+        
+        # disable the command lists
+        self.read_command_frame.setEnabled(False)
+        self.write_command_frame.setEnabled(False)
 
         # signals connect
         self.show_current_ui_pushButton.clicked.connect(self.load_current_ui)
         self.category_remove_pushButton.clicked.connect(self.remove_category) # not complete
         self.category_add_pushButton.clicked.connect(lambda: self.add_category(self.add_category_lineEdit.text()))
         self.component_remove_pushButton.clicked.connect(self.remove_component) # not complete
-        self.command_list_pushButton.clicked.connect(self.open_command_list_window)
+        self.add_read_checkBox.stateChanged.connect(self.enable_read_command)
+        self.read_command_list_pushButton.clicked.connect(lambda: self.open_command_list_window(self.read_command_name_label))
+        self.add_write_checkBox.stateChanged.connect(self.enable_write_command)
+        self.write_command_list_pushButton.clicked.connect(lambda: self.open_command_list_window(self.write_command_name_label))
         self.add_component_pushButton.clicked.connect(self.add_component)
         self.save_pushButton.clicked.connect(self.save_instrument_definition)
         self.choose_category_comboBox.currentTextChanged.connect(self.update_component_combobox)
+        
+    def enable_read_command(self):
+        if self.add_read_checkBox.isChecked():
+            self.read_command_frame.setEnabled(True)
+        else:
+            self.read_command_frame.setEnabled(False)
+    
+    def enable_write_command(self):
+        if self.add_write_checkBox.isChecked():
+            self.write_command_frame.setEnabled(True)
+        else:
+            self.write_command_frame.setEnabled(False)
         
     def update_category_combobox(self):
         self.choose_category_comboBox.clear()
@@ -138,9 +161,9 @@ class ui_edit_setting_ui(QWidget):
         # update component comboBox
         self.update_component_combobox()
     
-    def open_command_list_window(self):
+    def open_command_list_window(self, command_name_label):
         self.CommandListWin = QMainWindow()
-        self.CommandListWid = clu.command_list_ui(self.instrument, self.CommandListWin, True, self.command_name_label)
+        self.CommandListWid = clu.command_list_ui(self.instrument, self.CommandListWin, True, command_name_label)
         self.CommandListWin.setCentralWidget(self.CommandListWid)
         
         self.CommandListWin.setWindowTitle(f"{self.instrument.model} Command List")
@@ -159,9 +182,10 @@ class ui_edit_setting_ui(QWidget):
         category_name = self.choose_category_comboBox.currentText()
         component_name = self.component_lineEdit.text()
         component_type = self.widget_type_comboBox.currentIndex()
-        command_name = self.command_name_label.text()
-        add_write = self.add_write_checkBox.isChecked()
         add_read = self.add_read_checkBox.isChecked()
+        read_command_name = self.read_command_name_label.text()
+        add_write = self.add_write_checkBox.isChecked()
+        write_command_name = self.write_command_name_label.text()
         exp_readonly = self.read_only_checkBox.isChecked()
         
         if category_name not in self.ui_definition:
@@ -177,9 +201,10 @@ class ui_edit_setting_ui(QWidget):
         component_info = {
             "name": component_name,
             "type": component_type,
-            "command": command_name,
-            "write": add_write,
             "read": add_read,
+            "read_command": read_command_name,
+            "write": add_write,
+            "write_command": write_command_name,
             "exp_readonly": exp_readonly
         }
         self.ui_definition[category_name].append(component_info)

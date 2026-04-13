@@ -19,7 +19,7 @@
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_10">
+     <layout class="QHBoxLayout" name="horizontalLayout_15">
       <item>
        <widget class="QFrame" name="frame_15">
         <property name="layoutDirection">
@@ -444,7 +444,14 @@
                 </widget>
                </item>
                <item>
-                <widget class="QFrame" name="frame_11">
+                <widget class="QCheckBox" name="add_read_checkBox">
+                 <property name="text">
+                  <string>Add a READ Button</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QFrame" name="read_command_frame">
                  <property name="frameShape">
                   <enum>QFrame::NoFrame</enum>
                  </property>
@@ -464,19 +471,19 @@
                   <item>
                    <widget class="QLabel" name="label_13">
                     <property name="text">
-                     <string>Command:</string>
+                     <string>Read Command:</string>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="command_name_label">
+                   <widget class="QLabel" name="read_command_name_label">
                     <property name="text">
                      <string>Choose a command from the command list</string>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="command_list_pushButton">
+                   <widget class="QPushButton" name="read_command_list_pushButton">
                     <property name="text">
                      <string>Command List</string>
                     </property>
@@ -510,10 +517,45 @@
                     </property>
                    </widget>
                   </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QFrame" name="write_command_frame">
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
+                 </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout_10">
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
                   <item>
-                   <widget class="QCheckBox" name="add_read_checkBox">
+                   <widget class="QLabel" name="label_14">
                     <property name="text">
-                     <string>Add a READ Button</string>
+                     <string>Write Command:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="write_command_name_label">
+                    <property name="text">
+                     <string>Choose a command from the command list</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="write_command_list_pushButton">
+                    <property name="text">
+                     <string>Command List</string>
                     </property>
                    </widget>
                   </item>
