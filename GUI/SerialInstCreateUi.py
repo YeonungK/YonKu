@@ -122,8 +122,10 @@ from PyQt5.QtCore import QTimer, Qt
 from PyQt5 import uic
 
 class {self.name}_widget(QWidget):
-    def __init__(self):
+    def __init__(self, instrument):
         super().__init__()
+        
+        self.instrument = instrument
         
         uic.loadUi('GUI/ui_files/instrument_control_uis/{self.model}_ui.ui', self)
         

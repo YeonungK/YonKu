@@ -8,9 +8,10 @@ from PyQt5.QtCore import QTimer, Qt
 from PyQt5 import uic
 
 class pressureGauge_widget(QWidget):
-    def __init__(self):
+    def __init__(self, instrument):
         super().__init__()
         
+        self.instrument = instrument
         uic.loadUi('GUI/ui_files/instrument_control_uis/INFICON_VGC401_ui.ui', self)
         
 

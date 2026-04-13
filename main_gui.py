@@ -496,7 +496,7 @@ class UI(QMainWindow):
         self._initial_sub_sizes = {}
         
         self.instrument_wid = {}
-        self.instruments = {}
+        self.instruments = {}  # self.instruments = {'model_name' : self.instrument}
         self.devices = {}
         self.device_count = 0
 

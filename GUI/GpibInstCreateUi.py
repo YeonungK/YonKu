@@ -62,6 +62,53 @@ class {self.name}(GPIBInstrument):
         super().__init__(name, '{self.model}', address)
         """
         return script
+
+    def device_ui_script(self):
+        
+        script = f"""<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>656</width>
+    <height>497</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>{self.model}</string>
+  </property>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
+        """
+        return script
+    
+    def device_wid_script(self):
+        
+        script = f"""import sys
+
+sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+
+
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QLabel, QComboBox
+from PyQt5.QtCore import QTimer, Qt
+from PyQt5 import uic
+
+class {self.name}_widget(QWidget):
+    def __init__(self, instrument):
+        super().__init__()
+        
+        self.instrument = instrument
+        
+        uic.loadUi('GUI/ui_files/instrument_control_uis/{self.model}_ui.ui', self)
+        
+        
+        """
+        return script
         
 
 if __name__ == "__main__":
