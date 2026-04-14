@@ -5,6 +5,7 @@ import time
 import os
 import glob
 import threading
+import json
 import traceback
 import importlib
 from pathlib import Path
@@ -1329,6 +1330,12 @@ class UI(QMainWindow):
         os.makedirs(directory_path, exist_ok=True)
         with open(full_file_path, "w") as f:
             f.write(self.serial_inst_create_wid.device_ui_script())
+            
+        # save the json config file
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
+        file_name = self.serial_inst_create_wid.data_list['model'] + '_ui' + '.json' 
+        with open(directory_path, "w", encoding="utf-8") as f:
+            json.dump({}, f, indent=4)
         
         directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/instrument_control_widgets"
         file_name = self.serial_inst_create_wid.data_list['model'] + '_widget' + '.py'
@@ -1421,6 +1428,31 @@ class UI(QMainWindow):
             
         self.deviceListSub.widget.tabWidget.addTab(self.instrument_wid[device_key], device_key)
         
+        self.gpib_device_wid_create()
+        
+    def gpib_device_wid_create(self):
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
+        file_name = self.gpib_inst_create_wid.data_list['model'] + '_ui' + '.ui'
+        
+        full_file_path = os.path.join(directory_path, file_name)
+        os.makedirs(directory_path, exist_ok=True)
+        with open(full_file_path, "w") as f:
+            f.write(self.gpib_inst_create_wid.device_ui_script())
+            
+        # save the json config file
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
+        file_name = self.gpib_inst_create_wid.data_list['model'] + '_ui' + '.json' 
+        with open(directory_path, "w", encoding="utf-8") as f:
+            json.dump({}, f, indent=4)
+        
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/instrument_control_widgets"
+        file_name = self.gpib_inst_create_wid.data_list['model'] + '_widget' + '.py'
+        
+        full_file_path = os.path.join(directory_path, file_name)
+        os.makedirs(directory_path, exist_ok=True)
+        with open(full_file_path, "w") as f:
+            f.write(self.gpib_inst_create_wid.device_wid_script())
+            
     def gpib_instantiate(self, data_list, device_key):
         model_name = data_list["model"]
         device_name = data_list["name"]
@@ -1494,7 +1526,7 @@ class UI(QMainWindow):
             
             device_key = "Device_" + str(self.device_count)
             self.devices[device_key] = data_list
-            self.instrument_wid[device_key] = eidu.EthernetnstDeviceUi(data_list)
+            self.instrument_wid[device_key] = eidu.EthernetInstDeviceUi(data_list)
             self.ethernet_instantiate(data_list, device_key)
                 
             print(data_list)
@@ -1502,6 +1534,31 @@ class UI(QMainWindow):
             self.device_count += 1
             
         self.deviceListSub.widget.tabWidget.addTab(self.instrument_wid[device_key], device_key)
+        
+        self.ethernet_device_wid_create()
+        
+    def ethernet_device_wid_create(self):
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
+        file_name = self.ethernet_inst_create_wid.data_list['model'] + '_ui' + '.ui'
+        
+        full_file_path = os.path.join(directory_path, file_name)
+        os.makedirs(directory_path, exist_ok=True)
+        with open(full_file_path, "w") as f:
+            f.write(self.ethernet_inst_create_wid.device_ui_script())
+            
+        # save the json config file
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
+        file_name = self.ethernet_inst_create_wid.data_list['model'] + '_ui' + '.json' 
+        with open(directory_path, "w", encoding="utf-8") as f:
+            json.dump({}, f, indent=4)
+        
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/instrument_control_widgets"
+        file_name = self.ethernet_inst_create_wid.data_list['model'] + '_widget' + '.py'
+        
+        full_file_path = os.path.join(directory_path, file_name)
+        os.makedirs(directory_path, exist_ok=True)
+        with open(full_file_path, "w") as f:
+            f.write(self.ethernet_inst_create_wid.device_wid_script())
         
     def ethernet_instantiate(self, data_list, device_key):
         model_name = data_list["model"]
@@ -1588,6 +1645,31 @@ class UI(QMainWindow):
             self.device_count += 1
             
         self.deviceListSub.widget.tabWidget.addTab(self.instrument_wid[device_key], device_key)
+        
+        self.usb_6525_device_wid_create()
+        
+    def usb_6525_device_wid_create(self):
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
+        file_name = self.usb_6525_inst_create_wid.data_list['model'] + '_ui' + '.ui'
+        
+        full_file_path = os.path.join(directory_path, file_name)
+        os.makedirs(directory_path, exist_ok=True)
+        with open(full_file_path, "w") as f:
+            f.write(self.usb_6525_inst_create_wid.device_ui_script())
+            
+        # save the json config file
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
+        file_name = self.usb_6525_inst_create_wid.data_list['model'] + '_ui' + '.json' 
+        with open(directory_path, "w", encoding="utf-8") as f:
+            json.dump({}, f, indent=4)
+        
+        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/instrument_control_widgets"
+        file_name = self.usb_6525_inst_create_wid.data_list['model'] + '_widget' + '.py'
+        
+        full_file_path = os.path.join(directory_path, file_name)
+        os.makedirs(directory_path, exist_ok=True)
+        with open(full_file_path, "w") as f:
+            f.write(self.usb_6525_inst_create_wid.device_wid_script())
         
     def usb_6525_instantiate(self, data_list, device_key):
         model_name = data_list["model"]

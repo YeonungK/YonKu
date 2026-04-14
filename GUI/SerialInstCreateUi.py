@@ -116,19 +116,10 @@ class {self.name}(SerialInstrument):
 
 sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
+from GUI.instrument_control_widgets import widget
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QLabel, QComboBox
-from PyQt5.QtCore import QTimer, Qt
-from PyQt5 import uic
-
-class {self.name}_widget(QWidget):
+class test_instrument_widget(widget.widget):
     def __init__(self, instrument):
-        super().__init__()
-        
-        self.instrument = instrument
-        
-        uic.loadUi('GUI/ui_files/instrument_control_uis/{self.model}_ui.ui', self)
-        
-        
+        super().__init__(instrument, 'GUI/ui_files/instrument_control_uis/{self.model}_ui.ui')
         """
         return script

@@ -1,1 +1,35 @@
-{}
+{
+    "category1": [
+        {
+            "name": "test_ser",
+            "type": 0,
+            "read": true,
+            "read_command": "ser",
+            "write": true,
+            "write_command": "Choose a command from the command list",
+            "exp_readonly": false
+        }
+    ],
+    "category2": [
+        {
+            "name": "test_ser",
+            "type": 0,
+            "read": true,
+            "read_command": "ser",
+            "write": false,
+            "write_command": "Choose a command from the command list",
+            "exp_readonly": false
+        }
+    ],
+    "category3": [
+        {
+            "name": "test_ser",
+            "type": 0,
+            "read": false,
+            "read_command": "ser",
+            "write": false,
+            "write_command": "Choose a command from the command list",
+            "exp_readonly": false
+        }
+    ]
+}

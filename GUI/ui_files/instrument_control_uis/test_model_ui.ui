@@ -37,34 +37,37 @@
             <property name="text">
              <string>category1</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="category1_add_one_rowWidget">
-            <layout class="QHBoxLayout" name="category1_add_one_rowLayout">
+           <widget class="QWidget" name="category1_test_ser_rowWidget">
+            <layout class="QHBoxLayout" name="category1_test_ser_rowLayout">
              <item>
-              <widget class="QLabel" name="category1_add_one_label">
+              <widget class="QLabel" name="category1_test_ser_label">
                <property name="text">
-                <string>add_one</string>
+                <string>test_ser</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="category1_add_one_lineEdit">
+              <widget class="QLineEdit" name="category1_test_ser_lineEdit">
                <property name="readOnly">
                 <bool>false</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="category1_add_one_readButton">
+              <widget class="QPushButton" name="category1_test_ser_readButton">
                <property name="text">
                 <string>Read</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="category1_add_one_writeButton">
+              <widget class="QPushButton" name="category1_test_ser_writeButton">
                <property name="text">
                 <string>Write</string>
                </property>
@@ -84,36 +87,32 @@
             <property name="text">
              <string>category2</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="category2_component1_rowWidget">
-            <layout class="QHBoxLayout" name="category2_component1_rowLayout">
+           <widget class="QWidget" name="category2_test_ser_rowWidget">
+            <layout class="QHBoxLayout" name="category2_test_ser_rowLayout">
              <item>
-              <widget class="QLabel" name="category2_component1_label">
+              <widget class="QLabel" name="category2_test_ser_label">
                <property name="text">
-                <string>component1</string>
+                <string>test_ser</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="category2_component1_lineEdit">
+              <widget class="QLineEdit" name="category2_test_ser_lineEdit">
                <property name="readOnly">
                 <bool>false</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="category2_component1_readButton">
+              <widget class="QPushButton" name="category2_test_ser_readButton">
                <property name="text">
                 <string>Read</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="category2_component1_writeButton">
-               <property name="text">
-                <string>Write</string>
                </property>
               </widget>
              </item>
@@ -131,36 +130,25 @@
             <property name="text">
              <string>category3</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="category3_ser__rowWidget">
-            <layout class="QHBoxLayout" name="category3_ser__rowLayout">
+           <widget class="QWidget" name="category3_test_ser_rowWidget">
+            <layout class="QHBoxLayout" name="category3_test_ser_rowLayout">
              <item>
-              <widget class="QLabel" name="category3_ser__label">
+              <widget class="QLabel" name="category3_test_ser_label">
                <property name="text">
-                <string>ser:</string>
+                <string>test_ser</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="category3_ser__lineEdit">
+              <widget class="QLineEdit" name="category3_test_ser_lineEdit">
                <property name="readOnly">
                 <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="category3_ser__readButton">
-               <property name="text">
-                <string>Read</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="category3_ser__writeButton">
-               <property name="text">
-                <string>Write</string>
                </property>
               </widget>
              </item>

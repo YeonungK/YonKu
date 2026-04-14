@@ -417,6 +417,10 @@ class ui_edit_setting_ui(QWidget):
                 "name": f"{cat}_label"
             })
             add_string_property(title, "text", category_name)
+            
+            prop = SubElement(title, "property", {"name": "alignment"})
+            align = SubElement(prop, "set")
+            align.text = "Qt::AlignCenter"
 
             # Component rows
             
