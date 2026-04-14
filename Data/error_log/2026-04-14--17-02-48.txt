@@ -1,0 +1,9 @@
+Szkopek Lab Error Log Book - 2026-04-14--17-02-48
+
+2026-04-14--17-03-56 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1009, in pause_resume_experiment_thread
+    self.plot_worker.pause_resume_experiment()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'plot_worker'
+
+

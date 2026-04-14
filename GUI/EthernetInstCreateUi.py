@@ -53,6 +53,10 @@ from Tools.Instrument import EthernetInstrument
 class {self.name}(EthernetInstrument):
     def __init__(self, name, ip, port):
         super().__init__(name, '{self.model}', ip, port)
+        
+        self.data_type = {{}}
+        self.data_unit = {{}}
+        self.data_function = {{}}
         """
         return script
 

@@ -1,0 +1,17 @@
+Szkopek Lab Error Log Book - 2026-04-14--17-01-18
+
+2026-04-14--17-01-21 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1772, in <module>
+    UIWindow = UI()
+               ^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 519, in __init__
+    self.connect_instrument_windows()  # [/]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 911, in connect_instrument_windows
+    initial_function()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 926, in magnetPowerSupply_initial_function
+    self.set_switch_heater_status()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'set_switch_heater_status'
+
+

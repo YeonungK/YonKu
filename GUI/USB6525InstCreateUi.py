@@ -56,6 +56,10 @@ from Tools.Instrument import NidaqmxInstrument
 class {self.name}(NidaqmxInstrument):
     def __init__(self, name, device_number, port, range):
         super().__init__(name, '{self.model}', device_number, port, range)
+        
+        self.data_type = {{}}
+        self.data_unit = {{}}
+        self.data_function = {{}}
         """
         return script
         

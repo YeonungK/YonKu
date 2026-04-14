@@ -16,3 +16,7 @@ class test_instrument(SerialInstrument):
                                 parity = serial.PARITY_NONE, 
                                 stopbits = serial.STOPBITS_ONE)
         
+        self.data_type = {}
+        self.data_unit = {}
+        self.data_function = {}
+        

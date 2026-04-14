@@ -6,16 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>696</width>
-    <height>496</height>
+    <width>1022</width>
+    <height>785</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3">
+  <layout class="QHBoxLayout" name="horizontalLayout_16">
    <item>
     <widget class="QFrame" name="frame_16">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -648,13 +651,16 @@
         </layout>
        </widget>
       </item>
-      <item alignment="Qt::AlignRight">
+      <item>
        <widget class="QFrame" name="frame_12">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::RightToLeft</enum>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -664,16 +670,16 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_12">
          <item>
-          <widget class="QPushButton" name="saveButton">
+          <widget class="QPushButton" name="cancelButton">
            <property name="text">
-            <string>Save</string>
+            <string>Cancel</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="cancelButton">
+          <widget class="QPushButton" name="saveButton">
            <property name="text">
-            <string>Cancel</string>
+            <string>Save</string>
            </property>
           </widget>
          </item>

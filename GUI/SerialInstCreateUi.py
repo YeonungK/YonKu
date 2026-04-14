@@ -83,6 +83,10 @@ class {self.name}(SerialInstrument):
                                 bytesize = serial.{self.bytesize}, 
                                 parity = serial.{self.parity}, 
                                 stopbits = serial.{self.stopbits})
+                                
+        self.data_type = {{}}
+        self.data_unit = {{}}
+        self.data_function = {{}}
         """
         return script
 
