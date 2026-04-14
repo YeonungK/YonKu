@@ -5,7 +5,7 @@ sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QLabel, QComboBox
-from PyQt5.QtCore import QTimer, Qt
+from PyQt5.QtCore import QTimer, Qt, QObject, pyqtSignal, QThread
 from PyQt5 import uic
 
 class magnetPowerSupply_widget(QWidget):
@@ -27,7 +27,7 @@ class magnetPowerSupply_widget(QWidget):
         self.targetFieldRead.clicked.connect(self.read_target_field)
         self.fieldRatingSet.clicked.connect(self.set_field_rate)
         self.fieldRatingRead.clicked.connect(self.read_field_rate)
-        # self.startDisplay.clicked.connect(self.magnetPowerSupply_thread) # [/]
+        self.startDisplay.clicked.connect(self.magnetPowerSupply_thread) # [/]
     
     
     
@@ -110,6 +110,61 @@ class magnetPowerSupply_widget(QWidget):
         now.strftime('%Y-%m-%d %H:%M:%S')
         self.switchHeaterZLineEdit.setText(str(now))
     
+    def magnetPowerSupply_thread(self):
+        print("magnet reading start")
+        
+        self.magnet_worker = magnetPowerSupply_worker(self.instrument, 1000, self.stopDisplay,
+                                                     self.temperatureLineEdit,
+                                                     self.currentLineEdit,
+                                                     self.fieldZLineEdit)
+        self.magnet_worker_thread = QThread()
+        self.magnet_worker.moveToThread(self.magnet_worker_thread)
+        
+        self.magnet_worker_thread.started.connect(self.magnet_worker.start_reading)
+        self.magnet_worker.finished.connect(self.magnet_worker_thread.quit)
+        self.magnet_worker_thread.finished.connect(self.magnet_worker.deleteLater)
+        self.magnet_worker_thread.finished.connect(self.magnet_worker_thread.deleteLater)
+        
+        self.magnet_worker_thread.start()
+        
     # [/]
 
     
+
+"""worker class for measuring magnetPowerSupply (thread)"""
+class magnetPowerSupply_worker(QObject):
+    finished = pyqtSignal()
+    def __init__(self, instrument, period, magnetStopDisplayButton, temperatureLineEdit, currentLineEdit, fieldZLineEdit):
+        super().__init__()
+        
+        self.instrument = instrument
+        self.period = period
+        self.magnetStopDisplayButton = magnetStopDisplayButton
+        self.temperatureLineEdit = temperatureLineEdit
+        self.currentLineEdit = currentLineEdit
+        self.fieldZLineEdit = fieldZLineEdit
+        
+        self.magnetStopDisplayButton.clicked.connect(self.finish)
+        
+    def start_reading(self):
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.read_magnetPowerSupply)
+        self.timer.start(self.period)  # 1Hz  
+
+    def read_magnetPowerSupply(self):
+        temperature = self.instrument.read_temperature()
+        current = self.instrument.read_current()[0]
+        field = self.instrument.read_all_field()[0]
+        
+        self.temperatureLineEdit.setText(str(temperature))
+        self.currentLineEdit.setText(str(current))
+        self.fieldZLineEdit.setText(str(field))
+        
+    def finish(self):
+        print("worker_finished")
+        self.temperatureLineEdit.setText("")
+        self.currentLineEdit.setText("")
+        self.fieldZLineEdit.setText("")
+        self.timer.stop()
+        self.finished.emit()
+        

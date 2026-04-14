@@ -4,7 +4,7 @@ sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QLabel, QComboBox
-from PyQt5.QtCore import QTimer, Qt
+from PyQt5.QtCore import QTimer, Qt, pyqtSignal, QObject
 from PyQt5 import uic
 
 class gasValve_widget(QWidget):
@@ -27,7 +27,7 @@ class gasValve_widget(QWidget):
             )
         
         
-    # [----------gas valve and pressure gauge ui signals---------]
+    # [----------gas valve ui signals---------]
         
         self.pumpPushButton.toggled.connect(self.pump_change)
         self.ivcPushButton.toggled.connect(self.ivc_change)
@@ -89,9 +89,7 @@ class gasValve_widget(QWidget):
                 button.setStyleSheet(
                     "background-color: red; color: black"
                 )
-         # [/]
-    
-        
-        
+            # [/]
+
         
     

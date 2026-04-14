@@ -1,110 +1,25 @@
 import sys
 import re
 import keyword
-import time
 import os
 import glob
-import threading
 import json
 import traceback
 import importlib
-from pathlib import Path
-from functools import partial
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QMessageBox, QAction, QLineEdit, QComboBox
-from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot, QTimer, Qt, QSize
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMdiSubWindow, QMessageBox, QAction, QMdiSubWindow
+from PyQt5.QtCore import QThread, QObject, pyqtSignal, QTimer, Qt
 from PyQt5.QtGui import QCloseEvent
 from PyQt5 import uic
 
-from GUI import ChsBigLineUi as chs, NewPlotSettingUi as nps, OpenPlotSettingUi as ops, PlotUi, ExperimentSettingUi as esu
+from GUI import NewPlotSettingUi as nps, OpenPlotSettingUi as ops, PlotUi, ExperimentSettingUi as esu
 from GUI import SerialInstCreateUi as sic, GpibInstCreateUi as gic, EthernetInstCreateUi as eic, USB6525InstCreateUi as bic, DisconnectedDevicesUi as ddu
 from GUI import DeviceListUi as dlu, SerialInstDeviceUi as sidu, GpibInstDeviceUi as gidu, EthernetInstDeviceUi as eidu, USB6525InstDeviceUi as uidu
-from Tools import LakeShore_336, INFICON_VGC401, GasValve, SRS_830, Oxford_MercuryiPS, DataLogger, Dataset, NewQMdiSubWindow
+from Tools import DataLogger, Dataset, NewQMdiSubWindow, ExperimentController
 
 
 from datetime import datetime
-from zoneinfo import ZoneInfo
 
-
-"""Exception Handler"""
-class ExceptionForwarder(QObject):
-    exception_occurred = pyqtSignal(str)
-
-    def __init__(self):
-        super().__init__()
-
-    def handle_exception(self, exc_type, exc_value, exc_tb):
-        error_msg = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
-        print(error_msg)
-        self.exception_occurred.emit(error_msg)
-
-
-"""worker class for measuring pressureGauge (thread)"""
-class PressureWorker(QObject):
-    finished = pyqtSignal()
-    def __init__(self, pressureDevice, period, stopDisplayButton, pressureLineEdit):
-        super().__init__()
-        
-        self.pressureDevice = pressureDevice
-        self.period = period
-        self.stopDisplayButton = stopDisplayButton
-        self.pressureLineEdit = pressureLineEdit
-        
-        self.stopDisplayButton.clicked.connect(self.finish)
-    
-    def start_reading(self):
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.read_pressure)
-        self.timer.start(self.period)  # 0.5Hz  
-
-    def read_pressure(self):
-        pressure = self.pressureDevice.pressure_read()[0]
-        self.pressureLineEdit.setText(pressure)
-        
-    def finish(self):
-        print("worker_finished")
-        self.pressureLineEdit.setText("")
-        self.timer.stop()
-        self.finished.emit()
-
-"""worker class for measuring magnetPowerSupply (thread)"""
-class MagnetPowerSupplyWorker(QObject):
-    finished = pyqtSignal()
-    def __init__(self, magnetDevice, period, magnetStopDisplayButton, temperatureLineEdit, currentLineEdit, fieldZLineEdit):
-        super().__init__()
-        
-        self.magnetDevice = magnetDevice
-        self.period = period
-        self.magnetStopDisplayButton = magnetStopDisplayButton
-        self.temperatureLineEdit = temperatureLineEdit
-        self.currentLineEdit = currentLineEdit
-        self.fieldZLineEdit = fieldZLineEdit
-        
-        self.magnetStopDisplayButton.clicked.connect(self.finish)
-        
-    def start_reading(self):
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.read_magnetPowerSupply)
-        self.timer.start(self.period)  # 1Hz  
-
-    def read_magnetPowerSupply(self):
-        temperature = self.magnetDevice.read_temperature()
-        current = self.magnetDevice.read_current()[0]
-        field = self.magnetDevice.read_all_field()[0]
-        
-        self.temperatureLineEdit.setText(str(temperature))
-        self.currentLineEdit.setText(str(current))
-        self.fieldZLineEdit.setText(str(field))
-        
-    def finish(self):
-        print("worker_finished")
-        self.temperatureLineEdit.setText("")
-        self.currentLineEdit.setText("")
-        self.fieldZLineEdit.setText("")
-        self.timer.stop()
-        self.finished.emit()
-        
-        
 """main gui window class"""
 class UI(QMainWindow):
     def __init__(self):
@@ -163,8 +78,8 @@ class UI(QMainWindow):
             device_name = data_list["name"]
 
             # Retrieve dynamic attributes
-            action = getattr(self, f"action_{device_name}", None)
-            subwindow = getattr(self, f"{device_name}Sub", None)
+            action = getattr(self, f"action_{device_name}", QAction())
+            subwindow = getattr(self, f"{device_name}Sub", QMdiSubWindow())
             view_func = getattr(self, f"{device_name}Sub_view", None)
 
             # Ensure all exist before connecting
@@ -207,16 +122,6 @@ class UI(QMainWindow):
         # [/]
         # [/]
 
-        # [======instrument ui output signals======]
-        
-
-        
-
-
-
-        
-         # [/]
-         # [/]
         
         self.showMaximized()
         self.show()  # [/]
@@ -369,7 +274,6 @@ class UI(QMainWindow):
         
         # device list sub
         self.deviceListSub = dlu.DeviceListUi(self.mdi)
-    
         self.deviceListSub.hide()
         
         self.esu_window = QMainWindow()
@@ -496,7 +400,7 @@ class UI(QMainWindow):
                 self.experiment_period = int(self.MeasureFreqLineEdit.text()) * 1000
            
             # self.plot_worker for data acquisition
-            self.plot_worker = PlotWorker(self.connected_instuments, self.plot_widgets, self.datasets['primary'].set, self.experiment_period, 
+            self.plot_worker = ExperimentController.PlotWorker(self.connected_instuments, self.plot_widgets, self.datasets['primary'].set, self.experiment_period, 
                                         self.pausePushButton, self.experimentNameLineEdit,
                                         self.lockInAmplifier1Wid.xLineEdit, self.lockInAmplifier1Wid.yLineEdit, self.lockInAmplifier1Wid.rLineEdit, self.lockInAmplifier1Wid.thetaLineEdit, 
                                         self.lockInAmplifier2Wid.xLineEdit, self.lockInAmplifier2Wid.yLineEdit, self.lockInAmplifier2Wid.rLineEdit, self.lockInAmplifier2Wid.thetaLineEdit, 
@@ -525,6 +429,7 @@ class UI(QMainWindow):
         except Exception as e:
             self.errorDisplay.setText("There's an error. Check the error in the terminal to debug.")
             print(e)
+            
     def pause_resume_experiment_thread(self):
         self.plot_worker.pause_resume_experiment()
         # self.plot_update_worker.pause_resume_experiment()
@@ -606,48 +511,6 @@ class UI(QMainWindow):
              # [/]
     
     
-    # [...........Instrument Threads...........]
-    
-    def pressure_function(self):
-        if self.pressureGaugeWid.startDisplay.isChecked():
-            self.start_reading_pressure()
-        else:
-            self.pressure_worker_thread.exit()
-    
-    def pressureGauge_thread(self):
-        print("pressure reading start")
-        
-        self.pressure_worker = PressureWorker(self.pressureGauge, 2000, self.pressureGaugeWid.stopDisplay, self.pressureGaugeWid.pressureGaugeLineEdit)
-        self.pressure_worker_thread = QThread()
-        self.pressure_worker.moveToThread(self.pressure_worker_thread)
-        
-        self.pressure_worker_thread.started.connect(self.pressure_worker.start_reading)
-        self.pressure_worker.finished.connect(self.pressure_worker_thread.quit)
-        self.pressure_worker_thread.finished.connect(self.pressure_worker.deleteLater)
-        self.pressure_worker_thread.finished.connect(self.pressure_worker_thread.deleteLater)
-        
-        self.pressure_worker_thread.start()
-        
-    def magnetPowerSupply_thread(self):
-        print("magnet reading start")
-        
-        self.magnet_worker = MagnetPowerSupplyWorker(self.magnetPowerSupply, 1000, self.magnetPowerSupplyWid.stopDisplay,
-                                                     self.magnetPowerSupplyWid.temperatureLineEdit,
-                                                     self.magnetPowerSupplyWid.currentLineEdit,
-                                                     self.magnetPowerSupplyWid.fieldZLineEdit)
-        self.magnet_worker_thread = QThread()
-        self.magnet_worker.moveToThread(self.magnet_worker_thread)
-        
-        self.magnet_worker_thread.started.connect(self.magnet_worker.start_reading)
-        self.magnet_worker.finished.connect(self.magnet_worker_thread.quit)
-        self.magnet_worker_thread.finished.connect(self.magnet_worker.deleteLater)
-        self.magnet_worker_thread.finished.connect(self.magnet_worker_thread.deleteLater)
-        
-        self.magnet_worker_thread.start()
-        
-    # [/]
-    
-    
     # [+++++++++Plot UI Interface functions]
     
     # [...........new plots...........]
@@ -722,7 +585,7 @@ class UI(QMainWindow):
                 param_file_content = param_file.readlines()
                 connected_instruments = eval(param_file_content[59].replace("\n",""))
                 print(connected_instruments)
-            except SyntaxError: # in case we are opening databases from before the latest version
+            except SyntaxError as e: # in case we are opening databases from before the latest version
                 print(e)
                 connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
             except FileNotFoundError as e:
@@ -1285,8 +1148,19 @@ class UI(QMainWindow):
         
          # [/]
         
-        
+"""Exception Handler"""
+class ExceptionForwarder(QObject):
+    exception_occurred = pyqtSignal(str)
 
+    def __init__(self):
+        super().__init__()
+
+    def handle_exception(self, exc_type, exc_value, exc_tb):
+        error_msg = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
+        print(error_msg)
+        self.exception_occurred.emit(error_msg)
+      
+      
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     UIWindow = UI()
