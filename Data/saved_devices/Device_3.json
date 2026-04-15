@@ -1,0 +1,6 @@
+{
+    "name": "lockInAmplifier1", 
+    "interface": "gpib", 
+    "model": "SRS_830", 
+    "address": "8"
+}        

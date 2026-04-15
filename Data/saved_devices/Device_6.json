@@ -1,0 +1,9 @@
+{
+    "name": "gasValve", 
+    "interface": "usb6525", 
+    "model": "usb6525_gasValve", 
+    "deviceNumber": "1", 
+    "port": "0", 
+    "range1": "0", 
+    "range2": "2"
+}        

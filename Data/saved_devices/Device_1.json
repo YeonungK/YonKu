@@ -1,0 +1,12 @@
+{
+    "name": "temperatureController", 
+    "interface": "serial", 
+    "model": "Lakeshore_336", 
+    "description": "Lake Shore Model 336 Temperature Controller (COM4)", 
+    "port": "COM4", 
+    "baudrate": "57600", 
+    "bytesize": "SEVENBITS", 
+    "parity": "PARITY_ODD", 
+    "stopbits": "STOPBITS_ONE", 
+    "timeout": "", "xonxoff": ""
+}        

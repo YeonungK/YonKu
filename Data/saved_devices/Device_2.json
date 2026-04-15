@@ -1,0 +1,7 @@
+{
+    "name": "magnetPowerSupply", 
+    "interface": "ethernet", 
+    "model": "Oxford_MercuryiPS", 
+    "instIP": "192.169.10.100", 
+    "port": "7020"
+}        

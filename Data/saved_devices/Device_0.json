@@ -1,0 +1,11 @@
+{
+    "name": "pressureGauge", 
+    "interface": "serial", 
+    "model": "INFICON_VGC401", 
+    "description": "Prolific USB-to-Serial Comm Port (COM5)", 
+    "port": "COM5", "baudrate": "9600", 
+    "bytesize": "EIGHTBITS", 
+    "parity": "PARITY_NONE", 
+    "stopbits": "STOPBITS_ONE", 
+    "timeout": "", "xonxoff": ""
+}        

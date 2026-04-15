@@ -1,3 +1,4 @@
+from pathlib import Path
 import sys
 import re
 import keyword
@@ -177,23 +178,18 @@ class UI(QMainWindow):
     # [+++++++++System setup functions+++++++++]
     
     def instruments_setup(self):
-        folder_path = 'C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments'
-        file_pattern = "*.py"
-        
-        file_paths = glob.glob(f"{folder_path}/{file_pattern}")
-        
-        for file_path in file_paths:
-            with open(file_path, 'r') as f:
-                # getting the instrument info
-                content = f.readline()
-                content = content.strip()
-                content = content.strip("#")
-                
-                data_list = eval(content)
-                
-                device_key = "Device_" + str(self.device_count)
-                self.devices[device_key] = data_list
-                
+        folder_path = Path("C:/Users/szkop/OneDrive/Desktop/YonKu/Data/saved_devices")
+
+        config_files = folder_path.glob("*.json")
+
+        for file_path in config_files:
+            with open(file_path, "r", encoding="utf-8") as f:
+                data_list = json.load(f)
+
+            device_key = f"Device_{self.device_count}"
+            self.devices[device_key] = data_list
+
+            try:   
                 # actually instantiating each instrument
                 match data_list['interface']:
                     case 'serial': 
@@ -213,6 +209,9 @@ class UI(QMainWindow):
                 print(data_list)
                 
                 self.device_count += 1
+            except Exception as e:
+                print(f"Failed to instantiate {data_list['name']}: {e}")
+                continue
         
         print(self.devices)   
         print("instrument setup done")
