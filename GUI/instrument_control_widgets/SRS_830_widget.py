@@ -9,10 +9,13 @@ sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 
 class lockInAmplifier1_widget(QWidget):
-    def __init__(self, instrument):
+    def __init__(self, instrument, device_info, device_key, parent):
         super().__init__()
         
         self.instrument = instrument
+        self.data_list = device_info
+        self.device_key = device_key
+        self.parent = parent
         uic.loadUi("GUI/ui_files/instrument_control_uis/SRS_830_ui.ui", self)
         
         
@@ -70,7 +73,10 @@ class lockInAmplifier1_widget(QWidget):
         # [/]
         
     
-    # [...........lock in amplifier...........]
+    # [...........functions...........]
+    
+    def initialize_widget(self):
+        pass
     
     # [#######setting functions#######]
     

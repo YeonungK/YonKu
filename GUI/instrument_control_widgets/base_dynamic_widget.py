@@ -12,12 +12,15 @@ import json
 import importlib
 
 class widget(QWidget):
-    def __init__(self, instrument, ui_path):
+    def __init__(self, instrument, device_info, device_key, parent, ui_path):
         super().__init__()
         
         self.instrument = instrument
         self.instrument_model = self.instrument.model
         self.instrument_name = self.instrument.name
+        self.data_list = device_info
+        self.device_key = device_key
+        self.parent = parent
         self.ui_path = ui_path
         uic.loadUi(ui_path, self)
         
@@ -184,3 +187,6 @@ class widget(QWidget):
             # self.testResponse.setText("The function code is empty.")
         except Exception as e:
             print(f"Write failed for {category_name} / {component.get('name')}: {e}")
+        
+    def initialize_widget(self):
+        pass

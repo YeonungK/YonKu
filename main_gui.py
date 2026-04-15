@@ -53,6 +53,7 @@ class UI(QMainWindow):
         self.plot_widgets = {}
         self.plot_widget_count = 0
         
+            # [/]
         
         # [Instruments & Widgets & Signals]
         
@@ -172,6 +173,7 @@ class UI(QMainWindow):
      
      # [/]
      
+     
     # [+++++++++System setup functions+++++++++]
     
     def instruments_setup(self):
@@ -240,7 +242,7 @@ class UI(QMainWindow):
             
             # 3. Create the widget instance
             widget_class = getattr(widget_module, f"{device_name}_widget")
-            widget_instance = widget_class(instrument)
+            widget_instance = widget_class(instrument=instrument, device_info=data_list, device_key=device_key, parent=self)
             
             # 4. Create the subwindow
             subwindow = NewQMdiSubWindow.NewQMdiSubWindow(action)
@@ -331,7 +333,7 @@ class UI(QMainWindow):
             device_Wid = getattr(self, f'{device_name}Wid')
             if self.instruments[data_list['model']].connected:
                 device_Wid.setEnabled(True)
-                initial_function = getattr(self, f'{device_name}_initial_function')
+                initial_function = getattr(device_Wid, f'initialize_widget')
                 initial_function()
             else:
                 device_Wid.setEnabled(False)
@@ -339,38 +341,7 @@ class UI(QMainWindow):
         
         # [/]
 
-    
-    # [++++++++++Instrument inital function++++++++++++]
-    
-    
-    def pressureGauge_initial_function(self):
-        pass
-        
-    def magnetPowerSupply_initial_function(self):
-        self.magnetPowerSupplyWid.set_switch_heater_status()
-    
-    def temperatureController_initial_function(self):
-        pass
-    
-    def lockInAmplifier2_initial_function(self):
-        pass
-    
-    def lockInAmplifier1_initial_function(self):
-        pass
-    
-    def gasValve_initial_function(self):
-        if self.gasValve.initial_state[0]:
-            self.gasValveWid.pumpPushButton.setChecked(True)
-        if self.gasValve.initial_state[1]:
-            self.gasValveWid.ivcPushButton.setChecked(True)
-        if self.gasValve.initial_state[2]:
-            self.gasValveWid.hePushButton.setChecked(True)
-           
-    def test_instrument_initial_function(self):
-        pass
-       # [/]
-       
-       
+
     # [+++++++++(Thread) experiment functions++++++++]
     def check_experiment_condition(self):
         # check error for filename

@@ -8,10 +8,13 @@ from PyQt5.QtCore import QTimer, Qt, pyqtSignal, QObject
 from PyQt5 import uic
 
 class gasValve_widget(QWidget):
-    def __init__(self, instrument):
+    def __init__(self, instrument, device_info, device_key, parent):
         super().__init__()
         
         self.instrument = instrument
+        self.data_list = device_info
+        self.device_key = device_key
+        self.parent = parent
         
         uic.loadUi('GUI/ui_files/instrument_control_uis/usb6525_gasValve_ui.ui', self)
         
@@ -43,6 +46,9 @@ class gasValve_widget(QWidget):
         
         
  # [...........functions...........]
+
+    def initialize_widget(self):
+        pass
     
     def pump_change(self):
         if self.pumpPushButton.isChecked():

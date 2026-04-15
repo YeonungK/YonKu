@@ -9,10 +9,13 @@ from GUI import ChsBigLineUi as chs
 
 
 class temperatureController_widget(QWidget):
-    def __init__(self, instrument):
+    def __init__(self, instrument, device_info, device_key, parent):
         super().__init__()
         
         self.instrument = instrument
+        self.data_list = device_info
+        self.device_key = device_key
+        self.parent = parent
         uic.loadUi("GUI/ui_files/instrument_control_uis/Lakeshore_336_ui.ui", self)
         
         self.chA_line_sub = chs.chABigLineUi()
@@ -46,6 +49,9 @@ class temperatureController_widget(QWidget):
     
     
     # [...........functions...........]
+    
+    def initialize_widget(self):
+        pass
         
     def expand_chA_line(self):
         self.chA_line_sub.show()

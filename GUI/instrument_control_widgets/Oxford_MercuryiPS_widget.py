@@ -9,10 +9,13 @@ from PyQt5.QtCore import QTimer, Qt, QObject, pyqtSignal, QThread
 from PyQt5 import uic
 
 class magnetPowerSupply_widget(QWidget):
-    def __init__(self, instrument):
+    def __init__(self, instrument, device_info, device_key, parent):
         super().__init__()
         
         self.instrument = instrument
+        self.data_list = device_info
+        self.device_key = device_key
+        self.parent = parent
         
         uic.loadUi("GUI/ui_files/instrument_control_uis/Oxford_MercuryiPS_ui.ui", self)
         
@@ -32,6 +35,9 @@ class magnetPowerSupply_widget(QWidget):
     
     
     # [...........functions...........]
+    
+    def initialize_widget(self):
+        self.set_switch_heater_status()
     
     def switch_heater_power(self):
         if self.switchHeaterZbutton.isChecked():

@@ -8,6 +8,15 @@
             "write": true,
             "write_command": "Choose a command from the command list",
             "exp_readonly": false
+        },
+        {
+            "name": "Vx",
+            "type": 0,
+            "read": true,
+            "read_command": "ser",
+            "write": true,
+            "write_command": "Choose a command from the command list",
+            "exp_readonly": false
         }
     ],
     "category2": [
@@ -31,5 +40,6 @@
             "write_command": "Choose a command from the command list",
             "exp_readonly": false
         }
-    ]
+    ],
+    "voltage": []
 }

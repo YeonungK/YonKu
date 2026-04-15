@@ -76,6 +76,40 @@
             </layout>
            </widget>
           </item>
+          <item>
+           <widget class="QWidget" name="category1_Vx_rowWidget">
+            <layout class="QHBoxLayout" name="category1_Vx_rowLayout">
+             <item>
+              <widget class="QLabel" name="category1_Vx_label">
+               <property name="text">
+                <string>Vx</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="category1_Vx_lineEdit">
+               <property name="readOnly">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="category1_Vx_readButton">
+               <property name="text">
+                <string>Read</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="category1_Vx_writeButton">
+               <property name="text">
+                <string>Write</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -153,6 +187,32 @@
               </widget>
              </item>
             </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QWidget" name="voltage_container">
+         <layout class="QVBoxLayout" name="voltage_layout">
+          <item>
+           <widget class="QLabel" name="voltage_label">
+            <property name="text">
+             <string>voltage</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="voltage_emptyLabel">
+            <property name="text">
+             <string>No components</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
            </widget>
           </item>
          </layout>
