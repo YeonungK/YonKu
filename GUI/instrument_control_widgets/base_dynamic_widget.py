@@ -113,14 +113,8 @@ class widget(QWidget):
             return
 
         try:
-            # IMPORT AND RUN THE TEST FUNCTION
-            module_path = f"Tools.saved_instruments.Members.{self.instrument.model}.attributes"
-            if module_path in sys.modules:
-                method_module = importlib.reload(sys.modules[module_path])
-            else:
-                method_module = importlib.import_module(module_path)
             # 2. Get the specific function/attribute from the module using getattr
-            method_function = method_module.read_functions[command_name]
+            method_function = self.instrument.read_functions[command_name]
             value = method_function(self.instrument)
             print(f"This is the respone: {value}")
             

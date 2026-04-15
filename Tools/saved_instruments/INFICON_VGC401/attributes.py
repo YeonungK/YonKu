@@ -1,6 +1,6 @@
 import sys
 sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
-from Tools.saved_instruments.Members.INFICON_VGC401 import attributes, pressure_read_method
+from Tools.saved_instruments.INFICON_VGC401.methods import pressure_read_method
 data_type = {}
 data_unit = {}
 functions = {'pressure_read': pressure_read_method.pressure_read}

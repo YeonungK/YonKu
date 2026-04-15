@@ -1,0 +1,14 @@
+Szkopek Lab Error Log Book - 2026-04-15--17-07-14
+
+2026-04-15--17-07-15 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 878, in <module>
+    UIWindow = UI()
+               ^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 68, in __init__
+    self.add_windows()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 230, in add_windows
+    instrument = self.instruments[model_name]
+                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'INFICON_VGC401'
+
+

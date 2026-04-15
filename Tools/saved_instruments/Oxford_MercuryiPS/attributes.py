@@ -1,6 +1,6 @@
 import sys
 sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
-from Tools.saved_instruments.Members.Oxford_MercuryiPS import attributes, example_1_method
+from Tools.saved_instruments.Oxford_MercuryiPS.methods import example_1_method
 data_type = {}
 data_unit = {}
 functions = {'example_1': example_1_method.example_1}
