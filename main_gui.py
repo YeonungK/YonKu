@@ -634,103 +634,9 @@ class UI(QMainWindow):
         
         self.serial_inst_create_sub.show()
         
-        self.serial_inst_create_wid.cancelButton.clicked.connect(self.serial_close)
-        self.serial_inst_create_wid.saveButton.clicked.connect(self.serial_save_device)
-        
-    def serial_close(self):
-        self.serial_inst_create_sub.hide()
-
-    def serial_save_device(self):
-        self.serial_inst_create_sub.hide()
-        
-        self.serial_inst_create_wid.update_parameters()
-        
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments"
-        file_name = self.serial_inst_create_wid.data_list['model'] + '.py'
-        
-        full_file_path = os.path.join(directory_path, file_name)
-        os.makedirs(directory_path, exist_ok=True)
-        with open(full_file_path, "w") as f:
-            f.write(self.serial_inst_create_wid.device_script())
-            
-        with open(full_file_path, 'r') as f:
-            content = f.readline()
-            content = content.strip()
-            content = content.strip("#")
-            # Process the content as needed
-            # print(content)
-            
-            data_list = eval(content)
-            
-            device_key = "Device_" + str(self.device_count)
-            self.devices[device_key] = data_list
-            self.instrument_wid[device_key] = sidu.SerialInstDeviceUi(data_list)
-            self.serial_instantiate(data_list, device_key)
-
-                
-            print(data_list)
-            
-            self.device_count += 1
-            
-        self.deviceListSub.widget.tabWidget.addTab(self.instrument_wid[device_key], device_key)
-        
-        self.serial_device_wid_create()
-
-    def serial_device_wid_create(self):
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
-        file_name = self.serial_inst_create_wid.data_list['model'] + '_ui' + '.ui'
-        
-        full_file_path = os.path.join(directory_path, file_name)
-        os.makedirs(directory_path, exist_ok=True)
-        with open(full_file_path, "w") as f:
-            f.write(self.serial_inst_create_wid.device_ui_script())
-            
-        # save the json config file
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
-        file_name = self.serial_inst_create_wid.data_list['model'] + '_ui' + '.json' 
-        with open(directory_path, "w", encoding="utf-8") as f:
-            json.dump({}, f, indent=4)
-        
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/instrument_control_widgets"
-        file_name = self.serial_inst_create_wid.data_list['model'] + '_widget' + '.py'
-        
-        full_file_path = os.path.join(directory_path, file_name)
-        os.makedirs(directory_path, exist_ok=True)
-        with open(full_file_path, "w") as f:
-            f.write(self.serial_inst_create_wid.device_wid_script())
-        
-
-    def serial_instantiate(self, data_list, device_key):
-        model_name = data_list["model"]
-        device_name = data_list["name"]
-        port = data_list['port']
-        
-        module_path = f"Tools.saved_instruments.{model_name}"
-        try:
-            instrument_module = importlib.import_module(module_path)
-        except ImportError as e:
-            print(f"Warning: Could not import module '{module_path}': {e}")
-        
-        try:
-            instrument_class = getattr(instrument_module, device_name)
-        except AttributeError:
-            print(f"Warning: '{device_name}' not found in module '{module_path}'.")
-            
-        try:
-            serial_instrument = instrument_class(device_name, port)
-        except Exception as e:
-            print(f"Error instantiating '{device_name}': {e}")
-        
-        setattr(self, device_name, serial_instrument)
-        self.instruments[model_name] = serial_instrument
-            
-        if self.instruments[model_name].connected:
-            self.instrument_wid[device_key].connectionLineEdit.setText("Connected")
-            self.instrument_wid[device_key].instrument = serial_instrument
-        else:
-            self.instrument_wid[device_key].connectionLineEdit.setText("Not Connected")
-
-
+        self.serial_inst_create_wid.cancelButton.clicked.connect(self.serial_inst_create_sub.hide)
+        self.serial_inst_create_wid.saveButton.clicked.connect(lambda: self.save_device_common(self.serial_inst_create_wid, "serial"))
+    
     def gpib_instrument_create(self):
         self.gpib_inst_create_wid = gic.GpibInstCreateUi()
         self.gpib_inst_create_sub = QMdiSubWindow()
@@ -743,101 +649,9 @@ class UI(QMainWindow):
         
         self.gpib_inst_create_sub.show()
         
-        self.gpib_inst_create_wid.cancelButton.clicked.connect(self.gpib_close)
-        self.gpib_inst_create_wid.saveButton.clicked.connect(self.gpib_save_device)
-        
-    def gpib_close(self):
-        self.gpib_inst_create_sub.hide()
-        
-    def gpib_save_device(self):
-        self.gpib_inst_create_sub.hide()
-        
-        self.gpib_inst_create_wid.update_parameters()
-        
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments"
-        file_name = self.gpib_inst_create_wid.data_list['model'] + '.py'
-        
-        full_file_path = os.path.join(directory_path, file_name)
-        os.makedirs(directory_path, exist_ok=True)
-        with open(full_file_path, "w") as f:
-            f.write(self.gpib_inst_create_wid.device_script())
-            
-        with open(full_file_path, 'r') as f:
-            content = f.readline()
-            content = content.strip()
-            content = content.strip("#")
-            # Process the content as needed
-            # print(content)
-            
-            data_list = eval(content)
-            
-            device_key = "Device_" + str(self.device_count)
-            self.devices[device_key] = data_list
-            self.instrument_wid[device_key] = gidu.GPIBInstDeviceUi(data_list)
-            self.gpib_instantiate(data_list, device_key)
-                
-            print(data_list)
-            
-            self.device_count += 1
-            
-        self.deviceListSub.widget.tabWidget.addTab(self.instrument_wid[device_key], device_key)
-        
-        self.gpib_device_wid_create()
-        
-    def gpib_device_wid_create(self):
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
-        file_name = self.gpib_inst_create_wid.data_list['model'] + '_ui' + '.ui'
-        
-        full_file_path = os.path.join(directory_path, file_name)
-        os.makedirs(directory_path, exist_ok=True)
-        with open(full_file_path, "w") as f:
-            f.write(self.gpib_inst_create_wid.device_ui_script())
-            
-        # save the json config file
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
-        file_name = self.gpib_inst_create_wid.data_list['model'] + '_ui' + '.json' 
-        with open(directory_path, "w", encoding="utf-8") as f:
-            json.dump({}, f, indent=4)
-        
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/instrument_control_widgets"
-        file_name = self.gpib_inst_create_wid.data_list['model'] + '_widget' + '.py'
-        
-        full_file_path = os.path.join(directory_path, file_name)
-        os.makedirs(directory_path, exist_ok=True)
-        with open(full_file_path, "w") as f:
-            f.write(self.gpib_inst_create_wid.device_wid_script())
-            
-    def gpib_instantiate(self, data_list, device_key):
-        model_name = data_list["model"]
-        device_name = data_list["name"]
-        address = data_list['address']
-        
-        module_path = f"Tools.saved_instruments.{model_name}"
-        try:
-            instrument_module = importlib.import_module(module_path)
-        except ImportError as e:
-            print(f"Warning: Could not import module '{module_path}': {e}")
-        
-        try:
-            instrument_class = getattr(instrument_module, device_name)
-        except AttributeError:
-            print(f"Warning: '{device_name}' not found in module '{module_path}'.")
-            
-        try:
-            gpib_instrument = instrument_class(device_name, address)
-        except Exception as e:
-            print(f"Error instantiating '{device_name}': {e}")
-        
-        setattr(self, device_name, gpib_instrument)
-        self.instruments[model_name] = gpib_instrument
-            
-        if self.instruments[model_name].connected:
-            self.instrument_wid[device_key].connectionLineEdit.setText("Connected")
-            self.instrument_wid[device_key].instrument = gpib_instrument
-        else:
-            self.instrument_wid[device_key].connectionLineEdit.setText("Not Connected")
-            
-       
+        self.gpib_inst_create_wid.cancelButton.clicked.connect(self.gpib_inst_create_sub.hide)
+        self.gpib_inst_create_wid.saveButton.clicked.connect(lambda: self.save_device_common(self.gpib_inst_create_wid, "gpib"))
+             
     def ethernet_instrument_create(self):
         self.ethernet_inst_create_wid = eic.EthernetInstCreateUi()
         self.ethernet_inst_create_sub = QMdiSubWindow()
@@ -850,104 +664,9 @@ class UI(QMainWindow):
         
         self.ethernet_inst_create_sub.show()
         
-        self.ethernet_inst_create_wid.cancelButton.clicked.connect(self.ethernet_close)
-        self.ethernet_inst_create_wid.saveButton.clicked.connect(self.ethernet_save_device)
+        self.ethernet_inst_create_wid.cancelButton.clicked.connect(self.ethernet_inst_create_sub.hide)
+        self.ethernet_inst_create_wid.saveButton.clicked.connect(lambda: self.save_device_common(self.ethernet_inst_create_wid, "ethernet"))
             
-    def ethernet_close(self):
-        self.ethernet_inst_create_sub.hide()
-        
-    def ethernet_save_device(self):
-        self.ethernet_inst_create_sub.hide()
-        
-        self.ethernet_inst_create_wid.update_parameters()
-        
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments"
-        file_name = self.ethernet_inst_create_wid.data_list['model'] + '.py'
-        
-        full_file_path = os.path.join(directory_path, file_name)
-        os.makedirs(directory_path, exist_ok=True)
-        with open(full_file_path, "w") as f:
-            f.write(self.ethernet_inst_create_wid.device_script())
-            
-        with open(full_file_path, 'r') as f:
-            content = f.readline()
-            content = content.strip()
-            content = content.strip("#")
-            # Process the content as needed
-            # print(content)
-            
-            data_list = eval(content)
-            
-            device_key = "Device_" + str(self.device_count)
-            self.devices[device_key] = data_list
-            self.instrument_wid[device_key] = eidu.EthernetInstDeviceUi(data_list)
-            self.ethernet_instantiate(data_list, device_key)
-                
-            print(data_list)
-            
-            self.device_count += 1
-            
-        self.deviceListSub.widget.tabWidget.addTab(self.instrument_wid[device_key], device_key)
-        
-        self.ethernet_device_wid_create()
-        
-    def ethernet_device_wid_create(self):
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
-        file_name = self.ethernet_inst_create_wid.data_list['model'] + '_ui' + '.ui'
-        
-        full_file_path = os.path.join(directory_path, file_name)
-        os.makedirs(directory_path, exist_ok=True)
-        with open(full_file_path, "w") as f:
-            f.write(self.ethernet_inst_create_wid.device_ui_script())
-            
-        # save the json config file
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
-        file_name = self.ethernet_inst_create_wid.data_list['model'] + '_ui' + '.json' 
-        with open(directory_path, "w", encoding="utf-8") as f:
-            json.dump({}, f, indent=4)
-        
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/instrument_control_widgets"
-        file_name = self.ethernet_inst_create_wid.data_list['model'] + '_widget' + '.py'
-        
-        full_file_path = os.path.join(directory_path, file_name)
-        os.makedirs(directory_path, exist_ok=True)
-        with open(full_file_path, "w") as f:
-            f.write(self.ethernet_inst_create_wid.device_wid_script())
-        
-    def ethernet_instantiate(self, data_list, device_key):
-        model_name = data_list["model"]
-        device_name = data_list["name"]
-        inst_IP = data_list['instIP']
-        port = data_list['port']
-        
-        module_path = f"Tools.saved_instruments.{model_name}"
-        try:
-            instrument_module = importlib.import_module(module_path)
-        except ImportError as e:
-            print(f"Warning: Could not import module '{module_path}': {e}")
-        
-        try:
-            instrument_class = getattr(instrument_module, device_name)
-        except AttributeError:
-            print(f"Warning: '{device_name}' not found in module '{module_path}'.")
-            
-        try:
-            ethernet_instrument = instrument_class(device_name, 
-                                            inst_IP, 
-                                            int(port))
-        except Exception as e:
-            print(f"Error instantiating '{device_name}': {e}")
-        
-        setattr(self, device_name, ethernet_instrument)
-        self.instruments[model_name] = ethernet_instrument
-            
-        if self.instruments[model_name].connected:
-            self.instrument_wid[device_key].connectionLineEdit.setText("Connected")
-            self.instrument_wid[device_key].instrument = ethernet_instrument
-        else:
-            self.instrument_wid[device_key].connectionLineEdit.setText("Not Connected")
-  
-        
     def usb_6525_instrument_create(self):
         self.usb_6525_inst_create_wid = bic.usb6525InstCreateUi()
         self.usb_6525_inst_create_sub = QMdiSubWindow()
@@ -960,105 +679,128 @@ class UI(QMainWindow):
         
         self.usb_6525_inst_create_sub.show()
         
-        self.usb_6525_inst_create_wid.cancelButton.clicked.connect(self.usb_6525_close)
-        self.usb_6525_inst_create_wid.saveButton.clicked.connect(self.usb_6525_save_device)
+        self.usb_6525_inst_create_wid.cancelButton.clicked.connect(self.usb_6525_inst_create_sub.hide)
+        self.usb_6525_inst_create_wid.saveButton.clicked.connect(lambda: self.save_device_common(self.usb_6525_inst_create_wid, "usb6525"))
         
-    def usb_6525_close(self):
-        self.usb_6525_inst_create_sub.hide()
-        
-    def usb_6525_save_device(self):
-        self.usb_6525_inst_create_sub.hide()
-        
-        self.usb_6525_inst_create_wid.update_parameters()
-        
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments"
-        file_name = self.usb_6525_inst_create_wid.data_list['model'] + '.py'
-        
-        full_file_path = os.path.join(directory_path, file_name)
-        os.makedirs(directory_path, exist_ok=True)
-        with open(full_file_path, "w") as f:
-            f.write(self.usb_6525_inst_create_wid.device_script())
-            
-        with open(full_file_path, 'r') as f:
-            content = f.readline()
-            content = content.strip()
-            content = content.strip("#")
-            # Process the content as needed
-            # print(content)
-            
-            data_list = eval(content)
-            
-            device_key = "Device_" + str(self.device_count)
-            self.devices[device_key] = data_list
-            self.instrument_wid[device_key] = uidu.usb6525InstDeviceUi(data_list)
-            self.usb_6525_instantiate(data_list, device_key)
-            
-                
-            print(data_list)
-            
-            self.device_count += 1
-            
+    def save_device_common(self, creator_widget, interface_type):
+        creator_widget.update_parameters()
+        data_list = creator_widget.data_list
+
+        # --- Save instrument script ---
+        script_dir = "C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments"
+        file_name = f"{data_list['model']}.py"
+        full_path = os.path.join(script_dir, file_name)
+
+        os.makedirs(script_dir, exist_ok=True)
+
+        with open(full_path, "w") as f:
+            f.write(creator_widget.device_script())
+
+        # --- Reload metadata ---
+        with open(full_path, "r") as f:
+            content = f.readline().strip().strip("#")
+            data_list = eval(content)   # replace later with safer parsing
+
+        # --- Register device ---
+        device_key = f"Device_{self.device_count}"
+        self.devices[device_key] = data_list
+
+        # Create device UI (tab view)
+        ui_class_map = {
+            "serial": sidu.SerialInstDeviceUi,
+            "gpib": gidu.GPIBInstDeviceUi,
+            "ethernet": eidu.EthernetInstDeviceUi,
+            "usb6525": uidu.usb6525InstDeviceUi,
+        }
+
+        self.instrument_wid[device_key] = ui_class_map[interface_type](data_list)
+
+        # --- Instantiate instrument ---
+        self.instantiate_device(data_list, device_key, interface_type)
+
+        # --- Add to device list tab ---
         self.deviceListSub.widget.tabWidget.addTab(self.instrument_wid[device_key], device_key)
-        
-        self.usb_6525_device_wid_create()
-        
-    def usb_6525_device_wid_create(self):
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
-        file_name = self.usb_6525_inst_create_wid.data_list['model'] + '_ui' + '.ui'
-        
-        full_file_path = os.path.join(directory_path, file_name)
-        os.makedirs(directory_path, exist_ok=True)
-        with open(full_file_path, "w") as f:
-            f.write(self.usb_6525_inst_create_wid.device_ui_script())
-            
-        # save the json config file
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
-        file_name = self.usb_6525_inst_create_wid.data_list['model'] + '_ui' + '.json' 
-        with open(directory_path, "w", encoding="utf-8") as f:
-            json.dump({}, f, indent=4)
-        
-        directory_path = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/instrument_control_widgets"
-        file_name = self.usb_6525_inst_create_wid.data_list['model'] + '_widget' + '.py'
-        
-        full_file_path = os.path.join(directory_path, file_name)
-        os.makedirs(directory_path, exist_ok=True)
-        with open(full_file_path, "w") as f:
-            f.write(self.usb_6525_inst_create_wid.device_wid_script())
-        
-    def usb_6525_instantiate(self, data_list, device_key):
+
+        self.device_count += 1
+
+        # --- Generate UI + widget files ---
+        self.create_generated_files(creator_widget)
+    
+    def instantiate_device(self, data_list, device_key, interface_type):
         model_name = data_list["model"]
         device_name = data_list["name"]
-        
+
         module_path = f"Tools.saved_instruments.{model_name}"
+
         try:
-            instrument_module = importlib.import_module(module_path)
-        except ImportError as e:
-            print(f"Warning: Could not import module '{module_path}': {e}")
-        
-        try:
-            instrument_class = getattr(instrument_module, device_name)
-        except AttributeError:
-            print(f"Warning: '{device_name}' not found in module '{module_path}'.")
-            
-        try:
-            usb_instrument = instrument_class(device_name, 
-                                            f'Dev{data_list['deviceNumber']}', 
-                                            f'port{data_list['port']}', 
-                                            f'line{data_list['range1']}:{data_list['range2']}')
+            module = importlib.import_module(module_path)
+            cls = getattr(module, device_name)
         except Exception as e:
-            print(f"Error instantiating '{device_name}': {e}")
-        
-        setattr(self, device_name, usb_instrument)
-        self.instruments[model_name] = usb_instrument
-            
-        if self.instruments[model_name].connected:
-            self.instrument_wid[device_key].connectionLineEdit.setText("Connected")
-            self.instrument_wid[device_key].instrument = usb_instrument
+            print(f"[ERROR] import failed: {e}")
+            return
+
+        try:
+            match interface_type:
+                case "serial":
+                    inst = cls(device_name, data_list["port"])
+
+                case "gpib":
+                    inst = cls(device_name, data_list["address"])
+
+                case "ethernet":
+                    inst = cls(device_name, data_list["instIP"], int(data_list["port"]))
+
+                case "usb6525":
+                    inst = cls(
+                        device_name,
+                        f"Dev{data_list['deviceNumber']}",
+                        f"port{data_list['port']}",
+                        f"line{data_list['range1']}:{data_list['range2']}"
+                    )
+
+                case _:
+                    raise ValueError("Unknown interface")
+
+        except Exception as e:
+            print(f"[ERROR] instantiation failed: {e}")
+            return
+
+        # store instrument (⚠️ still model-keyed for now)
+        self.instruments[model_name] = inst
+
+        # update UI connection state
+        wid = self.instrument_wid[device_key]
+        wid.instrument = inst
+
+        if inst.connected:
+            wid.connectionLineEdit.setText("Connected")
         else:
-            self.instrument_wid[device_key].connectionLineEdit.setText("Not Connected")
-           
-        
-        
+            wid.connectionLineEdit.setText("Not Connected")
+
+    def create_generated_files(self, creator_widget):
+        model = creator_widget.data_list["model"]
+
+        base_ui_dir = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
+        base_widget_dir = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/instrument_control_widgets"
+
+        os.makedirs(base_ui_dir, exist_ok=True)
+        os.makedirs(base_widget_dir, exist_ok=True)
+
+        # --- UI file ---
+        ui_path = os.path.join(base_ui_dir, f"{model}_ui.ui")
+        with open(ui_path, "w") as f:
+            f.write(creator_widget.device_ui_script())
+
+        # --- JSON config ---
+        json_path = os.path.join(base_ui_dir, f"{model}_ui.json")
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump({}, f, indent=4)
+
+        # --- widget python file ---
+        widget_path = os.path.join(base_widget_dir, f"{model}_widget.py")
+        with open(widget_path, "w") as f:
+            f.write(creator_widget.device_wid_script())
+            
 
     def device_list_show(self):
         self.deviceListSub.show()
