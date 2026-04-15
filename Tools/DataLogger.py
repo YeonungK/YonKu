@@ -15,7 +15,7 @@ class DataLogger:
         self.keys = []
         
         
-        for device_model, instrument in self.instruments.items():
+        for device_key, instrument in self.instruments.items():
             for data_type in instrument.data_type.keys():
                 print(f"instrument data type: {data_type}")
                 logging_data = setattr(self, f"df_{data_type}", pd.DataFrame.from_dict(data_set[f'{data_type}']))
@@ -57,7 +57,7 @@ class DataLogger:
         print(logging_data_list)
         print(self.instruments)
         
-        for device_model, instrument in self.instruments.items():
+        for device_key, instrument in self.instruments.items():
             for data_type in instrument.data_type.keys():
                 data_index = 0
                 appending_dict = setattr(self, f'appending_{data_type}', {})

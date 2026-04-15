@@ -164,11 +164,11 @@ class UI(QMainWindow):
     def check_instrument_connection(self):
         disconnected_instr = {}
         connected_instr = {}
-        for device_model, instrument in self.instruments.items():
+        for device_key, instrument in self.instruments.items():
             if instrument.connected:
-                connected_instr[device_model] = instrument
+                connected_instr[device_key] = instrument
             else:
-                disconnected_instr[device_model] = instrument
+                disconnected_instr[device_key] = instrument
         print(disconnected_instr)
         return connected_instr, disconnected_instr
      
@@ -227,7 +227,7 @@ class UI(QMainWindow):
             model_name = data_list["model"]
             device_name = data_list["name"]
             
-            instrument = self.instruments[model_name]
+            instrument = self.instruments[device_key]
             
             # 1. Dynamically import the widget module
             module_path = f"GUI.instrument_control_widgets.{model_name}_widget"
@@ -330,7 +330,7 @@ class UI(QMainWindow):
         for device_key, data_list in self.devices.items():
             device_name = data_list['name']
             device_Wid = getattr(self, f'{device_name}Wid')
-            if self.instruments[data_list['model']].connected:
+            if self.instruments[device_key].connected:
                 device_Wid.setEnabled(True)
                 initial_function = getattr(device_Wid, f'initialize_widget')
                 initial_function()
@@ -765,7 +765,7 @@ class UI(QMainWindow):
             return
 
         # store instrument (⚠️ still model-keyed for now)
-        self.instruments[model_name] = inst
+        self.instruments[device_key] = inst
 
         # update UI connection state
         wid = self.instrument_wid[device_key]
@@ -839,8 +839,8 @@ class UI(QMainWindow):
             except:
                 pass
             
-            for name, device in self.instruments.items():
-                self.instruments[name].close()
+            for device_key, device in self.instruments.items():
+                self.instruments[device_key].close()
             
             with open(self.error_logger.file_path, "r") as f:
                 error_log = f.read()

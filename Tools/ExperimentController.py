@@ -3,6 +3,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 from pathlib import Path
 from Tools import DataLogger
+from Tools.saved_instruments.Oxford_MercuryiPS import instrument as magnetPowerSupply
 
 """worker class for Expriments and Real-time Plotting (thread)"""
 class PlotWorker(QObject):
@@ -21,14 +22,14 @@ class PlotWorker(QObject):
         
         self.instruments = instruments
         self.omitted_instruments = []
-        for device_model, instrument in self.instruments.items():
+        for device_key, instrument in self.instruments.items():
             if not instrument.data_type:
-                self.omitted_instruments.append(device_model)
-            if device_model == "INFICON_VGC401":
-                self.omitted_instruments.append(device_model)
+                self.omitted_instruments.append(device_key)
+            if isinstance(instrument, magnetPowerSupply.magnetPowerSupply):
+                self.omitted_instruments.append(device_key)
         
-        for device_model in self.omitted_instruments:
-            del self.instruments[device_model]
+        for device_key in self.omitted_instruments:
+            del self.instruments[device_key]
         print(self.instruments)
         
         self.plot_widgets = plot_widgets
