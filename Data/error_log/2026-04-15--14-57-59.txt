@@ -1,0 +1,15 @@
+Szkopek Lab Error Log Book - 2026-04-15--14-57-59
+
+2026-04-15--14-57-59 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 879, in <module>
+    UIWindow = UI()
+               ^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 62, in __init__
+    self.instruments_setup()  # connect and query identifications from each instrument
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 201, in instruments_setup
+    self.serial_instantiate(data_list, device_key)
+    ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'UI' object has no attribute 'serial_instantiate'
+
+

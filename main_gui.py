@@ -198,16 +198,16 @@ class UI(QMainWindow):
                 match data_list['interface']:
                     case 'serial': 
                         self.instrument_wid[device_key] = sidu.SerialInstDeviceUi(data_list)
-                        self.serial_instantiate(data_list, device_key)
+                        self.instantiate_device(data_list, device_key, 'serial')
                     case 'gpib': 
                         self.instrument_wid[device_key] = gidu.GPIBInstDeviceUi(data_list)
-                        self.gpib_instantiate(data_list, device_key)
+                        self.instantiate_device(data_list, device_key, 'gpib')
                     case 'ethernet':
                         self.instrument_wid[device_key] = eidu.EthernetInstDeviceUi(data_list)
-                        self.ethernet_instantiate(data_list, device_key)
+                        self.instantiate_device(data_list, device_key, 'ethernet')
                     case 'usb6525':
                         self.instrument_wid[device_key] = uidu.usb6525InstDeviceUi(data_list)
-                        self.usb_6525_instantiate(data_list, device_key)
+                        self.instantiate_device(data_list, device_key, 'usb6525')
                     case _: self.instrument_wid[device_key] = sidu.SerialInstDeviceUi(data_list)
                     
                 print(data_list)
