@@ -148,11 +148,20 @@ class PlotWorker(QObject):
         for inst in self.instruments.values():
             available_data_types.extend(inst.data_type.keys())
 
+        # -- pause, resume, and end time ----
+        pause_times = []
+        resume_times = []
+        end_time = None
+
         # --- Final structure ---
         experiment_json = {
             "metadata": metadata,
             "data_schema": data_schema,
-            "devices": devices,            "available_data_types": available_data_types
+            "devices": devices,            
+            "available_data_types": available_data_types,
+            "pause_times": pause_times,
+            "resume_times": resume_times,
+            "end_time": end_time
         }
 
         # --- Save ---
@@ -303,14 +312,24 @@ class PlotWorker(QObject):
         if self.pausePushButton.isChecked():
             self.timer.stop()
             pauseTime = datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
-            with open(self.file_path, "a") as f:
-                f.write(f"\n\npauseDatetime: {pauseTime}")
-                f.close()
+            # 1. Load existing data
+            with open(self.file_path, "r") as f:
+                data = json.load(f)
+            # 2. Modify it  
+            data["pause_times"].append(pauseTime)   # append to list
+            # 3. Save back
+            with open(self.file_path, "w") as f:
+                json.dump(data, f, indent=4)
         else:
             resumeTime = datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
-            with open(self.file_path, "a") as f:
-                f.write(f"\nresumeDatetime: {resumeTime}")
-                f.close()
+            # 1. Load existing data
+            with open(self.file_path, "r") as f:
+                data = json.load(f)
+            # 2. Modify it  
+            data["resume_times"].append(resumeTime)   # append to list
+            # 3. Save back
+            with open(self.file_path, "w") as f:
+                json.dump(data, f, indent=4)
             self.timer = QTimer()
             self.timer.timeout.connect(self.plot_update)
             self.timer.start(self.period) 
@@ -319,9 +338,14 @@ class PlotWorker(QObject):
         self.timer.stop()
         
         endTime = datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
-        with open(self.file_path, "a") as f:
-            f.write(f"\n\nendDatetime: {endTime}")
-            f.close() 
+        # 1. Load existing data
+        with open(self.file_path, "r") as f:
+            data = json.load(f)
+        # 2. Modify it  
+        data["end_time"] = endTime  # append to list
+        # 3. Save back
+        with open(self.file_path, "w") as f:
+            json.dump(data, f, indent=4)
         
         self.chALineEdit.setText("")
         self.chBLineEdit.setText("")
