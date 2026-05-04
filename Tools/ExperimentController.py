@@ -27,8 +27,6 @@ class PlotWorker(QObject):
         for device_key, instrument in self.instruments.items():
             if not instrument.data_type:
                 self.omitted_instruments.append(device_key)
-            if isinstance(instrument, magnetPowerSupply.magnetPowerSupply):
-                self.omitted_instruments.append(device_key)
             if isinstance(instrument, pressureGauge.pressureGauge):
                 self.omitted_instruments.append(device_key)
         
@@ -144,7 +142,7 @@ class PlotWorker(QObject):
             })
         
         # --- Available data types ---
-        available_data_types = []
+        available_data_types = ["time"]
         for inst in self.instruments.values():
             available_data_types.extend(inst.data_type.keys())
 
