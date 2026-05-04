@@ -4,6 +4,7 @@ from zoneinfo import ZoneInfo
 from pathlib import Path
 from Tools import DataLogger
 from Tools.saved_instruments.Oxford_MercuryiPS import instrument as magnetPowerSupply
+from Tools.saved_instruments.INFICON_VGC401 import instrument as pressureGauge
 import json
 
 """worker class for Expriments and Real-time Plotting (thread)"""
@@ -27,6 +28,8 @@ class PlotWorker(QObject):
             if not instrument.data_type:
                 self.omitted_instruments.append(device_key)
             if isinstance(instrument, magnetPowerSupply.magnetPowerSupply):
+                self.omitted_instruments.append(device_key)
+            if isinstance(instrument, pressureGauge.pressureGauge):
                 self.omitted_instruments.append(device_key)
         
         for device_key in self.omitted_instruments:

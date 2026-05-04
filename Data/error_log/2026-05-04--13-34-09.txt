@@ -1,0 +1,45 @@
+Szkopek Lab Error Log Book - 2026-05-04--13-34-09
+
+2026-05-04--13-34-27 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\ExperimentController.py", line 73, in start_experiment
+    self.logger = DataLogger.DataLogger(self.instruments, self.dataset, self.experiment_title)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\DataLogger.py", line 21, in __init__
+    logging_data = setattr(self, f"df_{data_type}", pd.DataFrame.from_dict(data_set[f'{data_type}']))
+                                                                           ~~~~~~~~^^^^^^^^^^^^^^^^
+KeyError: 'pressure'
+
+
+
+
+2026-05-04--13-34-29 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 404, in pause_resume_experiment_thread
+    self.plot_worker.pause_resume_experiment()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\ExperimentController.py", line 303, in pause_resume_experiment
+    with open(self.file_path, "a") as f:
+              ^^^^^^^^^^^^^^
+AttributeError: 'PlotWorker' object has no attribute 'file_path'
+
+
+
+
+2026-05-04--13-34-29 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 408, in end_experiment_worker
+    self.plot_worker.end_experiment()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\ExperimentController.py", line 319, in end_experiment
+    with open(self.file_path, "a") as f:
+              ^^^^^^^^^^^^^^
+AttributeError: 'PlotWorker' object has no attribute 'file_path'
+
+
+
+
+2026-05-04--13-34-29 Exception: Traceback (most recent call last):
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\ExperimentController.py", line 234, in plot_update
+    self.instrument_read_data()
+  File "C:\Users\szkop\OneDrive\Desktop\YonKu\Tools\ExperimentController.py", line 254, in instrument_read_data
+    self.dataset[data_type][data_ch].append(data_list[index])
+    ~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'pressure'
+
+
