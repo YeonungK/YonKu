@@ -263,7 +263,7 @@ class plotWidget(QWidget):
 
 
 class oldPlotWidget(QWidget):
-    def __init__(self, plot_setting, instruments):
+    def __init__(self, plot_setting):
         super().__init__()
         
         # [PlotItem Related Variables (plot setting, title, axes, dataset, experiment parameters)]
@@ -283,10 +283,8 @@ class oldPlotWidget(QWidget):
         self.gridLine = plot_setting[7]
         self.multipleDataset = plot_setting[9]
         self.experimentParamLink = plot_setting[10]
-        self.connected_instruments = plot_setting[11]
-        self.all_instruments = instruments
+        self.experimentParamJson = plot_setting[11]
         
-        print(self.connected_instruments, self.all_instruments)
 
         # used for multiple time axes
         self.axes = {}
@@ -312,18 +310,29 @@ class oldPlotWidget(QWidget):
             self.datasetLink = plot_setting[8]
             self.dataset = pd.read_csv(self.datasetLink, header=[0,1])
             self.set = {}
+
+            for data_type, channel in self.dataset.columns:
+                if data_type not in self.set:
+                    self.set[data_type] = {}
+
+                self.set[data_type][channel] = self.dataset[(data_type, channel)].to_list()
+
+            # also expose each data_type as an attribute because the rest of your class uses self.temperature, self.lockIn, etc.
+            for data_type, data_dict in self.set.items():
+                setattr(self, data_type, data_dict)
+
             
-            for instrument in self.connected_instruments:
-                for data_type, channel in self.all_instruments[instrument].data_type.items():
-                    self.data_dict = setattr(self, data_type, {})
-                    self.data_dict = getattr(self, data_type)
-                    for ch in channel:
-                        self.data_dict[ch] = self.dataset[data_type][ch].to_list()
+            # for instrument in self.connected_instruments:
+            #     for data_type, channel in self.all_instruments[instrument].data_type.items():
+            #         self.data_dict = setattr(self, data_type, {})
+            #         self.data_dict = getattr(self, data_type)
+            #         for ch in channel:
+            #             self.data_dict[ch] = self.dataset[data_type][ch].to_list()
                     
-                    self.set[data_type] = self.data_dict
+            #         self.set[data_type] = self.data_dict
             
-            self.time = {'time':self.dataset['time']['time'].to_list()}
-            self.set['time'] = self.time
+            # self.time = {'time':self.dataset['time']['time'].to_list()}
+            # self.set['time'] = self.time
             
             print(self.set)
         
@@ -345,9 +354,6 @@ class oldPlotWidget(QWidget):
         # if it's a normal old plot
         if not self.multipleDataset :
             try:
-                self.param_file = open(self.experimentParamLink)
-                
-                self.param_file_list = self.param_file.readlines()
                 
                 self.experiment_parameters = {'temperature_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'temperature_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
                                         'resistance_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'resistance_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
@@ -357,55 +363,55 @@ class oldPlotWidget(QWidget):
                                         'current_name':{"current":""}, 'current_unit':{"current":""},
                                         'time_name':{"time":""}}
                 
-                print(self.param_file_list)
                 
-                self.experiment_parameters['temperature_name']["ch_A"] = self.param_file_list[5].split(":")[1].replace("\n","")
-                self.experiment_parameters['temperature_name']["ch_B"] = self.param_file_list[6].split(":")[1].replace("\n","")
-                self.experiment_parameters['temperature_name']["ch_C"] = self.param_file_list[7].split(":")[1].replace("\n","")
-                self.experiment_parameters['temperature_name']["ch_D"] = self.param_file_list[8].split(":")[1].replace("\n","")
-                
-                self.experiment_parameters['temperature_unit']["ch_A"] = self.param_file_list[10].split(":")[1].replace("\n","")
-                self.experiment_parameters['temperature_unit']["ch_B"] = self.param_file_list[11].split(":")[1].replace("\n","")
-                self.experiment_parameters['temperature_unit']["ch_C"] = self.param_file_list[12].split(":")[1].replace("\n","")
-                self.experiment_parameters['temperature_unit']["ch_D"] = self.param_file_list[13].split(":")[1].replace("\n","")
-                
-                self.experiment_parameters['resistance_name']["ch_A"] = self.param_file_list[16].split(":")[1].replace("\n","")
-                self.experiment_parameters['resistance_name']["ch_B"] = self.param_file_list[17].split(":")[1].replace("\n","")
-                self.experiment_parameters['resistance_name']["ch_C"] = self.param_file_list[18].split(":")[1].replace("\n","")
-                self.experiment_parameters['resistance_name']["ch_D"] = self.param_file_list[19].split(":")[1].replace("\n","")
-                
-                self.experiment_parameters['resistance_unit']["ch_A"] = self.param_file_list[21].split(":")[1].replace("\n","")
-                self.experiment_parameters['resistance_unit']["ch_B"] = self.param_file_list[22].split(":")[1].replace("\n","")
-                self.experiment_parameters['resistance_unit']["ch_C"] = self.param_file_list[23].split(":")[1].replace("\n","")
-                self.experiment_parameters['resistance_unit']["ch_D"] = self.param_file_list[24].split(":")[1].replace("\n","")
+                self.experiment_parameters['temperature_name']["ch_A"] = self.experimentParamJson["data_schema"]["temperature"]["ch_A"]["label"]
+                self.experiment_parameters['temperature_name']["ch_B"] = self.experimentParamJson["data_schema"]["temperature"]["ch_B"]["label"]
+                self.experiment_parameters['temperature_name']["ch_C"] = self.experimentParamJson["data_schema"]["temperature"]["ch_C"]["label"]
+                self.experiment_parameters['temperature_name']["ch_D"] = self.experimentParamJson["data_schema"]["temperature"]["ch_D"]["label"]
 
-                self.experiment_parameters['lockIn_name']["x"] = self.param_file_list[27].split(":")[1].replace("\n","")
-                self.experiment_parameters['lockIn_name']["y"] = self.param_file_list[28].split(":")[1].replace("\n","")
-                self.experiment_parameters['lockIn_name']["r"] = self.param_file_list[29].split(":")[1].replace("\n","")
-                self.experiment_parameters['lockIn_name']["theta"] = self.param_file_list[30].split(":")[1].replace("\n","")
+                self.experiment_parameters['temperature_unit']["ch_A"] = self.experimentParamJson["data_schema"]["temperature"]["ch_A"]["unit"]
+                self.experiment_parameters['temperature_unit']["ch_B"] = self.experimentParamJson["data_schema"]["temperature"]["ch_B"]["unit"]
+                self.experiment_parameters['temperature_unit']["ch_C"] = self.experimentParamJson["data_schema"]["temperature"]["ch_C"]["unit"]
+                self.experiment_parameters['temperature_unit']["ch_D"] = self.experimentParamJson["data_schema"]["temperature"]["ch_D"]["unit"]
+
                 
-                self.experiment_parameters['lockIn_unit']["x"] = self.param_file_list[32].split(":")[1].replace("\n","")
-                self.experiment_parameters['lockIn_unit']["y"] = self.param_file_list[33].split(":")[1].replace("\n","")
-                self.experiment_parameters['lockIn_unit']["r"] = self.param_file_list[34].split(":")[1].replace("\n","")
-                self.experiment_parameters['lockIn_unit']["theta"] = self.param_file_list[35].split(":")[1].replace("\n","")
+                self.experiment_parameters['resistance_name']["ch_A"] = self.experimentParamJson["data_schema"]["resistance"]["ch_A"]["label"]
+                self.experiment_parameters['resistance_name']["ch_B"] = self.experimentParamJson["data_schema"]["resistance"]["ch_B"]["label"]
+                self.experiment_parameters['resistance_name']["ch_C"] = self.experimentParamJson["data_schema"]["resistance"]["ch_C"]["label"]
+                self.experiment_parameters['resistance_name']["ch_D"] = self.experimentParamJson["data_schema"]["resistance"]["ch_D"]["label"]
                 
-                self.experiment_parameters['lockIn2_name']["x"] = self.param_file_list[38].split(":")[1].replace("\n","")
-                self.experiment_parameters['lockIn2_name']["y"] = self.param_file_list[39].split(":")[1].replace("\n","")
-                self.experiment_parameters['lockIn2_name']["r"] = self.param_file_list[40].split(":")[1].replace("\n","")
-                self.experiment_parameters['lockIn2_name']["theta"] = self.param_file_list[41].split(":")[1].replace("\n","")
+                self.experiment_parameters['resistance_unit']["ch_A"] = self.experimentParamJson["data_schema"]["resistance"]["ch_A"]["unit"]
+                self.experiment_parameters['resistance_unit']["ch_B"] = self.experimentParamJson["data_schema"]["resistance"]["ch_B"]["unit"]
+                self.experiment_parameters['resistance_unit']["ch_C"] = self.experimentParamJson["data_schema"]["resistance"]["ch_C"]["unit"]
+                self.experiment_parameters['resistance_unit']["ch_D"] = self.experimentParamJson["data_schema"]["resistance"]["ch_D"]["unit"]
+
+                self.experiment_parameters['lockIn_name']["x"] = self.experimentParamJson["data_schema"]["lockIn"]["x"]["label"]
+                self.experiment_parameters['lockIn_name']["y"] = self.experimentParamJson["data_schema"]["lockIn"]["y"]["label"]
+                self.experiment_parameters['lockIn_name']["r"] = self.experimentParamJson["data_schema"]["lockIn"]["r"]["label"]
+                self.experiment_parameters['lockIn_name']["theta"] = self.experimentParamJson["data_schema"]["lockIn"]["theta"]["label"]
+
+                self.experiment_parameters['lockIn_unit']["x"] = self.experimentParamJson["data_schema"]["lockIn"]["x"]["unit"]
+                self.experiment_parameters['lockIn_unit']["y"] = self.experimentParamJson["data_schema"]["lockIn"]["y"]["unit"]
+                self.experiment_parameters['lockIn_unit']["r"] = self.experimentParamJson["data_schema"]["lockIn"]["r"]["unit"]
+                self.experiment_parameters['lockIn_unit']["theta"] = self.experimentParamJson["data_schema"]["lockIn"]["theta"]["unit"]
+
+                self.experiment_parameters['lockIn2_name']["x"] = self.experimentParamJson["data_schema"]["lockIn2"]["x"]["label"]
+                self.experiment_parameters['lockIn2_name']["y"] = self.experimentParamJson["data_schema"]["lockIn2"]["y"]["label"]
+                self.experiment_parameters['lockIn2_name']["r"] = self.experimentParamJson["data_schema"]["lockIn2"]["r"]["label"]
+                self.experiment_parameters['lockIn2_name']["theta"] = self.experimentParamJson["data_schema"]["lockIn2"]["theta"]["label"]
+
+                self.experiment_parameters['lockIn2_unit']["x"] = self.experimentParamJson["data_schema"]["lockIn2"]["x"]["unit"]
+                self.experiment_parameters['lockIn2_unit']["y"] = self.experimentParamJson["data_schema"]["lockIn2"]["y"]["unit"]
+                self.experiment_parameters['lockIn2_unit']["r"] = self.experimentParamJson["data_schema"]["lockIn2"]["r"]["unit"]
+                self.experiment_parameters['lockIn2_unit']["theta"] = self.experimentParamJson["data_schema"]["lockIn2"]["theta"]["unit"]
                 
-                self.experiment_parameters['lockIn2_unit']["x"] = self.param_file_list[43].split(":")[1].replace("\n","")
-                self.experiment_parameters['lockIn2_unit']["y"] = self.param_file_list[44].split(":")[1].replace("\n","")
-                self.experiment_parameters['lockIn2_unit']["r"] = self.param_file_list[45].split(":")[1].replace("\n","")
-                self.experiment_parameters['lockIn2_unit']["theta"] = self.param_file_list[46].split(":")[1].replace("\n","")
+                self.experiment_parameters['field_name']["field"] = self.experimentParamJson["data_schema"]["field"]["label"]
+                self.experiment_parameters['field_unit']["field"] = self.experimentParamJson["data_schema"]["field"]["unit"]
                 
-                self.experiment_parameters['field_name']["field"] = self.param_file_list[49].split(":")[1].replace("\n","")
-                self.experiment_parameters['field_unit']["field"] = self.param_file_list[50].split(":")[1].replace("\n","")
+                self.experiment_parameters['current_name']["current"] = self.experimentParamJson["data_schema"]["current"]["label"]
+                self.experiment_parameters['current_unit']["current"] = self.experimentParamJson["data_schema"]["current"]["unit"]
                 
-                self.experiment_parameters['current_name']["current"] = self.param_file_list[53].split(":")[1].replace("\n","")
-                self.experiment_parameters['current_unit']["current"] = self.param_file_list[54].split(":")[1].replace("\n","")
-                
-                self.experiment_parameters['time_name']["time"] = self.param_file_list[57].split(":")[1].replace("\n","")
+                self.experiment_parameters['time_name']["time"] = self.experimentParamJson["data_schema"]["time"]["label"]
                 
             except FileNotFoundError:
                 self.experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},

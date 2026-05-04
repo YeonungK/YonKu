@@ -1,5 +1,6 @@
 from pathlib import Path
 import sys
+import ast
 import re
 import keyword
 import os
@@ -542,6 +543,162 @@ class UI(QMainWindow):
         
         self.openPlotSettingWid.CreatePlotPushButton.clicked.connect(self.create_old_plot)
     
+    def load_experiment_parameters(self, param_path):
+        """
+        Supports both:
+        - new .json experiment parameter files
+        - old .txt experiment parameter files
+        """
+        param_path = Path(param_path)
+
+        if param_path.suffix.lower() == ".json":
+            with open(param_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+
+        if param_path.suffix.lower() == ".txt":
+            return self.parse_old_txt_experiment_parameters(param_path)
+
+        raise ValueError(f"Unsupported parameter file type: {param_path.suffix}")
+
+    def parse_old_txt_experiment_parameters(self, param_path):
+        """
+        Converts old text parameter files into a normalized dictionary.
+        """
+        params = {}
+        connected_models = []
+        available_data_types = []
+
+        with open(param_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+
+                if not line:
+                    continue
+
+                # old connected instruments line:
+                # ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830_2']
+                if line.startswith("[") and line.endswith("]"):
+                    try:
+                        connected_models = ast.literal_eval(line)
+                    except Exception:
+                        connected_models = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+                    continue
+
+                for model in connected_models:
+                    match model:
+                        case 'Lakeshore_336':
+                            available_data_types.extend(['temperature', 'resistance'])
+                        case 'Oxford_MercuryiPS':
+                            available_data_types.extend(['field', 'current'])
+                        case 'SRS_830':
+                            available_data_types.extend(['lockIn'])
+                        case 'SRS_830_2':
+                            available_data_types.extend(['lockIn2'])
+
+                if ":" in line:
+                    key, value = line.split(":", 1)
+                    params[key.strip()] = value.strip()
+                
+                
+
+        return {
+            "format": "legacy_txt",
+            "metadata": {
+                "start_datetime": params.get("startDatetime", ""),
+                "name": params.get("name", ""),
+                "measurement_period_ms": params.get("measurementPeriod", "")
+            },
+            "data_schema": {
+                "temperature_ch_A": {
+                    "label": params.get("temperature_ch_A_label", "Ch_A"),
+                    "unit": params.get("temperature_ch_A_unit", "K")    
+                },
+                "temperature_ch_B": {
+                    "label": params.get("temperature_ch_B_label", "Ch_B"),
+                    "unit": params.get("temperature_ch_B_unit", "K")
+                },
+                "temperature_ch_C": {
+                    "label": params.get("temperature_ch_C_label", "Ch_C"),
+                    "unit": params.get("temperature_ch_C_unit", "K")
+                },
+                "temperature_ch_D": {
+                    "label": params.get("temperature_ch_D_label", "Ch_D"),
+                    "unit": params.get("temperature_ch_D_unit", "K")
+                },
+                "resistance_ch_A": {
+                    "label": params.get("resistance_ch_A_label", "Ch_A"),
+                    "unit": params.get("resistance_ch_A_unit", "Ohms")
+                },
+                "resistance_ch_B": {
+                    "label": params.get("resistance_ch_B_label", "Ch_B"),
+                    "unit": params.get("resistance_ch_B_unit", "Ohms")
+                },
+                "resistance_ch_C": {
+                    "label": params.get("resistance_ch_C_label", "Ch_C"),
+                    "unit": params.get("resistance_ch_C_unit", "Ohms")
+                },
+                "resistance_ch_D": {
+                    "label": params.get("resistance_ch_D_label", "Ch_D"),
+                    "unit": params.get("resistance_ch_D_unit", "Ohms")
+                },
+                "lockIn_x": {
+                    "label": params.get("lockIn_x_label", "X"),
+                    "unit": params.get("lockIn_x_unit", "manual")
+                },
+                "lockIn_y": {
+                    "label": params.get("lockIn_y_label", "Y"),
+                    "unit": params.get("lockIn_y_unit", "manual")
+                },
+                "lockIn_r": {
+                    "label": params.get("lockIn_r_label", "R"),
+                    "unit": params.get("lockIn_r_unit", "manual")
+                },
+                "lockIn_theta": {
+                    "label": params.get("lockIn_theta_label", "Theta"),
+                    "unit": params.get("lockIn_theta_unit", "degrees")   
+                },
+                "lockIn2_x": {
+                    "label": params.get("lockIn2_x_label", "X"),
+                    "unit": params.get("lockIn2_x_unit", "manual")
+                },
+                "lockIn2_y": {
+                    "label": params.get("lockIn2_y_label", "Y"),
+                    "unit": params.get("lockIn2_y_unit", "manual")
+                },
+                "lockIn2_r": {
+                    "label": params.get("lockIn2_r_label", "R"),
+                    "unit": params.get("lockIn2_r_unit", "manual")
+                },
+                "lockIn2_theta": {
+                    "label": params.get("lockIn2_theta_label", "Theta"),
+                    "unit": params.get("lockIn2_theta_unit", "degrees")
+                },
+                "field": {
+                    "label": params.get("field_label", "field"),
+                    "unit": params.get("field_unit", "T")
+                },
+                "current": {
+                    "label": params.get("current_label", "current"),
+                    "unit": params.get("current_unit", "A")
+                },
+                "time": {
+                    "label": params.get("time_label", "time"),
+                    "unit": params.get("time_unit", "s")
+                }
+            },
+            "connected_models": connected_models,
+            "available_data_types": available_data_types
+        }
+
+    def get_available_data_types_from_params(self, experiment_params):
+        """
+        Unified reader for new JSON and old TXT-normalized parameter data.
+        """
+
+        # New preferred format
+        if "available_data_types" in experiment_params:
+            return experiment_params["available_data_types"]
+
     def create_old_plot(self):
         try:
             self.openPlotSettingWid.update_values() #update the open plot setting values
@@ -550,41 +707,20 @@ class UI(QMainWindow):
             self.xAxis_exists = False
             self.yAxis_exists = False
             
-            try:
-                param_file = open(self.openPlotSettingWid.experimentParam)    
-                param_file_content = param_file.readlines()
-                connected_instruments = eval(param_file_content[59].replace("\n",""))
-                print(connected_instruments)
-            except SyntaxError as e: # in case we are opening databases from before the latest version
-                print(e)
-                connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
-            except FileNotFoundError as e:
-                print(e)
-                print("Error detected at the nested level")
-                connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
-            except UnboundLocalError as e:
-                print(e)
-                connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+            experiment_params = self.load_experiment_parameters(
+            self.openPlotSettingWid.experimentParam
+        )
+
+            available_data_types = experiment_params["available_data_types"]
+
+            self.xAxis_exists = self.openPlotSettingWid.xAxisUnit in available_data_types
+            self.yAxis_exists = self.openPlotSettingWid.yAxisUnit in available_data_types
                 
-            for instrument in connected_instruments:
-                for data_type in list(self.instruments[instrument].data_type.keys()):
-                    print(data_type)
-                    if data_type == self.openPlotSettingWid.xAxisUnit:
-                        self.xAxis_exists = True
-                    if data_type == self.openPlotSettingWid.yAxisUnit:
-                        self.yAxis_exists = True
-                    print([self.xAxis_exists,self.yAxis_exists])
-            
-            if self.openPlotSettingWid.xAxisUnit == 'time':
-                self.xAxis_exists = True
-            if self.openPlotSettingWid.yAxisUnit == 'time':
-                self.yAxis_exists = True
-            
             if self.xAxis_exists and self.yAxis_exists:
                 self.plot_setting = [self.openPlotSettingWid.xAxisUnit, self.openPlotSettingWid.yAxisUnit, self.openPlotSettingWid.xAxisHiLim, 
                             self.openPlotSettingWid.xAxisLoLim, self.openPlotSettingWid.yAxisHiLim, self.openPlotSettingWid.yAxisLoLim, 
                             self.openPlotSettingWid.tickVal, self.openPlotSettingWid.gridLine, self.openPlotSettingWid.dataset, self.openPlotSettingWid.multipleDataset,
-                            self.openPlotSettingWid.experimentParam, connected_instruments]
+                            self.openPlotSettingWid.experimentParam, experiment_params]
                 self.old_plot_window()
                 print(self.plot_setting)
                 self.ops_window.close()
@@ -597,7 +733,7 @@ class UI(QMainWindow):
             self.openPlotSettingWid.browseDatasetLineEdit.setText("You have to choose a database to open.")
         
     def old_plot_window(self):
-        self.plot_widgets[self.plot_widget_count] = PlotUi.oldPlotWidget(self.plot_setting, self.instruments)
+        self.plot_widgets[self.plot_widget_count] = PlotUi.oldPlotWidget(self.plot_setting)
         self.plot_sub = QMdiSubWindow()
         self.plot_sub.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint) # disable maximize button
         self.plot_sub.setWidget(self.plot_widgets[self.plot_widget_count])
