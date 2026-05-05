@@ -1,3 +1,4 @@
+from email.mime import base
 from pathlib import Path
 import sys
 import ast
@@ -551,6 +552,15 @@ class UI(QMainWindow):
         """
         param_path = Path(param_path)
 
+
+        for ext in [".json", ".txt", ".csv"]:
+            file_path = base.with_suffix(ext)
+            if file_path.exists():
+                param_path = file_path
+                break
+            else:
+                raise FileNotFoundError("No matching file found")
+
         if param_path.suffix.lower() == ".json":
             with open(param_path, "r", encoding="utf-8") as f:
                 return json.load(f)
@@ -689,15 +699,6 @@ class UI(QMainWindow):
             "connected_models": connected_models,
             "available_data_types": available_data_types
         }
-
-    def get_available_data_types_from_params(self, experiment_params):
-        """
-        Unified reader for new JSON and old TXT-normalized parameter data.
-        """
-
-        # New preferred format
-        if "available_data_types" in experiment_params:
-            return experiment_params["available_data_types"]
 
     def create_old_plot(self):
         try:

@@ -46,7 +46,7 @@ class create_plot_setting_ui(QWidget):
             fname = QFileDialog.getOpenFileName(self, "Open File", "C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_data", "CSV Files (*.csv)")
             
             self.datasetLink = fname[0]
-            self.datasetLink = self.datasetLink[:-3] + "txt"
+            self.datasetLink = self.datasetLink[:-3] + "json"
             self.datasetLink = self.datasetLink.split("/")
             
             self.datasetLink[7] = "experiment_parameters"

@@ -1,3 +1,8 @@
+import ast
+from email.mime import base
+import json
+from pathlib import Path
+
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QFileDialog
 from PyQt5 import uic, QtCore
 import sys
@@ -6,7 +11,7 @@ import pandas as pd
 
 
 class add_multidata_plot_ui(QWidget):
-    def __init__(self, xAxis, yAxis, xAxis_name_key, yAxis_name_key, xAxis_unit_key, yAxis_unit_key, xData, yData, experiment_parameters, all_instruments):
+    def __init__(self, xAxis, yAxis, xAxis_name_key, yAxis_name_key, xAxis_unit_key, yAxis_unit_key, xData, yData, experiment_parameters):
         super().__init__()
 
         uic.loadUi("GUI/ui_files/add_multidata_plot.ui", self)
@@ -30,15 +35,169 @@ class add_multidata_plot_ui(QWidget):
         self.x_channel_list = list(self.xData.keys())
         self.y_channel_list = list(self.yData.keys())
         
-        self.instruments = all_instruments
 
 
         self.experimentParamLink = ""
         self.BrowseDatasetButton.clicked.connect(self.dataset_search)
 
+      
+    def load_experiment_parameters(self, param_path):
+        """
+        Supports both:
+        - new .json experiment parameter files
+        - old .txt experiment parameter files
+        """
+        param_path = Path(param_path)
 
-        
-        
+
+        for ext in [".json", ".txt", ".csv"]:
+            file_path = base.with_suffix(ext)
+            if file_path.exists():
+                param_path = file_path
+                break
+            else:
+                raise FileNotFoundError("No matching file found")
+
+        if param_path.suffix.lower() == ".json":
+            with open(param_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+
+        if param_path.suffix.lower() == ".txt":
+            return self.parse_old_txt_experiment_parameters(param_path)
+
+        raise ValueError(f"Unsupported parameter file type: {param_path.suffix}")
+
+    def parse_old_txt_experiment_parameters(self, param_path):
+        """
+        Converts old text parameter files into a normalized dictionary.
+        """
+        params = {}
+        connected_models = []
+        available_data_types = []
+
+        with open(param_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+
+                if not line:
+                    continue
+
+                # old connected instruments line:
+                # ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830_2']
+                if line.startswith("[") and line.endswith("]"):
+                    try:
+                        connected_models = ast.literal_eval(line)
+                    except Exception:
+                        connected_models = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+                    continue
+
+                for model in connected_models:
+                    match model:
+                        case 'Lakeshore_336':
+                            available_data_types.extend(['temperature', 'resistance'])
+                        case 'Oxford_MercuryiPS':
+                            available_data_types.extend(['field', 'current'])
+                        case 'SRS_830':
+                            available_data_types.extend(['lockIn'])
+                        case 'SRS_830_2':
+                            available_data_types.extend(['lockIn2'])
+
+                if ":" in line:
+                    key, value = line.split(":", 1)
+                    params[key.strip()] = value.strip()
+                
+                
+
+        return {
+            "format": "legacy_txt",
+            "metadata": {
+                "start_datetime": params.get("startDatetime", ""),
+                "name": params.get("name", ""),
+                "measurement_period_ms": params.get("measurementPeriod", "")
+            },
+            "data_schema": {
+                "temperature_ch_A": {
+                    "label": params.get("temperature_ch_A_label", "Ch_A"),
+                    "unit": params.get("temperature_ch_A_unit", "K")    
+                },
+                "temperature_ch_B": {
+                    "label": params.get("temperature_ch_B_label", "Ch_B"),
+                    "unit": params.get("temperature_ch_B_unit", "K")
+                },
+                "temperature_ch_C": {
+                    "label": params.get("temperature_ch_C_label", "Ch_C"),
+                    "unit": params.get("temperature_ch_C_unit", "K")
+                },
+                "temperature_ch_D": {
+                    "label": params.get("temperature_ch_D_label", "Ch_D"),
+                    "unit": params.get("temperature_ch_D_unit", "K")
+                },
+                "resistance_ch_A": {
+                    "label": params.get("resistance_ch_A_label", "Ch_A"),
+                    "unit": params.get("resistance_ch_A_unit", "Ohms")
+                },
+                "resistance_ch_B": {
+                    "label": params.get("resistance_ch_B_label", "Ch_B"),
+                    "unit": params.get("resistance_ch_B_unit", "Ohms")
+                },
+                "resistance_ch_C": {
+                    "label": params.get("resistance_ch_C_label", "Ch_C"),
+                    "unit": params.get("resistance_ch_C_unit", "Ohms")
+                },
+                "resistance_ch_D": {
+                    "label": params.get("resistance_ch_D_label", "Ch_D"),
+                    "unit": params.get("resistance_ch_D_unit", "Ohms")
+                },
+                "lockIn_x": {
+                    "label": params.get("lockIn_x_label", "X"),
+                    "unit": params.get("lockIn_x_unit", "manual")
+                },
+                "lockIn_y": {
+                    "label": params.get("lockIn_y_label", "Y"),
+                    "unit": params.get("lockIn_y_unit", "manual")
+                },
+                "lockIn_r": {
+                    "label": params.get("lockIn_r_label", "R"),
+                    "unit": params.get("lockIn_r_unit", "manual")
+                },
+                "lockIn_theta": {
+                    "label": params.get("lockIn_theta_label", "Theta"),
+                    "unit": params.get("lockIn_theta_unit", "degrees")   
+                },
+                "lockIn2_x": {
+                    "label": params.get("lockIn2_x_label", "X"),
+                    "unit": params.get("lockIn2_x_unit", "manual")
+                },
+                "lockIn2_y": {
+                    "label": params.get("lockIn2_y_label", "Y"),
+                    "unit": params.get("lockIn2_y_unit", "manual")
+                },
+                "lockIn2_r": {
+                    "label": params.get("lockIn2_r_label", "R"),
+                    "unit": params.get("lockIn2_r_unit", "manual")
+                },
+                "lockIn2_theta": {
+                    "label": params.get("lockIn2_theta_label", "Theta"),
+                    "unit": params.get("lockIn2_theta_unit", "degrees")
+                },
+                "field": {
+                    "label": params.get("field_label", "field"),
+                    "unit": params.get("field_unit", "T")
+                },
+                "current": {
+                    "label": params.get("current_label", "current"),
+                    "unit": params.get("current_unit", "A")
+                },
+                "time": {
+                    "label": params.get("time_label", "time"),
+                    "unit": params.get("time_unit", "s")
+                }
+            },
+            "connected_models": connected_models,
+            "available_data_types": available_data_types
+        }
+
+
     def dataset_search(self):
         self.xAxis_exists = False
         self.yAxis_exists = False
@@ -47,7 +206,7 @@ class add_multidata_plot_ui(QWidget):
             # find the experiment parameters file link
             fname = QFileDialog.getOpenFileName(self, "Open File", "C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_data", "CSV Files (*.csv)")
             self.datasetLink = fname[0]
-            self.paramLink = self.datasetLink[:-3] + "txt"
+            self.paramLink = self.datasetLink[:-4] 
             self.paramLink = self.paramLink.split("/")
             
             self.paramLink[7] = "experiment_parameters"
@@ -58,42 +217,51 @@ class add_multidata_plot_ui(QWidget):
                 self.experimentParamLink = self.experimentParamLink + "/" + self.paramLink[n]
                 print(self.experimentParamLink)
             
-            # check if the dataset includes the xaxis and yaxis data type
-            try:
-                param_file = open(self.experimentParamLink)    
-                param_file_content = param_file.readlines()
-                connected_instruments = eval(param_file_content[59].replace("\n",""))
-                print(connected_instruments)
-            except SyntaxError: # in case we are opening databases from before the latest version
-                print(e)
-                connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
-            except FileNotFoundError as e:
-                print(e)
-                print("Error detected at the nested level")
-                connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
-            except UnboundLocalError as e:
-                print(e)
-                connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+            experiment_params = self.load_experiment_parameters(
+            self.experimentParamLink
+        )
+
+            available_data_types = experiment_params["available_data_types"]
+
+            self.xAxis_exists = self.openPlotSettingWid.xAxisUnit in available_data_types
+            self.yAxis_exists = self.openPlotSettingWid.yAxisUnit in available_data_types
             
-            for instrument in connected_instruments:
-                for data_type in list(self.instruments[instrument].data_type.keys()):
-                    print(data_type)
-                    if data_type == self.xAxis:
-                        self.xAxis_exists = True
-                    if data_type == self.yAxis:
-                        self.yAxis_exists = True
-                    print([self.xAxis_exists,self.yAxis_exists])
+            # # check if the dataset includes the xaxis and yaxis data type
+            # try:
+            #     param_file = open(self.experimentParamLink)    
+            #     param_file_content = param_file.readlines()
+            #     connected_instruments = eval(param_file_content[59].replace("\n",""))
+            #     print(connected_instruments)
+            # except SyntaxError: # in case we are opening databases from before the latest version
+            #     print(e)
+            #     connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+            # except FileNotFoundError as e:
+            #     print(e)
+            #     print("Error detected at the nested level")
+            #     connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+            # except UnboundLocalError as e:
+            #     print(e)
+            #     connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
             
-            if self.xAxis == 'time':
-                self.xAxis_exists = True
-            if self.yAxis == 'time':
-                self.yAxis_exists = True
+            # for instrument in connected_instruments:
+            #     for data_type in list(self.instruments[instrument].data_type.keys()):
+            #         print(data_type)
+            #         if data_type == self.xAxis:
+            #             self.xAxis_exists = True
+            #         if data_type == self.yAxis:
+            #             self.yAxis_exists = True
+            #         print([self.xAxis_exists,self.yAxis_exists])
+            
+            # if self.xAxis == 'time':
+            #     self.xAxis_exists = True
+            # if self.yAxis == 'time':
+            #     self.yAxis_exists = True
             
             # if they do, proceed to set names in the 
             if self.xAxis_exists and self.yAxis_exists:
                 self.AxisDatasetLineEdit.setText(fname[0])
                 self.datasetLink = fname[0]
-                self.expParam = self.set_names(self.experimentParamLink, self.xAxisChannelComboBox, self.yAxisChannelComboBox, self.xAxis_name_key, self.yAxis_name_key, self.xData, self.yData)
+                self.expParam = self.set_names(experiment_params, self.xAxisChannelComboBox, self.yAxisChannelComboBox, self.xAxis_name_key, self.yAxis_name_key, self.xData, self.yData)
                 print(f"parameter: {self.expParam}")
             else:
                 self.AxisDatasetLineEdit.setText("This dataset doesn't include the chosen data types.")
@@ -102,15 +270,9 @@ class add_multidata_plot_ui(QWidget):
             pass
             
         
-    def set_names(self, experimentParamLink, x_combo_box, y_combo_box, x_name_key, y_name_key, x_data, y_data):
+    def set_names(self, experiment_params, x_combo_box, y_combo_box, x_name_key, y_name_key, x_data, y_data):
         
         try:
-            param_file = open(experimentParamLink)
-                    
-            param_file_list = param_file.readlines()
-            
-            print(param_file_list)
-            
             experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
                                         'resistance_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistance_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
                                         'lockIn_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
@@ -119,54 +281,54 @@ class add_multidata_plot_ui(QWidget):
                                         'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
                                         'time_name':{"time":"time"}}
             
-            experiment_parameters['temperature_name']["ch_A"] = param_file_list[5].split(":")[1].replace("\n","")
-            experiment_parameters['temperature_name']["ch_B"] = param_file_list[6].split(":")[1].replace("\n","")
-            experiment_parameters['temperature_name']["ch_C"] = param_file_list[7].split(":")[1].replace("\n","")
-            experiment_parameters['temperature_name']["ch_D"] = param_file_list[8].split(":")[1].replace("\n","")
-            
-            experiment_parameters['temperature_unit']["ch_A"] = param_file_list[10].split(":")[1].replace("\n","")
-            experiment_parameters['temperature_unit']["ch_B"] = param_file_list[11].split(":")[1].replace("\n","")
-            experiment_parameters['temperature_unit']["ch_C"] = param_file_list[12].split(":")[1].replace("\n","")
-            experiment_parameters['temperature_unit']["ch_D"] = param_file_list[13].split(":")[1].replace("\n","")
-            
-            experiment_parameters['resistance_name']["ch_A"] = param_file_list[16].split(":")[1].replace("\n","")
-            experiment_parameters['resistance_name']["ch_B"] = param_file_list[17].split(":")[1].replace("\n","")
-            experiment_parameters['resistance_name']["ch_C"] = param_file_list[18].split(":")[1].replace("\n","")
-            experiment_parameters['resistance_name']["ch_D"] = param_file_list[19].split(":")[1].replace("\n","")
-            
-            experiment_parameters['resistance_unit']["ch_A"] = param_file_list[21].split(":")[1].replace("\n","")
-            experiment_parameters['resistance_unit']["ch_B"] = param_file_list[22].split(":")[1].replace("\n","")
-            experiment_parameters['resistance_unit']["ch_C"] = param_file_list[23].split(":")[1].replace("\n","")
-            experiment_parameters['resistance_unit']["ch_D"] = param_file_list[24].split(":")[1].replace("\n","")
+            experiment_parameters['temperature_name']["ch_A"] = experiment_params['data_schema']['temperature_ch_A']['label']
+            experiment_parameters['temperature_name']["ch_B"] = experiment_params['data_schema']['temperature_ch_B']['label']
+            experiment_parameters['temperature_name']["ch_C"] = experiment_params['data_schema']['temperature_ch_C']['label']
+            experiment_parameters['temperature_name']["ch_D"] = experiment_params['data_schema']['temperature_ch_D']['label']
 
-            experiment_parameters['lockIn_name']["x"] = param_file_list[27].split(":")[1].replace("\n","")
-            experiment_parameters['lockIn_name']["y"] = param_file_list[28].split(":")[1].replace("\n","")
-            experiment_parameters['lockIn_name']["r"] = param_file_list[29].split(":")[1].replace("\n","")
-            experiment_parameters['lockIn_name']["theta"] = param_file_list[30].split(":")[1].replace("\n","")
-            
-            experiment_parameters['lockIn_unit']["x"] = param_file_list[32].split(":")[1].replace("\n","")
-            experiment_parameters['lockIn_unit']["y"] = param_file_list[33].split(":")[1].replace("\n","")
-            experiment_parameters['lockIn_unit']["r"] = param_file_list[34].split(":")[1].replace("\n","")
-            experiment_parameters['lockIn_unit']["theta"] = param_file_list[35].split(":")[1].replace("\n","")
-            
-            experiment_parameters['lockIn2_name']["x"] = param_file_list[38].split(":")[1].replace("\n","")
-            experiment_parameters['lockIn2_name']["y"] = param_file_list[39].split(":")[1].replace("\n","")
-            experiment_parameters['lockIn2_name']["r"] = param_file_list[40].split(":")[1].replace("\n","")
-            experiment_parameters['lockIn2_name']["theta"] = param_file_list[41].split(":")[1].replace("\n","")
-            
-            experiment_parameters['lockIn2_unit']["x"] = param_file_list[43].split(":")[1].replace("\n","")
-            experiment_parameters['lockIn2_unit']["y"] = param_file_list[44].split(":")[1].replace("\n","")
-            experiment_parameters['lockIn2_unit']["r"] = param_file_list[45].split(":")[1].replace("\n","")
-            experiment_parameters['lockIn2_unit']["theta"] = param_file_list[46].split(":")[1].replace("\n","")
-            
-            experiment_parameters['field_name']["field"] = param_file_list[49].split(":")[1].replace("\n","")
-            experiment_parameters['field_unit']["field"] = param_file_list[50].split(":")[1].replace("\n","")
-            
-            experiment_parameters['current_name']["current"] = param_file_list[53].split(":")[1].replace("\n","")
-            experiment_parameters['current_unit']["current"] = param_file_list[54].split(":")[1].replace("\n","")
-            
-            experiment_parameters['time_name']["time"] = param_file_list[57].split(":")[1].replace("\n","")
-            
+            experiment_parameters['temperature_unit']["ch_A"] = experiment_params['data_schema']['temperature_ch_A']['unit']
+            experiment_parameters['temperature_unit']["ch_B"] = experiment_params['data_schema']['temperature_ch_B']['unit']
+            experiment_parameters['temperature_unit']["ch_C"] = experiment_params['data_schema']['temperature_ch_C']['unit']
+            experiment_parameters['temperature_unit']["ch_D"] = experiment_params['data_schema']['temperature_ch_D']['unit']
+
+            experiment_parameters['resistance_name']["ch_A"] = experiment_params['data_schema']['resistance_ch_A']['label']
+            experiment_parameters['resistance_name']["ch_B"] = experiment_params['data_schema']['resistance_ch_B']['label']
+            experiment_parameters['resistance_name']["ch_C"] = experiment_params['data_schema']['resistance_ch_C']['label']
+            experiment_parameters['resistance_name']["ch_D"] = experiment_params['data_schema']['resistance_ch_D']['label']
+
+            experiment_parameters['resistance_unit']["ch_A"] = experiment_params['data_schema']['resistance_ch_A']['unit']
+            experiment_parameters['resistance_unit']["ch_B"] = experiment_params['data_schema']['resistance_ch_B']['unit']
+            experiment_parameters['resistance_unit']["ch_C"] = experiment_params['data_schema']['resistance_ch_C']['unit']
+            experiment_parameters['resistance_unit']["ch_D"] = experiment_params['data_schema']['resistance_ch_D']['unit']
+
+            experiment_parameters['lockIn_name']["x"] = experiment_params['data_schema']['lockIn_x']['label']
+            experiment_parameters['lockIn_name']["y"] = experiment_params['data_schema']['lockIn_y']['label']
+            experiment_parameters['lockIn_name']["r"] = experiment_params['data_schema']['lockIn_r']['label']
+            experiment_parameters['lockIn_name']["theta"] = experiment_params['data_schema']['lockIn_theta']['label']
+
+            experiment_parameters['lockIn_unit']["x"] = experiment_params['data_schema']['lockIn_x']['unit']
+            experiment_parameters['lockIn_unit']["y"] = experiment_params['data_schema']['lockIn_y']['unit']
+            experiment_parameters['lockIn_unit']["r"] = experiment_params['data_schema']['lockIn_r']['unit']
+            experiment_parameters['lockIn_unit']["theta"] = experiment_params['data_schema']['lockIn_theta']['unit']
+
+            experiment_parameters['lockIn2_name']["x"] = experiment_params['data_schema']['lockIn2_x']['label']
+            experiment_parameters['lockIn2_name']["y"] = experiment_params['data_schema']['lockIn2_y']['label']
+            experiment_parameters['lockIn2_name']["r"] = experiment_params['data_schema']['lockIn2_r']['label']
+            experiment_parameters['lockIn2_name']["theta"] = experiment_params['data_schema']['lockIn2_theta']['label']
+
+            experiment_parameters['lockIn2_unit']["x"] = experiment_params['data_schema']['lockIn2_x']['unit']
+            experiment_parameters['lockIn2_unit']["y"] = experiment_params['data_schema']['lockIn2_y']['unit']
+            experiment_parameters['lockIn2_unit']["r"] = experiment_params['data_schema']['lockIn2_r']['unit']
+            experiment_parameters['lockIn2_unit']["theta"] = experiment_params['data_schema']['lockIn2_theta']['unit']
+
+            experiment_parameters['field_name']["field"] = experiment_params['data_schema']['field']['label']
+            experiment_parameters['field_unit']["field"] = experiment_params['data_schema']['field']['unit']
+
+            experiment_parameters['current_name']["current"] = experiment_params['data_schema']['current']['label']
+            experiment_parameters['current_unit']["current"] = experiment_params['data_schema']['current']['unit']
+
+            experiment_parameters['time_name']["time"] = experiment_params['data_schema']['time']['label']
+
         except FileNotFoundError:
             experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
                                     'resistance_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistance_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},

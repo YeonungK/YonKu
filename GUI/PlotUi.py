@@ -597,7 +597,7 @@ class oldPlotWidget(QWidget):
         
         self.amp_window = QMainWindow()
         self.addMultiDataPlotWid = amp.add_multidata_plot_ui(self.x_set_name, self.y_set_name, self.xAxis_name_key, self.yAxis_name_key,
-                                                            self.xAxis_unit_key, self.yAxis_unit_key, self.xAxisData, self.yAxisData, self.experiment_parameters, self.all_instruments)
+                                                            self.xAxis_unit_key, self.yAxis_unit_key, self.xAxisData, self.yAxisData, self.experiment_parameters)
 
         self.amp_window.setCentralWidget(self.addMultiDataPlotWid)
         self.amp_window.setWindowTitle("Add a new trace")
