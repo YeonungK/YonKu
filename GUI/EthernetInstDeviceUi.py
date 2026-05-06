@@ -6,13 +6,13 @@ import os
 import shutil
 import stat
 
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+from project_paths import GUI_DIR, SAVED_INSTRUMENTS_DIR, INSTRUMENT_CONTROL_UIS_DIR, INSTRUMENT_WIDGETS_DIR
 
 class EthernetInstDeviceUi(QWidget):
     def __init__(self, data_list):
         super().__init__()
         
-        uic.loadUi("GUI/ui_files/ethernet_instrument_device_wid.ui", self)
+        uic.loadUi(f"{GUI_DIR}/ui_files/ethernet_instrument_device_wid.ui", self)
         
         self.instrument = None
         self.data_list = data_list
@@ -78,7 +78,7 @@ class EthernetInstDeviceUi(QWidget):
             
     def remove_instrument_confirm(self):
         removeInstrumentWid = QWidget()
-        uic.loadUi("GUI/ui_files/remove_instrument_confirm.ui", removeInstrumentWid)
+        uic.loadUi(f"{GUI_DIR}/ui_files/remove_instrument_confirm.ui", removeInstrumentWid)
         self.removeInstrumentWin = QMainWindow()
         self.removeInstrumentWin.setCentralWidget(removeInstrumentWid)
         self.removeInstrumentWin.setWindowTitle("Remove this instrument")
@@ -103,7 +103,7 @@ class EthernetInstDeviceUi(QWidget):
         
         #1. the instrument object python file
         
-        path = f"Tools/saved_instruments/{instrument_model}.py"
+        path = f"{SAVED_INSTRUMENTS_DIR}/{instrument_model}.py"
         if os.path.isfile(path):
             os.remove(path)
         else:
@@ -111,7 +111,7 @@ class EthernetInstDeviceUi(QWidget):
         
         #2. the command/attribute folder of the instrument
         
-        path = f"Tools/saved_instruments/Members/{instrument_model}"
+        path = f"{SAVED_INSTRUMENTS_DIR}/Members/{instrument_model}"
         if os.path.isdir(path):
             shutil.rmtree(path, onerror=self.remove_readonly)
         else:
@@ -119,7 +119,7 @@ class EthernetInstDeviceUi(QWidget):
             
         #3. the instrument widget python file
         
-        path = f"GUI/instrument_control_widgets/{instrument_model}_widget.py"
+        path = f"{INSTRUMENT_WIDGETS_DIR}/{instrument_model}_widget.py"
         if os.path.isfile(path):
             os.remove(path)
         else:
@@ -127,7 +127,7 @@ class EthernetInstDeviceUi(QWidget):
         
         #4. the instrument ui file
         
-        path = f"GUI/ui_files/instrument_control_uis/{instrument_model}_ui.ui"
+        path = f"{INSTRUMENT_CONTROL_UIS_DIR}/{instrument_model}_ui.ui"
         if os.path.isfile(path):
             os.remove(path)
         else:

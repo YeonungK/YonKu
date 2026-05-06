@@ -4,13 +4,13 @@ import sys
 import nidaqmx
 from nidaqmx.constants import LineGrouping
 
-sys.path.append('C:/Users/szkop/Desktop/YonKu')
+from project_paths import GUI_DIR
 
 class usb6525InstCreateUi(QWidget):
     def __init__(self):
         super().__init__()
         
-        uic.loadUi("GUI/ui_files/usb_6525_create.ui", self)
+        uic.loadUi(f"{GUI_DIR}/ui_files/usb_6525_create.ui", self)
         
         """parameters"""
         
@@ -48,7 +48,7 @@ import nidaqmx
 from nidaqmx.constants import LineGrouping
 import sys
 
-sys.path.append('C:/Users/szkop/Desktop/YonKu')
+from project_paths import PROJECT_ROOT
 
 from Tools.Instrument import NidaqmxInstrument
 
@@ -91,13 +91,13 @@ class {self.name}(NidaqmxInstrument):
         
         script = f"""sys
 
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+from project_paths import PROJECT_ROOT
 
 from GUI.instrument_control_widgets import base_dynamic_widget
 
 class test_instrument_widget(base_dynamic_widget.widget):
     def __init__(self, instrument):
-        super().__init__(instrument, 'GUI/ui_files/instrument_control_uis/{self.model}_ui.ui')
+        super().__init__(instrument, f'GUI/ui_files/instrument_control_uis/{self.model}_ui.ui')
         """
         return script
         

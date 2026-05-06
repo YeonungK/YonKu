@@ -1,6 +1,6 @@
 import sys
 
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+from project_paths import PROJECT_ROOT
 
 from GUI.instrument_control_widgets import base_dynamic_widget
 

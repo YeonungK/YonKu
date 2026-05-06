@@ -2,8 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QM
 from PyQt5.QtGui import QCloseEvent
 from PyQt5 import uic
 import sys
-
-sys.path.append('C:/Users/szkop/Desktop/YonKu')
+from project_paths import GUI_DIR
 
 
 class chABigLineUi(QMainWindow):
@@ -11,7 +10,7 @@ class chABigLineUi(QMainWindow):
         super().__init__()
         
         self.widget = QWidget()
-        uic.loadUi("GUI/ui_files/ch_A_big_line.ui", self.widget)
+        uic.loadUi(f"{GUI_DIR}/ui_files/ch_A_big_line.ui", self.widget)
         
         self.setCentralWidget(self.widget)
         self.setWindowTitle("chA measurement")
@@ -26,7 +25,7 @@ class chBBigLineUi(QMainWindow):
         super().__init__()
         
         self.widget = QWidget()
-        uic.loadUi("GUI/ui_files/ch_B_big_line.ui", self.widget)
+        uic.loadUi(f"{GUI_DIR}/ui_files/ch_B_big_line.ui", self.widget)
         
         self.setCentralWidget(self.widget)
         self.setWindowTitle("chB measurement")
@@ -41,7 +40,7 @@ class chCBigLineUi(QMainWindow):
         super().__init__()
         
         self.widget = QWidget()
-        uic.loadUi("GUI/ui_files/ch_C_big_line.ui", self.widget)
+        uic.loadUi(f"{GUI_DIR}/ui_files/ch_C_big_line.ui", self.widget)
         
         self.setCentralWidget(self.widget)
         self.setWindowTitle("chC measurement")
@@ -56,7 +55,7 @@ class chDBigLineUi(QMainWindow):
         super().__init__()
         
         self.widget = QWidget()
-        uic.loadUi("GUI/ui_files/ch_D_big_line.ui", self.widget)
+        uic.loadUi(f"{GUI_DIR}/ui_files/ch_D_big_line.ui", self.widget)
         
         self.setCentralWidget(self.widget)
         self.setWindowTitle("chD measurement")

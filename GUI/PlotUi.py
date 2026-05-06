@@ -1,6 +1,6 @@
 import sys
 
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+
 
 import numpy as np
 import h5py
@@ -13,7 +13,6 @@ import pyqtgraph as pg
 import pandas as pd
 
 from GUI import AddMultidataPlotUi as amp
-
 
 
 class plotWidget(QWidget):
@@ -364,47 +363,47 @@ class oldPlotWidget(QWidget):
                                         'time_name':{"time":""}}
                 
                 
-                self.experiment_parameters['temperature_name']["ch_A"] = self.experimentParamJson["data_schema"]["temperature"]["ch_A"]["label"]
-                self.experiment_parameters['temperature_name']["ch_B"] = self.experimentParamJson["data_schema"]["temperature"]["ch_B"]["label"]
-                self.experiment_parameters['temperature_name']["ch_C"] = self.experimentParamJson["data_schema"]["temperature"]["ch_C"]["label"]
-                self.experiment_parameters['temperature_name']["ch_D"] = self.experimentParamJson["data_schema"]["temperature"]["ch_D"]["label"]
+                self.experiment_parameters['temperature_name']["ch_A"] = self.experimentParamJson["data_schema"]["temperature_ch_A"]["label"]
+                self.experiment_parameters['temperature_name']["ch_B"] = self.experimentParamJson["data_schema"]["temperature_ch_B"]["label"]
+                self.experiment_parameters['temperature_name']["ch_C"] = self.experimentParamJson["data_schema"]["temperature_ch_C"]["label"]
+                self.experiment_parameters['temperature_name']["ch_D"] = self.experimentParamJson["data_schema"]["temperature_ch_D"]["label"]
 
-                self.experiment_parameters['temperature_unit']["ch_A"] = self.experimentParamJson["data_schema"]["temperature"]["ch_A"]["unit"]
-                self.experiment_parameters['temperature_unit']["ch_B"] = self.experimentParamJson["data_schema"]["temperature"]["ch_B"]["unit"]
-                self.experiment_parameters['temperature_unit']["ch_C"] = self.experimentParamJson["data_schema"]["temperature"]["ch_C"]["unit"]
-                self.experiment_parameters['temperature_unit']["ch_D"] = self.experimentParamJson["data_schema"]["temperature"]["ch_D"]["unit"]
+                self.experiment_parameters['temperature_unit']["ch_A"] = self.experimentParamJson["data_schema"]["temperature_ch_A"]["unit"]
+                self.experiment_parameters['temperature_unit']["ch_B"] = self.experimentParamJson["data_schema"]["temperature_ch_B"]["unit"]
+                self.experiment_parameters['temperature_unit']["ch_C"] = self.experimentParamJson["data_schema"]["temperature_ch_C"]["unit"]
+                self.experiment_parameters['temperature_unit']["ch_D"] = self.experimentParamJson["data_schema"]["temperature_ch_D"]["unit"]
 
                 
-                self.experiment_parameters['resistance_name']["ch_A"] = self.experimentParamJson["data_schema"]["resistance"]["ch_A"]["label"]
-                self.experiment_parameters['resistance_name']["ch_B"] = self.experimentParamJson["data_schema"]["resistance"]["ch_B"]["label"]
-                self.experiment_parameters['resistance_name']["ch_C"] = self.experimentParamJson["data_schema"]["resistance"]["ch_C"]["label"]
-                self.experiment_parameters['resistance_name']["ch_D"] = self.experimentParamJson["data_schema"]["resistance"]["ch_D"]["label"]
-                
-                self.experiment_parameters['resistance_unit']["ch_A"] = self.experimentParamJson["data_schema"]["resistance"]["ch_A"]["unit"]
-                self.experiment_parameters['resistance_unit']["ch_B"] = self.experimentParamJson["data_schema"]["resistance"]["ch_B"]["unit"]
-                self.experiment_parameters['resistance_unit']["ch_C"] = self.experimentParamJson["data_schema"]["resistance"]["ch_C"]["unit"]
-                self.experiment_parameters['resistance_unit']["ch_D"] = self.experimentParamJson["data_schema"]["resistance"]["ch_D"]["unit"]
+                self.experiment_parameters['resistance_name']["ch_A"] = self.experimentParamJson["data_schema"]["resistance_ch_A"]["label"]
+                self.experiment_parameters['resistance_name']["ch_B"] = self.experimentParamJson["data_schema"]["resistance_ch_B"]["label"]
+                self.experiment_parameters['resistance_name']["ch_C"] = self.experimentParamJson["data_schema"]["resistance_ch_C"]["label"]
+                self.experiment_parameters['resistance_name']["ch_D"] = self.experimentParamJson["data_schema"]["resistance_ch_D"]["label"]
 
-                self.experiment_parameters['lockIn_name']["x"] = self.experimentParamJson["data_schema"]["lockIn"]["x"]["label"]
-                self.experiment_parameters['lockIn_name']["y"] = self.experimentParamJson["data_schema"]["lockIn"]["y"]["label"]
-                self.experiment_parameters['lockIn_name']["r"] = self.experimentParamJson["data_schema"]["lockIn"]["r"]["label"]
-                self.experiment_parameters['lockIn_name']["theta"] = self.experimentParamJson["data_schema"]["lockIn"]["theta"]["label"]
+                self.experiment_parameters['resistance_unit']["ch_A"] = self.experimentParamJson["data_schema"]["resistance_ch_A"]["unit"]
+                self.experiment_parameters['resistance_unit']["ch_B"] = self.experimentParamJson["data_schema"]["resistance_ch_B"]["unit"]
+                self.experiment_parameters['resistance_unit']["ch_C"] = self.experimentParamJson["data_schema"]["resistance_ch_C"]["unit"]
+                self.experiment_parameters['resistance_unit']["ch_D"] = self.experimentParamJson["data_schema"]["resistance_ch_D"]["unit"]
 
-                self.experiment_parameters['lockIn_unit']["x"] = self.experimentParamJson["data_schema"]["lockIn"]["x"]["unit"]
-                self.experiment_parameters['lockIn_unit']["y"] = self.experimentParamJson["data_schema"]["lockIn"]["y"]["unit"]
-                self.experiment_parameters['lockIn_unit']["r"] = self.experimentParamJson["data_schema"]["lockIn"]["r"]["unit"]
-                self.experiment_parameters['lockIn_unit']["theta"] = self.experimentParamJson["data_schema"]["lockIn"]["theta"]["unit"]
+                self.experiment_parameters['lockIn_name']["x"] = self.experimentParamJson["data_schema"]["lockIn_x"]["label"]
+                self.experiment_parameters['lockIn_name']["y"] = self.experimentParamJson["data_schema"]["lockIn_y"]["label"]
+                self.experiment_parameters['lockIn_name']["r"] = self.experimentParamJson["data_schema"]["lockIn_r"]["label"]
+                self.experiment_parameters['lockIn_name']["theta"] = self.experimentParamJson["data_schema"]["lockIn_theta"]["label"]
 
-                self.experiment_parameters['lockIn2_name']["x"] = self.experimentParamJson["data_schema"]["lockIn2"]["x"]["label"]
-                self.experiment_parameters['lockIn2_name']["y"] = self.experimentParamJson["data_schema"]["lockIn2"]["y"]["label"]
-                self.experiment_parameters['lockIn2_name']["r"] = self.experimentParamJson["data_schema"]["lockIn2"]["r"]["label"]
-                self.experiment_parameters['lockIn2_name']["theta"] = self.experimentParamJson["data_schema"]["lockIn2"]["theta"]["label"]
+                self.experiment_parameters['lockIn_unit']["x"] = self.experimentParamJson["data_schema"]["lockIn_x"]["unit"]
+                self.experiment_parameters['lockIn_unit']["y"] = self.experimentParamJson["data_schema"]["lockIn_y"]["unit"]
+                self.experiment_parameters['lockIn_unit']["r"] = self.experimentParamJson["data_schema"]["lockIn_r"]["unit"]
+                self.experiment_parameters['lockIn_unit']["theta"] = self.experimentParamJson["data_schema"]["lockIn_theta"]["unit"]
 
-                self.experiment_parameters['lockIn2_unit']["x"] = self.experimentParamJson["data_schema"]["lockIn2"]["x"]["unit"]
-                self.experiment_parameters['lockIn2_unit']["y"] = self.experimentParamJson["data_schema"]["lockIn2"]["y"]["unit"]
-                self.experiment_parameters['lockIn2_unit']["r"] = self.experimentParamJson["data_schema"]["lockIn2"]["r"]["unit"]
-                self.experiment_parameters['lockIn2_unit']["theta"] = self.experimentParamJson["data_schema"]["lockIn2"]["theta"]["unit"]
-                
+                self.experiment_parameters['lockIn2_name']["x"] = self.experimentParamJson["data_schema"]["lockIn2_x"]["label"]
+                self.experiment_parameters['lockIn2_name']["y"] = self.experimentParamJson["data_schema"]["lockIn2_y"]["label"]
+                self.experiment_parameters['lockIn2_name']["r"] = self.experimentParamJson["data_schema"]["lockIn2_r"]["label"]
+                self.experiment_parameters['lockIn2_name']["theta"] = self.experimentParamJson["data_schema"]["lockIn2_theta"]["label"]
+
+                self.experiment_parameters['lockIn2_unit']["x"] = self.experimentParamJson["data_schema"]["lockIn2_x"]["unit"]
+                self.experiment_parameters['lockIn2_unit']["y"] = self.experimentParamJson["data_schema"]["lockIn2_y"]["unit"]
+                self.experiment_parameters['lockIn2_unit']["r"] = self.experimentParamJson["data_schema"]["lockIn2_r"]["unit"]
+                self.experiment_parameters['lockIn2_unit']["theta"] = self.experimentParamJson["data_schema"]["lockIn2_theta"]["unit"]
+
                 self.experiment_parameters['field_name']["field"] = self.experimentParamJson["data_schema"]["field"]["label"]
                 self.experiment_parameters['field_unit']["field"] = self.experimentParamJson["data_schema"]["field"]["unit"]
                 

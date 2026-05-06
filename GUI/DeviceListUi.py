@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QM
 from PyQt5.QtGui import QCloseEvent
 from PyQt5 import uic
 import sys
+from project_paths import GUI_DIR
 
 
 class DeviceListUi(QMdiSubWindow):
@@ -9,7 +10,7 @@ class DeviceListUi(QMdiSubWindow):
         super().__init__()
         
         self.widget = QWidget()
-        uic.loadUi("GUI/ui_files/device_list.ui", self.widget)
+        uic.loadUi(f"{GUI_DIR}/ui_files/device_list.ui", self.widget)
         
         
         mdi.addSubWindow(self)

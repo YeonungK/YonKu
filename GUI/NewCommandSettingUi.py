@@ -10,7 +10,7 @@ import shutil
 import os
 from GUI import ManualEditUi as meu
 
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+from project_paths import GUI_DIR, SAVED_INSTRUMENTS_DIR, INSTRUMENT_CONTROL_UIS_DIR, INSTRUMENT_WIDGETS_DIR
 
 
 class new_command_setting_ui(QWidget):
@@ -19,7 +19,7 @@ class new_command_setting_ui(QWidget):
     def __init__(self, instrument, interface, window):
         super().__init__()
         print("loadUi")
-        uic.loadUi("GUI/ui_files/new_command.ui", self)
+        uic.loadUi(f"{GUI_DIR}/ui_files/new_command.ui", self)
         
         self.instrument = instrument
         
@@ -68,16 +68,16 @@ class new_command_setting_ui(QWidget):
     def create_member_folder(self):
         
         print("creating folders")
-        instrument_folder = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}")
+        instrument_folder = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}")
         instrument_folder.mkdir(parents=True, exist_ok=True)
         
-        self.attribute_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/attributes.py")
+        self.attribute_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/attributes.py")
         
         if not self.attribute_path.exists():
             self.attribute_path.touch()
             with open(self.attribute_path, "w") as f:
                 basic_attributes = f"""import sys
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+from project_paths import PROJECT_ROOT
 from Tools.saved_instruments.Members.{self.instrument.model} import attributes
 data_type = {{}}
 data_unit = {{}}
@@ -95,7 +95,7 @@ initial_state = {{}}
         self.method_name = self.command_name
         index = self.try_make_method_file(self.method_name, 0)
         self.method_name = self.method_name + "_" + str(index)
-        self.method_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/{self.method_name}_method.py")
+        self.method_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{self.method_name}_method.py")
         
         with open(self.method_path, "w") as f:
             script = f"""
@@ -117,7 +117,7 @@ data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
         
     def try_make_method_file(self, method_name, num):
         method_real_name = method_name + "_" + str(num)
-        method_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/{method_real_name}_method.py")
+        method_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{method_real_name}_method.py")
         try:
             method_path.touch()
             index = num
@@ -155,7 +155,7 @@ data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
     
     def nameSaveButton_method(self):
         
-        new_method_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/{self.nameLineEdit.text()}_method.py")
+        new_method_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{self.nameLineEdit.text()}_method.py")
         try:
             self.method_path.rename(new_method_path)
             
@@ -870,8 +870,8 @@ class edit_command_setting_ui(QWidget):
         self.command_name = command_name
         self.method_module_path = f"Tools.saved_instruments.Members.{self.instrument.model}.{self.command_name}_method"
 # CREATE A COPY FILE OF THE METHOD
-        self.original_method_file = f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/{self.command_name}_method.py"
-        self.copy_method_file = f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/{self.command_name}_method_copy.py"
+        self.original_method_file = f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{self.command_name}_method.py"
+        self.copy_method_file = f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{self.command_name}_method_copy.py"
 
         try:
             # Use shutil.copy2 to copy the file content and metadata (permissions, timestamps)
@@ -882,12 +882,12 @@ class edit_command_setting_ui(QWidget):
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
         
-        self.original_method_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/{self.command_name}_method_copy.py")
-        self.method_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/{self.command_name}_method.py")
+        self.original_method_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{self.command_name}_method_copy.py")
+        self.method_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{self.command_name}_method.py")
 
 # CREATE A COPY FILE OF ATTRIBUTES
-        self.original_attribute_file = f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/attributes.py"
-        self.copy_attribute_file = f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/attributes_copy.py"
+        self.original_attribute_file = f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/attributes.py"
+        self.copy_attribute_file = f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/attributes_copy.py"
 
         try:
             # Use shutil.copy2 to copy the file content and metadata (permissions, timestamps)
@@ -898,8 +898,8 @@ class edit_command_setting_ui(QWidget):
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
         
-        self.original_attribute_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/attributes_copy.py")
-        self.attribute_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/attributes.py")
+        self.original_attribute_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/attributes_copy.py")
+        self.attribute_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/attributes.py")
 
 # GET RID OF THIS FUNCTION IN THE NEW ATTRIBUTE FILE
         attribute_module = importlib.import_module(f"Tools.saved_instruments.Members.{self.instrument.model}.attributes")
@@ -1072,7 +1072,7 @@ class edit_command_setting_ui(QWidget):
     
     def nameSaveButton_method(self):
         
-        new_method_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/{self.nameLineEdit.text()}_method.py")
+        new_method_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{self.nameLineEdit.text()}_method.py")
         try:
             self.method_path.rename(new_method_path)
             
@@ -1766,8 +1766,8 @@ def {self.command_name}(self):
         try:
             self.method_path.unlink()
             self.attribute_path.unlink()
-            new_method_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/{self.original_command_name}_method.py")
-            new_attribute_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/attributes.py")
+            new_method_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{self.original_command_name}_method.py")
+            new_attribute_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/attributes.py")
             try:
                 self.original_method_path.rename(new_method_path)
                 self.original_attribute_path.rename(new_attribute_path)

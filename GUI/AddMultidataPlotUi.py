@@ -1,5 +1,4 @@
 import ast
-from email.mime import base
 import json
 from pathlib import Path
 
@@ -8,13 +7,15 @@ from PyQt5 import uic, QtCore
 import sys
 import pandas as pd
 
+from project_paths import GUI_DIR, EXPERIMENT_DATA_DIR, EXPERIMENT_PARAMETERS_DIR
+
 
 
 class add_multidata_plot_ui(QWidget):
     def __init__(self, xAxis, yAxis, xAxis_name_key, yAxis_name_key, xAxis_unit_key, yAxis_unit_key, xData, yData, experiment_parameters):
         super().__init__()
 
-        uic.loadUi("GUI/ui_files/add_multidata_plot.ui", self)
+        uic.loadUi(f"{GUI_DIR}/ui_files/add_multidata_plot.ui", self)
         
         self.add_signal = QtCore.pyqtSignal()
         
@@ -48,9 +49,10 @@ class add_multidata_plot_ui(QWidget):
         - old .txt experiment parameter files
         """
         param_path = Path(param_path)
+        base = param_path.with_suffix("")  # remove extension
 
 
-        for ext in [".json", ".txt", ".csv"]:
+        for ext in [".json", ".txt"]:
             file_path = base.with_suffix(ext)
             if file_path.exists():
                 param_path = file_path
@@ -91,20 +93,21 @@ class add_multidata_plot_ui(QWidget):
                         connected_models = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
                     continue
 
-                for model in connected_models:
-                    match model:
-                        case 'Lakeshore_336':
-                            available_data_types.extend(['temperature', 'resistance'])
-                        case 'Oxford_MercuryiPS':
-                            available_data_types.extend(['field', 'current'])
-                        case 'SRS_830':
-                            available_data_types.extend(['lockIn'])
-                        case 'SRS_830_2':
-                            available_data_types.extend(['lockIn2'])
 
                 if ":" in line:
                     key, value = line.split(":", 1)
                     params[key.strip()] = value.strip()
+            
+        for model in connected_models:
+                match model:
+                    case 'Lakeshore_336':
+                        available_data_types.extend(['temperature', 'resistance'])
+                    case 'Oxford_MercuryiPS':
+                        available_data_types.extend(['field', 'current'])
+                    case 'SRS_830':
+                        available_data_types.extend(['lockIn'])
+                    case 'SRS_830_2':
+                        available_data_types.extend(['lockIn2'])
                 
                 
 
@@ -204,19 +207,13 @@ class add_multidata_plot_ui(QWidget):
         
         try:
             # find the experiment parameters file link
-            fname = QFileDialog.getOpenFileName(self, "Open File", "C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_data", "CSV Files (*.csv)")
+            fname = QFileDialog.getOpenFileName(self, "Open File", str(EXPERIMENT_DATA_DIR), "CSV Files (*.csv)")
             self.datasetLink = fname[0]
-            self.paramLink = self.datasetLink[:-4] 
-            self.paramLink = self.paramLink.split("/")
-            
-            self.paramLink[7] = "experiment_parameters"
-            
-            self.experimentParamLink = self.paramLink[0]
-            
-            for n in range(1,9):
-                self.experimentParamLink = self.experimentParamLink + "/" + self.paramLink[n]
-                print(self.experimentParamLink)
-            
+            # go to experiment_parameters folder and keep same filename
+            param_base = EXPERIMENT_PARAMETERS_DIR / self.datasetLink.stem
+
+            self.experimentParamLink = str(param_base)
+                        
             experiment_params = self.load_experiment_parameters(
             self.experimentParamLink
         )

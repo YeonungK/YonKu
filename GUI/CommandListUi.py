@@ -8,14 +8,13 @@ import pathlib
 import importlib
 from GUI import NewCommandSettingUi as ncsu
 
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
-
+from project_paths import GUI_DIR, SAVED_INSTRUMENTS_DIR
 
 class command_list_ui(QWidget):
     def __init__(self, instrument, window, ui_edit_list=False, ui_command_lineEdit = None):
         super().__init__()
         print("This works.")
-        uic.loadUi("GUI/ui_files/command_list.ui", self)
+        uic.loadUi(f"{GUI_DIR}/ui_files/command_list.ui", self)
         
         self.instrument = instrument
         self.window = window
@@ -25,8 +24,8 @@ class command_list_ui(QWidget):
         self.row_count = self.commandListTable.rowCount()
         
         # Set the path to the current directory ('.') or a specific path
-        self.directory_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}")
-        self.attribute_path =  pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/attributes.py")
+        self.directory_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}")
+        self.attribute_path =  pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/attributes.py")
         self.edit_button_list = {}
         self.remove_button_list = {}
         self.pick_button_list = {}
@@ -200,7 +199,7 @@ class command_list_ui(QWidget):
             
             
         # Loop through all items matching the '*.py' pattern in the directory
-        removing_file_path = pathlib.Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments/Members/{self.instrument.model}/{command_name}_method.py")
+        removing_file_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{command_name}_method.py")
         
         try:
             removing_file_path.unlink()

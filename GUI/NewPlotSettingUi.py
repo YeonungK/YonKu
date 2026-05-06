@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QM
 from PyQt5 import uic
 import sys
 
-
+from project_paths import GUI_DIR
         
 
 
@@ -10,7 +10,7 @@ class create_plot_setting_ui(QWidget):
     def __init__(self):
         super().__init__()
 
-        uic.loadUi("GUI/ui_files/new_plot_setting.ui", self)
+        uic.loadUi(f"{GUI_DIR}/ui_files/new_plot_setting.ui", self)
 
         self.xAxisUnit = "temperature"
         self.yAxisUnit = "temperature"

@@ -1,7 +1,8 @@
 import sys
 from datetime import datetime
 from zoneinfo import ZoneInfo
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+
+from project_paths import INSTRUMENT_CONTROL_UIS_DIR
 
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QLabel, QComboBox
@@ -17,7 +18,7 @@ class magnetPowerSupply_widget(QWidget):
         self.device_key = device_key
         self.parent = parent
         
-        uic.loadUi("GUI/ui_files/instrument_control_uis/Oxford_MercuryiPS_ui.ui", self)
+        uic.loadUi(f"{INSTRUMENT_CONTROL_UIS_DIR}/Oxford_MercuryiPS_ui.ui", self)
         
 
         self.switchHeaterZbutton.setCheckable(True)

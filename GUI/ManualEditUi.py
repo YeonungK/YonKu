@@ -9,14 +9,13 @@ import pathlib
 import importlib
 
 
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
-
+from project_paths import GUI_DIR
 
 class manual_edit_ui(QWidget):
     def __init__(self, current_function_code):
         super().__init__()
         
-        uic.loadUi("GUI/ui_files/manual_edit_ui.ui", self)
+        uic.loadUi(f"{GUI_DIR}/ui_files/manual_edit_ui.ui", self)
         
         self.code = current_function_code
         self.manualEditDisplay.setPlainText(self.code)

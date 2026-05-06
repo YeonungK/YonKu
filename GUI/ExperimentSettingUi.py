@@ -1,6 +1,6 @@
 import sys
 
-sys.path.append('C:/Users/szkop/Desktop/YonKu')
+from project_paths import GUI_DIR
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget
 from PyQt5 import uic
@@ -13,7 +13,7 @@ class ExperimentSettingUi(QWidget):
     def __init__(self):
         super().__init__()
 
-        uic.loadUi("GUI/ui_files/experiment_setting.ui", self)
+        uic.loadUi(f"{GUI_DIR}/ui_files/experiment_setting.ui", self)
         
         self.dataComboBox.currentIndexChanged.connect(self.data_type_switch)
         self.saveButton.clicked.connect(self.save_button)

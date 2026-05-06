@@ -3,7 +3,7 @@ from PyQt5 import uic
 import sys
 
 
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+from project_paths import INSTRUMENT_CONTROL_UIS_DIR
 
 from GUI import ChsBigLineUi as chs
 
@@ -16,7 +16,7 @@ class temperatureController_widget(QWidget):
         self.data_list = device_info
         self.device_key = device_key
         self.parent = parent
-        uic.loadUi("GUI/ui_files/instrument_control_uis/Lakeshore_336_ui.ui", self)
+        uic.loadUi(f"{INSTRUMENT_CONTROL_UIS_DIR}/Lakeshore_336_ui.ui", self)
         
         self.chA_line_sub = chs.chABigLineUi()
         # self.chA_line_sub.move(100,100)

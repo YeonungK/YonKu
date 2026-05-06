@@ -1,7 +1,7 @@
 import sys
 import importlib
 
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+from project_paths import GUI_DIR
 
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QLabel, QComboBox
@@ -12,7 +12,7 @@ class disconnected_devices_widget(QWidget):
     def __init__(self, disconnected_dict):
         super().__init__()
         
-        uic.loadUi('GUI/ui_files/disconnected_instruments.ui', self)
+        uic.loadUi(f"{GUI_DIR}/ui_files/disconnected_instruments.ui", self)
         
         self.dict = disconnected_dict
     

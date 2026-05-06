@@ -1,6 +1,6 @@
 import sys
 
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+from project_paths import GUI_DIR
 
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QLabel, QComboBox, QLineEdit
@@ -36,7 +36,7 @@ class widget(QWidget):
 
     def bind_dynamic_signals(self):
         
-        json_path = f"GUI/ui_files/instrument_control_uis/{self.instrument_model}_ui.json"
+        json_path = f"{GUI_DIR}/ui_files/instrument_control_uis/{self.instrument_model}_ui.json"
         
         if not os.path.exists(json_path):
             print(f"[ERROR] UI definition file not found: {json_path}")

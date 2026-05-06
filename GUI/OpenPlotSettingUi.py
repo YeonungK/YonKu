@@ -2,14 +2,14 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QM
 from PyQt5 import uic
 import sys
 
-        
+from project_paths import GUI_DIR, EXPERIMENT_DATA_DIR, EXPERIMENT_PARAMETERS_DIR        
 
 
 class create_plot_setting_ui(QWidget):
     def __init__(self):
         super().__init__()
 
-        uic.loadUi("GUI/ui_files/open_plot_setting.ui", self)
+        uic.loadUi(f"{GUI_DIR}/ui_files/open_plot_setting.ui", self)
 
         self.xAxisUnit = "temperature"
         self.yAxisUnit = "temperature"
@@ -43,19 +43,14 @@ class create_plot_setting_ui(QWidget):
     def dataset_search(self):
         try:
             
-            fname = QFileDialog.getOpenFileName(self, "Open File", "C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_data", "CSV Files (*.csv)")
+            fname = QFileDialog.getOpenFileName(self, "Open File", str(EXPERIMENT_DATA_DIR), "CSV Files (*.csv)")
             
             self.datasetLink = fname[0]
-            self.datasetLink = self.datasetLink[:-3] + "json"
-            self.datasetLink = self.datasetLink.split("/")
-            
-            self.datasetLink[7] = "experiment_parameters"
-            
-            self.experimentParam = self.datasetLink[0]
-            
-            for n in range(1,9):
-                self.experimentParam = self.experimentParam + "/" + self.datasetLink[n]
-                print(self.experimentParam)
+            # go to experiment_parameters folder and keep same filename
+            param_base = EXPERIMENT_PARAMETERS_DIR / self.datasetLink.stem
+
+            self.experimentParamLink = str(param_base)
+
             if fname:
                 self.browseDatasetLineEdit.setText(fname[0])
                 self.dataset = fname[0]

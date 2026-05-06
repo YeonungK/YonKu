@@ -1,6 +1,5 @@
 import sys
-
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+from project_paths import INSTRUMENT_CONTROL_UIS_DIR
 
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QLabel, QComboBox
@@ -16,7 +15,7 @@ class gasValve_widget(QWidget):
         self.device_key = device_key
         self.parent = parent
         
-        uic.loadUi('GUI/ui_files/instrument_control_uis/usb6525_gasValve_ui.ui', self)
+        uic.loadUi(f"{INSTRUMENT_CONTROL_UIS_DIR}/usb6525_gasValve_ui.ui", self)
         
         self.valves = [self.pumpPushButton, self.ivcPushButton, self.hePushButton]
         self.pumpPushButton.setCheckable(True)

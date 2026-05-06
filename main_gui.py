@@ -1,4 +1,4 @@
-from email.mime import base
+
 from pathlib import Path
 import sys
 import ast
@@ -23,10 +23,21 @@ from Tools import DataLogger, Dataset, NewQMdiSubWindow, ExperimentController
 
 from datetime import datetime
 
+from project_paths import (
+    ensure_project_dirs,
+    GRAPHENE_UI_PATH,
+    SAVED_DEVICES_DIR,
+    SAVED_INSTRUMENTS_DIR,
+    INSTRUMENT_CONTROL_UIS_DIR,
+    INSTRUMENT_WIDGETS_DIR,
+)
+
 """main gui window class"""
 class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
+
+        
         
         # [Error log creation & Error Centralization]
         
@@ -40,8 +51,9 @@ class UI(QMainWindow):
         self.exception_forwarder.exception_occurred.connect(self.show_error_in_main_thread) # [/]
         
         # [System Setup]
-        
-        uic.loadUi("GUI/ui_files/graphene.ui", self)
+
+        ensure_project_dirs()
+        uic.loadUi(str(GRAPHENE_UI_PATH), self)
         self.mdi = self.mdiArea_2
         self.mdi_plot = self.mdiArea
         
@@ -180,7 +192,7 @@ class UI(QMainWindow):
     # [+++++++++System setup functions+++++++++]
     
     def instruments_setup(self):
-        folder_path = Path("C:/Users/szkop/OneDrive/Desktop/YonKu/Data/saved_devices")
+        folder_path = SAVED_DEVICES_DIR
 
         config_files = folder_path.glob("*.json")
 
@@ -551,9 +563,10 @@ class UI(QMainWindow):
         - old .txt experiment parameter files
         """
         param_path = Path(param_path)
+        base = param_path.with_suffix("")  # remove extension
 
 
-        for ext in [".json", ".txt", ".csv"]:
+        for ext in [".json", ".txt"]:
             file_path = base.with_suffix(ext)
             if file_path.exists():
                 param_path = file_path
@@ -594,7 +607,11 @@ class UI(QMainWindow):
                         connected_models = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
                     continue
 
-                for model in connected_models:
+                if ":" in line:
+                    key, value = line.split(":", 1)
+                    params[key.strip()] = value.strip()
+                
+        for model in connected_models:
                     match model:
                         case 'Lakeshore_336':
                             available_data_types.extend(['temperature', 'resistance'])
@@ -604,11 +621,6 @@ class UI(QMainWindow):
                             available_data_types.extend(['lockIn'])
                         case 'SRS_830_2':
                             available_data_types.extend(['lockIn2'])
-
-                if ":" in line:
-                    key, value = line.split(":", 1)
-                    params[key.strip()] = value.strip()
-                
                 
 
         return {
@@ -823,7 +835,7 @@ class UI(QMainWindow):
         data_list = creator_widget.data_list
 
         # --- Save instrument script ---
-        script_dir = "C:/Users/szkop/OneDrive/Desktop/YonKu/Tools/saved_instruments"
+        script_dir = str(SAVED_INSTRUMENTS_DIR)
         file_name = f"{data_list['model']}.py"
         full_path = os.path.join(script_dir, file_name)
 
@@ -916,8 +928,8 @@ class UI(QMainWindow):
     def create_generated_files(self, creator_widget):
         model = creator_widget.data_list["model"]
 
-        base_ui_dir = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/ui_files/instrument_control_uis"
-        base_widget_dir = "C:/Users/szkop/OneDrive/Desktop/YonKu/GUI/instrument_control_widgets"
+        base_ui_dir = str(INSTRUMENT_CONTROL_UIS_DIR)
+        base_widget_dir = str(INSTRUMENT_WIDGETS_DIR)
 
         os.makedirs(base_ui_dir, exist_ok=True)
         os.makedirs(base_widget_dir, exist_ok=True)
@@ -937,7 +949,6 @@ class UI(QMainWindow):
         with open(widget_path, "w") as f:
             f.write(creator_widget.device_wid_script())
             
-
     def device_list_show(self):
         self.deviceListSub.show()
  

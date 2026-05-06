@@ -5,7 +5,7 @@ import sys
 
 import sys
 
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+from project_paths import INSTRUMENT_CONTROL_UIS_DIR
 
 
 class lockInAmplifier1_widget(QWidget):
@@ -16,7 +16,7 @@ class lockInAmplifier1_widget(QWidget):
         self.data_list = device_info
         self.device_key = device_key
         self.parent = parent
-        uic.loadUi("GUI/ui_files/instrument_control_uis/SRS_830_ui.ui", self)
+        uic.loadUi(f"{INSTRUMENT_CONTROL_UIS_DIR}/SRS_830_ui.ui", self)
         
         
     # [----------lock in amplifier ui output signals----------]

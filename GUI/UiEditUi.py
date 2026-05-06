@@ -16,7 +16,7 @@ from xml.dom import minidom
 from GUI import ManualEditUi as meu, CommandListUi as clu
 
 
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+from project_paths import GUI_DIR, SAVED_INSTRUMENTS_DIR, INSTRUMENT_CONTROL_UIS_DIR, INSTRUMENT_WIDGETS_DIR
 
 
 class ui_edit_setting_ui(QWidget):
@@ -25,7 +25,7 @@ class ui_edit_setting_ui(QWidget):
     def __init__(self, instrument, data_list, interface, window):
         super().__init__()
         print("loadUi")
-        uic.loadUi("GUI/ui_files/ui_edit.ui", self)
+        uic.loadUi(f"{GUI_DIR}/ui_files/ui_edit.ui", self)
         
         
         self.instrument = instrument
@@ -40,7 +40,7 @@ class ui_edit_setting_ui(QWidget):
         self.ui_definition = {}
 
         # load ui config if exists
-        self.json_file_path = f"GUI/ui_files/instrument_control_uis/{self.data_list['model']}_ui.json"
+        self.json_file_path = f"{INSTRUMENT_CONTROL_UIS_DIR}/{self.data_list['model']}_ui.json"
         if os.path.exists(self.json_file_path):
             with open(self.json_file_path, "r") as f:
                 self.ui_definition = json.load(f)
@@ -109,7 +109,7 @@ class ui_edit_setting_ui(QWidget):
             print(self.json_file_path)
             print("You can't edit this UI")
         else:
-            uic.loadUi(f"GUI/ui_files/instrument_control_uis/{self.data_list['model']}_ui.ui", self.mdiWidget)
+            uic.loadUi(f"{INSTRUMENT_CONTROL_UIS_DIR}/{self.data_list['model']}_ui.ui", self.mdiWidget)
             self.mdiWindow.setWidget(self.mdiWidget)
             self.mdiWindow.setWindowTitle("Current Ui")
             self.current_ui_mdiArea.addSubWindow(self.mdiWindow)
@@ -216,12 +216,12 @@ class ui_edit_setting_ui(QWidget):
 
     def save_instrument_definition(self):
         # save the json config file
-        json_file_path = f"GUI/ui_files/instrument_control_uis/{self.data_list['model']}_ui.json"   
+        json_file_path = f"{INSTRUMENT_CONTROL_UIS_DIR}/{self.data_list['model']}_ui.json"
         with open(json_file_path, "w", encoding="utf-8") as f:
             json.dump(self.ui_definition, f, indent=4)
 
         # save the .ui file
-        ui_xml = self.ui_definition_to_xml(save_path=f"GUI/ui_files/instrument_control_uis/{self.data_list['model']}_ui.ui")
+        ui_xml = self.ui_definition_to_xml(save_path=f"{INSTRUMENT_CONTROL_UIS_DIR}/{self.data_list['model']}_ui.ui")
 
     
     # translates the ui_config json data(python dict data) to xml and saves it

@@ -6,6 +6,7 @@ from Tools import DataLogger
 from Tools.saved_instruments.Oxford_MercuryiPS import instrument as magnetPowerSupply
 from Tools.saved_instruments.INFICON_VGC401 import instrument as pressureGauge
 import json
+from project_paths import EXPERIMENT_PARAMETERS_DIR
 
 """worker class for Expriments and Real-time Plotting (thread)"""
 class PlotWorker(QObject):
@@ -77,9 +78,7 @@ class PlotWorker(QObject):
 
     def log_experiment_parameters(self):
 
-        self.file_path = Path(
-            f"C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_parameters/{self.experiment_title}.json"
-        )
+        self.file_path = EXPERIMENT_PARAMETERS_DIR / f"{self.experiment_title}.json"
 
         self.experimentSettingWid.save_all_values()
         params = self.experimentSettingWid.experiment_parameters

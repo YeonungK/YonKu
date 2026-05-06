@@ -3,13 +3,13 @@ from PyQt5 import uic
 import sys
 import pyvisa
 
-sys.path.append('C:/Users/szkop/Desktop/YonKu')
+from project_paths import GUI_DIR
 
 class GpibInstCreateUi(QWidget):
     def __init__(self):
         super().__init__()
         
-        uic.loadUi("GUI/ui_files/gpib_instrument_create.ui", self)
+        uic.loadUi(f"{GUI_DIR}/ui_files/gpib_instrument_create.ui", self)
         
         self.rm = pyvisa.ResourceManager()
         self.list = self.rm.list_resources()
@@ -52,7 +52,7 @@ import pyvisa
 import time
 import sys
 
-sys.path.append('C:/Users/szkop/Desktop/YonKu')
+from project_paths import PROJECT_ROOT
 
 from Tools.Instrument import GPIBInstrument
 
@@ -95,13 +95,13 @@ class {self.name}(GPIBInstrument):
         
         script = f"""sys
 
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
+from project_paths import PROJECT_ROOT
 
 from GUI.instrument_control_widgets import base_dynamic_widget
 
 class test_instrument_widget(base_dynamic_widget.widget):
     def __init__(self, instrument):
-        super().__init__(instrument, 'GUI/ui_files/instrument_control_uis/{self.model}_ui.ui')
+        super().__init__(instrument, f"GUI/ui_files/instrument_control_uis/{self.model}_ui.ui")
         """
         return script
         

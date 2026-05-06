@@ -23,5 +23,3 @@ class DataAnalyzer:
 
 
 
-if __name__ == "__main__":
-    test = DataAnalyzer("C:/Users/szkop/OneDrive/Desktop/YonKu/Data/data_analysis/Mag_Top_valid_data.csv")
