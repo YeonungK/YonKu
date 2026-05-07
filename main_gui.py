@@ -572,7 +572,94 @@ class UI(QMainWindow):
                 param_path = file_path
                 break
             else:
-                raise FileNotFoundError("No matching file found")
+                return {
+            "format": "legacy_txt",
+            "metadata": {
+                "start_datetime": "",
+                "name": "",
+                "measurement_period_ms": ""
+            },
+            "data_schema": {
+                "temperature_ch_A": {
+                    "label": "Ch_A",
+                    "unit": "K"    
+                },
+                "temperature_ch_B": {
+                    "label": "Ch_B",
+                    "unit": "K"
+                },
+                "temperature_ch_C": {
+                    "label": "Ch_C",
+                    "unit": "K"
+                },
+                "temperature_ch_D": {
+                    "label": "Ch_D",
+                    "unit": "K"
+                },
+                "resistance_ch_A": {
+                    "label": "Ch_A",
+                    "unit": "Ohms"
+                },
+                "resistance_ch_B": {
+                    "label": "Ch_B",
+                    "unit": "Ohms"
+                },
+                "resistance_ch_C": {
+                    "label": "Ch_C",
+                    "unit": "Ohms"
+                },
+                "resistance_ch_D": {
+                    "label": "Ch_D",
+                    "unit": "Ohms"
+                },
+                "lockIn_x": {
+                    "label": "X",
+                    "unit": "manual"
+                },
+                "lockIn_y": {
+                    "label": "Y",
+                    "unit": "manual"
+                },
+                "lockIn_r": {
+                    "label": "R",
+                    "unit": "manual"
+                },
+                "lockIn_theta": {
+                    "label": "Theta",
+                    "unit": "degrees"   
+                },
+                "lockIn2_x": {
+                    "label": "X",
+                    "unit": "manual"
+                },
+                "lockIn2_y": {
+                    "label": "Y",
+                    "unit": "manual"
+                },
+                "lockIn2_r": {
+                    "label": "R",
+                    "unit": "manual"
+                },
+                "lockIn2_theta": {
+                    "label": "Theta",
+                    "unit": "degrees"
+                },
+                "field": {
+                    "label": "field",
+                    "unit": "T"
+                },
+                "current": {
+                    "label": "current",
+                    "unit": "A"
+                },
+                "time": {
+                    "label": "time",
+                    "unit": "s"
+                }
+            },
+            "connected_models": ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2'],
+            "available_data_types": ['time','temperature', 'resistance', 'lockIn', 'lockIn2', 'field', 'current']
+        }
 
         if param_path.suffix.lower() == ".json":
             with open(param_path, "r", encoding="utf-8") as f:
@@ -589,7 +676,7 @@ class UI(QMainWindow):
         """
         params = {}
         connected_models = []
-        available_data_types = []
+        available_data_types = ['time']
 
         with open(param_path, "r", encoding="utf-8") as f:
             for line in f:
@@ -720,27 +807,38 @@ class UI(QMainWindow):
             self.xAxis_exists = False
             self.yAxis_exists = False
             
-            experiment_params = self.load_experiment_parameters(
-            self.openPlotSettingWid.experimentParam
-        )
+            if not self.openPlotSettingWid.multipleDataset:
+                experiment_params = self.load_experiment_parameters(
+                self.openPlotSettingWid.experimentParam
+            )
 
-            available_data_types = experiment_params["available_data_types"]
+                available_data_types = experiment_params["available_data_types"]
 
-            self.xAxis_exists = self.openPlotSettingWid.xAxisUnit in available_data_types
-            self.yAxis_exists = self.openPlotSettingWid.yAxisUnit in available_data_types
+                self.xAxis_exists = self.openPlotSettingWid.xAxisUnit in available_data_types
+                self.yAxis_exists = self.openPlotSettingWid.yAxisUnit in available_data_types
+                    
+                if self.xAxis_exists and self.yAxis_exists:
+                    self.plot_setting = [self.openPlotSettingWid.xAxisUnit, self.openPlotSettingWid.yAxisUnit, self.openPlotSettingWid.xAxisHiLim, 
+                                self.openPlotSettingWid.xAxisLoLim, self.openPlotSettingWid.yAxisHiLim, self.openPlotSettingWid.yAxisLoLim, 
+                                self.openPlotSettingWid.tickVal, self.openPlotSettingWid.gridLine, self.openPlotSettingWid.dataset, self.openPlotSettingWid.multipleDataset,
+                                self.openPlotSettingWid.experimentParam, experiment_params]
+                    self.old_plot_window()
+                    print(self.plot_setting)
+                    self.ops_window.close()
                 
-            if self.xAxis_exists and self.yAxis_exists:
+                else:
+                    self.openPlotSettingWid.browseDatasetLineEdit.setText("This dataset doesn't include the chosen data types.")
+            
+            else:   # if the user chooses multiple datasets
                 self.plot_setting = [self.openPlotSettingWid.xAxisUnit, self.openPlotSettingWid.yAxisUnit, self.openPlotSettingWid.xAxisHiLim, 
-                            self.openPlotSettingWid.xAxisLoLim, self.openPlotSettingWid.yAxisHiLim, self.openPlotSettingWid.yAxisLoLim, 
-                            self.openPlotSettingWid.tickVal, self.openPlotSettingWid.gridLine, self.openPlotSettingWid.dataset, self.openPlotSettingWid.multipleDataset,
-                            self.openPlotSettingWid.experimentParam, experiment_params]
+                                self.openPlotSettingWid.xAxisLoLim, self.openPlotSettingWid.yAxisHiLim, self.openPlotSettingWid.yAxisLoLim, 
+                                self.openPlotSettingWid.tickVal, self.openPlotSettingWid.gridLine, self.openPlotSettingWid.dataset, self.openPlotSettingWid.multipleDataset,
+                                None, None]
                 self.old_plot_window()
                 print(self.plot_setting)
                 self.ops_window.close()
-            
-            else:
-                self.openPlotSettingWid.browseDatasetLineEdit.setText("This dataset doesn't include the chosen data types.")
-            
+
+
         except FileNotFoundError as e:
             print(e)
             self.openPlotSettingWid.browseDatasetLineEdit.setText("You have to choose a database to open.")

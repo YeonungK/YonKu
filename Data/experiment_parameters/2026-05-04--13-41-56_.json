@@ -97,15 +97,17 @@
         }
     ],
     "available_data_types": [
+        "time",
         "temperature",
         "resistance",
         "lockIn",
         "lockIn2"
-    ]
+    ],
+    "pause_times": [
+        "2026-05-04--13-50-17"
+    ],
+    "resume_times": [
+        "2026-05-04--13-50-18"
+    ],
+    "end_time": "2026-05-04--13-50-21"
 }
-
-pauseDatetime: 2026-05-04--13-41-57
-
-endDatetime: 2026-05-04--13-41-59
-
-endDatetime: 2026-05-04--13-42-49

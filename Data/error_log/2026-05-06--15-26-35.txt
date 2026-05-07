@@ -1,0 +1,48 @@
+Szkopek Lab Error Log Book - 2026-05-06--15-26-35
+
+2026-05-06--15-37-06 Exception: Traceback (most recent call last):
+  File "c:\Users\user\Desktop\YonKu\GUI\AddMultidataPlotUi.py", line 310, in dataset_search
+    self.xAxis_exists = self.openPlotSettingWid.xAxisUnit in available_data_types
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'add_multidata_plot_ui' object has no attribute 'openPlotSettingWid'
+
+
+
+
+2026-05-06--15-37-12 Exception: Traceback (most recent call last):
+  File "c:\Users\user\Desktop\YonKu\GUI\AddMultidataPlotUi.py", line 310, in dataset_search
+    self.xAxis_exists = self.openPlotSettingWid.xAxisUnit in available_data_types
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'add_multidata_plot_ui' object has no attribute 'openPlotSettingWid'
+
+
+
+
+2026-05-06--15-37-16 Exception: Traceback (most recent call last):
+  File "c:\Users\user\Desktop\YonKu\GUI\AddMultidataPlotUi.py", line 310, in dataset_search
+    self.xAxis_exists = self.openPlotSettingWid.xAxisUnit in available_data_types
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'add_multidata_plot_ui' object has no attribute 'openPlotSettingWid'
+
+
+
+
+2026-05-06--15-37-19 Exception: Traceback (most recent call last):
+  File "c:\Users\user\Desktop\YonKu\GUI\AddMultidataPlotUi.py", line 310, in dataset_search
+    self.xAxis_exists = self.openPlotSettingWid.xAxisUnit in available_data_types
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'add_multidata_plot_ui' object has no attribute 'openPlotSettingWid'
+
+
+
+
+2026-05-06--15-39-34 Exception: Traceback (most recent call last):
+  File "c:\Users\user\Desktop\YonKu\main_gui.py", line 1079, in closeEvent
+    self.instruments[device_key].close()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Desktop\YonKu\Tools\Instrument.py", line 131, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

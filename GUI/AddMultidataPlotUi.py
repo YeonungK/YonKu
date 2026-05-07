@@ -58,7 +58,94 @@ class add_multidata_plot_ui(QWidget):
                 param_path = file_path
                 break
             else:
-                raise FileNotFoundError("No matching file found")
+                return {
+            "format": "legacy_txt",
+            "metadata": {
+                "start_datetime": "",
+                "name": "",
+                "measurement_period_ms": ""
+            },
+            "data_schema": {
+                "temperature_ch_A": {
+                    "label": "Ch_A",
+                    "unit": "K"    
+                },
+                "temperature_ch_B": {
+                    "label": "Ch_B",
+                    "unit": "K"
+                },
+                "temperature_ch_C": {
+                    "label": "Ch_C",
+                    "unit": "K"
+                },
+                "temperature_ch_D": {
+                    "label": "Ch_D",
+                    "unit": "K"
+                },
+                "resistance_ch_A": {
+                    "label": "Ch_A",
+                    "unit": "Ohms"
+                },
+                "resistance_ch_B": {
+                    "label": "Ch_B",
+                    "unit": "Ohms"
+                },
+                "resistance_ch_C": {
+                    "label": "Ch_C",
+                    "unit": "Ohms"
+                },
+                "resistance_ch_D": {
+                    "label": "Ch_D",
+                    "unit": "Ohms"
+                },
+                "lockIn_x": {
+                    "label": "X",
+                    "unit": "manual"
+                },
+                "lockIn_y": {
+                    "label": "Y",
+                    "unit": "manual"
+                },
+                "lockIn_r": {
+                    "label": "R",
+                    "unit": "manual"
+                },
+                "lockIn_theta": {
+                    "label": "Theta",
+                    "unit": "degrees"   
+                },
+                "lockIn2_x": {
+                    "label": "X",
+                    "unit": "manual"
+                },
+                "lockIn2_y": {
+                    "label": "Y",
+                    "unit": "manual"
+                },
+                "lockIn2_r": {
+                    "label": "R",
+                    "unit": "manual"
+                },
+                "lockIn2_theta": {
+                    "label": "Theta",
+                    "unit": "degrees"
+                },
+                "field": {
+                    "label": "field",
+                    "unit": "T"
+                },
+                "current": {
+                    "label": "current",
+                    "unit": "A"
+                },
+                "time": {
+                    "label": "time",
+                    "unit": "s"
+                }
+            },
+            "connected_models": ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2'],
+            "available_data_types": ['time','temperature', 'resistance', 'lockIn', 'lockIn2', 'field', 'current']
+        }
 
         if param_path.suffix.lower() == ".json":
             with open(param_path, "r", encoding="utf-8") as f:
@@ -75,7 +162,7 @@ class add_multidata_plot_ui(QWidget):
         """
         params = {}
         connected_models = []
-        available_data_types = []
+        available_data_types = ['time']
 
         with open(param_path, "r", encoding="utf-8") as f:
             for line in f:
@@ -204,67 +291,72 @@ class add_multidata_plot_ui(QWidget):
     def dataset_search(self):
         self.xAxis_exists = False
         self.yAxis_exists = False
+
+        # find the experiment parameters file link
+        fname = QFileDialog.getOpenFileName(self, "Open File", str(EXPERIMENT_DATA_DIR), "CSV Files (*.csv)")
         
-        try:
-            # find the experiment parameters file link
-            fname = QFileDialog.getOpenFileName(self, "Open File", str(EXPERIMENT_DATA_DIR), "CSV Files (*.csv)")
-            self.datasetLink = fname[0]
-            # go to experiment_parameters folder and keep same filename
-            param_base = EXPERIMENT_PARAMETERS_DIR / self.datasetLink.stem
+        if fname[0]:  # if the user selects a file
+            try:
+                
+                self.datasetLink = Path(fname[0])
+                # go to experiment_parameters folder and keep same filename
+                param_base = EXPERIMENT_PARAMETERS_DIR / self.datasetLink.stem
 
-            self.experimentParamLink = str(param_base)
-                        
-            experiment_params = self.load_experiment_parameters(
-            self.experimentParamLink
-        )
+                self.experimentParamLink = str(param_base)
+                            
+                experiment_params = self.load_experiment_parameters(
+                self.experimentParamLink
+            )
 
-            available_data_types = experiment_params["available_data_types"]
+                available_data_types = experiment_params["available_data_types"]
 
-            self.xAxis_exists = self.openPlotSettingWid.xAxisUnit in available_data_types
-            self.yAxis_exists = self.openPlotSettingWid.yAxisUnit in available_data_types
-            
-            # # check if the dataset includes the xaxis and yaxis data type
-            # try:
-            #     param_file = open(self.experimentParamLink)    
-            #     param_file_content = param_file.readlines()
-            #     connected_instruments = eval(param_file_content[59].replace("\n",""))
-            #     print(connected_instruments)
-            # except SyntaxError: # in case we are opening databases from before the latest version
-            #     print(e)
-            #     connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
-            # except FileNotFoundError as e:
-            #     print(e)
-            #     print("Error detected at the nested level")
-            #     connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
-            # except UnboundLocalError as e:
-            #     print(e)
-            #     connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
-            
-            # for instrument in connected_instruments:
-            #     for data_type in list(self.instruments[instrument].data_type.keys()):
-            #         print(data_type)
-            #         if data_type == self.xAxis:
-            #             self.xAxis_exists = True
-            #         if data_type == self.yAxis:
-            #             self.yAxis_exists = True
-            #         print([self.xAxis_exists,self.yAxis_exists])
-            
-            # if self.xAxis == 'time':
-            #     self.xAxis_exists = True
-            # if self.yAxis == 'time':
-            #     self.yAxis_exists = True
-            
-            # if they do, proceed to set names in the 
-            if self.xAxis_exists and self.yAxis_exists:
-                self.AxisDatasetLineEdit.setText(fname[0])
-                self.datasetLink = fname[0]
-                self.expParam = self.set_names(experiment_params, self.xAxisChannelComboBox, self.yAxisChannelComboBox, self.xAxis_name_key, self.yAxis_name_key, self.xData, self.yData)
-                print(f"parameter: {self.expParam}")
-            else:
-                self.AxisDatasetLineEdit.setText("This dataset doesn't include the chosen data types.")
-            
-        except IndexError:
-            pass
+                self.xAxis_exists = self.xAxis in available_data_types
+                self.yAxis_exists = self.yAxis in available_data_types
+                
+                # # check if the dataset includes the xaxis and yaxis data type
+                # try:
+                #     param_file = open(self.experimentParamLink)    
+                #     param_file_content = param_file.readlines()
+                #     connected_instruments = eval(param_file_content[59].replace("\n",""))
+                #     print(connected_instruments)
+                # except SyntaxError: # in case we are opening databases from before the latest version
+                #     print(e)
+                #     connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+                # except FileNotFoundError as e:
+                #     print(e)
+                #     print("Error detected at the nested level")
+                #     connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+                # except UnboundLocalError as e:
+                #     print(e)
+                #     connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
+                
+                # for instrument in connected_instruments:
+                #     for data_type in list(self.instruments[instrument].data_type.keys()):
+                #         print(data_type)
+                #         if data_type == self.xAxis:
+                #             self.xAxis_exists = True
+                #         if data_type == self.yAxis:
+                #             self.yAxis_exists = True
+                #         print([self.xAxis_exists,self.yAxis_exists])
+                
+                # if self.xAxis == 'time':
+                #     self.xAxis_exists = True
+                # if self.yAxis == 'time':
+                #     self.yAxis_exists = True
+                
+                # if they do, proceed to set names in the 
+                if self.xAxis_exists and self.yAxis_exists:
+                    self.AxisDatasetLineEdit.setText(fname[0])
+                    self.datasetLink = fname[0]
+                    self.expParam = self.set_names(experiment_params, self.xAxisChannelComboBox, self.yAxisChannelComboBox, self.xAxis_name_key, self.yAxis_name_key, self.xData, self.yData)
+                    print(f"parameter: {self.expParam}")
+                else:
+                    print(self.xAxis, self.yAxis)
+                    self.AxisDatasetLineEdit.setText("This dataset doesn't include the chosen data types.")
+                
+            except IndexError:
+                pass
+        else: pass
             
         
     def set_names(self, experiment_params, x_combo_box, y_combo_box, x_name_key, y_name_key, x_data, y_data):

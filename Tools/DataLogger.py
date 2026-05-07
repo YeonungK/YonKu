@@ -3,7 +3,7 @@ import time
 import sys
 import numpy as np
 from pathlib import Path
-from project_paths import EXPERIMENT_DATA_DIR
+from project_paths import EXPERIMENT_DATA_DIR, DATA_DIR
 
 
 class DataLogger:
@@ -79,7 +79,7 @@ class ErrorLogger:
     def __init__(self, heading, title):
         self.title = title
         self.heading = heading
-        self.file_path = Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Data/error_log/{self.title}.txt")
+        self.file_path = Path(f"{DATA_DIR}/error_log/{self.title}.txt")
         # self.file_path.mkdir(parents=True, exist_ok=True)
         # self.file = open(self.file_path, "x")
         with open(self.file_path, "w") as f:
@@ -91,18 +91,3 @@ class ErrorLogger:
             f.write(msg)
             f.close()
 
-if __name__ == "__main__":
-    
-    temperatures = {'ch_A':[1,2,3], 'ch_B':[2,3,4], 'ch_C':[5,6,7], 'ch_D':[8,7,5]}
-    resistances = {'ch_A':[5,6,7], 'ch_B':[1,4,5], 'ch_C':[4,7,6], 'ch_D':[3,4,6]}
-    voltages = {'ch_A':[], 'ch_B':[], 'ch_C':[], 'ch_D':[]}
-    times = {'time':[1,2,3]}
-    
-    data_set = [temperatures, resistances, voltages, times]
-
-    
-    datalog = DataLogger(data_set, 'experiment')
-    
-    print(datalog.result)
-        
-        

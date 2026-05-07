@@ -17,7 +17,10 @@ class gasValve(NidaqmxInstrument):
         self.data_type = {}
         self.data_unit = {}
         self.data_function = {}
-        self.initial_state = self.read()
+        if self.connected:
+            self.initial_state = self.read()
+        else:
+            pass
         
         # if self.connected:
         #     self.turn_off_all()

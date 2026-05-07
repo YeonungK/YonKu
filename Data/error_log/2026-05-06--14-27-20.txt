@@ -1,0 +1,29 @@
+Szkopek Lab Error Log Book - 2026-05-06--14-27-20
+
+2026-05-06--14-28-03 Exception: Traceback (most recent call last):
+  File "c:\Users\user\Desktop\YonKu\main_gui.py", line 723, in create_old_plot
+        experiment_params = self.load_experiment_parameters(
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.openPlotSettingWid.experimentParam
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\user\Desktop\YonKu\main_gui.py", line 566, in load_experiment_parameters
+    base = param_path.with_suffix("")  # remove extension
+  File "C:\ProgramData\anaconda3\Lib\pathlib\_abc.py", line 230, in with_suffix
+    raise ValueError(f"{self!r} has an empty name")
+ValueError: WindowsPath('.') has an empty name
+
+
+
+
+2026-05-06--14-30-53 Exception: Traceback (most recent call last):
+  File "c:\Users\user\Desktop\YonKu\main_gui.py", line 991, in closeEvent
+    for device_key, device in self.instruments.items():
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\YonKu\Tools\Instrument.py", line 131, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

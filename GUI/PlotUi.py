@@ -333,7 +333,6 @@ class oldPlotWidget(QWidget):
             # self.time = {'time':self.dataset['time']['time'].to_list()}
             # self.set['time'] = self.time
             
-            print(self.set)
         
         # if multiple dataset option is chosen    
         else:
@@ -557,31 +556,59 @@ class oldPlotWidget(QWidget):
         # [Plot Window Creation]
 
         # instantiate a graphicsview instead of a plot widget (for multiple axes)
-        self.graphics_view = pg.GraphicsView()
-        self.graphics_layout = pg.GraphicsLayout()
-        self.graphics_view.setCentralWidget(self.graphics_layout)
-        self.plot_item = pg.PlotItem()
-        self.plot_legend = self.plot_item.addLegend(offset = [-1,20])
-        self.graphics_layout.addItem(self.plot_item, row=1, col=1)
-        
-        # set time axes if needed
-        if self.xAxis == 'time':
-            self.plot_item.setAxisItems(axisItems = {'bottom': self.x_date_axis})
-        if self.yAxis == 'time':
-            self.plot_item.setAxisItems(axisItems = {'left': self.y_date_axis})
-        
-        # set the layout or whatever
-        self.plot_item.setTitle(self.title)
-        self.layout.addLayout(self.layout4)
-        self.layout.addWidget(self.graphics_view)
-        self.setLayout(self.layout)
-        
-        self.bottom_axis = self.plot_item.getAxis('bottom')
-        self.left_axis = self.plot_item.getAxis('left')
 
-        # Set labels for the axes
-        self.bottom_axis.setLabel(text=self.xAxis)
-        self.left_axis.setLabel(text=self.yAxis)
+        if not self.multipleDataset:
+            self.plot_widget = pg.PlotWidget()
+            self.plot_item = self.plot_widget.getPlotItem()
+
+            self.plot_legend = self.plot_item.addLegend(offset=[-1, 20])
+
+            # set time axes if needed
+            if self.xAxis == 'time':
+                self.plot_item.setAxisItems(axisItems = {'bottom': self.x_date_axis})
+            if self.yAxis == 'time':
+                self.plot_item.setAxisItems(axisItems = {'left': self.y_date_axis})
+            
+            # set the layout or whatever
+            self.plot_item.setTitle(self.title)
+            self.layout.addLayout(self.layout4)
+            self.layout.addWidget(self.plot_widget)
+            self.setLayout(self.layout)
+            
+            self.bottom_axis = self.plot_item.getAxis('bottom')
+            self.left_axis = self.plot_item.getAxis('left')
+
+            # Set labels for the axes
+            self.bottom_axis.setLabel(text=self.xAxis)
+            self.left_axis.setLabel(text=self.yAxis)
+        
+        else: # if it is multidataset
+
+            self.graphics_view = pg.GraphicsView()
+            self.graphics_layout = pg.GraphicsLayout()
+            self.graphics_view.setCentralWidget(self.graphics_layout)
+            self.plot_item = pg.PlotItem()
+            self.plot_legend = self.plot_item.addLegend(offset = [-1,20])
+            self.graphics_layout.addItem(self.plot_item, row=1, col=1)
+            
+            # set time axes if needed
+            if self.xAxis == 'time':
+                self.plot_item.setAxisItems(axisItems = {'bottom': self.x_date_axis})
+            if self.yAxis == 'time':
+                self.plot_item.setAxisItems(axisItems = {'left': self.y_date_axis})
+            
+            # set the layout or whatever
+            self.plot_item.setTitle(self.title)
+            self.layout.addLayout(self.layout4)
+            self.layout.addWidget(self.graphics_view)
+            self.setLayout(self.layout)
+            
+            self.bottom_axis = self.plot_item.getAxis('bottom')
+            self.left_axis = self.plot_item.getAxis('left')
+
+            # Set labels for the axes
+            self.bottom_axis.setLabel(text=self.xAxis)
+            self.left_axis.setLabel(text=self.yAxis)
         
         # signals
         if not self.multipleDataset:
@@ -611,174 +638,292 @@ class oldPlotWidget(QWidget):
             self.addMultiDataPlotWid.addPlotButton.clicked.connect(self.multidataset_update_all) # the rest don't
          
     def multidataset_update_all_multiaxes(self):
-        xAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.x_channel_list, self.addMultiDataPlotWid.xAxisChannelComboBox, 
-                                             self.xAxisData, self.addMultiDataPlotWid.xAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
-                                             self.addMultiDataPlotWid.xAxis_name_key, self.addMultiDataPlotWid.xAxis_unit_key)
-        yAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.y_channel_list, self.addMultiDataPlotWid.yAxisChannelComboBox, 
-                                             self.yAxisData, self.addMultiDataPlotWid.yAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
-                                             self.addMultiDataPlotWid.yAxis_name_key, self.addMultiDataPlotWid.yAxis_unit_key)
-        if xAxisChannel_name == None or yAxisChannel_name == None:
-            return None
-        
-        
-        self.amp_window.hide()
-        
-        self.secondary_viewboxes = []
-        self.main_viewbox = self.plot_item.vb # get main viewbox
-        self.previous_viewbox = None
-        self.main_layout = self.plot_item.layout
-        
-        if not self.xAxis == 'time':
-            xAxisChannel_unit = self.experiment_parameters[self.xAxis_unit_key][xAxisChannel_name]
+        if self.addMultiDataPlotWid.AxisDatasetLineEdit.text() == "" or self.addMultiDataPlotWid.AxisDatasetLineEdit.text() == "This dataset doesn't include the chosen data types.":
+            self.addMultiDataPlotWid.AxisDatasetLineEdit.setText("Please choose a dataset.")
         else:
-            xAxisChannel_unit = "-"
+            xAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.x_channel_list, self.addMultiDataPlotWid.xAxisChannelComboBox, 
+                                                self.xAxisData, self.addMultiDataPlotWid.xAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
+                                                self.addMultiDataPlotWid.xAxis_name_key, self.addMultiDataPlotWid.xAxis_unit_key)
+            yAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.y_channel_list, self.addMultiDataPlotWid.yAxisChannelComboBox, 
+                                                self.yAxisData, self.addMultiDataPlotWid.yAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
+                                                self.addMultiDataPlotWid.yAxis_name_key, self.addMultiDataPlotWid.yAxis_unit_key)
+            if xAxisChannel_name == None or yAxisChannel_name == None:
+                return None
             
-        if not self.yAxis == 'time':    
-            yAxisChannel_unit = self.experiment_parameters[self.yAxis_unit_key][yAxisChannel_name]
-        else:
-            yAxisChannel_unit = "-"
-        
-        plot_name = yAxisChannel_name + " (" + yAxisChannel_unit + ")" + " vs " + xAxisChannel_name + " (" + xAxisChannel_unit + ")"
-        plot_channels = xAxisChannel_name + " vs " + yAxisChannel_name
-        
-        
-        if self.plot_count == 0:
-            main_x_axis = self.plot_item.getAxis("bottom")
             
-            main_y_axis = self.plot_item.getAxis("left")
+            self.amp_window.hide()
             
-            self.main_viewbox.setMouseMode(pg.ViewBox.RectMode)
+            self.secondary_viewboxes = []
+            self.main_viewbox = self.plot_item.vb # get main viewbox
+            self.previous_viewbox = None
+            self.main_layout = self.plot_item.layout
             
-            self.main_layout.removeItem(main_y_axis) # remove items created in PlotItem from its layout
-            self.main_layout.removeItem(main_x_axis)
-            self.main_layout.removeItem(self.main_viewbox)
+            if not self.xAxis == 'time':
+                xAxisChannel_unit = self.experiment_parameters[self.xAxis_unit_key][xAxisChannel_name]
+            else:
+                xAxisChannel_unit = "-"
+                
+            if not self.yAxis == 'time':    
+                yAxisChannel_unit = self.experiment_parameters[self.yAxis_unit_key][yAxisChannel_name]
+            else:
+                yAxisChannel_unit = "-"
+            
+            plot_name = yAxisChannel_name + " (" + yAxisChannel_unit + ")" + " vs " + xAxisChannel_name + " (" + xAxisChannel_unit + ")"
+            plot_channels = xAxisChannel_name + " vs " + yAxisChannel_name
+            
+            
+            if self.plot_count == 0:
+                main_x_axis = self.plot_item.getAxis("bottom")
+                
+                main_y_axis = self.plot_item.getAxis("left")
+                
+                self.main_viewbox.setMouseMode(pg.ViewBox.RectMode)
+                
+                self.main_layout.removeItem(main_y_axis) # remove items created in PlotItem from its layout
+                self.main_layout.removeItem(main_x_axis)
+                self.main_layout.removeItem(self.main_viewbox)
 
-            self.main_layout.addItem(main_y_axis, 1, 0)  # shift them to the right, making space for secondary axes
-            self.main_layout.addItem(self.main_viewbox, 1, 1)
-            self.main_layout.addItem(main_x_axis,  2, 1)
+                self.main_layout.addItem(main_y_axis, 1, 0)  # shift them to the right, making space for secondary axes
+                self.main_layout.addItem(self.main_viewbox, 1, 1)
+                self.main_layout.addItem(main_x_axis,  2, 1)
+                    
+                if self.xAxis == 'time' or self.xAxis == 'field':
+                    print("This is executing")
+                    main_x_axis.setLabel(plot_name)
+                    self.main_layout.setRowStretchFactor(2, 0)
+                    
+                print(self.yAxis)
+                if self.yAxis == 'time' or self.yAxis == 'field':
+                    print("This is executing")
+                    main_y_axis.setLabel(plot_name)
+                    self.main_layout.setRowStretchFactor(2, 0)
                 
-            if self.xAxis == 'time' or self.xAxis == 'field':
-                print("This is executing")
-                main_x_axis.setLabel(xAxisChannel_name + " (" + xAxisChannel_unit + ")")
-                self.main_layout.setRowStretchFactor(2, 0)
-                
-            print(self.yAxis)
-            if self.yAxis == 'time' or self.yAxis == 'field':
-                print("This is executing")
-                main_y_axis.setLabel(yAxisChannel_name + " (" + yAxisChannel_unit + ")")
-                self.main_layout.setRowStretchFactor(2, 0)
-            
-            viewbox = self.previous_viewbox = self.main_viewbox
-                
-            self.plots[plot_channels] = pg.PlotDataItem(self.xAxisData[xAxisChannel_name], 
-                                                                self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
-            self.plot_legend.addItem(self.plots[plot_channels], self.plots[plot_channels].name())
-                
-            
-            
-        else:
-            if self.xAxis == 'time' or self.xAxis == 'field':
-                
+                viewbox = self.previous_viewbox = self.main_viewbox
+                    
                 self.plots[plot_channels] = pg.PlotDataItem(self.xAxisData[xAxisChannel_name], 
-                                                            self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
+                                                                    self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
                 self.plot_legend.addItem(self.plots[plot_channels], self.plots[plot_channels].name())
+                    
                 
-                if self.xAxis == 'time':
-                    self.axes[plot_channels] = pg.DateAxisItem(orientation='bottom',
-                                                                utcOffset=14400,               # set to your timezone offset if desired
-                                                                showValues=True,
-                                                                autoScale=True)
-                elif self.xAxis == 'field':
-                    self.axes[plot_channels] = pg.AxisItem(orientation='bottom',
-                                                                showValues=True,
-                                                                autoScale=True)
-                self.axes[plot_channels].setTextPen(self.colors[self.plot_count % 5])
-                self.axes[plot_channels].setLabel(plot_name)
-                self.main_layout.addItem(self.axes[plot_channels], 2+self.plot_count, 1)
-                self.main_layout.setRowStretchFactor(2+self.plot_count, 2)
                 
-                viewbox = pg.ViewBox()  # create ViewBox
-                viewbox.setYLink(self.main_viewbox)  # link to previous
-                self.previous_viewbox = viewbox
-                self.axes[plot_channels].linkToView(viewbox)  # link axis with viewbox
-                self.graphics_layout.scene().addItem(viewbox)  # add viewbox to layout
-                viewbox.enableAutoRange(axis=pg.ViewBox.XYAxes, enable=True)  # autorange once to fit views at start
+            else:
+                x_special = self.xAxis in ["time", "field"]
+                y_special = self.yAxis in ["time", "field"]
+
+                x_data = self.xAxisData[xAxisChannel_name]
+                y_data = self.yAxisData[yAxisChannel_name]
+
+                # Create ONE plot item and ONE legend entry
+                self.plots[plot_channels] = pg.PlotDataItem(
+                    x_data,
+                    y_data,
+                    name=plot_name,
+                    pen=self.colors[self.plot_count % 5]
+                )
+
+                self.plot_legend.addItem(
+                    self.plots[plot_channels],
+                    self.plots[plot_channels].name()
+                )
+
+                # Create ONE viewbox for this trace
+                viewbox = pg.ViewBox()
+                self.graphics_layout.scene().addItem(viewbox)
+
+                # Link only the shared/non-special axis
+                if x_special and not y_special:
+                    viewbox.setYLink(self.main_viewbox)
+
+                if y_special and not x_special:
+                    viewbox.setXLink(self.main_viewbox)
+
+                # Create extra x-axis if needed
+                if x_special:
+                    if self.xAxis == "time":
+                        x_axis = pg.DateAxisItem(
+                            orientation="bottom",
+                            utcOffset=14400,
+                            showValues=True,
+                            autoScale=True
+                        )
+                    else:
+                        x_axis = pg.AxisItem(
+                            orientation="bottom",
+                            showValues=True,
+                            autoScale=True
+                        )
+
+                    x_axis.setTextPen(self.colors[self.plot_count % 5])
+                    x_axis.setLabel(plot_name)
+                    x_axis.linkToView(viewbox)
+
+                    self.axes[f"{plot_channels}_x"] = x_axis
+                    self.main_layout.addItem(x_axis, 2 + self.plot_count, 1)
+                    self.main_layout.setRowStretchFactor(2 + self.plot_count, 2)
+
+                # Create extra y-axis if needed
+                if y_special:
+                    if self.yAxis == "time":
+                        y_axis = pg.DateAxisItem(
+                            orientation="right",
+                            utcOffset=14400,
+                            showValues=True,
+                            autoScale=True
+                        )
+                    else:
+                        y_axis = pg.AxisItem(
+                            orientation="right",
+                            showValues=True,
+                            autoScale=True
+                        )
+
+                    y_axis.setTextPen(self.colors[self.plot_count % 5])
+                    y_axis.setLabel(plot_name)
+                    y_axis.linkToView(viewbox)
+
+                    self.axes[f"{plot_channels}_y"] = y_axis
+                    self.main_layout.addItem(y_axis, 1, 1 + self.plot_count)
+
+                # Add plot to the viewbox
+                viewbox.addItem(self.plots[plot_channels])
+
+                # Autoscale using ALL plotted data so far
+                all_x = []
+                all_y = []
+
+                for plot in self.plots.values():
+                    xs, ys = plot.getData()
+
+                    if xs is not None and len(xs) > 0:
+                        all_x.extend(xs)
+
+                    if ys is not None and len(ys) > 0:
+                        all_y.extend(ys)
+
+                if x_special and not y_special:
+                    if all_y:
+                        self.main_viewbox.setYRange(min(all_y), max(all_y), padding=0.05)
+
+                elif y_special and not x_special:
+                    if all_x:
+                        self.main_viewbox.setXRange(min(all_x), max(all_x), padding=0.05)
+
+                elif x_special and y_special:
+                    if all_x:
+                        viewbox.setXRange(min(all_x), max(all_x), padding=0.05)
+
+                    if all_y:
+                        viewbox.setYRange(min(all_y), max(all_y), padding=0.05)
+
+                viewbox.enableAutoRange(axis=pg.ViewBox.XYAxes, enable=False)
 
                 self.secondary_viewboxes.append(viewbox)
+                # if self.xAxis == 'time' or self.xAxis == 'field':
+                    
+                #     self.plots[plot_channels] = pg.PlotDataItem(self.xAxisData[xAxisChannel_name], 
+                #                                                 self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
+                #     self.plot_legend.addItem(self.plots[plot_channels], self.plots[plot_channels].name())
+                    
+                #     if self.xAxis == 'time':
+                #         self.axes[plot_channels] = pg.DateAxisItem(orientation='bottom',
+                #                                                     utcOffset=14400,               # set to your timezone offset if desired
+                #                                                     showValues=True,
+                #                                                     autoScale=True)
+                #     elif self.xAxis == 'field':
+                #         self.axes[plot_channels] = pg.AxisItem(orientation='bottom',
+                #                                                     showValues=True,
+                #                                                     autoScale=True)
+                #     self.axes[plot_channels].setTextPen(self.colors[self.plot_count % 5])
+                #     self.axes[plot_channels].setLabel(plot_name)
+                #     self.main_layout.addItem(self.axes[plot_channels], 2+self.plot_count, 1)
+                #     self.main_layout.setRowStretchFactor(2+self.plot_count, 2)
+                    
+                #     viewbox = pg.ViewBox()  # create ViewBox
+                #     viewbox.setYLink(self.main_viewbox)  # link to previous
+                #     self.previous_viewbox = viewbox
+                #     self.axes[plot_channels].linkToView(viewbox)  # link axis with viewbox
+                #     self.graphics_layout.scene().addItem(viewbox)  # add viewbox to layout
+                #     viewbox.enableAutoRange(axis=pg.ViewBox.XYAxes, enable=True)  # autorange once to fit views at start
+
+                #     self.secondary_viewboxes.append(viewbox)
+                
+                # if self.yAxis == 'time' or self.yAxis == 'field':
+                    
+                #     self.plots[plot_channels] = pg.PlotDataItem(self.xAxisData[xAxisChannel_name], 
+                #                                                 self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
+                #     self.plot_legend.addItem(self.plots[plot_channels], self.plots[plot_channels].name())
+                    
+                #     if self.yAxis == 'time':
+                #         self.axes[plot_channels] = pg.DateAxisItem(orientation='right',
+                #                                                     utcOffset=14400,               # set to your timezone offset if desired
+                #                                                     showValues=True,
+                #                                                     autoScale=True)
+                #     elif self.yAxis == 'field':
+                #         self.axes[plot_channels] = pg.AxisItem(orientation='right',
+                #                                                     showValues=True,
+                #                                                     autoScale=True)
+                #     self.axes[plot_channels].setTextPen(self.colors[self.plot_count % 5])
+                    
+                #     self.axes[plot_channels].setLabel(plot_name)
+                #     self.main_layout.addItem(self.axes[plot_channels], 1, 1+self.plot_count)
+                #     #self.main_layout.setColumnStretchFactor(-1, 2)
+                    
+                #     viewbox = pg.ViewBox()  # create ViewBox
+                #     viewbox.setXLink(self.main_viewbox)  # link to previous
+                #     self.previous_viewbox = viewbox
+                #     self.axes[plot_channels].linkToView(viewbox)  # link axis with viewbox
+                #     self.graphics_layout.scene().addItem(viewbox)  # add viewbox to layout
+                #     viewbox.enableAutoRange(axis=pg.ViewBox.XYAxes, enable=True)  # autorange once to fit views at start
+
+                #     self.secondary_viewboxes.append(viewbox)
+                    
+                    
+
             
-            if self.yAxis == 'time' or self.yAxis == 'field':
-                
-                self.plots[plot_channels] = pg.PlotDataItem(self.xAxisData[xAxisChannel_name], 
-                                                            self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
-                self.plot_legend.addItem(self.plots[plot_channels], self.plots[plot_channels].name())
-                
-                if self.yAxis == 'time':
-                    self.axes[plot_channels] = pg.DateAxisItem(orientation='right',
-                                                                utcOffset=14400,               # set to your timezone offset if desired
-                                                                showValues=True,
-                                                                autoScale=True)
-                elif self.yAxis == 'field':
-                    self.axes[plot_channels] = pg.AxisItem(orientation='right',
-                                                                showValues=True,
-                                                                autoScale=True)
-                self.axes[plot_channels].setTextPen(self.colors[self.plot_count % 5])
-                
-                self.axes[plot_channels].setLabel(plot_name)
-                self.main_layout.addItem(self.axes[plot_channels], 1, 1+self.plot_count)
-                #self.main_layout.setColumnStretchFactor(-1, 2)
-                
-                viewbox = pg.ViewBox()  # create ViewBox
-                viewbox.setXLink(self.main_viewbox)  # link to previous
-                self.previous_viewbox = viewbox
-                self.axes[plot_channels].linkToView(viewbox)  # link axis with viewbox
-                self.graphics_layout.scene().addItem(viewbox)  # add viewbox to layout
-                viewbox.enableAutoRange(axis=pg.ViewBox.XYAxes, enable=True)  # autorange once to fit views at start
-
-                self.secondary_viewboxes.append(viewbox)
-                
-                
-
-        
-        self.main_viewbox.sigResized.connect(self.updateViews)
-        # self.updateViews()
-        
-        viewbox.addItem(self.plots[plot_channels])
-        self.plot_count += 1
+            self.main_viewbox.sigResized.connect(self.updateViews)
+            # self.updateViews()
+            
+            viewbox.addItem(self.plots[plot_channels])
+            self.plot_count += 1
         
     def multidataset_update_all(self):
-        
-        xAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.x_channel_list, self.addMultiDataPlotWid.xAxisChannelComboBox, 
-                                             self.xAxisData, self.addMultiDataPlotWid.xAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
-                                             self.addMultiDataPlotWid.xAxis_name_key, self.addMultiDataPlotWid.xAxis_unit_key)
-        yAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.y_channel_list, self.addMultiDataPlotWid.yAxisChannelComboBox, 
-                                             self.yAxisData, self.addMultiDataPlotWid.yAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
-                                             self.addMultiDataPlotWid.yAxis_name_key, self.addMultiDataPlotWid.yAxis_unit_key)
 
-        self.amp_window.hide()
-        
-        
-        if not self.xAxis == 'time':
-            xAxisChannel_unit = self.experiment_parameters[self.xAxis_unit_key][xAxisChannel_name]
+        if self.addMultiDataPlotWid.AxisDatasetLineEdit.text() == "" or self.addMultiDataPlotWid.AxisDatasetLineEdit.text() == "This dataset doesn't include the chosen data types.":
+            self.addMultiDataPlotWid.AxisDatasetLineEdit.setText("Please choose a dataset.")
         else:
-            xAxisChannel_unit = "-"
-            
-            
-        if not self.yAxis == 'time':    
-            yAxisChannel_unit = self.experiment_parameters[self.yAxis_unit_key][yAxisChannel_name]
-        else:
-            yAxisChannel_unit = "-"
         
-        plot_name = yAxisChannel_name + " (" + yAxisChannel_unit + ")" + " vs " + xAxisChannel_name + " (" + xAxisChannel_unit + ")"
-        plot_channels = xAxisChannel_name + " vs " + yAxisChannel_name
-        
-        if not plot_channels in self.plots:
-            self.plots[plot_channels] = self.plot_item.plot(self.xAxisData[xAxisChannel_name], 
-                                                                self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
-            
+            xAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.x_channel_list, self.addMultiDataPlotWid.xAxisChannelComboBox, 
+                                                self.xAxisData, self.addMultiDataPlotWid.xAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
+                                                self.addMultiDataPlotWid.xAxis_name_key, self.addMultiDataPlotWid.xAxis_unit_key)
+            yAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.y_channel_list, self.addMultiDataPlotWid.yAxisChannelComboBox, 
+                                                self.yAxisData, self.addMultiDataPlotWid.yAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
+                                                self.addMultiDataPlotWid.yAxis_name_key, self.addMultiDataPlotWid.yAxis_unit_key)
 
-            self.plot_count += 1
-        else:
-            pass
+            self.amp_window.hide()
+            
+            
+            if not self.xAxis == 'time':
+                xAxisChannel_unit = self.experiment_parameters[self.xAxis_unit_key][xAxisChannel_name]
+            else:
+                xAxisChannel_unit = "-"
+                
+                
+            if not self.yAxis == 'time':    
+                yAxisChannel_unit = self.experiment_parameters[self.yAxis_unit_key][yAxisChannel_name]
+            else:
+                yAxisChannel_unit = "-"
+            
+            plot_name = yAxisChannel_name + " (" + yAxisChannel_unit + ")" + " vs " + xAxisChannel_name + " (" + xAxisChannel_unit + ")"
+            plot_channels = xAxisChannel_name + " vs " + yAxisChannel_name
+            
+            if not plot_channels in self.plots:
+                self.plots[plot_channels] = self.plot_item.plot(self.xAxisData[xAxisChannel_name], 
+                                                                    self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
+                
+
+                self.plot_count += 1
+            else:
+                pass
     
     def updateViews(self):
         for vb in self.secondary_viewboxes:

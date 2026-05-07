@@ -97,6 +97,7 @@
         }
     ],
     "available_data_types": [
+        "time",
         "temperature",
         "resistance",
         "lockIn",

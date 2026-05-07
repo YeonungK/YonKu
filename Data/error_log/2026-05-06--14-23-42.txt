@@ -1,0 +1,21 @@
+Szkopek Lab Error Log Book - 2026-05-06--14-23-42
+
+2026-05-06--14-24-38 Exception: Traceback (most recent call last):
+  File "c:\Users\user\Desktop\YonKu\GUI\OpenPlotSettingUi.py", line 50, in dataset_search
+    param_base = EXPERIMENT_PARAMETERS_DIR / self.datasetLink.stem
+                                             ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'stem'
+
+
+
+
+2026-05-06--14-27-12 Exception: Traceback (most recent call last):
+  File "c:\Users\user\Desktop\YonKu\main_gui.py", line 991, in closeEvent
+    self.instruments[device_key].close()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Desktop\YonKu\Tools\Instrument.py", line 131, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

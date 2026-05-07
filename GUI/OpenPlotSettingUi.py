@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QFileDialog
 from PyQt5 import uic
 import sys
@@ -45,11 +47,11 @@ class create_plot_setting_ui(QWidget):
             
             fname = QFileDialog.getOpenFileName(self, "Open File", str(EXPERIMENT_DATA_DIR), "CSV Files (*.csv)")
             
-            self.datasetLink = fname[0]
+            self.datasetLink = Path(fname[0])
             # go to experiment_parameters folder and keep same filename
             param_base = EXPERIMENT_PARAMETERS_DIR / self.datasetLink.stem
 
-            self.experimentParamLink = str(param_base)
+            self.experimentParam= str(param_base)
 
             if fname:
                 self.browseDatasetLineEdit.setText(fname[0])
