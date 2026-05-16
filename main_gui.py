@@ -30,6 +30,7 @@ from project_paths import (
     SAVED_INSTRUMENTS_DIR,
     INSTRUMENT_CONTROL_UIS_DIR,
     INSTRUMENT_WIDGETS_DIR,
+    DATA_DIR
 )
 
 """main gui window class"""
@@ -930,26 +931,134 @@ class UI(QMainWindow):
         
     def save_device_common(self, creator_widget, interface_type):
         creator_widget.update_parameters()
-        data_list = creator_widget.data_list
+        data_list = creator_widget.data_list    # get the data list from the creator widget (⚠️ make sure it's updated with the latest user input
+        
+        # -------------Create Directories------------------
 
-        # --- Save instrument script ---
-        script_dir = str(SAVED_INSTRUMENTS_DIR)
-        file_name = f"{data_list['model']}.py"
-        full_path = os.path.join(script_dir, file_name)
+        # 0.create instrument directory if it doesn't exist
+        instrument_dir = SAVED_INSTRUMENTS_DIR / data_list["model"]
+        os.makedirs(instrument_dir, exist_ok=True)
 
-        os.makedirs(script_dir, exist_ok=True)
+        # 0-1. create init file for inst dir
+        instrument_init_path = instrument_dir / "__init__.py"
+        if not instrument_init_path.exists():
+            with open(instrument_init_path, "w") as f:
+                f.write("")
 
-        with open(full_path, "w") as f:
+        # 0-2. create methods directory if it doesn't exist
+        methods_dir = instrument_dir / "methods"
+        os.makedirs(methods_dir, exist_ok=True)
+
+        # 0-3. create init file for methods dir
+        methods_init_path = methods_dir / "__init__.py"
+        if not methods_init_path.exists():  
+            with open(methods_init_path, "w") as f:
+                f.write("")
+
+        # 1. create the metadata.json file
+        metadata = {
+            "data_type" : {},
+            "data_label" : {},
+            "data_unit" : {},
+            "initial_state" : {},
+            "methods" : {}
+            
+        }
+
+        metadata_path = instrument_dir / "metadata.json"
+        with open(metadata_path, "w", encoding="utf-8") as f:
+            json.dump(metadata, f, indent=4)
+
+
+        # 2. create the attribute.py file
+        attributes_text = f"""
+import json
+import importlib
+from pathlib import Path
+from project_paths import PROJECT_ROOT
+
+MODEL_NAME = "{data_list["model"]}"
+
+MODEL_DIR = Path(__file__).resolve().parent
+METADATA_PATH = MODEL_DIR / "metadata.json"
+
+PACKAGE_ROOT = f"Tools.saved_instruments.{{MODEL_NAME}}"
+
+
+data_type = {{}}
+data_label = {{}}
+data_unit = {{}}
+initial_state = {{}}
+
+functions = {{}}
+read_functions = {{}}
+data_functions = {{}}
+write_functions = {{}}
+
+
+
+def load_metadata():
+    global data_type, data_label, data_unit, initial_state
+
+    if not METADATA_PATH.exists():
+        return
+
+    with open(METADATA_PATH, "r", encoding="utf-8") as f:
+        metadata = json.load(f)
+
+    data_type = metadata.get("data_type", {{}})
+    data_label = metadata.get("data_label", {{}})
+    data_unit = metadata.get("data_unit", {{}})
+    initial_state = metadata.get("initial_state", {{}})
+
+    return metadata
+
+
+def load_methods(metadata):
+    functions.clear()
+    read_functions.clear()
+    write_functions.clear()
+    data_functions.clear()
+
+    for command_name, info in metadata.get("methods", {{}}).items():
+        module_path = f"{{PACKAGE_ROOT}}.methods.{{command_name}}"
+        module = importlib.import_module(module_path)
+
+        if not hasattr(module, "run"):
+            continue
+
+        functions[command_name] = module.run
+
+        method_type = info.get("command_type")
+
+        if method_type == "read":
+            read_functions[command_name] = module.run
+        elif method_type == "write":
+            write_functions[command_name] = module.run
+
+        method_linked_data = info.get("command_linked_data")
+        
+        if method_linked_data["data_function"] == "true":
+            temp_data_type = data_type.get(method_linked_data["data_type"])
+            data_functions[temp_data_type] = module.run
+
+
+metadata = load_metadata() or {{}}
+load_methods(metadata)"""
+
+        
+        # create the instrument.py file
+        instrument_path = instrument_dir / "instrument.py"
+        with open(instrument_path, "w") as f:
             f.write(creator_widget.device_script())
 
-        # --- Reload metadata ---
-        with open(full_path, "r") as f:
-            content = f.readline().strip().strip("#")
-            data_list = eval(content)   # replace later with safer parsing
-
-        # --- Register device ---
+        # create the saved_device metadata file
         device_key = f"Device_{self.device_count}"
         self.devices[device_key] = data_list
+
+        device_path = DATA_DIR / "saved_devices" / f"{device_key}.json"
+        with open(device_path, "w") as f:
+            json.dump(data_list, f, indent=4)
 
         # Create device UI (tab view)
         ui_class_map = {

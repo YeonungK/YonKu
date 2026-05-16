@@ -3,6 +3,10 @@ command_name = "ser"
 command_text = "ser"
 data_list = {}
 command_type = "READ"
+command_linked_data = {
+    "data_function": False,
+    "data_type": None,
+}
 communication_syntax = "ASCII"
 desired_data_type = "string"
 

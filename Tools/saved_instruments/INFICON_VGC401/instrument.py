@@ -7,6 +7,7 @@ import sys
 sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 from Tools.Instrument import SerialInstrument
+from Tools.saved_instruments.test_model import attributes
 
 
 class pressureGauge(SerialInstrument):
@@ -17,9 +18,10 @@ class pressureGauge(SerialInstrument):
                                 stopbits = serial.STOPBITS_ONE)
         
         self.connected = self.check_connection()
-        self.data_type = {'pressure':['ch_A']}
-        self.data_unit = {'pressure':'mBar'}
-        self.data_function = {'pressure': self.pressure_read}
+        self.data_type = attributes.data_type
+        self.data_unit = attributes.data_unit
+        self.data_label = attributes.data_label
+        self.data_function = attributes.functions
         
     def check_connection(self):
         try:

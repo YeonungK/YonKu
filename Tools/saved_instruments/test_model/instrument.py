@@ -4,10 +4,10 @@ import serial
 import time
 import sys
 
-sys.path.append('C:/Users/szkop/Desktop/YonKu')
+from project_paths import PROJECT_ROOT
 
 from Tools.Instrument import SerialInstrument
-from Tools.saved_instruments.test_model import attributes
+from . import attributes
 
 
 class test_instrument(SerialInstrument):
@@ -23,6 +23,7 @@ class test_instrument(SerialInstrument):
         )
         
         self.data_type = attributes.data_type
+        self.data_label = attributes.data_label
         self.data_unit = attributes.data_unit
         self.data_function = attributes.data_functions
         self.read_functions = attributes.read_functions

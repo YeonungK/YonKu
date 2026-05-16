@@ -80,6 +80,7 @@ class new_command_setting_ui(QWidget):
 from project_paths import PROJECT_ROOT
 from Tools.saved_instruments.Members.{self.instrument.model} import attributes
 data_type = {{}}
+data_label = {{}}
 data_unit = {{}}
 functions = {{}}
 read_functions = {{}}
