@@ -1,0 +1,13 @@
+{
+    "name": "test_serial",
+    "interface": "serial",
+    "model": "test_serial_model",
+    "description": "No device found",
+    "port": "",
+    "baudrate": "9600",
+    "bytesize": "FIVEBITS",
+    "parity": "PARITY_NONE",
+    "stopbits": "STOPBITS_ONE",
+    "timeout": "",
+    "xonxoff": ""
+}

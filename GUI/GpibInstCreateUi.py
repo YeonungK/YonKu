@@ -95,18 +95,21 @@ class {self.name}(GPIBInstrument):
         """
         return script
     
-    def device_wid_script(self):
+    def device_wid_script(self, name, ui_path):
         
-        script = f"""sys
+        script = f"""
 
 from project_paths import PROJECT_ROOT
 
 from GUI.instrument_control_widgets import base_dynamic_widget
 
-class test_instrument_widget(base_dynamic_widget.widget):
-    def __init__(self, instrument):
-        super().__init__(instrument, f"GUI/ui_files/instrument_control_uis/{self.model}_ui.ui")
-        """
+class {name}_widget(base_dynamic_widget.widget):
+    def __init__(self, instrument, device_info, device_key, parent):
+        
+        super().__init__(instrument, device_info, device_key, parent, '{ui_path}')
+        
+    def initialize_widget(self):
+        pass"""
         return script
         
 

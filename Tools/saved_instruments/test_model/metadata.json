@@ -8,7 +8,7 @@
             "command_name" : "ser",
             "command_text" : "ser",
             "data_list" : {},
-            "command_type" : "READ",
+            "command_type" : "read",
             "command_linked_data" : {
                 "data_function" : "false",
                 "data_type": ""

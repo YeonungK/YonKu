@@ -68,35 +68,19 @@ class new_command_setting_ui(QWidget):
     def create_member_folder(self):
         
         print("creating folders")
-        instrument_folder = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}")
+        instrument_folder = SAVED_INSTRUMENTS_DIR / self.instrument.model
+        methods_folder = instrument_folder / "methods"
+
         instrument_folder.mkdir(parents=True, exist_ok=True)
-        
-        self.attribute_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/attributes.py")
-        
-        if not self.attribute_path.exists():
-            self.attribute_path.touch()
-            with open(self.attribute_path, "w") as f:
-                basic_attributes = f"""import sys
-from project_paths import PROJECT_ROOT
-from Tools.saved_instruments.Members.{self.instrument.model} import attributes
-data_type = {{}}
-data_label = {{}}
-data_unit = {{}}
-functions = {{}}
-read_functions = {{}}
-write_functions = {{}}
-data_functions = {{}}
-initial_state = {{}}
-"""
-                f.write(basic_attributes)
-                f.close()
-        else:
-            pass
+        methods_folder.mkdir(parents=True, exist_ok=True)
+
+        self.attribute_path = instrument_folder / "attributes.py"
+        self.metadata_path = instrument_folder / "metadata.json"
         
         self.method_name = self.command_name
         index = self.try_make_method_file(self.method_name, 0)
         self.method_name = self.method_name + "_" + str(index)
-        self.method_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{self.method_name}_method.py")
+        self.method_path = methods_folder / f"{self.method_name}_method.py"
         
         with open(self.method_path, "w") as f:
             script = f"""
@@ -118,7 +102,7 @@ data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
         
     def try_make_method_file(self, method_name, num):
         method_real_name = method_name + "_" + str(num)
-        method_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{method_real_name}_method.py")
+        method_path = SAVED_INSTRUMENTS_DIR / self.instrument.model / "methods" / f"{method_real_name}_method.py"
         try:
             method_path.touch()
             index = num

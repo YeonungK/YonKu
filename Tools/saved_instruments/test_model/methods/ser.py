@@ -12,7 +12,7 @@ desired_data_type = "string"
 
 function_code = """"""
 data_manipulation_code = """"""
-def ser(self):
+def run(self):
     try:
         print("This is the ser method. You can replace this with your own code to read from the instrument.")
         return None

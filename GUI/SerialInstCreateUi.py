@@ -35,8 +35,10 @@ class SerialInstCreateUi(QWidget):
             self.ports[port.device] = port.description
             self.portComboBox.addItem(port.device)
           
-            
-        self.descriptionLineEdit.setText(self.ports[self.portComboBox.currentText()])
+        try:    
+            self.descriptionLineEdit.setText(self.ports[self.portComboBox.currentText()])
+        except KeyError:
+            self.descriptionLineEdit.setText("No device found")
         self.portComboBox.currentTextChanged.connect(self.change_description)
     
         
@@ -118,17 +120,19 @@ class {self.name}(SerialInstrument):
         """
         return script
     
-    def device_wid_script(self):
+    def device_wid_script(self, instrument_name, ui_path):
         
-        script = f"""import sys
+        script = f"""
 
 from project_paths import PROJECT_ROOT
 
 from GUI.instrument_control_widgets import base_dynamic_widget
 
-class test_instrument_widget(base_dynamic_widget.widget):
-    def __init__(self, instrument):
-        super().__init__(instrument, f'GUI/ui_files/instrument_control_uis/{self.model}_ui.ui')
-    
-        """
+class {instrument_name}_widget(base_dynamic_widget.widget):
+    def __init__(self, instrument, device_info, device_key, parent):
+        
+        super().__init__(instrument, device_info, device_key, parent, '{ui_path}')
+        
+    def initialize_widget(self):
+        pass"""
         return script

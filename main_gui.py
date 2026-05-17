@@ -882,7 +882,7 @@ class UI(QMainWindow):
         self.serial_inst_create_sub.show()
         
         self.serial_inst_create_wid.cancelButton.clicked.connect(self.serial_inst_create_sub.hide)
-        self.serial_inst_create_wid.saveButton.clicked.connect(lambda: self.save_device_common(self.serial_inst_create_wid, "serial"))
+        self.serial_inst_create_wid.saveButton.clicked.connect(lambda: self.save_device_common(self.serial_inst_create_sub, self.serial_inst_create_wid, "serial"))
     
     def gpib_instrument_create(self):
         self.gpib_inst_create_wid = gic.GpibInstCreateUi()
@@ -897,7 +897,7 @@ class UI(QMainWindow):
         self.gpib_inst_create_sub.show()
         
         self.gpib_inst_create_wid.cancelButton.clicked.connect(self.gpib_inst_create_sub.hide)
-        self.gpib_inst_create_wid.saveButton.clicked.connect(lambda: self.save_device_common(self.gpib_inst_create_wid, "gpib"))
+        self.gpib_inst_create_wid.saveButton.clicked.connect(lambda: self.save_device_common(self.gpib_inst_create_sub, self.gpib_inst_create_wid, "gpib"))
              
     def ethernet_instrument_create(self):
         self.ethernet_inst_create_wid = eic.EthernetInstCreateUi()
@@ -912,7 +912,7 @@ class UI(QMainWindow):
         self.ethernet_inst_create_sub.show()
         
         self.ethernet_inst_create_wid.cancelButton.clicked.connect(self.ethernet_inst_create_sub.hide)
-        self.ethernet_inst_create_wid.saveButton.clicked.connect(lambda: self.save_device_common(self.ethernet_inst_create_wid, "ethernet"))
+        self.ethernet_inst_create_wid.saveButton.clicked.connect(lambda: self.save_device_common(self.ethernet_inst_create_sub, self.ethernet_inst_create_wid, "ethernet"))
             
     def usb_6525_instrument_create(self):
         self.usb_6525_inst_create_wid = bic.usb6525InstCreateUi()
@@ -927,9 +927,9 @@ class UI(QMainWindow):
         self.usb_6525_inst_create_sub.show()
         
         self.usb_6525_inst_create_wid.cancelButton.clicked.connect(self.usb_6525_inst_create_sub.hide)
-        self.usb_6525_inst_create_wid.saveButton.clicked.connect(lambda: self.save_device_common(self.usb_6525_inst_create_wid, "usb6525"))
+        self.usb_6525_inst_create_wid.saveButton.clicked.connect(lambda: self.save_device_common(self.usb_6525_inst_create_sub, self.usb_6525_inst_create_wid, "usb6525"))
         
-    def save_device_common(self, creator_widget, interface_type):
+    def save_device_common(self, creator_sub, creator_widget, interface_type):
         creator_widget.update_parameters()
         data_list = creator_widget.data_list    # get the data list from the creator widget (⚠️ make sure it's updated with the latest user input
         
@@ -943,7 +943,7 @@ class UI(QMainWindow):
         instrument_init_path = instrument_dir / "__init__.py"
         if not instrument_init_path.exists():
             with open(instrument_init_path, "w") as f:
-                f.write("")
+                f.write(f"from .instrument import {data_list['name']}\n")
 
         # 0-2. create methods directory if it doesn't exist
         methods_dir = instrument_dir / "methods"
@@ -966,8 +966,10 @@ class UI(QMainWindow):
         }
 
         metadata_path = instrument_dir / "metadata.json"
-        with open(metadata_path, "w", encoding="utf-8") as f:
-            json.dump(metadata, f, indent=4)
+
+        if not metadata_path.exists():
+            with open(metadata_path, "w", encoding="utf-8") as f:
+                json.dump(metadata, f, indent=4)
 
 
         # 2. create the attribute.py file
@@ -984,7 +986,6 @@ METADATA_PATH = MODEL_DIR / "metadata.json"
 
 PACKAGE_ROOT = f"Tools.saved_instruments.{{MODEL_NAME}}"
 
-
 data_type = {{}}
 data_label = {{}}
 data_unit = {{}}
@@ -992,16 +993,15 @@ initial_state = {{}}
 
 functions = {{}}
 read_functions = {{}}
-data_functions = {{}}
 write_functions = {{}}
-
+data_functions = {{}}
 
 
 def load_metadata():
     global data_type, data_label, data_unit, initial_state
 
     if not METADATA_PATH.exists():
-        return
+        return {{}}
 
     with open(METADATA_PATH, "r", encoding="utf-8") as f:
         metadata = json.load(f)
@@ -1021,31 +1021,45 @@ def load_methods(metadata):
     data_functions.clear()
 
     for command_name, info in metadata.get("methods", {{}}).items():
-        module_path = f"{{PACKAGE_ROOT}}.methods.{{command_name}}"
-        module = importlib.import_module(module_path)
+        module_name = info.get("module", command_name)
+        function_name = info.get("function", "run")
 
-        if not hasattr(module, "run"):
+        module_path = f"{{PACKAGE_ROOT}}.methods.{{module_name}}"
+
+        try:
+            module = importlib.import_module(module_path)
+        except Exception as e:
+            print(f"Failed to import method module {{module_path}}: {{e}}")
             continue
 
-        functions[command_name] = module.run
+        if not hasattr(module, function_name):
+            print(f"Method module {{module_path}} has no function {{function_name}}")
+            continue
 
-        method_type = info.get("command_type")
+        func = getattr(module, function_name)
+        functions[command_name] = func
 
-        if method_type == "read":
-            read_functions[command_name] = module.run
-        elif method_type == "write":
-            write_functions[command_name] = module.run
+        command_type = info.get("command_type", "").upper()
 
-        method_linked_data = info.get("command_linked_data")
-        
-        if method_linked_data["data_function"] == "true":
-            temp_data_type = data_type.get(method_linked_data["data_type"])
-            data_functions[temp_data_type] = module.run
+        if command_type == "READ":
+            read_functions[command_name] = func
+        elif command_type == "WRITE":
+            write_functions[command_name] = func
+
+        linked_data = info.get("command_linked_data", {{}})
+        if linked_data.get("data_function") is True:
+            linked_data_type = linked_data.get("data_type")
+            if linked_data_type:
+                data_functions[linked_data_type] = func
 
 
-metadata = load_metadata() or {{}}
+metadata = load_metadata()
 load_methods(metadata)"""
 
+        attributes_path = instrument_dir / "attributes.py"
+
+        with open(attributes_path, "w", encoding="utf-8") as f:
+            f.write(attributes_text)
         
         # create the instrument.py file
         instrument_path = instrument_dir / "instrument.py"
@@ -1080,6 +1094,9 @@ load_methods(metadata)"""
 
         # --- Generate UI + widget files ---
         self.create_generated_files(creator_widget)
+
+        creator_sub.close()
+
     
     def instantiate_device(self, data_list, device_key, interface_type):
         model_name = data_list["model"]
@@ -1134,6 +1151,7 @@ load_methods(metadata)"""
 
     def create_generated_files(self, creator_widget):
         model = creator_widget.data_list["model"]
+        name = creator_widget.data_list["name"]
 
         base_ui_dir = str(INSTRUMENT_CONTROL_UIS_DIR)
         base_widget_dir = str(INSTRUMENT_WIDGETS_DIR)
@@ -1153,9 +1171,10 @@ load_methods(metadata)"""
 
         # --- widget python file ---
         widget_path = os.path.join(base_widget_dir, f"{model}_widget.py")
+        edited_ui_path = f'GUI/ui_files/instrument_control_uis/{model}_ui.ui'
         with open(widget_path, "w") as f:
-            f.write(creator_widget.device_wid_script())
-            
+            f.write(creator_widget.device_wid_script(name, edited_ui_path))
+
     def device_list_show(self):
         self.deviceListSub.show()
  

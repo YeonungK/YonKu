@@ -8,7 +8,7 @@ MODEL_NAME = "test_model"
 MODEL_DIR = Path(__file__).resolve().parent
 METADATA_PATH = MODEL_DIR / "metadata.json"
 
-PACKAGE_ROOT = f"Tools.saved_instruments.{{MODEL_NAME}}"
+PACKAGE_ROOT = f"Tools.saved_instruments.{MODEL_NAME}"
 
 
 data_type = {}
@@ -47,7 +47,7 @@ def load_methods(metadata):
     data_functions.clear()
 
     for command_name, info in metadata.get("methods", {}).items():
-        module_path = f"{{PACKAGE_ROOT}}.methods.{{command_name}}"
+        module_path = f"{PACKAGE_ROOT}.methods.{command_name}"
         module = importlib.import_module(module_path)
 
         if not hasattr(module, "run"):

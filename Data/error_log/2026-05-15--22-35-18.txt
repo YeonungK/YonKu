@@ -1,0 +1,36 @@
+Szkopek Lab Error Log Book - 2026-05-15--22-35-18
+
+2026-05-15--22-35-55 Exception: Traceback (most recent call last):
+  File "C:\Users\user\Desktop\YonKu\main_gui.py", line 873, in serial_instrument_create
+    self.serial_inst_create_wid = sic.SerialInstCreateUi()
+                                  ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Desktop\YonKu\GUI\SerialInstCreateUi.py", line 39, in __init__
+    self.descriptionLineEdit.setText(self.ports[self.portComboBox.currentText()])
+                                     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: ''
+
+
+
+
+2026-05-15--22-36-37 Exception: Traceback (most recent call last):
+  File "C:\Users\user\Desktop\YonKu\main_gui.py", line 873, in serial_instrument_create
+    self.serial_inst_create_wid = sic.SerialInstCreateUi()
+                                  ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Desktop\YonKu\GUI\SerialInstCreateUi.py", line 39, in __init__
+    self.descriptionLineEdit.setText(self.ports[self.portComboBox.currentText()])
+                                     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: ''
+
+
+
+
+2026-05-15--22-38-06 Exception: Traceback (most recent call last):
+  File "C:\Users\user\Desktop\YonKu\main_gui.py", line 1212, in closeEvent
+    self.instruments[device_key].close()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Desktop\YonKu\Tools\Instrument.py", line 131, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+
