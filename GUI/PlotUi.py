@@ -22,13 +22,13 @@ class plotWidget(QWidget):
         # [PlotItem Related Variables (Dataset, Plot setting, Axes type, etc.)]
 
         # data dictionaries
-        self.temperature = dataset['temperature']
-        self.resistance = dataset['resistance']
-        self.lockIn = dataset['lockIn']
-        self.lockIn2 = dataset['lockIn2']
-        self.field = dataset['field']
-        self.current = dataset['current']
-        self.time = dataset['time']
+        # self.temperature = dataset['temperature']
+        # self.resistance = dataset['resistance']
+        # self.lockIn = dataset['lockIn']
+        # self.lockIn2 = dataset['lockIn2']
+        # self.field = dataset['field']
+        # self.current = dataset['current']
+        # self.time = dataset['time']
         
         self.dataset = dataset
         self.experiment_parameters = experiment_parameters
@@ -64,62 +64,72 @@ class plotWidget(QWidget):
         self.colors = ['r', 'g', 'y', 'c', 'w']
         
         # set the xAxis and yAxis data type according to the exp setting ui & dataset
-        match self.xAxis:
-            case "lockIn":
-                self.xAxisData = self.lockIn
-                self.xAxis_name_key = 'lockIn_name'
-                self.xAxis_unit_key = 'lockIn_unit'
-            case "lockIn2":
-                self.xAxisData = self.lockIn2
-                self.xAxis_name_key = 'lockIn2_name'
-                self.xAxis_unit_key = 'lockIn2_unit'
-            case "temperature":
-                self.xAxisData = self.temperature
-                self.xAxis_name_key = 'temperature_name'
-                self.xAxis_unit_key = 'temperature_unit'
-            case "resistance":
-                self.xAxisData = self.resistance
-                self.xAxis_name_key = 'resistance_name'
-                self.xAxis_unit_key = 'resistance_unit'
-            case "field":
-                self.xAxisData = self.field
-                self.xAxis_name_key = 'field_name'
-                self.xAxis_unit_key = 'field_unit'
-            case "current":
-                self.xAxisData = self.current
-                self.xAxis_name_key = 'current_name'
-                self.xAxis_unit_key = 'current_unit'
-            case "time":
-                self.xAxisData = self.time
-                self.xAxis_name_key = 'time_name'
-        match self.yAxis:
-            case "lockIn":
-                self.yAxisData = self.lockIn
-                self.yAxis_name_key = 'lockIn_name'
-                self.yAxis_unit_key = 'lockIn_unit'
-            case "lockIn2":
-                self.yAxisData = self.lockIn2
-                self.yAxis_name_key = 'lockIn2_name'
-                self.yAxis_unit_key = 'lockIn2_unit'
-            case "temperature":
-                self.yAxisData = self.temperature
-                self.yAxis_name_key = 'temperature_name'
-                self.yAxis_unit_key = 'temperature_unit'
-            case "resistance":
-                self.yAxisData = self.resistance
-                self.yAxis_name_key = 'resistance_name'
-                self.yAxis_unit_key = 'resistance_unit'
-            case "field":
-                self.yAxisData = self.field
-                self.yAxis_name_key = 'field_name'
-                self.yAxis_unit_key = 'field_unit'
-            case "current":
-                self.yAxisData = self.current
-                self.yAxis_name_key = 'current_name'
-                self.yAxis_unit_key = 'current_unit'
-            case "time":
-                self.yAxisData = self.time
-                self.yAxis_name_key = 'time_name'
+        # match self.xAxis:
+        #     case "lockIn":
+        #         self.xAxisData = self.lockIn
+        #         self.xAxis_name_key = 'lockIn_name'
+        #         self.xAxis_unit_key = 'lockIn_unit'
+        #     case "lockIn2":
+        #         self.xAxisData = self.lockIn2
+        #         self.xAxis_name_key = 'lockIn2_name'
+        #         self.xAxis_unit_key = 'lockIn2_unit'
+        #     case "temperature":
+        #         self.xAxisData = self.temperature
+        #         self.xAxis_name_key = 'temperature_name'
+        #         self.xAxis_unit_key = 'temperature_unit'
+        #     case "resistance":
+        #         self.xAxisData = self.resistance
+        #         self.xAxis_name_key = 'resistance_name'
+        #         self.xAxis_unit_key = 'resistance_unit'
+        #     case "field":
+        #         self.xAxisData = self.field
+        #         self.xAxis_name_key = 'field_name'
+        #         self.xAxis_unit_key = 'field_unit'
+        #     case "current":
+        #         self.xAxisData = self.current
+        #         self.xAxis_name_key = 'current_name'
+        #         self.xAxis_unit_key = 'current_unit'
+        #     case "time":
+        #         self.xAxisData = self.time
+        #         self.xAxis_name_key = 'time_name'
+        # match self.yAxis:
+        #     case "lockIn":
+        #         self.yAxisData = self.lockIn
+        #         self.yAxis_name_key = 'lockIn_name'
+        #         self.yAxis_unit_key = 'lockIn_unit'
+        #     case "lockIn2":
+        #         self.yAxisData = self.lockIn2
+        #         self.yAxis_name_key = 'lockIn2_name'
+        #         self.yAxis_unit_key = 'lockIn2_unit'
+        #     case "temperature":
+        #         self.yAxisData = self.temperature
+        #         self.yAxis_name_key = 'temperature_name'
+        #         self.yAxis_unit_key = 'temperature_unit'
+        #     case "resistance":
+        #         self.yAxisData = self.resistance
+        #         self.yAxis_name_key = 'resistance_name'
+        #         self.yAxis_unit_key = 'resistance_unit'
+        #     case "field":
+        #         self.yAxisData = self.field
+        #         self.yAxis_name_key = 'field_name'
+        #         self.yAxis_unit_key = 'field_unit'
+        #     case "current":
+        #         self.yAxisData = self.current
+        #         self.yAxis_name_key = 'current_name'
+        #         self.yAxis_unit_key = 'current_unit'
+        #     case "time":
+        #         self.yAxisData = self.time
+        #         self.yAxis_name_key = 'time_name'
+
+        self.xAxisData = self.dataset.get(self.xAxis, {})
+        self.yAxisData = self.dataset.get(self.yAxis, {})
+
+        if not self.xAxisData:
+            print(f"Warning: x-axis data type '{self.xAxis}' not found in dataset.")
+
+        if not self.yAxisData:
+            print(f"Warning: y-axis data type '{self.yAxis}' not found in dataset.")
+
          # [/]
         
         # [Plot Window Related Variables (layouts, comboboxes, buttons)]
@@ -190,6 +200,24 @@ class plotWidget(QWidget):
    
     # [Functions]
     
+    def get_schema_entry(self, data_type, channel):
+        schema = self.experiment_parameters.get("data_schema", {})
+
+        key = f"{data_type}_{channel}"
+
+
+        return schema.get(key, {
+            "label": channel,
+            "unit": "-"
+        })
+
+    def get_label(self, data_type, channel):
+        return self.get_schema_entry(data_type, channel).get("label", channel)
+
+
+    def get_unit(self, data_type, channel):
+        return self.get_schema_entry(data_type, channel).get("unit", "-")
+
     def create_new_plot(self): # trace == plot in this function
         
         # [Trace Info Extraction (channel, name, etc.)]
@@ -197,52 +225,53 @@ class plotWidget(QWidget):
         # take the channel names of each Axis data type
         x_channel_list = list(self.xAxisData.keys())
         y_channel_list = list(self.yAxisData.keys())
+
+        if not x_channel_list or not y_channel_list:
+            print("No channels available for selected data types.")
+            return
         
         # choose the current channel from the combobox(we aren't using the combobox txt directly since they are not keys)
-        xAxisChannel = x_channel_list[self.xAxisUnitComboBox.currentIndex()]
-        yAxisChannel = y_channel_list[self.yAxisUnitComboBox.currentIndex()]
+        x_channel = x_channel_list[self.xAxisUnitComboBox.currentIndex()]
+        y_channel = y_channel_list[self.yAxisUnitComboBox.currentIndex()]
+
+        x_label = self.get_label(self.xAxis, x_channel)
+        y_label = self.get_label(self.yAxis, y_channel)
+
+        x_unit = self.get_unit(self.xAxis, x_channel)
+        y_unit = self.get_unit(self.yAxis, y_channel)
         
-        # take the channel name from the experiment_parameters
-        xAxisChannel_name = self.experiment_parameters[self.xAxis_name_key][xAxisChannel]
-        yAxisChannel_name = self.experiment_parameters[self.yAxis_name_key][yAxisChannel]
-        
-        # Editing the time unit (non-existent)
-        if not self.xAxis == 'time':
-            xAxisChannel_unit = self.experiment_parameters[self.xAxis_unit_key][xAxisChannel]
-        else:
-            xAxisChannel_unit = "-"
-        if not self.yAxis == 'time':    
-            yAxisChannel_unit = self.experiment_parameters[self.yAxis_unit_key][yAxisChannel]
-        else:
-            yAxisChannel_unit = "-"
         
         # plot and channel names
-        plot_name = yAxisChannel_name + " (" + yAxisChannel_unit + ")" + " vs " + xAxisChannel_name + " (" + xAxisChannel_unit + ")"
-        plot_channels = yAxisChannel + " vs " + xAxisChannel # [/]
+        plot_name = f"{y_label} ({y_unit}) vs {x_label} ({x_unit})"
+        plot_key = f"{y_channel} vs {x_channel}" # [/]
             
         # create a new trace with the extracted trace info
-        if not plot_channels in self.plots:
+        if not plot_key in self.plots:
             # data = np.array([self.xAxisData[xAxisChannel],self.yAxisData[yAxisChannel]], dtype=float)
             # data = data.transpose()
-            self.plots[plot_channels] = self.plot_widget.plot(self.xAxisData[xAxisChannel], 
-                                                                self.yAxisData[yAxisChannel], name = plot_name, pen = self.colors[self.plot_count % 5])
+            self.plots[plot_key] = self.plot_widget.plot(
+                self.xAxisData[x_channel],
+                self.yAxisData[y_channel],
+                name=plot_name,
+                pen=self.colors[self.plot_count % len(self.colors)]
+            )
             self.plot_count += 1
         else:
             pass
         
         #print(self.plots.keys())
     
-    def create_combo_box(self, Axis):
-        
+    def create_combo_box(self, axis):
         combo_box = QComboBox()
-        match Axis:
-            case 'x':
-                for ch in self.xAxisData.keys():
-                    combo_box.addItem(self.experiment_parameters[self.xAxis_name_key][ch])
-            case 'y':
-                for ch in self.yAxisData.keys():
-                    combo_box.addItem(self.experiment_parameters[self.yAxis_name_key][ch])
-        
+
+        if axis == "x":
+            for channel in self.xAxisData.keys():
+                combo_box.addItem(self.get_label(self.xAxis, channel))
+
+        elif axis == "y":
+            for channel in self.yAxisData.keys():
+                combo_box.addItem(self.get_label(self.yAxis, channel))
+
         return combo_box
     
     def plot_data(self): # update data for each plot
@@ -311,14 +340,15 @@ class oldPlotWidget(QWidget):
             self.set = {}
 
             for data_type, channel in self.dataset.columns:
-                if data_type not in self.set:
-                    self.set[data_type] = {}
-
+                self.set.setdefault(data_type, {})
                 self.set[data_type][channel] = self.dataset[(data_type, channel)].to_list()
 
             # also expose each data_type as an attribute because the rest of your class uses self.temperature, self.lockIn, etc.
-            for data_type, data_dict in self.set.items():
-                setattr(self, data_type, data_dict)
+            # for data_type, data_dict in self.set.items():
+            #     setattr(self, data_type, data_dict)
+
+            self.xAxisData = self.set.get(self.xAxis, {})
+            self.yAxisData = self.set.get(self.yAxis, {})
 
             
             # for instrument in self.connected_instruments:
@@ -336,173 +366,183 @@ class oldPlotWidget(QWidget):
         
         # if multiple dataset option is chosen    
         else:
-            self.temperature = {'ch_A':[],'ch_B':[],'ch_C':[],'ch_D':[]}
-            self.resistance = {'ch_A':[],'ch_B':[],'ch_C':[],'ch_D':[]}
-            self.lockIn = {'x':[],'y':[],'r':[],'theta':[]}
-            self.lockIn2 = {'x':[],'y':[],'r':[],'theta':[]}
-            self.field = {'field':[]}
-            self.current = {'current':[]}
-            self.time = {'time':[]}
+            # self.temperature = {'ch_A':[],'ch_B':[],'ch_C':[],'ch_D':[]}
+            # self.resistance = {'ch_A':[],'ch_B':[],'ch_C':[],'ch_D':[]}
+            # self.lockIn = {'x':[],'y':[],'r':[],'theta':[]}
+            # self.lockIn2 = {'x':[],'y':[],'r':[],'theta':[]}
+            # self.field = {'field':[]}
+            # self.current = {'current':[]}
+            # self.time = {'time':[]}
             
-            self.set = self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'field': self.field, 'current':self.current, 'time':self.time}
-             # [/]
+            # self.set = self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'field': self.field, 'current':self.current, 'time':self.time}
+            
+            self.set = {}
+            self.xAxisData = {}
+            self.yAxisData = {}
+
+            
+            # [/]
         
         # [Experiment Parameters Construction]
         
         # if it's a normal old plot
         if not self.multipleDataset :
-            try:
+            
+            self.experiment_parameters = self.experimentParamJson
                 
-                self.experiment_parameters = {'temperature_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'temperature_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
-                                        'resistance_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'resistance_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
-                                        'lockIn_name':{"x":"","y":"","r":"","theta":""}, 'lockIn_unit':{"x":"","y":"","r":"","theta":""},
-                                        'lockIn2_name':{"x":"","y":"","r":"","theta":""}, 'lockIn2_unit':{"x":"","y":"","r":"","theta":""},
-                                        'field_name':{"field":""}, 'field_unit':{"field":""},
-                                        'current_name':{"current":""}, 'current_unit':{"current":""},
-                                        'time_name':{"time":""}}
+            #     self.experiment_parameters = {'temperature_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'temperature_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
+            #                             'resistance_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'resistance_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
+            #                             'lockIn_name':{"x":"","y":"","r":"","theta":""}, 'lockIn_unit':{"x":"","y":"","r":"","theta":""},
+            #                             'lockIn2_name':{"x":"","y":"","r":"","theta":""}, 'lockIn2_unit':{"x":"","y":"","r":"","theta":""},
+            #                             'field_name':{"field":""}, 'field_unit':{"field":""},
+            #                             'current_name':{"current":""}, 'current_unit':{"current":""},
+            #                             'time_name':{"time":""}}
                 
                 
-                self.experiment_parameters['temperature_name']["ch_A"] = self.experimentParamJson["data_schema"]["temperature_ch_A"]["label"]
-                self.experiment_parameters['temperature_name']["ch_B"] = self.experimentParamJson["data_schema"]["temperature_ch_B"]["label"]
-                self.experiment_parameters['temperature_name']["ch_C"] = self.experimentParamJson["data_schema"]["temperature_ch_C"]["label"]
-                self.experiment_parameters['temperature_name']["ch_D"] = self.experimentParamJson["data_schema"]["temperature_ch_D"]["label"]
+            #     self.experiment_parameters['temperature_name']["ch_A"] = self.experimentParamJson["data_schema"]["temperature_ch_A"]["label"]
+            #     self.experiment_parameters['temperature_name']["ch_B"] = self.experimentParamJson["data_schema"]["temperature_ch_B"]["label"]
+            #     self.experiment_parameters['temperature_name']["ch_C"] = self.experimentParamJson["data_schema"]["temperature_ch_C"]["label"]
+            #     self.experiment_parameters['temperature_name']["ch_D"] = self.experimentParamJson["data_schema"]["temperature_ch_D"]["label"]
 
-                self.experiment_parameters['temperature_unit']["ch_A"] = self.experimentParamJson["data_schema"]["temperature_ch_A"]["unit"]
-                self.experiment_parameters['temperature_unit']["ch_B"] = self.experimentParamJson["data_schema"]["temperature_ch_B"]["unit"]
-                self.experiment_parameters['temperature_unit']["ch_C"] = self.experimentParamJson["data_schema"]["temperature_ch_C"]["unit"]
-                self.experiment_parameters['temperature_unit']["ch_D"] = self.experimentParamJson["data_schema"]["temperature_ch_D"]["unit"]
+            #     self.experiment_parameters['temperature_unit']["ch_A"] = self.experimentParamJson["data_schema"]["temperature_ch_A"]["unit"]
+            #     self.experiment_parameters['temperature_unit']["ch_B"] = self.experimentParamJson["data_schema"]["temperature_ch_B"]["unit"]
+            #     self.experiment_parameters['temperature_unit']["ch_C"] = self.experimentParamJson["data_schema"]["temperature_ch_C"]["unit"]
+            #     self.experiment_parameters['temperature_unit']["ch_D"] = self.experimentParamJson["data_schema"]["temperature_ch_D"]["unit"]
 
                 
-                self.experiment_parameters['resistance_name']["ch_A"] = self.experimentParamJson["data_schema"]["resistance_ch_A"]["label"]
-                self.experiment_parameters['resistance_name']["ch_B"] = self.experimentParamJson["data_schema"]["resistance_ch_B"]["label"]
-                self.experiment_parameters['resistance_name']["ch_C"] = self.experimentParamJson["data_schema"]["resistance_ch_C"]["label"]
-                self.experiment_parameters['resistance_name']["ch_D"] = self.experimentParamJson["data_schema"]["resistance_ch_D"]["label"]
+            #     self.experiment_parameters['resistance_name']["ch_A"] = self.experimentParamJson["data_schema"]["resistance_ch_A"]["label"]
+            #     self.experiment_parameters['resistance_name']["ch_B"] = self.experimentParamJson["data_schema"]["resistance_ch_B"]["label"]
+            #     self.experiment_parameters['resistance_name']["ch_C"] = self.experimentParamJson["data_schema"]["resistance_ch_C"]["label"]
+            #     self.experiment_parameters['resistance_name']["ch_D"] = self.experimentParamJson["data_schema"]["resistance_ch_D"]["label"]
 
-                self.experiment_parameters['resistance_unit']["ch_A"] = self.experimentParamJson["data_schema"]["resistance_ch_A"]["unit"]
-                self.experiment_parameters['resistance_unit']["ch_B"] = self.experimentParamJson["data_schema"]["resistance_ch_B"]["unit"]
-                self.experiment_parameters['resistance_unit']["ch_C"] = self.experimentParamJson["data_schema"]["resistance_ch_C"]["unit"]
-                self.experiment_parameters['resistance_unit']["ch_D"] = self.experimentParamJson["data_schema"]["resistance_ch_D"]["unit"]
+            #     self.experiment_parameters['resistance_unit']["ch_A"] = self.experimentParamJson["data_schema"]["resistance_ch_A"]["unit"]
+            #     self.experiment_parameters['resistance_unit']["ch_B"] = self.experimentParamJson["data_schema"]["resistance_ch_B"]["unit"]
+            #     self.experiment_parameters['resistance_unit']["ch_C"] = self.experimentParamJson["data_schema"]["resistance_ch_C"]["unit"]
+            #     self.experiment_parameters['resistance_unit']["ch_D"] = self.experimentParamJson["data_schema"]["resistance_ch_D"]["unit"]
 
-                self.experiment_parameters['lockIn_name']["x"] = self.experimentParamJson["data_schema"]["lockIn_x"]["label"]
-                self.experiment_parameters['lockIn_name']["y"] = self.experimentParamJson["data_schema"]["lockIn_y"]["label"]
-                self.experiment_parameters['lockIn_name']["r"] = self.experimentParamJson["data_schema"]["lockIn_r"]["label"]
-                self.experiment_parameters['lockIn_name']["theta"] = self.experimentParamJson["data_schema"]["lockIn_theta"]["label"]
+            #     self.experiment_parameters['lockIn_name']["x"] = self.experimentParamJson["data_schema"]["lockIn_x"]["label"]
+            #     self.experiment_parameters['lockIn_name']["y"] = self.experimentParamJson["data_schema"]["lockIn_y"]["label"]
+            #     self.experiment_parameters['lockIn_name']["r"] = self.experimentParamJson["data_schema"]["lockIn_r"]["label"]
+            #     self.experiment_parameters['lockIn_name']["theta"] = self.experimentParamJson["data_schema"]["lockIn_theta"]["label"]
 
-                self.experiment_parameters['lockIn_unit']["x"] = self.experimentParamJson["data_schema"]["lockIn_x"]["unit"]
-                self.experiment_parameters['lockIn_unit']["y"] = self.experimentParamJson["data_schema"]["lockIn_y"]["unit"]
-                self.experiment_parameters['lockIn_unit']["r"] = self.experimentParamJson["data_schema"]["lockIn_r"]["unit"]
-                self.experiment_parameters['lockIn_unit']["theta"] = self.experimentParamJson["data_schema"]["lockIn_theta"]["unit"]
+            #     self.experiment_parameters['lockIn_unit']["x"] = self.experimentParamJson["data_schema"]["lockIn_x"]["unit"]
+            #     self.experiment_parameters['lockIn_unit']["y"] = self.experimentParamJson["data_schema"]["lockIn_y"]["unit"]
+            #     self.experiment_parameters['lockIn_unit']["r"] = self.experimentParamJson["data_schema"]["lockIn_r"]["unit"]
+            #     self.experiment_parameters['lockIn_unit']["theta"] = self.experimentParamJson["data_schema"]["lockIn_theta"]["unit"]
 
-                self.experiment_parameters['lockIn2_name']["x"] = self.experimentParamJson["data_schema"]["lockIn2_x"]["label"]
-                self.experiment_parameters['lockIn2_name']["y"] = self.experimentParamJson["data_schema"]["lockIn2_y"]["label"]
-                self.experiment_parameters['lockIn2_name']["r"] = self.experimentParamJson["data_schema"]["lockIn2_r"]["label"]
-                self.experiment_parameters['lockIn2_name']["theta"] = self.experimentParamJson["data_schema"]["lockIn2_theta"]["label"]
+            #     self.experiment_parameters['lockIn2_name']["x"] = self.experimentParamJson["data_schema"]["lockIn2_x"]["label"]
+            #     self.experiment_parameters['lockIn2_name']["y"] = self.experimentParamJson["data_schema"]["lockIn2_y"]["label"]
+            #     self.experiment_parameters['lockIn2_name']["r"] = self.experimentParamJson["data_schema"]["lockIn2_r"]["label"]
+            #     self.experiment_parameters['lockIn2_name']["theta"] = self.experimentParamJson["data_schema"]["lockIn2_theta"]["label"]
 
-                self.experiment_parameters['lockIn2_unit']["x"] = self.experimentParamJson["data_schema"]["lockIn2_x"]["unit"]
-                self.experiment_parameters['lockIn2_unit']["y"] = self.experimentParamJson["data_schema"]["lockIn2_y"]["unit"]
-                self.experiment_parameters['lockIn2_unit']["r"] = self.experimentParamJson["data_schema"]["lockIn2_r"]["unit"]
-                self.experiment_parameters['lockIn2_unit']["theta"] = self.experimentParamJson["data_schema"]["lockIn2_theta"]["unit"]
+            #     self.experiment_parameters['lockIn2_unit']["x"] = self.experimentParamJson["data_schema"]["lockIn2_x"]["unit"]
+            #     self.experiment_parameters['lockIn2_unit']["y"] = self.experimentParamJson["data_schema"]["lockIn2_y"]["unit"]
+            #     self.experiment_parameters['lockIn2_unit']["r"] = self.experimentParamJson["data_schema"]["lockIn2_r"]["unit"]
+            #     self.experiment_parameters['lockIn2_unit']["theta"] = self.experimentParamJson["data_schema"]["lockIn2_theta"]["unit"]
 
-                self.experiment_parameters['field_name']["field"] = self.experimentParamJson["data_schema"]["field"]["label"]
-                self.experiment_parameters['field_unit']["field"] = self.experimentParamJson["data_schema"]["field"]["unit"]
+            #     self.experiment_parameters['field_name']["field"] = self.experimentParamJson["data_schema"]["field"]["label"]
+            #     self.experiment_parameters['field_unit']["field"] = self.experimentParamJson["data_schema"]["field"]["unit"]
                 
-                self.experiment_parameters['current_name']["current"] = self.experimentParamJson["data_schema"]["current"]["label"]
-                self.experiment_parameters['current_unit']["current"] = self.experimentParamJson["data_schema"]["current"]["unit"]
+            #     self.experiment_parameters['current_name']["current"] = self.experimentParamJson["data_schema"]["current"]["label"]
+            #     self.experiment_parameters['current_unit']["current"] = self.experimentParamJson["data_schema"]["current"]["unit"]
                 
-                self.experiment_parameters['time_name']["time"] = self.experimentParamJson["data_schema"]["time"]["label"]
+            #     self.experiment_parameters['time_name']["time"] = self.experimentParamJson["data_schema"]["time"]["label"]
                 
-            except FileNotFoundError:
-                self.experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
-                                      'resistance_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistance_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
-                                      'lockIn_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-                                      'lockIn2_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn2_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-                                      'field_name':{"field":"field"}, 'field_unit':{"field":"T"},
-                                      'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
-                                      'time_name':{"time":"time"}}
+            # except FileNotFoundError:
+            #     self.experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
+            #                           'resistance_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistance_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
+            #                           'lockIn_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
+            #                           'lockIn2_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn2_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
+            #                           'field_name':{"field":"field"}, 'field_unit':{"field":"T"},
+            #                           'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
+            #                           'time_name':{"time":"time"}}
         
         # if multiple dataset option is chosen, don't take any parameters yet        
         else:
-            self.experiment_parameters = {'temperature_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'temperature_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
-                                        'resistance_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'resistance_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
-                                        'lockIn_name':{"x":"","y":"","r":"","theta":""}, 'lockIn_unit':{"x":"","y":"","r":"","theta":""},
-                                        'lockIn2_name':{"x":"","y":"","r":"","theta":""}, 'lockIn2_unit':{"x":"","y":"","r":"","theta":""},
-                                        'field_name':{"field":""}, 'field_unit':{"field":""},
-                                        'current_name':{"current":""}, 'current_unit':{"current":""},
-                                        'time_name':{"time":""}} # [/]
+            self.experiment_parameters = {} # [/]
             
         # set the xAxis and yAxis data type according to the exp setting ui & dataset
-        match self.xAxis:
-            case "lockIn":
-                self.xAxisData = self.lockIn
-                self.x_set_name = 'lockIn'
-                self.xAxis_name_key = 'lockIn_name'
-                self.xAxis_unit_key = 'lockIn_unit'
-            case "lockIn2":
-                self.xAxisData = self.lockIn2
-                self.x_set_name = 'lockIn2'
-                self.xAxis_name_key = 'lockIn2_name'
-                self.xAxis_unit_key = 'lockIn2_unit'
-            case "temperature":
-                self.xAxisData = self.temperature
-                self.x_set_name = 'temperature'
-                self.xAxis_name_key = 'temperature_name'
-                self.xAxis_unit_key = 'temperature_unit'
-            case "resistance":
-                self.xAxisData = self.resistance
-                self.x_set_name = 'resistance'
-                self.xAxis_name_key = 'resistance_name'
-                self.xAxis_unit_key = 'resistance_unit'
-            case "field":
-                self.xAxisData = self.field
-                self.x_set_name = 'field'
-                self.xAxis_name_key = 'field_name'
-                self.xAxis_unit_key = 'field_unit'
-            case "current":
-                self.xAxisData = self.current
-                self.x_set_name = 'current'
-                self.xAxis_name_key = 'current_name'
-                self.xAxis_unit_key = 'current_unit'
-            case "time":
-                self.xAxisData = self.time
-                self.x_set_name = 'time'
-                self.xAxis_name_key = 'time_name'
-                self.xAxis_unit_key = 'time_unit' 
-        match self.yAxis:
-            case "lockIn":
-                self.yAxisData = self.lockIn
-                self.y_set_name = 'lockIn'
-                self.yAxis_name_key = 'lockIn_name'
-                self.yAxis_unit_key = 'lockIn_unit'
-            case "lockIn2":
-                self.yAxisData = self.lockIn2
-                self.y_set_name = 'lockIn2'
-                self.yAxis_name_key = 'lockIn2_name'
-                self.yAxis_unit_key = 'lockIn2_unit'
-            case "temperature":
-                self.yAxisData = self.temperature
-                self.y_set_name = 'temperature'
-                self.yAxis_name_key = 'temperature_name'
-                self.yAxis_unit_key = 'temperature_unit'
-            case "resistance":
-                self.yAxisData = self.resistance
-                self.y_set_name = 'resistance'
-                self.yAxis_name_key = 'resistance_name'
-                self.yAxis_unit_key = 'resistance_unit'
-            case "field":
-                self.yAxisData = self.field
-                self.y_set_name = 'field'
-                self.yAxis_name_key = 'field_name'
-                self.yAxis_unit_key = 'field_unit'
-            case "current":
-                self.yAxisData = self.current
-                self.y_set_name = 'current'
-                self.yAxis_name_key = 'current_name'
-                self.yAxis_unit_key = 'current_unit'
-            case "time":
-                self.yAxisData = self.time
-                self.y_set_name = 'time'
-                self.yAxis_name_key = 'time_name'
-                self.yAxis_unit_key = 'time_unit'
+        self.xAxisData = self.set.get(self.xAxis, {})
+        self.x_set_name = self.xAxis
+        self.xAxis_name_key = f'{self.x_set_name}_name'
+        self.xAxis_unit_key = f'{self.x_set_name}__unit'
+        self.yAxisData = self.set.get(self.yAxis, {})
+        self.y_set_name = self.yAxis
+        self.yAxis_name_key = f'{self.y_set_name}_name'
+        self.yAxis_unit_key = f'{self.y_set_name}__unit'
+
+        # match self.xAxis:
+        #     case "lockIn":
+        #         self.xAxisData = self.lockIn
+        #         self.x_set_name = 'lockIn'
+        #         self.xAxis_name_key = 'lockIn_name'
+        #         self.xAxis_unit_key = 'lockIn_unit'
+        #     case "lockIn2":
+        #         self.xAxisData = self.lockIn2
+        #         self.x_set_name = 'lockIn2'
+        #         self.xAxis_name_key = 'lockIn2_name'
+        #         self.xAxis_unit_key = 'lockIn2_unit'
+        #     case "temperature":
+        #         self.xAxisData = self.temperature
+        #         self.x_set_name = 'temperature'
+        #         self.xAxis_name_key = 'temperature_name'
+        #         self.xAxis_unit_key = 'temperature_unit'
+        #     case "resistance":
+        #         self.xAxisData = self.resistance
+        #         self.x_set_name = 'resistance'
+        #         self.xAxis_name_key = 'resistance_name'
+        #         self.xAxis_unit_key = 'resistance_unit'
+        #     case "field":
+        #         self.xAxisData = self.field
+        #         self.x_set_name = 'field'
+        #         self.xAxis_name_key = 'field_name'
+        #         self.xAxis_unit_key = 'field_unit'
+        #     case "current":
+        #         self.xAxisData = self.current
+        #         self.x_set_name = 'current'
+        #         self.xAxis_name_key = 'current_name'
+        #         self.xAxis_unit_key = 'current_unit'
+        #     case "time":
+        #         self.xAxisData = self.time
+        #         self.x_set_name = 'time'
+        #         self.xAxis_name_key = 'time_name'
+        #         self.xAxis_unit_key = 'time_unit' 
+        # match self.yAxis:
+        #     case "lockIn":
+        #         self.yAxisData = self.lockIn
+        #         self.y_set_name = 'lockIn'
+        #         self.yAxis_name_key = 'lockIn_name'
+        #         self.yAxis_unit_key = 'lockIn_unit'
+        #     case "lockIn2":
+        #         self.yAxisData = self.lockIn2
+        #         self.y_set_name = 'lockIn2'
+        #         self.yAxis_name_key = 'lockIn2_name'
+        #         self.yAxis_unit_key = 'lockIn2_unit'
+        #     case "temperature":
+        #         self.yAxisData = self.temperature
+        #         self.y_set_name = 'temperature'
+        #         self.yAxis_name_key = 'temperature_name'
+        #         self.yAxis_unit_key = 'temperature_unit'
+        #     case "resistance":
+        #         self.yAxisData = self.resistance
+        #         self.y_set_name = 'resistance'
+        #         self.yAxis_name_key = 'resistance_name'
+        #         self.yAxis_unit_key = 'resistance_unit'
+        #     case "field":
+        #         self.yAxisData = self.field
+        #         self.y_set_name = 'field'
+        #         self.yAxis_name_key = 'field_name'
+        #         self.yAxis_unit_key = 'field_unit'
+        #     case "current":
+        #         self.yAxisData = self.current
+        #         self.y_set_name = 'current'
+        #         self.yAxis_name_key = 'current_name'
+        #         self.yAxis_unit_key = 'current_unit'
+        #     case "time":
+        #         self.yAxisData = self.time
+        #         self.y_set_name = 'time'
+        #         self.yAxis_name_key = 'time_name'
+        #         self.yAxis_unit_key = 'time_unit'
          # [/]
         
         # [Plot Window Related Variables (layouts, comboboxes, buttons)]
@@ -618,6 +658,23 @@ class oldPlotWidget(QWidget):
         
     # [Functions]
     
+    def get_schema_entry(self, data_type, channel):
+        schema = self.experiment_parameters.get("data_schema", {})
+        key = f"{data_type}_{channel}"
+
+        return schema.get(key, {
+            "label": channel,
+            "unit": "-"
+        })
+
+
+    def get_label(self, data_type, channel):
+        return self.get_schema_entry(data_type, channel).get("label", channel)
+
+
+    def get_unit(self, data_type, channel):
+        return self.get_schema_entry(data_type, channel).get("unit", "-")
+
     # [Multi dataset functions]
     def open_multidataset_plot(self):
         
@@ -641,10 +698,10 @@ class oldPlotWidget(QWidget):
         if self.addMultiDataPlotWid.AxisDatasetLineEdit.text() == "" or self.addMultiDataPlotWid.AxisDatasetLineEdit.text() == "This dataset doesn't include the chosen data types.":
             self.addMultiDataPlotWid.AxisDatasetLineEdit.setText("Please choose a dataset.")
         else:
-            xAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.x_channel_list, self.addMultiDataPlotWid.xAxisChannelComboBox, 
+            xAxisChannel_name, xAxisChannel_unit = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.x_channel_list, self.addMultiDataPlotWid.xAxisChannelComboBox, 
                                                 self.xAxisData, self.addMultiDataPlotWid.xAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
                                                 self.addMultiDataPlotWid.xAxis_name_key, self.addMultiDataPlotWid.xAxis_unit_key)
-            yAxisChannel_name = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.y_channel_list, self.addMultiDataPlotWid.yAxisChannelComboBox, 
+            yAxisChannel_name, yAxisChannel_unit = self.addMultiDataPlotWid.update_data(self.addMultiDataPlotWid.datasetLink, self.addMultiDataPlotWid.y_channel_list, self.addMultiDataPlotWid.yAxisChannelComboBox, 
                                                 self.yAxisData, self.addMultiDataPlotWid.yAxis, self.experiment_parameters, self.addMultiDataPlotWid.expParam,
                                                 self.addMultiDataPlotWid.yAxis_name_key, self.addMultiDataPlotWid.yAxis_unit_key)
             if xAxisChannel_name == None or yAxisChannel_name == None:
@@ -658,17 +715,19 @@ class oldPlotWidget(QWidget):
             self.previous_viewbox = None
             self.main_layout = self.plot_item.layout
             
-            if not self.xAxis == 'time':
-                xAxisChannel_unit = self.experiment_parameters[self.xAxis_unit_key][xAxisChannel_name]
-            else:
-                xAxisChannel_unit = "-"
-                
-            if not self.yAxis == 'time':    
-                yAxisChannel_unit = self.experiment_parameters[self.yAxis_unit_key][yAxisChannel_name]
-            else:
-                yAxisChannel_unit = "-"
             
-            plot_name = yAxisChannel_name + " (" + yAxisChannel_unit + ")" + " vs " + xAxisChannel_name + " (" + xAxisChannel_unit + ")"
+
+            # if not self.xAxis == 'time':
+            #     xAxisChannel_unit = self.experiment_parameters[self.xAxis_unit_key][xAxisChannel_name]
+            # else:
+            #     xAxisChannel_unit = "-"
+                
+            # if not self.yAxis == 'time':    
+            #     yAxisChannel_unit = self.experiment_parameters[self.yAxis_unit_key][yAxisChannel_name]
+            # else:
+            #     yAxisChannel_unit = "-"
+            
+            plot_name = f"{yAxisChannel_name} ({yAxisChannel_unit}) vs {xAxisChannel_name} ({xAxisChannel_unit})"
             plot_channels = xAxisChannel_name + " vs " + yAxisChannel_name
             
             
@@ -932,54 +991,61 @@ class oldPlotWidget(QWidget):
     
     # [Single dataset functions]
     def create_new_plot(self):
-        
+
+                # [Trace Info Extraction (channel, name, etc.)]
+
+        # take the channel names of each Axis data type
         x_channel_list = list(self.xAxisData.keys())
         y_channel_list = list(self.yAxisData.keys())
-        
-        xAxisChannel = x_channel_list[self.xAxisUnitComboBox.currentIndex()]
-        yAxisChannel = y_channel_list[self.yAxisUnitComboBox.currentIndex()]
-        
-        xAxisChannel_name = self.experiment_parameters[self.xAxis_name_key][xAxisChannel]
-        yAxisChannel_name = self.experiment_parameters[self.yAxis_name_key][yAxisChannel]
-        
-        if not self.xAxis == 'time':
-            xAxisChannel_unit = self.experiment_parameters[self.xAxis_unit_key][xAxisChannel]
-        else:
-            xAxisChannel_unit = "-"
-             
-        if not self.yAxis == 'time':    
-            yAxisChannel_unit = self.experiment_parameters[self.yAxis_unit_key][yAxisChannel]
-        else:
-            yAxisChannel_unit = "-"
-        
-        plot_name = yAxisChannel_name + " (" + yAxisChannel_unit + ")" + " vs " + xAxisChannel_name + " (" + xAxisChannel_unit + ")"
-        plot_channels = yAxisChannel + " vs " + xAxisChannel
-    
-        if not plot_channels in self.plots:
-            self.plots[plot_channels] = self.plot_item.plot(self.xAxisData[xAxisChannel], 
-                                                                self.yAxisData[yAxisChannel], name = plot_name, pen = self.colors[self.plot_count % 5])
 
+        if not x_channel_list or not y_channel_list:
+            print("No channels available for selected data types.")
+            return
+        
+        # choose the current channel from the combobox(we aren't using the combobox txt directly since they are not keys)
+        x_channel = x_channel_list[self.xAxisUnitComboBox.currentIndex()]
+        y_channel = y_channel_list[self.yAxisUnitComboBox.currentIndex()]
+
+        x_label = self.get_label(self.xAxis, x_channel)
+        y_label = self.get_label(self.yAxis, y_channel)
+
+        x_unit = self.get_unit(self.xAxis, x_channel)
+        y_unit = self.get_unit(self.yAxis, y_channel)
+        
+        
+        # plot and channel names
+        plot_name = f"{y_label} ({y_unit}) vs {x_label} ({x_unit})"
+        plot_key = f"{y_channel} vs {x_channel}" # [/]
+            
+        # create a new trace with the extracted trace info
+        if not plot_key in self.plots:
+            # data = np.array([self.xAxisData[xAxisChannel],self.yAxisData[yAxisChannel]], dtype=float)
+            # data = data.transpose()
+            self.plots[plot_key] = self.plot_widget.plot(
+                self.xAxisData[x_channel],
+                self.yAxisData[y_channel],
+                name=plot_name,
+                pen=self.colors[self.plot_count % len(self.colors)]
+            )
             self.plot_count += 1
         else:
             pass
         
+        
         #print(self.plots.keys())
      
-    def create_combo_box(self, Axis):
+    def create_combo_box(self, axis):
         
         combo_box = QComboBox()
-        
-        if not self.multipleDataset:
-            match Axis:
-                case 'x':
-                    for ch in self.xAxisData.keys():
-                        combo_box.addItem(self.experiment_parameters[self.xAxis_name_key][ch])
-                case 'y':
-                    for ch in self.yAxisData.keys():
-                        combo_box.addItem(self.experiment_parameters[self.yAxis_name_key][ch])
-        else:
-            combo_box.setEnabled(False)
-        
+
+        if axis == "x":
+            for channel in self.xAxisData.keys():
+                combo_box.addItem(self.get_label(self.xAxis, channel))
+
+        elif axis == "y":
+            for channel in self.yAxisData.keys():
+                combo_box.addItem(self.get_label(self.yAxis, channel))
+
         return combo_box
  # [/]
  # [/]

@@ -1,0 +1,14 @@
+Szkopek Lab Error Log Book - 2026-05-18--17-02-36
+
+2026-05-18--17-02-59 Exception: Traceback (most recent call last):
+  File "C:\Users\user\Desktop\YonKu\main_gui.py", line 1252, in <module>
+    UIWindow = UI()
+  File "C:\Users\user\Desktop\YonKu\main_gui.py", line 83, in __init__
+    self.add_windows()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Desktop\YonKu\main_gui.py", line 245, in add_windows
+    instrument = self.instruments[device_key]
+                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'Device_8'
+
+

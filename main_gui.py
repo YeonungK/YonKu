@@ -19,6 +19,7 @@ from GUI import NewPlotSettingUi as nps, OpenPlotSettingUi as ops, PlotUi, Exper
 from GUI import SerialInstCreateUi as sic, GpibInstCreateUi as gic, EthernetInstCreateUi as eic, USB6525InstCreateUi as bic, DisconnectedDevicesUi as ddu
 from GUI import DeviceListUi as dlu, SerialInstDeviceUi as sidu, GpibInstDeviceUi as gidu, EthernetInstDeviceUi as eidu, USB6525InstDeviceUi as uidu
 from Tools import DataLogger, Dataset, NewQMdiSubWindow, ExperimentController
+from Tools.ExperimentSchema import build_experiment_schema
 
 
 from datetime import datetime
@@ -186,7 +187,19 @@ class UI(QMainWindow):
                 disconnected_instr[device_key] = instrument
         print(disconnected_instr)
         return connected_instr, disconnected_instr
-     
+    
+    def get_acquirable_instruments(self, instruments):
+        acquirable = {}
+
+        for device_key, instrument in instruments.items():
+            if not getattr(instrument, "data_type", {}):
+                continue
+
+            # Keep this generic for now.
+            # If a device should not be logged, it should have empty data_type.
+            acquirable[device_key] = instrument
+
+        return acquirable
      # [/]
      
      
@@ -365,7 +378,22 @@ class UI(QMainWindow):
         else:  
             return None
         # check instrument connection
-        self.connected_instuments, self.disconnected_instuments = self.check_instrument_connection()
+        self.connected_instruments, self.disconnected_instuments = self.check_instrument_connection()
+        self.acquirable_instruments = self.get_acquirable_instruments(self.connected_instruments)
+        self.datasets["primary"].build_from_instruments(self.acquirable_instruments)
+
+        print("Dynamic dataset:")
+        print(self.datasets["primary"].set)
+
+        if not self.datasets["primary"].set:
+                self.errorDisplay.setText("Dataset was not initialized.")
+                return
+
+        if len(self.datasets["primary"].set) <= 1:
+            self.errorDisplay.setText("No acquirable instrument data types found.")
+            return
+        
+
         if not self.disconnected_instuments:
             self.start_experiment_thread()
         else:
@@ -377,15 +405,23 @@ class UI(QMainWindow):
             self.disDevWid.cancelButton.clicked.connect(self.disDevWid.close)
             
     def start_experiment_thread(self):
+
+        for device_key, inst in self.acquirable_instruments.items():
+            print(device_key)
+            print("data_type:", inst.data_type)
+            print("data_function:", inst.data_function)
+
         self.valid_period_check()
         try:
             if self.MeasureFreqLineEdit.text() == "":
                 self.experiment_period = 1000
             else:
                 self.experiment_period = int(self.MeasureFreqLineEdit.text()) * 1000
-           
+            
+            
+
             # self.plot_worker for data acquisition
-            self.plot_worker = ExperimentController.PlotWorker(self.connected_instuments, self.plot_widgets, self.datasets['primary'].set, self.experiment_period, 
+            self.plot_worker = ExperimentController.PlotWorker(self.acquirable_instruments, self.plot_widgets, self.datasets['primary'].set, self.experiment_period, 
                                         self.pausePushButton, self.experimentNameLineEdit,
                                         self.lockInAmplifier1Wid.xLineEdit, self.lockInAmplifier1Wid.yLineEdit, self.lockInAmplifier1Wid.rLineEdit, self.lockInAmplifier1Wid.thetaLineEdit, 
                                         self.lockInAmplifier2Wid.xLineEdit, self.lockInAmplifier2Wid.yLineEdit, self.lockInAmplifier2Wid.rLineEdit, self.lockInAmplifier2Wid.thetaLineEdit, 
@@ -500,9 +536,41 @@ class UI(QMainWindow):
     
     # [...........new plots...........]
     
+    def build_live_plot_parameters(self):
+        return build_experiment_schema(
+            self.instruments,
+            self.experimentSettingWid
+        )   
+
+    def get_live_available_data_types(self):
+        data_types = ["time"]
+
+        # Prefer current dataset if already built
+        if hasattr(self, "datasets") and "primary" in self.datasets:
+            dataset_keys = list(self.datasets["primary"].set.keys())
+            if dataset_keys:
+                return dataset_keys
+
+        # Fallback to instruments
+        for instrument in self.instruments.values():
+            for data_type in getattr(instrument, "data_type", {}).keys():
+                if data_type not in data_types:
+                    data_types.append(data_type)
+
+        return data_types
+
     def new_plot_setting(self):
         self.nps_window = QMainWindow()
-        self.newPlotSettingWid = nps.create_plot_setting_ui()
+
+        available_data_types = self.get_live_available_data_types()
+
+        if not available_data_types:
+            self.errorDisplay.setText("No available data types for plotting.")
+            return
+        
+        print("Available live plot data types:", self.get_live_available_data_types())
+
+        self.newPlotSettingWid = nps.create_plot_setting_ui(available_data_types=available_data_types)
         # self.Wid = QWidget()
         # uic.loadUi("GUI/create_plot_setting.ui", self.Wid)
         self.nps_window.setCentralWidget(self.newPlotSettingWid)
@@ -522,7 +590,11 @@ class UI(QMainWindow):
         self.new_plot_window()
 
     def new_plot_window(self):
-        self.plot_widgets[self.plot_widget_count] = PlotUi.plotWidget(self.plot_setting, self.datasets['primary'].set, self.experimentSettingWid.experiment_parameters)
+        self.plot_widgets[self.plot_widget_count] = PlotUi.plotWidget(
+            self.plot_setting, 
+            self.datasets['primary'].set, 
+            self.build_live_plot_parameters()
+        )
         
         self.plot_sub = QMdiSubWindow()
         self.plot_sub.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint) # disable maximize button
@@ -1120,7 +1192,11 @@ load_methods(metadata)"""
                     inst = cls(device_name, data_list["address"])
 
                 case "ethernet":
-                    inst = cls(device_name, data_list["instIP"], int(data_list["port"]))
+                    if data_list["port"] == "":
+                        inst = cls(device_name, data_list["instIP"], 0)
+                    else:
+                        inst = cls(device_name, data_list["instIP"], int(data_list["port"]))
+
 
                 case "usb6525":
                     inst = cls(

@@ -1,0 +1,7 @@
+{
+    "name": "test_ethernet",
+    "interface": "ethernet",
+    "model": "test_ethernet_model",
+    "instIP": "",
+    "port": ""
+}

@@ -299,19 +299,23 @@ class add_multidata_plot_ui(QWidget):
             try:
                 
                 self.datasetLink = Path(fname[0])
+
+                dataset = pd.read_csv(self.datasetLink, header=[0,1])
                 # go to experiment_parameters folder and keep same filename
                 param_base = EXPERIMENT_PARAMETERS_DIR / self.datasetLink.stem
 
                 self.experimentParamLink = str(param_base)
                             
-                experiment_params = self.load_experiment_parameters(
+                self.expParam = self.load_experiment_parameters(
                 self.experimentParamLink
             )
 
-                available_data_types = experiment_params["available_data_types"]
+                available_data_types = list(dataset.columns.get_level_values(0).unique())
 
                 self.xAxis_exists = self.xAxis in available_data_types
                 self.yAxis_exists = self.yAxis in available_data_types
+
+                
                 
                 # # check if the dataset includes the xaxis and yaxis data type
                 # try:
@@ -348,8 +352,11 @@ class add_multidata_plot_ui(QWidget):
                 if self.xAxis_exists and self.yAxis_exists:
                     self.AxisDatasetLineEdit.setText(fname[0])
                     self.datasetLink = fname[0]
-                    self.expParam = self.set_names(experiment_params, self.xAxisChannelComboBox, self.yAxisChannelComboBox, self.xAxis_name_key, self.yAxis_name_key, self.xData, self.yData)
-                    print(f"parameter: {self.expParam}")
+                    self.x_channel_list = list(dataset[self.xAxis].columns)
+                    self.y_channel_list = list(dataset[self.yAxis].columns)
+
+                    self.set_names()
+                    
                 else:
                     print(self.xAxis, self.yAxis)
                     self.AxisDatasetLineEdit.setText("This dataset doesn't include the chosen data types.")
@@ -359,110 +366,176 @@ class add_multidata_plot_ui(QWidget):
         else: pass
             
         
-    def set_names(self, experiment_params, x_combo_box, y_combo_box, x_name_key, y_name_key, x_data, y_data):
+    def set_names(self):
         
-        try:
-            experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
-                                        'resistance_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistance_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
-                                        'lockIn_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-                                        'lockIn2_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn2_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-                                        'field_name':{"field":"field"}, 'field_unit':{"field":"T"},
-                                        'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
-                                        'time_name':{"time":"time"}}
+        # try:
+        #     experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
+        #                                 'resistance_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistance_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
+        #                                 'lockIn_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
+        #                                 'lockIn2_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn2_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
+        #                                 'field_name':{"field":"field"}, 'field_unit':{"field":"T"},
+        #                                 'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
+        #                                 'time_name':{"time":"time"}}
             
-            experiment_parameters['temperature_name']["ch_A"] = experiment_params['data_schema']['temperature_ch_A']['label']
-            experiment_parameters['temperature_name']["ch_B"] = experiment_params['data_schema']['temperature_ch_B']['label']
-            experiment_parameters['temperature_name']["ch_C"] = experiment_params['data_schema']['temperature_ch_C']['label']
-            experiment_parameters['temperature_name']["ch_D"] = experiment_params['data_schema']['temperature_ch_D']['label']
+        #     experiment_parameters['temperature_name']["ch_A"] = experiment_params['data_schema']['temperature_ch_A']['label']
+        #     experiment_parameters['temperature_name']["ch_B"] = experiment_params['data_schema']['temperature_ch_B']['label']
+        #     experiment_parameters['temperature_name']["ch_C"] = experiment_params['data_schema']['temperature_ch_C']['label']
+        #     experiment_parameters['temperature_name']["ch_D"] = experiment_params['data_schema']['temperature_ch_D']['label']
 
-            experiment_parameters['temperature_unit']["ch_A"] = experiment_params['data_schema']['temperature_ch_A']['unit']
-            experiment_parameters['temperature_unit']["ch_B"] = experiment_params['data_schema']['temperature_ch_B']['unit']
-            experiment_parameters['temperature_unit']["ch_C"] = experiment_params['data_schema']['temperature_ch_C']['unit']
-            experiment_parameters['temperature_unit']["ch_D"] = experiment_params['data_schema']['temperature_ch_D']['unit']
+        #     experiment_parameters['temperature_unit']["ch_A"] = experiment_params['data_schema']['temperature_ch_A']['unit']
+        #     experiment_parameters['temperature_unit']["ch_B"] = experiment_params['data_schema']['temperature_ch_B']['unit']
+        #     experiment_parameters['temperature_unit']["ch_C"] = experiment_params['data_schema']['temperature_ch_C']['unit']
+        #     experiment_parameters['temperature_unit']["ch_D"] = experiment_params['data_schema']['temperature_ch_D']['unit']
 
-            experiment_parameters['resistance_name']["ch_A"] = experiment_params['data_schema']['resistance_ch_A']['label']
-            experiment_parameters['resistance_name']["ch_B"] = experiment_params['data_schema']['resistance_ch_B']['label']
-            experiment_parameters['resistance_name']["ch_C"] = experiment_params['data_schema']['resistance_ch_C']['label']
-            experiment_parameters['resistance_name']["ch_D"] = experiment_params['data_schema']['resistance_ch_D']['label']
+        #     experiment_parameters['resistance_name']["ch_A"] = experiment_params['data_schema']['resistance_ch_A']['label']
+        #     experiment_parameters['resistance_name']["ch_B"] = experiment_params['data_schema']['resistance_ch_B']['label']
+        #     experiment_parameters['resistance_name']["ch_C"] = experiment_params['data_schema']['resistance_ch_C']['label']
+        #     experiment_parameters['resistance_name']["ch_D"] = experiment_params['data_schema']['resistance_ch_D']['label']
 
-            experiment_parameters['resistance_unit']["ch_A"] = experiment_params['data_schema']['resistance_ch_A']['unit']
-            experiment_parameters['resistance_unit']["ch_B"] = experiment_params['data_schema']['resistance_ch_B']['unit']
-            experiment_parameters['resistance_unit']["ch_C"] = experiment_params['data_schema']['resistance_ch_C']['unit']
-            experiment_parameters['resistance_unit']["ch_D"] = experiment_params['data_schema']['resistance_ch_D']['unit']
+        #     experiment_parameters['resistance_unit']["ch_A"] = experiment_params['data_schema']['resistance_ch_A']['unit']
+        #     experiment_parameters['resistance_unit']["ch_B"] = experiment_params['data_schema']['resistance_ch_B']['unit']
+        #     experiment_parameters['resistance_unit']["ch_C"] = experiment_params['data_schema']['resistance_ch_C']['unit']
+        #     experiment_parameters['resistance_unit']["ch_D"] = experiment_params['data_schema']['resistance_ch_D']['unit']
 
-            experiment_parameters['lockIn_name']["x"] = experiment_params['data_schema']['lockIn_x']['label']
-            experiment_parameters['lockIn_name']["y"] = experiment_params['data_schema']['lockIn_y']['label']
-            experiment_parameters['lockIn_name']["r"] = experiment_params['data_schema']['lockIn_r']['label']
-            experiment_parameters['lockIn_name']["theta"] = experiment_params['data_schema']['lockIn_theta']['label']
+        #     experiment_parameters['lockIn_name']["x"] = experiment_params['data_schema']['lockIn_x']['label']
+        #     experiment_parameters['lockIn_name']["y"] = experiment_params['data_schema']['lockIn_y']['label']
+        #     experiment_parameters['lockIn_name']["r"] = experiment_params['data_schema']['lockIn_r']['label']
+        #     experiment_parameters['lockIn_name']["theta"] = experiment_params['data_schema']['lockIn_theta']['label']
 
-            experiment_parameters['lockIn_unit']["x"] = experiment_params['data_schema']['lockIn_x']['unit']
-            experiment_parameters['lockIn_unit']["y"] = experiment_params['data_schema']['lockIn_y']['unit']
-            experiment_parameters['lockIn_unit']["r"] = experiment_params['data_schema']['lockIn_r']['unit']
-            experiment_parameters['lockIn_unit']["theta"] = experiment_params['data_schema']['lockIn_theta']['unit']
+        #     experiment_parameters['lockIn_unit']["x"] = experiment_params['data_schema']['lockIn_x']['unit']
+        #     experiment_parameters['lockIn_unit']["y"] = experiment_params['data_schema']['lockIn_y']['unit']
+        #     experiment_parameters['lockIn_unit']["r"] = experiment_params['data_schema']['lockIn_r']['unit']
+        #     experiment_parameters['lockIn_unit']["theta"] = experiment_params['data_schema']['lockIn_theta']['unit']
 
-            experiment_parameters['lockIn2_name']["x"] = experiment_params['data_schema']['lockIn2_x']['label']
-            experiment_parameters['lockIn2_name']["y"] = experiment_params['data_schema']['lockIn2_y']['label']
-            experiment_parameters['lockIn2_name']["r"] = experiment_params['data_schema']['lockIn2_r']['label']
-            experiment_parameters['lockIn2_name']["theta"] = experiment_params['data_schema']['lockIn2_theta']['label']
+        #     experiment_parameters['lockIn2_name']["x"] = experiment_params['data_schema']['lockIn2_x']['label']
+        #     experiment_parameters['lockIn2_name']["y"] = experiment_params['data_schema']['lockIn2_y']['label']
+        #     experiment_parameters['lockIn2_name']["r"] = experiment_params['data_schema']['lockIn2_r']['label']
+        #     experiment_parameters['lockIn2_name']["theta"] = experiment_params['data_schema']['lockIn2_theta']['label']
 
-            experiment_parameters['lockIn2_unit']["x"] = experiment_params['data_schema']['lockIn2_x']['unit']
-            experiment_parameters['lockIn2_unit']["y"] = experiment_params['data_schema']['lockIn2_y']['unit']
-            experiment_parameters['lockIn2_unit']["r"] = experiment_params['data_schema']['lockIn2_r']['unit']
-            experiment_parameters['lockIn2_unit']["theta"] = experiment_params['data_schema']['lockIn2_theta']['unit']
+        #     experiment_parameters['lockIn2_unit']["x"] = experiment_params['data_schema']['lockIn2_x']['unit']
+        #     experiment_parameters['lockIn2_unit']["y"] = experiment_params['data_schema']['lockIn2_y']['unit']
+        #     experiment_parameters['lockIn2_unit']["r"] = experiment_params['data_schema']['lockIn2_r']['unit']
+        #     experiment_parameters['lockIn2_unit']["theta"] = experiment_params['data_schema']['lockIn2_theta']['unit']
 
-            experiment_parameters['field_name']["field"] = experiment_params['data_schema']['field']['label']
-            experiment_parameters['field_unit']["field"] = experiment_params['data_schema']['field']['unit']
+        #     experiment_parameters['field_name']["field"] = experiment_params['data_schema']['field']['label']
+        #     experiment_parameters['field_unit']["field"] = experiment_params['data_schema']['field']['unit']
 
-            experiment_parameters['current_name']["current"] = experiment_params['data_schema']['current']['label']
-            experiment_parameters['current_unit']["current"] = experiment_params['data_schema']['current']['unit']
+        #     experiment_parameters['current_name']["current"] = experiment_params['data_schema']['current']['label']
+        #     experiment_parameters['current_unit']["current"] = experiment_params['data_schema']['current']['unit']
 
-            experiment_parameters['time_name']["time"] = experiment_params['data_schema']['time']['label']
+        #     experiment_parameters['time_name']["time"] = experiment_params['data_schema']['time']['label']
 
-        except FileNotFoundError:
-            experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
-                                    'resistance_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistance_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
-                                    'lockIn_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-                                    'lockIn2_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn2_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-                                    'field_name':{"field":"field"}, 'field_unit':{"field":"T"},
-                                    'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
-                                    'time_name':{"time":"time"}}
+        # except FileNotFoundError:
+        #     experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
+        #                             'resistance_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistance_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
+        #                             'lockIn_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
+        #                             'lockIn2_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn2_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
+        #                             'field_name':{"field":"field"}, 'field_unit':{"field":"T"},
+        #                             'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
+        #                             'time_name':{"time":"time"}}
         
-        x_channels_list = list(x_data.keys())[0:len(experiment_parameters[x_name_key].keys())]
-        y_channels_list = list(y_data.keys())[0:len(experiment_parameters[y_name_key].keys())]
+        self.xAxisChannelComboBox.clear()
+        self.yAxisChannelComboBox.clear()
+
+        # Populate X-axis channel combo box
+        for ch in self.x_channel_list:
+            label = self.expParam.get("data_schema", {}).get(
+                f"{self.xAxis}_{ch}",
+                {}
+            ).get("label", ch)
+
+            self.xAxisChannelComboBox.addItem(label)
+
+        # Populate Y-axis channel combo box
+        for ch in self.y_channel_list:
+            label = self.expParam.get("data_schema", {}).get(
+                f"{self.yAxis}_{ch}",
+                {}
+            ).get("label", ch)
+
+            self.yAxisChannelComboBox.addItem(label)
+
+        # x_channels_list = list(x_data.keys())[0:len(experiment_parameters[x_name_key].keys())]
+        # y_channels_list = list(y_data.keys())[0:len(experiment_parameters[y_name_key].keys())]
         
 
-        for ch in x_channels_list:
-            x_combo_box.addItem(experiment_parameters[x_name_key][ch])
+        # for ch in x_channels_list:
+        #     x_combo_box.addItem(experiment_parameters[x_name_key][ch])
         
-        for ch in y_channels_list:
-            y_combo_box.addItem(experiment_parameters[y_name_key][ch])
+        # for ch in y_channels_list:
+        #     y_combo_box.addItem(experiment_parameters[y_name_key][ch])
 
             
             
-        return experiment_parameters
+        # return experiment_parameters
     
-    def update_data(self, datasetLink, channel_list, comboBox, empty_set, axis, empty_experiment_parameters, full_experiment_parameters, name_key, unit_key):
-        
-        dataset = pd.read_csv(datasetLink, header=[0,1])
-        AxisChannel = channel_list[comboBox.currentIndex()]
-        AxisName = self.plotNameLineEdit.text() + "_" + comboBox.currentText()
-        
+    def update_data(
+        self,
+        datasetLink,
+        channel_list,
+        comboBox,
+        empty_set,
+        axis,
+        empty_experiment_parameters,
+        full_experiment_parameters,
+        name_key=None,
+        unit_key=None
+    ):
+        dataset = pd.read_csv(datasetLink, header=[0, 1])
+
+        axis_channel = channel_list[comboBox.currentIndex()]
+        axis_name = self.plotNameLineEdit.text() + "_" + comboBox.currentText()
+
         try:
-            empty_set[AxisName] = dataset[axis][AxisChannel].to_list()
+            empty_set[axis_name] = dataset[(axis, axis_channel)].to_list()
         except KeyError:
             self.AxisDatasetLineEdit.setText("This dataset doesn't contain the chosen data types.")
             return None
 
-        empty_experiment_parameters[name_key][AxisName] = full_experiment_parameters[name_key][AxisChannel]
-        print(empty_experiment_parameters[name_key])
-        if axis == 'time':
-            pass
-        else:
-            empty_experiment_parameters[unit_key][AxisName] = full_experiment_parameters[unit_key][AxisChannel]
-            print(empty_experiment_parameters[unit_key])
+        empty_experiment_parameters.setdefault("data_schema", {})
+
+        source_key = f"{axis}_{axis_channel}"
+        target_key = f"{axis}_{axis_name}"
+
+        source_schema = full_experiment_parameters.get("data_schema", {}).get(
+            source_key,
+            {
+                "label": axis_channel,
+                "unit": "-"
+            }
+        )
+
+        print(source_schema)
+
+        empty_experiment_parameters["data_schema"][target_key] = source_schema
+
+        try:
+            return axis_name, source_schema["unit"]
+        except KeyError:
+            return axis_name, "-"
+
+    # def update_data(self, datasetLink, channel_list, comboBox, empty_set, axis, empty_experiment_parameters, full_experiment_parameters, name_key, unit_key):
+        
+    #     dataset = pd.read_csv(datasetLink, header=[0,1])
+    #     AxisChannel = channel_list[comboBox.currentIndex()]
+    #     AxisName = self.plotNameLineEdit.text() + "_" + comboBox.currentText()
+        
+    #     try:
+    #         empty_set[AxisName] = dataset[axis][AxisChannel].to_list()
+    #     except KeyError:
+    #         self.AxisDatasetLineEdit.setText("This dataset doesn't contain the chosen data types.")
+    #         return None
+
+    #     empty_experiment_parameters[name_key][AxisName] = full_experiment_parameters[name_key][AxisChannel]
+    #     print(empty_experiment_parameters[name_key])
+    #     if axis == 'time':
+    #         pass
+    #     else:
+    #         empty_experiment_parameters[unit_key][AxisName] = full_experiment_parameters[unit_key][AxisChannel]
+    #         print(empty_experiment_parameters[unit_key])
         
         
-        return AxisName
+    #     return AxisName
         
     
 

@@ -7,10 +7,22 @@ from project_paths import GUI_DIR
 
 
 class create_plot_setting_ui(QWidget):
-    def __init__(self):
+    def __init__(self, available_data_types=None):
         super().__init__()
 
+
         uic.loadUi(f"{GUI_DIR}/ui_files/new_plot_setting.ui", self)
+
+        self.available_data_types = available_data_types or ["time"]
+
+        self.xAxisUnitComboBox.clear()
+        self.yAxisUnitComboBox.clear()
+
+        self.xAxisUnitComboBox.addItems(self.available_data_types)
+        self.yAxisUnitComboBox.addItems(self.available_data_types)
+
+        self.xAxisUnit = self.available_data_types[0]
+        self.yAxisUnit = self.available_data_types[0]
 
         self.xAxisUnit = "temperature"
         self.yAxisUnit = "temperature"
@@ -26,57 +38,14 @@ class create_plot_setting_ui(QWidget):
    
     def update_values(self):
         
-        match self.xAxisUnitComboBox.currentIndex():
-            case 0:
-                self.xAxisUnit = "temperature"
-                
-            case 1:
-                self.xAxisUnit = "resistance"
-                
-            case 2:
-                self.xAxisUnit = "lockIn"
-                
-            case 3:
-                self.xAxisUnit = "lockIn2"
-                
-            case 4:
-                self.xAxisUnit = "field"
-                
-            case 5:
-                self.xAxisUnit = "current"
-                
-            case 6:
-                self.xAxisUnit = "time"
-                
-            case _:
-                self.xAxisUnit = 'time'
-        
-        match self.yAxisUnitComboBox.currentIndex():
-            case 0:
-                self.yAxisUnit = "temperature"
-                
-            case 1:
-                self.yAxisUnit = "resistance"
-            case 2:
-                self.yAxisUnit = "lockIn"
-            case 3:
-                self.yAxisUnit = "lockIn2"
-            case 4:
-                self.yAxisUnit = "field"
-            case 5:
-                self.yAxisUnit = "current"
-            case 6:
-                self.yAxisUnit = "time"
-            case _:
-                self.yAxisUnit = "temperature"
-        
-        
+        self.xAxisUnit = self.xAxisUnitComboBox.currentText()
+        self.yAxisUnit = self.yAxisUnitComboBox.currentText()
+
         self.xAxisHiLim = self.xAxisHiLimLineEdit.text()
         self.xAxisLoLim = self.xAxisLoLimLineEdit.text()
         self.yAxisHiLim = self.yAxisHiLimLineEdit.text()
         self.yAxisLoLim = self.yAxisLoLimLineEdit.text()
-        
-        
+
         self.tickVal = self.TicValLineEdit.text()
         self.gridLine = self.gridLineCheckBox.isChecked()
         self.symbol = self.symbolComboBox.currentText()

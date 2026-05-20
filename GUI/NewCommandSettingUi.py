@@ -8,6 +8,8 @@ import pathlib
 import importlib
 import shutil
 import os
+import json
+
 from GUI import ManualEditUi as meu
 
 from project_paths import GUI_DIR, SAVED_INSTRUMENTS_DIR, INSTRUMENT_CONTROL_UIS_DIR, INSTRUMENT_WIDGETS_DIR
@@ -74,42 +76,86 @@ class new_command_setting_ui(QWidget):
         instrument_folder.mkdir(parents=True, exist_ok=True)
         methods_folder.mkdir(parents=True, exist_ok=True)
 
+        self.methods_folder = methods_folder
         self.attribute_path = instrument_folder / "attributes.py"
         self.metadata_path = instrument_folder / "metadata.json"
-        
-        self.method_name = self.command_name
-        index = self.try_make_method_file(self.method_name, 0)
-        self.method_name = self.method_name + "_" + str(index)
-        self.method_path = methods_folder / f"{self.method_name}_method.py"
-        
-        with open(self.method_path, "w") as f:
-            script = f"""
-command_name = "{self.command_name}"
-command_text = "{self.command_text}"
-data_list = {self.old_data_list}
-command_type = "{self.command_type}"
-communication_syntax = "{self.communication_syntax}"
-desired_data_type = "{self.desiredDataComboBox.currentText()}"
 
-function_code = \"\"\"{self.old_function_code}\"\"\"
-data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
-"""
-            f.write(script)
-            f.close()
+        self.method_path = None
+        self.test_method_path = self.methods_folder / "__draft_test__.py"
+        
+        # self.method_name = "temporary_command"
+        # index = self.try_make_method_file(self.method_name, 0)
+        # self.method_name = f"{self.method_name}_{index}"
+        
+        
+#         with open(self.method_path, "w") as f:
+#             script = f"""
+# command_name = "{self.command_name}"
+# command_text = "{self.command_text}"
+# data_list = {self.old_data_list}
+# command_type = "{self.command_type}"
+# communication_syntax = "{self.communication_syntax}"
+# desired_data_type = "{self.desiredDataComboBox.currentText()}"
+
+# function_code = \"\"\"{self.old_function_code}\"\"\"
+# data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
+# """
+#             f.write(script)
+#             f.close()
         
         
         
         
     def try_make_method_file(self, method_name, num):
         method_real_name = method_name + "_" + str(num)
-        method_path = SAVED_INSTRUMENTS_DIR / self.instrument.model / "methods" / f"{method_real_name}_method.py"
-        try:
-            method_path.touch()
-            index = num
-        except FileExistsError:
-            num += 1
-            index = self.try_make_method_file(method_name, num)
-        return index
+        method_path = SAVED_INSTRUMENTS_DIR / self.instrument.model / "methods" / f"{method_real_name}.py"
+        if method_path.exists():
+            return self.try_make_method_file(method_name, num + 1)
+        method_path.touch()
+        return num
+
+    def load_metadata(self):
+        if not self.metadata_path.exists():
+            return {
+                "data_type": {},
+                "data_label": {},
+                "data_unit": {},
+                "initial_state": {},
+                "methods": {}
+            }
+
+        with open(self.metadata_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    
+    def save_metadata(self, metadata):
+        with open(self.metadata_path, "w", encoding="utf-8") as f:
+                json.dump(metadata, f, indent=4) 
+
+    def update_metadata_for_command(self):
+        metadata = self.load_metadata()
+
+        metadata.setdefault("data_type", {})
+        metadata.setdefault("data_label", {})
+        metadata.setdefault("data_unit", {})
+        metadata.setdefault("initial_state", {})
+        metadata.setdefault("methods", {})
+
+        command_name = self.command_name
+
+        metadata["methods"][command_name] = {
+            "module": command_name,
+            "function": "run",
+            "command_type": self.command_type,
+            "command_text": self.command_text,
+            "communication_syntax": self.communication_syntax,
+            "desired_data_type": self.desiredDataComboBox.currentText(),
+            "command_linked_data": {
+                "data_function": False,
+                "data_type": None
+            }
+        }
+
+        self.save_metadata(metadata)
         
     def _connect_pushbuttons(self):
         """
@@ -139,59 +185,74 @@ data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
         print(f"[DEBUG] {sender.objectName()} clicked")
     
     def nameSaveButton_method(self):
+        command_name = self.nameLineEdit.text().strip()
+
+        if not command_name.isidentifier():
+            self.nameLineEdit.setText("Invalid Python name")
+            return
+
+        method_path = self.methods_folder / f"{command_name}.py"
+
+        if method_path.exists():
+            self.nameLineEdit.setText("This name already exists.")
+            return
+
+        self.command_name = command_name
+        self.method_path = method_path
         
-        new_method_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{self.nameLineEdit.text()}_method.py")
-        try:
-            self.method_path.rename(new_method_path)
+        # new_method_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{self.nameLineEdit.text()}.py")
+        # try:
+        #     self.method_path.rename(new_method_path)
             
-            with open(new_method_path, "r") as f:
-                current_content = f.read()
-                print(current_content)
-                old_string = f'command_name = "{self.command_name}"'
-                new_string = f'command_name = "{self.nameLineEdit.text()}"'
+        #     with open(new_method_path, "r") as f:
+        #         current_content = f.read()
+        #         print(current_content)
+        #         old_string = f'command_name = "{self.command_name}"'
+        #         new_string = f'command_name = "{self.nameLineEdit.text()}"'
                 
-                if old_string not in current_content:
-                    print(f'"{old_string}" not found. No changes made.')
-                    return
+        #         if old_string not in current_content:
+        #             print(f'"{old_string}" not found. No changes made.')
+        #             return
                 
-                new_content = current_content.replace(old_string, new_string)
-                print(f'Successfully changed "{old_string}" to "{new_string}".')
+        #         new_content = current_content.replace(old_string, new_string)
+        #         print(f'Successfully changed "{old_string}" to "{new_string}".')
                 
-            with open(new_method_path, "w") as f:    
-                f.write(new_content)
+        #     with open(new_method_path, "w") as f:    
+        #         f.write(new_content)
             
-            self.command_name = self.nameLineEdit.text()
-            self.method_path = new_method_path
+        #     self.command_name = self.nameLineEdit.text()
+        #     self.method_path = new_method_path
                 
-        except FileNotFoundError:
-            print(f"Error: The file '{self.method_path}' was not found.")
-        except FileExistsError:
-            self.nameLineEdit.setText(f"This name already exists.")
-            print(f"Error: The file '{self.command_name}' already exists.")
+        # except FileNotFoundError:
+        #     print(f"Error: The file '{self.method_path}' was not found.")
+        # except FileExistsError:
+        #     self.nameLineEdit.setText(f"This name already exists.")
+        #     print(f"Error: The file '{self.command_name}' already exists.")
         
         
     def commandTextSaveButton_method(self):
-        try:
-            with open(self.method_path, "r") as f:
-                current_content = f.read()
-                print(current_content)
-                old_string = f'command_text = "{self.command_text}"'
-                new_string = f'command_text = "{self.commandText.text()}"'
+        self.command_text = self.commandText.text()
+        # try:
+        #     with open(self.method_path, "r") as f:
+        #         current_content = f.read()
+        #         print(current_content)
+        #         old_string = f'command_text = "{self.command_text}"'
+        #         new_string = f'command_text = "{self.commandText.text()}"'
                 
-                if old_string not in current_content:
-                        print(f'"{old_string}" not found. No changes made.')
-                        return
+        #         if old_string not in current_content:
+        #                 print(f'"{old_string}" not found. No changes made.')
+        #                 return
 
-                new_content = current_content.replace(old_string, new_string)
-                print(f'Successfully changed "{old_string}" to "{new_string}".')
+        #         new_content = current_content.replace(old_string, new_string)
+        #         print(f'Successfully changed "{old_string}" to "{new_string}".')
             
-            with open(self.method_path, "w") as f:    
-                    f.write(new_content)
+        #     with open(self.method_path, "w") as f:    
+        #             f.write(new_content)
             
-            self.command_text = self.commandText.text()
+        #     self.command_text = self.commandText.text()
         
-        except FileNotFoundError:
-            print(f"Error: The file '{self.method_path}' was not found.")
+        # except FileNotFoundError:
+        #     print(f"Error: The file '{self.method_path}' was not found.")
         
     # -------------------------------
     # Data type buttons
@@ -312,25 +373,26 @@ data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
     # -------------------------------
     
     def comSystemSaveButton_method(self):
-        try:
-            with open(self.method_path, "r") as f:
-                current_content = f.read()
-                print(current_content)
-                old_string = f'communication_syntax = "{self.communication_syntax}"'
-                new_string = f'communication_syntax = "{self.comSystemComboBox.currentText()}"'
+        self.communication_syntax = self.comSystemComboBox.currentText()
+        # try:
+        #     with open(self.method_path, "r") as f:
+        #         current_content = f.read()
+        #         print(current_content)
+        #         old_string = f'communication_syntax = "{self.communication_syntax}"'
+        #         new_string = f'communication_syntax = "{self.comSystemComboBox.currentText()}"'
                 
-                if old_string not in current_content:
-                        print(f'"{old_string}" not found. No changes made.')
-                        return
+        #         if old_string not in current_content:
+        #                 print(f'"{old_string}" not found. No changes made.')
+        #                 return
 
-                new_content = current_content.replace(old_string, new_string)
-                print(f'Successfully changed "{old_string}" to "{new_string}".')
+        #         new_content = current_content.replace(old_string, new_string)
+        #         print(f'Successfully changed "{old_string}" to "{new_string}".')
             
-            with open(self.method_path, "w") as f:    
-                    f.write(new_content)
+        #     with open(self.method_path, "w") as f:    
+        #             f.write(new_content)
         
-        except FileNotFoundError:
-            print(f"Error: The file '{self.method_path}' was not found.")
+        # except FileNotFoundError:
+        #     print(f"Error: The file '{self.method_path}' was not found.")
     
     def writeCommandCheckBox_method(self):
         if self.writeCommandCheckBox.isChecked():
@@ -463,48 +525,45 @@ data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
 
     def testExecute_method(self):
         function_code = ""
+
         if self.new_function_code == "":
             self.new_function_code = "return None"
+
         function_code_list = self.new_function_code.split("\n")
-        n = len(function_code_list)
-        
-        for i in range(0,n):
-            function_code = function_code + "        " + function_code_list[i] + "\n"
-        
+
+        for line in function_code_list:
+            function_code += "        " + line + "\n"
+
         for data_name, data_value in self.new_test_data_list.items():
             function_code = function_code.replace(f"{{{data_name}}}", data_value)
 
-# ADD THE TEST FUNCTION
-        try:
-            with open(self.method_path, "a") as f:
-                self.method_script = f"""
-def {self.command_name}(self):
-    try:
-{function_code}
-    except Exception as e:
-        print("Something went wrong: " + e)
-"""
-                print(self.method_script)
-                f.write(self.method_script)     
-        except FileNotFoundError:
-            print(f"Error: The file '{self.method_path}' was not found.")
-            self.testResponse.setText(f"The file '{self.method_path}' was not found. Did you save your method name?")
+# ADD THE DRAFT TEST FUNCTION
+        draft_script = f'''def run(self):
+            try:
+        {function_code}
+            except Exception as e:
+                print("Something went wrong: " + str(e))
+        '''
+        module_path = (
+            f"Tools.saved_instruments."
+            f"{self.instrument.model}."
+            f"methods.__draft_test__"
+        )
 # IMPORT AND RUN THE TEST FUNCTION
         try:
-            module_path = f"Tools.saved_instruments.Members.{self.instrument.model}.{self.command_name}_method"
+            with open(self.test_method_path, "w", encoding="utf-8") as f:
+                f.write(draft_script)
+
+            importlib.invalidate_caches()
+
             if module_path in sys.modules:
                 method_module = importlib.reload(sys.modules[module_path])
             else:
                 method_module = importlib.import_module(module_path)
-            # 2. Get the specific function/attribute from the module using getattr
-            method_function = getattr(method_module, f"{self.command_name}")
-            
-            self.response = method_function(self.instrument)
-            print("This is the respone: " + self.response)
-            
-            
-            
-            self.testResponse.setText(self.response)
+
+            response = method_module.run(self.instrument)
+            self.response = response
+            self.testResponse.setText(str(response))
 
         except (ImportError, AttributeError) as e:
             print(f"Error: {e}")
@@ -512,29 +571,19 @@ def {self.command_name}(self):
         except IndentationError:
             self.testResponse.setText("The function code is empty.")
         except Exception as e:
-                self.testResponse.setText(str(e))
-                print(str(e))
-        
+            self.testResponse.setText(str(e))
+            print(str(e))
+    
             
 # REMOVE THE TEST FUNCTION
-        try:
-            with open(self.method_path, "r") as f:
-                current_content = f.read()
-                old_string = self.method_script
-                new_string = ""
-                
-                if old_string not in current_content:
-                        print(f'"{old_string}" not found. No changes made.')
-                        return
+        finally:
+            try:
+                self.test_method_path.unlink()
+            except FileNotFoundError:
+                pass
 
-                new_content = current_content.replace(old_string, new_string)
-                print(f'Successfully changed.')
-            
-            with open(self.method_path, "w") as f:    
-                    f.write(new_content)
-        
-        except FileNotFoundError:
-            print(f"Error: The file '{self.method_path}' was not found.")
+            sys.modules.pop(module_path, None)
+            importlib.invalidate_caches()
             
 
     # -------------------------------
@@ -675,150 +724,101 @@ def {self.command_name}(self):
         self.manualDataManEditWin.close()
     
     def newCommandSaveButton_method(self):
+        command_name = self.nameLineEdit.text().strip()
+
+        if not command_name.isidentifier():
+            self.nameLineEdit.setText("Invalid Python name")
+            return
+
+        method_path = self.methods_folder / f"{command_name}.py"
+
+        if method_path.exists():
+            self.nameLineEdit.setText("This command already exists.")
+            return
+
+        self.command_name = command_name
+        self.method_path = method_path
+
+        self.command_text = self.commandText.text()
+        self.command_type = self.commandTypeComboBox.currentText()
+        self.communication_syntax = self.comSystemComboBox.currentText()
+
         saving_function_code = ""
+
         if self.new_function_code == "":
             self.new_function_code = "return None"
+
         saving_function_code_list = self.new_function_code.split("\n")
-        
         data_manipulation_code_list = self.new_data_manipulation_code.split("\n")
-        
-# PUTTING THE FUNCTION AND DATA MANIPULATION TOGETHER
+
         last_code_line = saving_function_code_list.pop()
         saving_function_code_list.extend(data_manipulation_code_list)
         saving_function_code_list.append(last_code_line)
-        n = len(saving_function_code_list)
-        
-        for i in range(0,n):
-            saving_function_code = saving_function_code + "        " + saving_function_code_list[i] + "\n"
-        
+
+        for line in saving_function_code_list:
+            saving_function_code += "        " + line + "\n"
+
         for data_name, data_value in self.new_data_list.items():
             saving_function_code = saving_function_code.replace(f"{{{data_name}}}", data_value)
 
-# ADD THE TEST FUNCTION
-        try:
-            with open(self.method_path, "a") as f:
-                self.method_script = f"""def {self.command_name}(self):
-    try:
-{saving_function_code}
-    except Exception as e:
-        print("Something went wrong: " + e)
-"""
-                print(self.method_script)
-                f.write(self.method_script)     
-        except FileNotFoundError:
-            print(f"Error: The file '{self.method_path}' was not found.")
-            
-# EDIT THE ATTRIBUTE FILE
-        # Import the newly made method file
-        importing_line = f", {self.command_name}_method"
-        try:
-            with open(self.attribute_path, "r") as f:
-                current_content = f.read()
-                f.seek(0)
-                current_content_list = f.readlines()
-                print(current_content)
-                old_string = current_content_list[2]
-                old_string = old_string.replace("\n","")
-                new_string = old_string + importing_line
-                
-                if old_string not in current_content:
-                        print(f'"{old_string}" not found. No changes made.')
-                        return
+        method_file_text = self.build_method_file_text(saving_function_code)
 
-                new_content = current_content.replace(old_string, new_string)
-                print(f'Successfully changed.')
-            
-            with open(self.attribute_path, "w") as f:    
-                    f.write(new_content)
-        
-        except FileNotFoundError:
-            print(f"Error: The file '{self.method_path}' was not found.")
-            
-        # Modify functions list
-        ### Read the current functions list
-        attribute_module = importlib.import_module(f"Tools.saved_instruments.Members.{self.instrument.model}.attributes")
-        
-        functions_dict = getattr(attribute_module, "functions")
-        functions_dict[self.command_name] = f"{self.command_name}_method.{self.command_name}"
-        functions_dict = "functions = " + str(functions_dict) + "\n"
-        functions_dict = functions_dict.replace(f"'{self.command_name}_method.{self.command_name}'", f'{self.command_name}_method.{self.command_name}')
-        
-        
         try:
-            with open(self.attribute_path, "r") as f:
-                current_content_list = f.readlines()
-                print(current_content_list)
-                current_content_list[5] = functions_dict
-                
-                new_content = ""
-                for i in range(0,len(current_content_list)):
-                    new_content = new_content + current_content_list[i] 
-                
-                print(f'Successfully changed.')
-            
-            with open(self.attribute_path, "w") as f:    
-                    f.write(new_content)
-        
-        except FileNotFoundError:
-            print(f"Error: The file '{self.attribute_path}' was not found.")
-            
-        # Modify lists depending on the command type
-        ### read command
-        if self.command_type == 'READ':
-            attribute_module = importlib.import_module(f"Tools.saved_instruments.Members.{self.instrument.model}.attributes")
-        
-            read_functions_dict = getattr(attribute_module, "read_functions")
-            read_functions_dict[self.command_name] = f"{self.command_name}_method.{self.command_name}"
-            read_functions_dict = "read_functions = " + str(read_functions_dict) + "\n"
-            read_functions_dict = read_functions_dict.replace(f"'{self.command_name}_method.{self.command_name}'", f'{self.command_name}_method.{self.command_name}')
-            
-            try:
-                with open(self.attribute_path, "r") as f:
-                    current_content_list = f.readlines()
-                    print(current_content_list)
-                    current_content_list[6] = read_functions_dict
-                    
-                    new_content = ""
-                    for i in range(0,len(current_content_list)):
-                        new_content = new_content + current_content_list[i] 
-                    
-                    print(f'Successfully changed.')
-                
-                with open(self.attribute_path, "w") as f:    
-                        f.write(new_content)
-            except FileNotFoundError:
-                print(f"Error: The file '{self.attribute_path}' was not found.")
-        
-        ### write command
-        if self.command_type == 'WRITE':
-            attribute_module = importlib.import_module(f"Tools.saved_instruments.Members.{self.instrument.model}.attributes")
-        
-            write_functions_dict = getattr(attribute_module, "write_functions")
-            write_functions_dict[self.command_name] = f"{self.command_name}_method.{self.command_name}"
-            write_functions_dict = "write_functions = " + str(write_functions_dict) + "\n"
-            write_functions_dict = write_functions_dict.replace(f"'{self.command_name}_method.{self.command_name}'", f'{self.command_name}_method.{self.command_name}')
-            
-            try:
-                with open(self.attribute_path, "r") as f:
-                    current_content_list = f.readlines()
-                    print(current_content_list)
-                    current_content_list[7] = write_functions_dict
-                    
-                    new_content = ""
-                    for i in range(0,len(current_content_list)):
-                        new_content = new_content + current_content_list[i] 
-                    
-                    print(f'Successfully changed.')
-                
-                with open(self.attribute_path, "w") as f:    
-                        f.write(new_content)
-            except FileNotFoundError:
-                print(f"Error: The file '{self.attribute_path}' was not found.")
-            
+            with open(self.method_path, "w", encoding="utf-8") as f:
+                f.write(method_file_text)
 
+            self.update_metadata_for_command()
+            importlib.invalidate_caches()
+            self.window.hide()
+
+        except Exception as e:
+            self.testResponse.setText(str(e))
+            print(str(e))
+#         saving_function_code = ""
+#         if self.new_function_code == "":
+#             self.new_function_code = "return None"
+#         saving_function_code_list = self.new_function_code.split("\n")
+        
+#         data_manipulation_code_list = self.new_data_manipulation_code.split("\n")
+        
+# # PUTTING THE FUNCTION AND DATA MANIPULATION TOGETHER
+#         last_code_line = saving_function_code_list.pop()
+#         saving_function_code_list.extend(data_manipulation_code_list)
+#         saving_function_code_list.append(last_code_line)
+#         n = len(saving_function_code_list)
+        
+#         for i in range(0,n):
+#             saving_function_code = saving_function_code + "        " + saving_function_code_list[i] + "\n"
+        
+#         for data_name, data_value in self.new_data_list.items():
+#             saving_function_code = saving_function_code.replace(f"{{{data_name}}}", data_value)
+
+# # ADD THE TEST FUNCTION
+#         try:
+#             with open(self.method_path, "a") as f:
+#                 self.method_script = f"""def run(self):
+#     try:
+# {saving_function_code}
+#     except Exception as e:
+#         print("Something went wrong: " + e)
+# """
+#                 print(self.method_script)
+#                 f.write(self.method_script)     
+#         except FileNotFoundError:
+#             print(f"Error: The file '{self.method_path}' was not found.")
+            
+# # update the metadata
+#         self.command_name = self.nameLineEdit.text()
+#         self.command_text = self.command_text
+#         self.command_type = self.commandTypeComboBox.currentText()
+#         self.communication_syntax = self.comSystemComboBox.currentText()
+
+#         self.update_metadata_for_command()
+
+#         importlib.invalidate_caches()
         
             
-        self.window.hide()
+#         self.window.hide()
     
     def dataManSaveAsTemplate_method(self):
         pass
@@ -835,6 +835,26 @@ def {self.command_name}(self):
         except:
             pass
         self.window.close()
+    
+    def build_method_file_text(self, saving_function_code):
+        return f'''command_name = "{self.command_name}"
+command_text = "{self.command_text}"
+data_list = {self.new_data_list}
+command_type = "{self.command_type}"
+communication_syntax = "{self.communication_syntax}"
+desired_data_type = "{self.desiredDataComboBox.currentText()}"
+
+function_code = """{self.new_function_code}"""
+data_manipulation_code = """{self.new_data_manipulation_code}"""
+
+def run(self):
+    try:
+{saving_function_code}
+    except Exception as e:
+        print("Something went wrong: " + str(e))
+'''
+
+
 
 
 
@@ -1201,27 +1221,28 @@ class edit_command_setting_ui(QWidget):
             print(f"Error: The file '{self.method_path}' was not found.")
     
     def commandTypeSaveButton_method(self):
-        try:
-            with open(self.method_path, "r") as f:
-                current_content = f.read()
-                print(current_content)
-                old_string = f'command_type = "{self.command_type}"'
-                new_string = f'command_type = "{self.commandTypeComboBox.currentText()}"'
+        self.command_type = self.commandTypeComboBox.currentText()
+        # try:
+        #     with open(self.method_path, "r") as f:
+        #         current_content = f.read()
+        #         print(current_content)
+        #         old_string = f'command_type = "{self.command_type}"'
+        #         new_string = f'command_type = "{self.commandTypeComboBox.currentText()}"'
                 
-                if old_string not in current_content:
-                        print(f'"{old_string}" not found. No changes made.')
-                        return
+        #         if old_string not in current_content:
+        #                 print(f'"{old_string}" not found. No changes made.')
+        #                 return
 
-                new_content = current_content.replace(old_string, new_string)
-                print(f'Successfully changed "{old_string}" to "{new_string}".')
+        #         new_content = current_content.replace(old_string, new_string)
+        #         print(f'Successfully changed "{old_string}" to "{new_string}".')
             
-            with open(self.method_path, "w") as f:    
-                    f.write(new_content)
+        #     with open(self.method_path, "w") as f:    
+        #             f.write(new_content)
             
-            self.command_type = self.commandTypeComboBox.currentText()
+        #     self.command_type = self.commandTypeComboBox.currentText()
         
-        except FileNotFoundError:
-            print(f"Error: The file '{self.method_path}' was not found.")
+        # except FileNotFoundError:
+        #     print(f"Error: The file '{self.method_path}' was not found.")
 
     # -------------------------------
     # BUILD YOUR FUNCTION
@@ -1340,27 +1361,28 @@ class edit_command_setting_ui(QWidget):
     
         
     def functionSave_method(self):
-        try:
-            with open(self.method_path, "r") as f:
-                current_content = f.read()
-                print(current_content)
-                old_string = f'function_code = \"\"\"{self.old_function_code}\"\"\"'
-                new_string = f'function_code = \"\"\"{self.new_function_code}\"\"\"'
+        self.old_function_code = self.new_function_code
+        # try:
+        #     with open(self.method_path, "r") as f:
+        #         current_content = f.read()
+        #         print(current_content)
+        #         old_string = f'function_code = \"\"\"{self.old_function_code}\"\"\"'
+        #         new_string = f'function_code = \"\"\"{self.new_function_code}\"\"\"'
                 
-                if old_string not in current_content:
-                        print(f'"{old_string}" not found. No changes made.')
-                        return
+        #         if old_string not in current_content:
+        #                 print(f'"{old_string}" not found. No changes made.')
+        #                 return
 
-                new_content = current_content.replace(old_string, new_string)
-                print(f'Successfully changed.')
+        #         new_content = current_content.replace(old_string, new_string)
+        #         print(f'Successfully changed.')
             
-            with open(self.method_path, "w") as f:    
-                    f.write(new_content)
+        #     with open(self.method_path, "w") as f:    
+        #             f.write(new_content)
             
-            self.old_function_code = self.new_function_code
+        #     self.old_function_code = self.new_function_code
         
-        except FileNotFoundError:
-            print(f"Error: The file '{self.method_path}' was not found.")
+        # except FileNotFoundError:
+        #     print(f"Error: The file '{self.method_path}' was not found.")
 
     def functionSaveAsTemplate_method(self):
         pass
@@ -1396,7 +1418,7 @@ class edit_command_setting_ui(QWidget):
         try:
             with open(self.method_path, "a") as f:
                 self.method_script = f"""
-def {self.command_name}(self):
+def run(self):
     try:
 {function_code}
     except Exception as e:
@@ -1408,13 +1430,13 @@ def {self.command_name}(self):
             print(f"Error: The file '{self.method_path}' was not found.")
 # IMPORT AND RUN THE TEST FUNCTION
         try:
-            module_path = f"Tools.saved_instruments.Members.{self.instrument.model}.{self.command_name}_method"
+            module_path = f"Tools.saved_instruments.Members.{self.instrument.model}.{self.command_name}"
             if module_path in sys.modules:
                 method_module = importlib.reload(sys.modules[module_path])
             else:
                 method_module = importlib.import_module(module_path)
             # 2. Get the specific function/attribute from the module using getattr
-            method_function = getattr(method_module, f"{self.command_name}")
+            method_function = getattr(method_module, f"run")
             
             self.response = method_function(self.instrument)
             print("This is the respone: " + self.response)
@@ -1535,27 +1557,28 @@ def {self.command_name}(self):
                 print("The index number is not working")
 
     def dataManSave_method(self):
-        try:
-            with open(self.method_path, "r") as f:
-                current_content = f.read()
-                print(current_content)
-                old_string = f'data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"'
-                new_string = f'data_manipulation_code = \"\"\"{self.new_data_manipulation_code}\"\"\"'
+        self.old_data_manipulation_code = self.new_data_manipulation_code
+        # try:
+        #     with open(self.method_path, "r") as f:
+        #         current_content = f.read()
+        #         print(current_content)
+        #         old_string = f'data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"'
+        #         new_string = f'data_manipulation_code = \"\"\"{self.new_data_manipulation_code}\"\"\"'
                 
-                if old_string not in current_content:
-                        print(f'"{old_string}" not found. No changes made.')
-                        return
+        #         if old_string not in current_content:
+        #                 print(f'"{old_string}" not found. No changes made.')
+        #                 return
 
-                new_content = current_content.replace(old_string, new_string)
-                print(f'Successfully changed.')
+        #         new_content = current_content.replace(old_string, new_string)
+        #         print(f'Successfully changed.')
             
-            with open(self.method_path, "w") as f:    
-                    f.write(new_content)
+        #     with open(self.method_path, "w") as f:    
+        #             f.write(new_content)
             
-            self.old_data_manipulation_code = self.new_data_manipulation_code
+        #     self.old_data_manipulation_code = self.new_data_manipulation_code
         
-        except FileNotFoundError:
-            print(f"Error: The file '{self.method_path}' was not found.")
+        # except FileNotFoundError:
+        #     print(f"Error: The file '{self.method_path}' was not found.")
 
     def dataManDelete_method(self):
         self.new_data_manipulation_code = self.new_data_manipulation_code.split("\n")

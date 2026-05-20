@@ -5,6 +5,7 @@ from pathlib import Path
 from Tools import DataLogger
 from Tools.saved_instruments.Oxford_MercuryiPS import instrument as magnetPowerSupply
 from Tools.saved_instruments.INFICON_VGC401 import instrument as pressureGauge
+from Tools.ExperimentSchema import build_experiment_schema
 import json
 from project_paths import EXPERIMENT_PARAMETERS_DIR
 
@@ -22,18 +23,31 @@ class PlotWorker(QObject):
                  magnetzLineEdit, currentLineEdit, experimentSettingWid):
         
         super().__init__()
+
+        self.instruments = {}
+
+        for device_key, instrument in instruments.items():
+            if not getattr(instrument, "data_type", {}):
+                continue
+
+            if not getattr(instrument, "data_function", {}):
+                continue
         
-        self.instruments = instruments
-        self.omitted_instruments = []
-        for device_key, instrument in self.instruments.items():
-            if not instrument.data_type:
-                self.omitted_instruments.append(device_key)
-            if isinstance(instrument, pressureGauge.pressureGauge):
-                self.omitted_instruments.append(device_key)
+            self.instruments[device_key] = instrument
         
-        for device_key in self.omitted_instruments:
-            del self.instruments[device_key]
-        print(self.instruments)
+        print("Acquirable instruments:", self.instruments)
+        
+        # self.instruments = instruments
+        # self.omitted_instruments = []
+        # for device_key, instrument in self.instruments.items():
+        #     if not instrument.data_type:
+        #         self.omitted_instruments.append(device_key)
+        #     if isinstance(instrument, pressureGauge.pressureGauge):
+        #         self.omitted_instruments.append(device_key)
+        
+        # for device_key in self.omitted_instruments:
+        #     del self.instruments[device_key]
+        # print(self.instruments)
         
         self.plot_widgets = plot_widgets
         self.period = period
@@ -91,78 +105,63 @@ class PlotWorker(QObject):
         }
 
         # --- Data schema ---
-        data_schema = {}
+        schema_info = build_experiment_schema(
+            self.instruments,
+            self.experimentSettingWid
+        )
+        # def add_group(group_name, keys):
+        #     for key in keys:
+        #         name = params[f"{group_name}_name"][key]
+        #         unit = params.get(f"{group_name}_unit", {}).get(key, "")
 
-        def add_group(group_name, keys):
-            for key in keys:
-                name = params[f"{group_name}_name"][key]
-                unit = params.get(f"{group_name}_unit", {}).get(key, "")
+        #         schema_key = f"{group_name}_{key}"
+        #         data_schema[schema_key] = {
+        #             "label": name,
+        #             "unit": unit
+        #         }
 
-                schema_key = f"{group_name}_{key}"
-                data_schema[schema_key] = {
-                    "label": name,
-                    "unit": unit
-                }
+        # # Temperature
+        # add_group("temperature", ["ch_A", "ch_B", "ch_C", "ch_D"])
 
-        # Temperature
-        add_group("temperature", ["ch_A", "ch_B", "ch_C", "ch_D"])
+        # # Resistance
+        # add_group("resistance", ["ch_A", "ch_B", "ch_C", "ch_D"])
 
-        # Resistance
-        add_group("resistance", ["ch_A", "ch_B", "ch_C", "ch_D"])
+        # # Lock-in 1
+        # add_group("lockIn", ["x", "y", "r", "theta"])
 
-        # Lock-in 1
-        add_group("lockIn", ["x", "y", "r", "theta"])
+        # # Lock-in 2
+        # add_group("lockIn2", ["x", "y", "r", "theta"])
 
-        # Lock-in 2
-        add_group("lockIn2", ["x", "y", "r", "theta"])
+        # # Single values
+        # data_schema["field"] = {
+        #     "label": params["field_name"]["field"],
+        #     "unit": params["field_unit"]["field"]
+        # }
 
-        # Single values
-        data_schema["field"] = {
-            "label": params["field_name"]["field"],
-            "unit": params["field_unit"]["field"]
-        }
+        # data_schema["current"] = {
+        #     "label": params["current_name"]["current"],
+        #     "unit": params["current_unit"]["current"]
+        # }
 
-        data_schema["current"] = {
-            "label": params["current_name"]["current"],
-            "unit": params["current_unit"]["current"]
-        }
+        # data_schema["time"] = {
+        #     "label": params["time_name"]["time"],
+        #     "unit": "s"
+        # }
 
-        data_schema["time"] = {
-            "label": params["time_name"]["time"],
-            "unit": "s"
-        }
-
-        # --- Devices ---
-        devices = []
-        for device_key, inst in self.instruments.items():
-            devices.append({
-                "device_id": device_key,
-                "model": getattr(inst, "model", "unknown")
-            })
-        
-        # --- Available data types ---
-        available_data_types = ["time"]
-        for inst in self.instruments.values():
-            available_data_types.extend(inst.data_type.keys())
-
-        # -- pause, resume, and end time ----
-        pause_times = []
-        resume_times = []
-        end_time = None
 
         # --- Final structure ---
         experiment_json = {
             "metadata": metadata,
-            "data_schema": data_schema,
-            "devices": devices,            
-            "available_data_types": available_data_types,
-            "pause_times": pause_times,
-            "resume_times": resume_times,
-            "end_time": end_time
+            "devices": schema_info["devices"],
+            "available_data_types": schema_info["available_data_types"],
+            "data_schema": schema_info["data_schema"],
+            "pause_times": [],
+            "resume_times": [],
+            "end_time": None
         }
 
         # --- Save ---
-        with open(self.file_path, "w") as f:
+        with open(self.file_path, "w", encoding="utf-8") as f:
             json.dump(experiment_json, f, indent=4)
         
 #     def log_experiment_parameters(self):
@@ -252,50 +251,34 @@ class PlotWorker(QObject):
         
         self.logging_data_list = []
         
-        for device_model, instrument in self.instruments.items():
+        for device_key, instrument in self.instruments.items():
             for data_type, function in instrument.data_function.items():
-                data_list = setattr(self, f"{data_type}_list", function())
-                data_list = getattr(self, f"{data_type}_list")
-                print(data_list)
-                self.logging_data_list.append(data_list)
-                index = 0
-                for data_ch in instrument.data_type[data_type]:
-                    self.dataset[data_type][data_ch].append(data_list[index])
-                    index += 1
 
-                if data_type == 'temperature':
-                    if self.unitButton.isChecked():
-                        self.chALineEdit.setText(str(data_list[0]))
-                        self.chBLineEdit.setText(str(data_list[1]))
-                        self.chCLineEdit.setText(str(data_list[2]))
-                        self.chDLineEdit.setText(str(data_list[3]))
-                        
-                        self.chABigLine.setText(str(data_list[0]))
-                        self.chBBigLine.setText(str(data_list[1]))
-                        self.chCBigLine.setText(str(data_list[2]))
-                        self.chDBigLine.setText(str(data_list[3]))
-                    else:
-                        self.chALineEdit.setText(str(data_list[0]))
-                        self.chBLineEdit.setText(str(data_list[1]))
-                        self.chCLineEdit.setText(str(data_list[2]))
-                        self.chDLineEdit.setText(str(data_list[3]))
-                        
-                        self.chABigLine.setText(str(data_list[0]))
-                        self.chBBigLine.setText(str(data_list[1]))
-                        self.chCBigLine.setText(str(data_list[2]))
-                        self.chDBigLine.setText(str(data_list[3]))
-                
-                if data_type == 'lockIn':
-                    self.xLineEdit.setText(str(data_list[0]))
-                    self.yLineEdit.setText(str(data_list[1]))
-                    self.rLineEdit.setText(str(data_list[2]))
-                    self.thetaLineEdit.setText(str(data_list[3]))
-                
-                if data_type == 'lockIn2':
-                    self.xLineEdit2.setText(str(data_list[0]))
-                    self.yLineEdit2.setText(str(data_list[1]))
-                    self.rLineEdit2.setText(str(data_list[2]))
-                    self.thetaLineEdit2.setText(str(data_list[3]))
+                channels = instrument.data_type.get(data_type, [])
+
+                try:
+                    values = function(instrument)
+                except Exception as e:
+                    print(f"Error reading {device_key} / {data_type}: {e}")
+                    values = None
+
+                if values is None:
+                    values = [None] * len(channels)
+
+                elif not isinstance(values, (list, tuple)):
+                    values = [values]
+
+                if len(values) != len(channels):
+                    print(
+                        f"Warning: {device_key} / {data_type} returned "
+                        f"{len(values)} values for {len(channels)} channels."
+                    )
+                    values = [None] * len(channels)
+
+                for channel, value in zip(channels, values):
+                    self.dataset[data_type][channel].append(value)
+
+                self.update_known_widget_fields(self, data_type, values)
             
             
         now = datetime.now(ZoneInfo('America/New_York')).timestamp()
@@ -303,6 +286,48 @@ class PlotWorker(QObject):
         
         self.logging_data_list.append(now)   
         self.logger.append(self.logging_data_list)     
+    
+    def update_known_widget_fields(self, data_type, values):
+        """
+        Temporary compatibility layer.
+
+        Long-term, widget updates should be handled by each instrument widget,
+        not hardcoded here.
+        """
+
+        if data_type == "temperature":
+            if len(values) >= 4:
+                self.chALineEdit.setText(str(values[0]))
+                self.chBLineEdit.setText(str(values[1]))
+                self.chCLineEdit.setText(str(values[2]))
+                self.chDLineEdit.setText(str(values[3]))
+
+                self.chABigLine.setText(str(values[0]))
+                self.chBBigLine.setText(str(values[1]))
+                self.chCBigLine.setText(str(values[2]))
+                self.chDBigLine.setText(str(values[3]))
+
+        elif data_type == "lockIn":
+            if len(values) >= 4:
+                self.xLineEdit.setText(str(values[0]))
+                self.yLineEdit.setText(str(values[1]))
+                self.rLineEdit.setText(str(values[2]))
+                self.thetaLineEdit.setText(str(values[3]))
+
+        elif data_type == "lockIn2":
+            if len(values) >= 4:
+                self.xLineEdit2.setText(str(values[0]))
+                self.yLineEdit2.setText(str(values[1]))
+                self.rLineEdit2.setText(str(values[2]))
+                self.thetaLineEdit2.setText(str(values[3]))
+
+        elif data_type == "field":
+            if len(values) >= 1:
+                self.magnetzLineEdit.setText(str(values[0]))
+
+        elif data_type == "current":
+            if len(values) >= 1:
+                self.currentLineEdit.setText(str(values[0]))
     
         
     def pause_resume_experiment(self):

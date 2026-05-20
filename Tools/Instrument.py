@@ -31,7 +31,11 @@ class EthernetInstrument(ScientificInstrument):
     def __init__(self, name, model, ip, port):
         super().__init__(name, model, 'ethernet')
         self.ip = ip
+        if self.ip == "":
+            self.ip == "0"
         self.port = port
+        if self.port == "":
+            self.port = "0"
         self.connected = False
         self.device = self.connect()
     
