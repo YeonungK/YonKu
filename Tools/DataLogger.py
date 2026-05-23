@@ -44,19 +44,19 @@ class DataLogger:
         self.concat_list = []
         list_index = 0
         data_index = 0
-        print(logging_data_list)
-        print(self.instruments)
+        # print(logging_data_list)
+        # print(self.instruments)
         
         for device_key, instrument in self.instruments.items():
             for data_type in instrument.data_type.keys():
                 data_index = 0
                 appending_dict = setattr(self, f'appending_{data_type}', {})
                 appending_dict = getattr(self, f'appending_{data_type}')
-                print(appending_dict)
+                # print(appending_dict)
                 for data_ch in instrument.data_type[data_type]:
                     appending_dict[data_ch] = [logging_data_list[list_index][data_index]]
                     data_index += 1
-                    print(appending_dict)
+                    # print(appending_dict)
             
                 self.concat_list.append(pd.DataFrame.from_dict(appending_dict))
                 
@@ -65,10 +65,10 @@ class DataLogger:
         data_index = 0
         appending_times = {'time':[]}
         appending_times['time'].append(logging_data_list[list_index])
-        print(appending_times)         
+        # print(appending_times)         
         self.df_times = pd.DataFrame.from_dict(appending_times)        
         self.concat_list.append(self.df_times)
-        print(self.concat_list)
+        # print(self.concat_list)
         
         result = pd.concat(self.concat_list, axis=1, keys=self.keys)
         

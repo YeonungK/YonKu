@@ -8,7 +8,7 @@ import time
 from datetime import datetime
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QLabel, QComboBox, QCheckBox, QMdiSubWindow
 from PyQt5.QtGui import QIcon, QCloseEvent
-from PyQt5.QtCore import QTimer, Qt, QSize
+from PyQt5.QtCore import QTimer, Qt, QSize, pyqtSignal
 import pyqtgraph as pg
 import pandas as pd
 
@@ -16,6 +16,7 @@ from GUI import AddMultidataPlotUi as amp
 
 
 class plotWidget(QWidget):
+    delete = pyqtSignal()
     def __init__(self, plot_setting, dataset, experiment_parameters):
         super().__init__()
         
@@ -32,6 +33,7 @@ class plotWidget(QWidget):
         
         self.dataset = dataset
         self.experiment_parameters = experiment_parameters
+
         
         # plots
         self.plots = {}
@@ -121,6 +123,8 @@ class plotWidget(QWidget):
         #         self.yAxisData = self.time
         #         self.yAxis_name_key = 'time_name'
 
+        print(self.xAxis, self.yAxis)
+        print(self.dataset)
         self.xAxisData = self.dataset.get(self.xAxis, {})
         self.yAxisData = self.dataset.get(self.yAxis, {})
 
@@ -276,6 +280,12 @@ class plotWidget(QWidget):
     
     def plot_data(self): # update data for each plot
         
+        print("plot_data is being run correctly.")
+        
+        self.xAxisData = self.dataset.get(self.xAxis, {})
+        self.yAxisData = self.dataset.get(self.yAxis, {})
+        
+        print(self.xAxisData, self.yAxisData)
         for plt_channels, plts in self.plots.items():
             plt_channels = plt_channels.split(" vs ")
             print(plt_channels)
@@ -286,6 +296,7 @@ class plotWidget(QWidget):
 
     def closeEvent(self, event:QCloseEvent):
         self.plots.clear()
+        self.delete.emit()
         event.accept()
          # [/]
 

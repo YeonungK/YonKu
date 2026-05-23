@@ -257,13 +257,13 @@ class PlotWorker(QObject):
                 channels = instrument.data_type.get(data_type, [])
 
                 try:
-                    values = function(instrument)
+                    values = function()
                 except Exception as e:
                     print(f"Error reading {device_key} / {data_type}: {e}")
                     values = None
 
                 if values is None:
-                    values = [None] * len(channels)
+                    values = [0] * len(channels)
 
                 elif not isinstance(values, (list, tuple)):
                     values = [values]
@@ -273,18 +273,23 @@ class PlotWorker(QObject):
                         f"Warning: {device_key} / {data_type} returned "
                         f"{len(values)} values for {len(channels)} channels."
                     )
-                    values = [None] * len(channels)
+                    values = [0] * len(channels)
+                
+                self.logging_data_list.append(values)
 
                 for channel, value in zip(channels, values):
                     self.dataset[data_type][channel].append(value)
 
-                self.update_known_widget_fields(self, data_type, values)
+                self.update_known_widget_fields(data_type, values)
             
             
         now = datetime.now(ZoneInfo('America/New_York')).timestamp()
         self.dataset['time']['time'].append(now)
         
-        self.logging_data_list.append(now)   
+        self.logging_data_list.append([now])
+        print("------------------------")   
+        print(self.logging_data_list)
+        print("------------------------")
         self.logger.append(self.logging_data_list)     
     
     def update_known_widget_fields(self, data_type, values):

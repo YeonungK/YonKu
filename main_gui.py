@@ -247,7 +247,10 @@ class UI(QMainWindow):
     def dataset_setup(self):
         
         self.datasets = {}
-        self.datasets['primary'] = Dataset.Dataset() 
+        self.datasets["primary"] = Dataset.Dataset()
+        self.connected_instruments, self.disconnected_instuments = self.check_instrument_connection()
+        self.acquirable_instruments = self.get_acquirable_instruments(self.connected_instruments)
+        self.datasets["primary"].build_from_instruments(self.acquirable_instruments)
         
     def add_windows(self):
     
@@ -378,9 +381,9 @@ class UI(QMainWindow):
         else:  
             return None
         # check instrument connection
-        self.connected_instruments, self.disconnected_instuments = self.check_instrument_connection()
-        self.acquirable_instruments = self.get_acquirable_instruments(self.connected_instruments)
-        self.datasets["primary"].build_from_instruments(self.acquirable_instruments)
+        # self.connected_instruments, self.disconnected_instuments = self.check_instrument_connection()
+        # self.acquirable_instruments = self.get_acquirable_instruments(self.connected_instruments)
+        # self.datasets["primary"].build_from_instruments(self.acquirable_instruments)
 
         print("Dynamic dataset:")
         print(self.datasets["primary"].set)
@@ -472,9 +475,12 @@ class UI(QMainWindow):
         self.plot_update_worker_thread.wait()
         
     def update_plot(self):
+        print("plotworker update signal is emitted correctly.")
         for index, plt_wid in self.plot_widgets.items():
             if isinstance(plt_wid, PlotUi.plotWidget):
                 plt_wid.plot_data()
+    
+
         
      # [/]
 
@@ -545,11 +551,11 @@ class UI(QMainWindow):
     def get_live_available_data_types(self):
         data_types = ["time"]
 
-        # Prefer current dataset if already built
-        if hasattr(self, "datasets") and "primary" in self.datasets:
-            dataset_keys = list(self.datasets["primary"].set.keys())
-            if dataset_keys:
-                return dataset_keys
+        # # Prefer current dataset if already built
+        # if hasattr(self, "datasets") and "primary" in self.datasets:
+        #     dataset_keys = list(self.datasets["primary"].set.keys())
+        #     if dataset_keys:
+        #         return dataset_keys
 
         # Fallback to instruments
         for instrument in self.instruments.values():
@@ -569,7 +575,7 @@ class UI(QMainWindow):
             return
         
         print("Available live plot data types:", self.get_live_available_data_types())
-
+        
         self.newPlotSettingWid = nps.create_plot_setting_ui(available_data_types=available_data_types)
         # self.Wid = QWidget()
         # uic.loadUi("GUI/create_plot_setting.ui", self.Wid)
@@ -590,11 +596,13 @@ class UI(QMainWindow):
         self.new_plot_window()
 
     def new_plot_window(self):
-        self.plot_widgets[self.plot_widget_count] = PlotUi.plotWidget(
+        
+        new_plot_widget = PlotUi.plotWidget(
             self.plot_setting, 
             self.datasets['primary'].set, 
             self.build_live_plot_parameters()
         )
+        self.plot_widgets[self.plot_widget_count] = new_plot_widget
         
         self.plot_sub = QMdiSubWindow()
         self.plot_sub.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint) # disable maximize button
@@ -609,7 +617,21 @@ class UI(QMainWindow):
         
         # print(self.plot_widgets)
         
+        
         self.plot_widget_count += 1 
+        
+        new_plot_widget.delete.connect(lambda: self.delete_worker(new_plot_widget))
+        
+    def delete_worker(self, plot_widget):
+        try:
+            for index, widget in self.plot_widgets.items():
+                if widget == plot_widget:
+                    del self.plot_widgets[index]
+        except RuntimeError as e:
+            self.errorDisplay.setText(f"<b style='color:red;'>Ignore this exception:</b>\n{e}")
+        
+        
+    
         
         
         
