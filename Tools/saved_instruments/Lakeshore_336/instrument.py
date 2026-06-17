@@ -7,6 +7,7 @@ import sys
 sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 from Tools.Instrument import SerialInstrument
+from Tools.saved_instruments.Lakeshore_336 import attributes
 
 
 class temperatureController(SerialInstrument):
@@ -15,11 +16,10 @@ class temperatureController(SerialInstrument):
                                 bytesize = serial.SEVENBITS, 
                                 parity = serial.PARITY_ODD, 
                                 stopbits = serial.STOPBITS_ONE)
-        
-        self.data_type = {'temperature':['ch_A', 'ch_B', 'ch_C', 'ch_D'], 
-                          'resistance': ['ch_A', 'ch_B', 'ch_C', 'ch_D']}
-        self.data_unit = {'temperature':'K', 'resistance':'Ohms'}
-        self.data_function = {'temperature':self.temp_read_all, 'resistance':self.resist_read_all}
+        self.data_type = attributes.data_type
+        self.data_unit = attributes.data_unit
+        self.data_label = attributes.data_label
+        self.data_function = attributes.functions
         
         
     def clear(self):

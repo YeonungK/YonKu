@@ -368,72 +368,6 @@ class add_multidata_plot_ui(QWidget):
         
     def set_names(self):
         
-        # try:
-        #     experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
-        #                                 'resistance_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistance_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
-        #                                 'lockIn_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-        #                                 'lockIn2_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn2_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-        #                                 'field_name':{"field":"field"}, 'field_unit':{"field":"T"},
-        #                                 'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
-        #                                 'time_name':{"time":"time"}}
-            
-        #     experiment_parameters['temperature_name']["ch_A"] = experiment_params['data_schema']['temperature_ch_A']['label']
-        #     experiment_parameters['temperature_name']["ch_B"] = experiment_params['data_schema']['temperature_ch_B']['label']
-        #     experiment_parameters['temperature_name']["ch_C"] = experiment_params['data_schema']['temperature_ch_C']['label']
-        #     experiment_parameters['temperature_name']["ch_D"] = experiment_params['data_schema']['temperature_ch_D']['label']
-
-        #     experiment_parameters['temperature_unit']["ch_A"] = experiment_params['data_schema']['temperature_ch_A']['unit']
-        #     experiment_parameters['temperature_unit']["ch_B"] = experiment_params['data_schema']['temperature_ch_B']['unit']
-        #     experiment_parameters['temperature_unit']["ch_C"] = experiment_params['data_schema']['temperature_ch_C']['unit']
-        #     experiment_parameters['temperature_unit']["ch_D"] = experiment_params['data_schema']['temperature_ch_D']['unit']
-
-        #     experiment_parameters['resistance_name']["ch_A"] = experiment_params['data_schema']['resistance_ch_A']['label']
-        #     experiment_parameters['resistance_name']["ch_B"] = experiment_params['data_schema']['resistance_ch_B']['label']
-        #     experiment_parameters['resistance_name']["ch_C"] = experiment_params['data_schema']['resistance_ch_C']['label']
-        #     experiment_parameters['resistance_name']["ch_D"] = experiment_params['data_schema']['resistance_ch_D']['label']
-
-        #     experiment_parameters['resistance_unit']["ch_A"] = experiment_params['data_schema']['resistance_ch_A']['unit']
-        #     experiment_parameters['resistance_unit']["ch_B"] = experiment_params['data_schema']['resistance_ch_B']['unit']
-        #     experiment_parameters['resistance_unit']["ch_C"] = experiment_params['data_schema']['resistance_ch_C']['unit']
-        #     experiment_parameters['resistance_unit']["ch_D"] = experiment_params['data_schema']['resistance_ch_D']['unit']
-
-        #     experiment_parameters['lockIn_name']["x"] = experiment_params['data_schema']['lockIn_x']['label']
-        #     experiment_parameters['lockIn_name']["y"] = experiment_params['data_schema']['lockIn_y']['label']
-        #     experiment_parameters['lockIn_name']["r"] = experiment_params['data_schema']['lockIn_r']['label']
-        #     experiment_parameters['lockIn_name']["theta"] = experiment_params['data_schema']['lockIn_theta']['label']
-
-        #     experiment_parameters['lockIn_unit']["x"] = experiment_params['data_schema']['lockIn_x']['unit']
-        #     experiment_parameters['lockIn_unit']["y"] = experiment_params['data_schema']['lockIn_y']['unit']
-        #     experiment_parameters['lockIn_unit']["r"] = experiment_params['data_schema']['lockIn_r']['unit']
-        #     experiment_parameters['lockIn_unit']["theta"] = experiment_params['data_schema']['lockIn_theta']['unit']
-
-        #     experiment_parameters['lockIn2_name']["x"] = experiment_params['data_schema']['lockIn2_x']['label']
-        #     experiment_parameters['lockIn2_name']["y"] = experiment_params['data_schema']['lockIn2_y']['label']
-        #     experiment_parameters['lockIn2_name']["r"] = experiment_params['data_schema']['lockIn2_r']['label']
-        #     experiment_parameters['lockIn2_name']["theta"] = experiment_params['data_schema']['lockIn2_theta']['label']
-
-        #     experiment_parameters['lockIn2_unit']["x"] = experiment_params['data_schema']['lockIn2_x']['unit']
-        #     experiment_parameters['lockIn2_unit']["y"] = experiment_params['data_schema']['lockIn2_y']['unit']
-        #     experiment_parameters['lockIn2_unit']["r"] = experiment_params['data_schema']['lockIn2_r']['unit']
-        #     experiment_parameters['lockIn2_unit']["theta"] = experiment_params['data_schema']['lockIn2_theta']['unit']
-
-        #     experiment_parameters['field_name']["field"] = experiment_params['data_schema']['field']['label']
-        #     experiment_parameters['field_unit']["field"] = experiment_params['data_schema']['field']['unit']
-
-        #     experiment_parameters['current_name']["current"] = experiment_params['data_schema']['current']['label']
-        #     experiment_parameters['current_unit']["current"] = experiment_params['data_schema']['current']['unit']
-
-        #     experiment_parameters['time_name']["time"] = experiment_params['data_schema']['time']['label']
-
-        # except FileNotFoundError:
-        #     experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
-        #                             'resistance_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistance_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
-        #                             'lockIn_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-        #                             'lockIn2_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn2_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-        #                             'field_name':{"field":"field"}, 'field_unit':{"field":"T"},
-        #                             'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
-        #                             'time_name':{"time":"time"}}
-        
         self.xAxisChannelComboBox.clear()
         self.yAxisChannelComboBox.clear()
 
@@ -455,19 +389,6 @@ class add_multidata_plot_ui(QWidget):
 
             self.yAxisChannelComboBox.addItem(label)
 
-        # x_channels_list = list(x_data.keys())[0:len(experiment_parameters[x_name_key].keys())]
-        # y_channels_list = list(y_data.keys())[0:len(experiment_parameters[y_name_key].keys())]
-        
-
-        # for ch in x_channels_list:
-        #     x_combo_box.addItem(experiment_parameters[x_name_key][ch])
-        
-        # for ch in y_channels_list:
-        #     y_combo_box.addItem(experiment_parameters[y_name_key][ch])
-
-            
-            
-        # return experiment_parameters
     
     def update_data(
         self,
@@ -514,29 +435,6 @@ class add_multidata_plot_ui(QWidget):
         except KeyError:
             return axis_name, "-"
 
-    # def update_data(self, datasetLink, channel_list, comboBox, empty_set, axis, empty_experiment_parameters, full_experiment_parameters, name_key, unit_key):
-        
-    #     dataset = pd.read_csv(datasetLink, header=[0,1])
-    #     AxisChannel = channel_list[comboBox.currentIndex()]
-    #     AxisName = self.plotNameLineEdit.text() + "_" + comboBox.currentText()
-        
-    #     try:
-    #         empty_set[AxisName] = dataset[axis][AxisChannel].to_list()
-    #     except KeyError:
-    #         self.AxisDatasetLineEdit.setText("This dataset doesn't contain the chosen data types.")
-    #         return None
-
-    #     empty_experiment_parameters[name_key][AxisName] = full_experiment_parameters[name_key][AxisChannel]
-    #     print(empty_experiment_parameters[name_key])
-    #     if axis == 'time':
-    #         pass
-    #     else:
-    #         empty_experiment_parameters[unit_key][AxisName] = full_experiment_parameters[unit_key][AxisChannel]
-    #         print(empty_experiment_parameters[unit_key])
-        
-        
-    #     return AxisName
-        
     
 
         

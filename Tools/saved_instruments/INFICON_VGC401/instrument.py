@@ -7,7 +7,7 @@ import sys
 sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 from Tools.Instrument import SerialInstrument
-from Tools.saved_instruments.test_model import attributes
+from Tools.saved_instruments.INFICON_VGC401 import attributes
 
 
 class pressureGauge(SerialInstrument):

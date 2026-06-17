@@ -306,7 +306,7 @@ class UI(QMainWindow):
         self.deviceListSub.hide()
         
         self.esu_window = QMainWindow()
-        self.experimentSettingWid = esu.ExperimentSettingUi()
+        self.experimentSettingWid = esu.ExperimentSettingUi(self.instruments)
         self.esu_window.setCentralWidget(self.experimentSettingWid)
         self.esu_window.setWindowTitle("Plot Setting")
         self.esu_window.resize(570, 300)

@@ -1,0 +1,12 @@
+Szkopek Lab Error Log Book - 2026-06-01--20-03-02
+
+2026-06-01--20-09-52 Exception: Traceback (most recent call last):
+  File "C:\Users\user\Desktop\YonKu\main_gui.py", line 1293, in closeEvent
+    self.instruments[device_key].close()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Desktop\YonKu\Tools\Instrument.py", line 135, in close
+    self.device.close()
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'close'
+
+

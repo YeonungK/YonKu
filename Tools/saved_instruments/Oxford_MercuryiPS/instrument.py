@@ -7,14 +7,16 @@ import sys
 sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 from Tools.Instrument import EthernetInstrument
+from Tools.saved_instruments.Oxford_MercuryiPS import attributes
 
 
 class magnetPowerSupply(EthernetInstrument):
     def __init__(self, name, ip, port):
         super().__init__(name, 'Oxford_MercuryiPS', ip, port)
-        self.data_type = {'field':['field'], 'current':['current']}
-        self.data_unit = {'field':'T', 'current':'A'}
-        self.data_function = {'field':self.read_all_field, 'current': self.read_current}
+        self.data_type = attributes.data_type
+        self.data_unit = attributes.data_unit
+        self.data_label = attributes.data_label
+        self.data_function = attributes.functions
     
     
     

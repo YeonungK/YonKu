@@ -1,10 +1,9 @@
-
 import json
 import importlib
 from pathlib import Path
 from project_paths import PROJECT_ROOT
 
-MODEL_NAME = "INFICON_VGC401"
+MODEL_NAME = "SRS_830_2"
 
 MODEL_DIR = Path(__file__).resolve().parent
 METADATA_PATH = MODEL_DIR / "metadata.json"

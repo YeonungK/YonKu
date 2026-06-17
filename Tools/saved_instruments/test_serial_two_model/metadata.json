@@ -3,5 +3,18 @@
     "data_label": {},
     "data_unit": {},
     "initial_state": {},
-    "methods": {}
+    "methods": {
+        "ser": {
+            "module": "",
+            "function": "",
+            "command_type": "",
+            "command_text": "",
+            "communication_syntax": "",
+            "desired_data_type": "",
+            "command_linked_data": {
+                "data_function": "",
+                "data_type": ""
+            }
+        }
+    }
 }

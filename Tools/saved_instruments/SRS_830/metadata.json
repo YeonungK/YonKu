@@ -1,7 +1,16 @@
 {
-    "data_type": {},
+    "data_type": {
+        "lockIn": [
+            "x",
+            "y",
+            "r",
+            "theta"
+        ]
+    },
     "data_label": {},
-    "data_unit": {},
+    "data_unit": {
+        "lockIn": "manual"
+    },
     "initial_state": {},
     "methods": {
         "ser": {

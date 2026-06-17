@@ -1,0 +1,28 @@
+{
+    "data_type": {
+        "pressure": [
+            "ch_A"
+        ]
+    },
+    "data_label": {
+        "pressure": "Pressure"
+    },
+    "data_unit": {
+        "pressure": "mBar"
+    },
+    "initial_state": {},
+    "methods": {
+        "pressure_read_method": {
+            "module": "pressure_read_method",
+            "function": "pressure_read",
+            "command_type": "READ",
+            "command_text": "PR1",
+            "communication_syntax": "ASCII",
+            "desired_data_type": "string",
+            "command_linked_data": {
+                "data_function": false,
+                "data_type": null
+            }
+        }
+    }
+}

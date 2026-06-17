@@ -1,0 +1,17 @@
+Szkopek Lab Error Log Book - 2026-06-01--20-27-22
+
+2026-06-01--20-27-44 Exception: Traceback (most recent call last):
+  File "C:\Users\user\Desktop\YonKu\main_gui.py", line 1328, in <module>
+    UIWindow = UI()
+  File "C:\Users\user\Desktop\YonKu\main_gui.py", line 84, in __init__
+    self.add_windows()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Desktop\YonKu\main_gui.py", line 309, in add_windows
+    self.experimentSettingWid = esu.ExperimentSettingUi(self.instruments)
+                                ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\YonKu\GUI\ExperimentSettingUi.py", line 19, in __init__
+    self.saveButton.clicked.connect(self.save_button)
+    ^^^^^^^^^^^^^^^
+AttributeError: 'ExperimentSettingUi' object has no attribute 'saveButton'. Did you mean: 'save_button'?
+
+

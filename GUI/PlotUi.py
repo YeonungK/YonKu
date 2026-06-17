@@ -21,14 +21,6 @@ class plotWidget(QWidget):
         
         # [PlotItem Related Variables (Dataset, Plot setting, Axes type, etc.)]
 
-        # data dictionaries
-        # self.temperature = dataset['temperature']
-        # self.resistance = dataset['resistance']
-        # self.lockIn = dataset['lockIn']
-        # self.lockIn2 = dataset['lockIn2']
-        # self.field = dataset['field']
-        # self.current = dataset['current']
-        # self.time = dataset['time']
         
         self.dataset = dataset
         self.experiment_parameters = experiment_parameters
@@ -63,63 +55,6 @@ class plotWidget(QWidget):
         self.title = self.yAxis.upper() + " vs " + self.xAxis.upper()
         self.colors = ['r', 'g', 'y', 'c', 'w']
         
-        # set the xAxis and yAxis data type according to the exp setting ui & dataset
-        # match self.xAxis:
-        #     case "lockIn":
-        #         self.xAxisData = self.lockIn
-        #         self.xAxis_name_key = 'lockIn_name'
-        #         self.xAxis_unit_key = 'lockIn_unit'
-        #     case "lockIn2":
-        #         self.xAxisData = self.lockIn2
-        #         self.xAxis_name_key = 'lockIn2_name'
-        #         self.xAxis_unit_key = 'lockIn2_unit'
-        #     case "temperature":
-        #         self.xAxisData = self.temperature
-        #         self.xAxis_name_key = 'temperature_name'
-        #         self.xAxis_unit_key = 'temperature_unit'
-        #     case "resistance":
-        #         self.xAxisData = self.resistance
-        #         self.xAxis_name_key = 'resistance_name'
-        #         self.xAxis_unit_key = 'resistance_unit'
-        #     case "field":
-        #         self.xAxisData = self.field
-        #         self.xAxis_name_key = 'field_name'
-        #         self.xAxis_unit_key = 'field_unit'
-        #     case "current":
-        #         self.xAxisData = self.current
-        #         self.xAxis_name_key = 'current_name'
-        #         self.xAxis_unit_key = 'current_unit'
-        #     case "time":
-        #         self.xAxisData = self.time
-        #         self.xAxis_name_key = 'time_name'
-        # match self.yAxis:
-        #     case "lockIn":
-        #         self.yAxisData = self.lockIn
-        #         self.yAxis_name_key = 'lockIn_name'
-        #         self.yAxis_unit_key = 'lockIn_unit'
-        #     case "lockIn2":
-        #         self.yAxisData = self.lockIn2
-        #         self.yAxis_name_key = 'lockIn2_name'
-        #         self.yAxis_unit_key = 'lockIn2_unit'
-        #     case "temperature":
-        #         self.yAxisData = self.temperature
-        #         self.yAxis_name_key = 'temperature_name'
-        #         self.yAxis_unit_key = 'temperature_unit'
-        #     case "resistance":
-        #         self.yAxisData = self.resistance
-        #         self.yAxis_name_key = 'resistance_name'
-        #         self.yAxis_unit_key = 'resistance_unit'
-        #     case "field":
-        #         self.yAxisData = self.field
-        #         self.yAxis_name_key = 'field_name'
-        #         self.yAxis_unit_key = 'field_unit'
-        #     case "current":
-        #         self.yAxisData = self.current
-        #         self.yAxis_name_key = 'current_name'
-        #         self.yAxis_unit_key = 'current_unit'
-        #     case "time":
-        #         self.yAxisData = self.time
-        #         self.yAxis_name_key = 'time_name'
 
         self.xAxisData = self.dataset.get(self.xAxis, {})
         self.yAxisData = self.dataset.get(self.yAxis, {})
@@ -343,38 +278,14 @@ class oldPlotWidget(QWidget):
                 self.set.setdefault(data_type, {})
                 self.set[data_type][channel] = self.dataset[(data_type, channel)].to_list()
 
-            # also expose each data_type as an attribute because the rest of your class uses self.temperature, self.lockIn, etc.
-            # for data_type, data_dict in self.set.items():
-            #     setattr(self, data_type, data_dict)
 
             self.xAxisData = self.set.get(self.xAxis, {})
             self.yAxisData = self.set.get(self.yAxis, {})
 
             
-            # for instrument in self.connected_instruments:
-            #     for data_type, channel in self.all_instruments[instrument].data_type.items():
-            #         self.data_dict = setattr(self, data_type, {})
-            #         self.data_dict = getattr(self, data_type)
-            #         for ch in channel:
-            #             self.data_dict[ch] = self.dataset[data_type][ch].to_list()
-                    
-            #         self.set[data_type] = self.data_dict
-            
-            # self.time = {'time':self.dataset['time']['time'].to_list()}
-            # self.set['time'] = self.time
-            
         
         # if multiple dataset option is chosen    
         else:
-            # self.temperature = {'ch_A':[],'ch_B':[],'ch_C':[],'ch_D':[]}
-            # self.resistance = {'ch_A':[],'ch_B':[],'ch_C':[],'ch_D':[]}
-            # self.lockIn = {'x':[],'y':[],'r':[],'theta':[]}
-            # self.lockIn2 = {'x':[],'y':[],'r':[],'theta':[]}
-            # self.field = {'field':[]}
-            # self.current = {'current':[]}
-            # self.time = {'time':[]}
-            
-            # self.set = self.set = {'temperature':self.temperature, 'resistance':self.resistance, 'lockIn':self.lockIn, 'field': self.field, 'current':self.current, 'time':self.time}
             
             self.set = {}
             self.xAxisData = {}
@@ -390,72 +301,6 @@ class oldPlotWidget(QWidget):
             
             self.experiment_parameters = self.experimentParamJson
                 
-            #     self.experiment_parameters = {'temperature_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'temperature_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
-            #                             'resistance_name':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""}, 'resistance_unit':{"ch_A":"","ch_B":"","ch_C":"","ch_D":""},
-            #                             'lockIn_name':{"x":"","y":"","r":"","theta":""}, 'lockIn_unit':{"x":"","y":"","r":"","theta":""},
-            #                             'lockIn2_name':{"x":"","y":"","r":"","theta":""}, 'lockIn2_unit':{"x":"","y":"","r":"","theta":""},
-            #                             'field_name':{"field":""}, 'field_unit':{"field":""},
-            #                             'current_name':{"current":""}, 'current_unit':{"current":""},
-            #                             'time_name':{"time":""}}
-                
-                
-            #     self.experiment_parameters['temperature_name']["ch_A"] = self.experimentParamJson["data_schema"]["temperature_ch_A"]["label"]
-            #     self.experiment_parameters['temperature_name']["ch_B"] = self.experimentParamJson["data_schema"]["temperature_ch_B"]["label"]
-            #     self.experiment_parameters['temperature_name']["ch_C"] = self.experimentParamJson["data_schema"]["temperature_ch_C"]["label"]
-            #     self.experiment_parameters['temperature_name']["ch_D"] = self.experimentParamJson["data_schema"]["temperature_ch_D"]["label"]
-
-            #     self.experiment_parameters['temperature_unit']["ch_A"] = self.experimentParamJson["data_schema"]["temperature_ch_A"]["unit"]
-            #     self.experiment_parameters['temperature_unit']["ch_B"] = self.experimentParamJson["data_schema"]["temperature_ch_B"]["unit"]
-            #     self.experiment_parameters['temperature_unit']["ch_C"] = self.experimentParamJson["data_schema"]["temperature_ch_C"]["unit"]
-            #     self.experiment_parameters['temperature_unit']["ch_D"] = self.experimentParamJson["data_schema"]["temperature_ch_D"]["unit"]
-
-                
-            #     self.experiment_parameters['resistance_name']["ch_A"] = self.experimentParamJson["data_schema"]["resistance_ch_A"]["label"]
-            #     self.experiment_parameters['resistance_name']["ch_B"] = self.experimentParamJson["data_schema"]["resistance_ch_B"]["label"]
-            #     self.experiment_parameters['resistance_name']["ch_C"] = self.experimentParamJson["data_schema"]["resistance_ch_C"]["label"]
-            #     self.experiment_parameters['resistance_name']["ch_D"] = self.experimentParamJson["data_schema"]["resistance_ch_D"]["label"]
-
-            #     self.experiment_parameters['resistance_unit']["ch_A"] = self.experimentParamJson["data_schema"]["resistance_ch_A"]["unit"]
-            #     self.experiment_parameters['resistance_unit']["ch_B"] = self.experimentParamJson["data_schema"]["resistance_ch_B"]["unit"]
-            #     self.experiment_parameters['resistance_unit']["ch_C"] = self.experimentParamJson["data_schema"]["resistance_ch_C"]["unit"]
-            #     self.experiment_parameters['resistance_unit']["ch_D"] = self.experimentParamJson["data_schema"]["resistance_ch_D"]["unit"]
-
-            #     self.experiment_parameters['lockIn_name']["x"] = self.experimentParamJson["data_schema"]["lockIn_x"]["label"]
-            #     self.experiment_parameters['lockIn_name']["y"] = self.experimentParamJson["data_schema"]["lockIn_y"]["label"]
-            #     self.experiment_parameters['lockIn_name']["r"] = self.experimentParamJson["data_schema"]["lockIn_r"]["label"]
-            #     self.experiment_parameters['lockIn_name']["theta"] = self.experimentParamJson["data_schema"]["lockIn_theta"]["label"]
-
-            #     self.experiment_parameters['lockIn_unit']["x"] = self.experimentParamJson["data_schema"]["lockIn_x"]["unit"]
-            #     self.experiment_parameters['lockIn_unit']["y"] = self.experimentParamJson["data_schema"]["lockIn_y"]["unit"]
-            #     self.experiment_parameters['lockIn_unit']["r"] = self.experimentParamJson["data_schema"]["lockIn_r"]["unit"]
-            #     self.experiment_parameters['lockIn_unit']["theta"] = self.experimentParamJson["data_schema"]["lockIn_theta"]["unit"]
-
-            #     self.experiment_parameters['lockIn2_name']["x"] = self.experimentParamJson["data_schema"]["lockIn2_x"]["label"]
-            #     self.experiment_parameters['lockIn2_name']["y"] = self.experimentParamJson["data_schema"]["lockIn2_y"]["label"]
-            #     self.experiment_parameters['lockIn2_name']["r"] = self.experimentParamJson["data_schema"]["lockIn2_r"]["label"]
-            #     self.experiment_parameters['lockIn2_name']["theta"] = self.experimentParamJson["data_schema"]["lockIn2_theta"]["label"]
-
-            #     self.experiment_parameters['lockIn2_unit']["x"] = self.experimentParamJson["data_schema"]["lockIn2_x"]["unit"]
-            #     self.experiment_parameters['lockIn2_unit']["y"] = self.experimentParamJson["data_schema"]["lockIn2_y"]["unit"]
-            #     self.experiment_parameters['lockIn2_unit']["r"] = self.experimentParamJson["data_schema"]["lockIn2_r"]["unit"]
-            #     self.experiment_parameters['lockIn2_unit']["theta"] = self.experimentParamJson["data_schema"]["lockIn2_theta"]["unit"]
-
-            #     self.experiment_parameters['field_name']["field"] = self.experimentParamJson["data_schema"]["field"]["label"]
-            #     self.experiment_parameters['field_unit']["field"] = self.experimentParamJson["data_schema"]["field"]["unit"]
-                
-            #     self.experiment_parameters['current_name']["current"] = self.experimentParamJson["data_schema"]["current"]["label"]
-            #     self.experiment_parameters['current_unit']["current"] = self.experimentParamJson["data_schema"]["current"]["unit"]
-                
-            #     self.experiment_parameters['time_name']["time"] = self.experimentParamJson["data_schema"]["time"]["label"]
-                
-            # except FileNotFoundError:
-            #     self.experiment_parameters = {'temperature_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'temperature_unit':{"ch_A":"K","ch_B":"K","ch_C":"K","ch_D":"K"},
-            #                           'resistance_name':{"ch_A":"Ch_A","ch_B":"Ch_B","ch_C":"Ch_C","ch_D":"Ch_D"}, 'resistance_unit':{"ch_A":"Ohms","ch_B":"Ohms","ch_C":"Ohms","ch_D":"Ohms"},
-            #                           'lockIn_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-            #                           'lockIn2_name':{"x":"X","y":"Y","r":"R","theta":"Theta"}, 'lockIn2_unit':{"x":"manual","y":"manual","r":"manual","theta":"degrees"},
-            #                           'field_name':{"field":"field"}, 'field_unit':{"field":"T"},
-            #                           'current_name':{"current":"current"}, 'current_unit':{"current":"A"},
-            #                           'time_name':{"time":"time"}}
         
         # if multiple dataset option is chosen, don't take any parameters yet        
         else:
@@ -471,78 +316,7 @@ class oldPlotWidget(QWidget):
         self.yAxis_name_key = f'{self.y_set_name}_name'
         self.yAxis_unit_key = f'{self.y_set_name}__unit'
 
-        # match self.xAxis:
-        #     case "lockIn":
-        #         self.xAxisData = self.lockIn
-        #         self.x_set_name = 'lockIn'
-        #         self.xAxis_name_key = 'lockIn_name'
-        #         self.xAxis_unit_key = 'lockIn_unit'
-        #     case "lockIn2":
-        #         self.xAxisData = self.lockIn2
-        #         self.x_set_name = 'lockIn2'
-        #         self.xAxis_name_key = 'lockIn2_name'
-        #         self.xAxis_unit_key = 'lockIn2_unit'
-        #     case "temperature":
-        #         self.xAxisData = self.temperature
-        #         self.x_set_name = 'temperature'
-        #         self.xAxis_name_key = 'temperature_name'
-        #         self.xAxis_unit_key = 'temperature_unit'
-        #     case "resistance":
-        #         self.xAxisData = self.resistance
-        #         self.x_set_name = 'resistance'
-        #         self.xAxis_name_key = 'resistance_name'
-        #         self.xAxis_unit_key = 'resistance_unit'
-        #     case "field":
-        #         self.xAxisData = self.field
-        #         self.x_set_name = 'field'
-        #         self.xAxis_name_key = 'field_name'
-        #         self.xAxis_unit_key = 'field_unit'
-        #     case "current":
-        #         self.xAxisData = self.current
-        #         self.x_set_name = 'current'
-        #         self.xAxis_name_key = 'current_name'
-        #         self.xAxis_unit_key = 'current_unit'
-        #     case "time":
-        #         self.xAxisData = self.time
-        #         self.x_set_name = 'time'
-        #         self.xAxis_name_key = 'time_name'
-        #         self.xAxis_unit_key = 'time_unit' 
-        # match self.yAxis:
-        #     case "lockIn":
-        #         self.yAxisData = self.lockIn
-        #         self.y_set_name = 'lockIn'
-        #         self.yAxis_name_key = 'lockIn_name'
-        #         self.yAxis_unit_key = 'lockIn_unit'
-        #     case "lockIn2":
-        #         self.yAxisData = self.lockIn2
-        #         self.y_set_name = 'lockIn2'
-        #         self.yAxis_name_key = 'lockIn2_name'
-        #         self.yAxis_unit_key = 'lockIn2_unit'
-        #     case "temperature":
-        #         self.yAxisData = self.temperature
-        #         self.y_set_name = 'temperature'
-        #         self.yAxis_name_key = 'temperature_name'
-        #         self.yAxis_unit_key = 'temperature_unit'
-        #     case "resistance":
-        #         self.yAxisData = self.resistance
-        #         self.y_set_name = 'resistance'
-        #         self.yAxis_name_key = 'resistance_name'
-        #         self.yAxis_unit_key = 'resistance_unit'
-        #     case "field":
-        #         self.yAxisData = self.field
-        #         self.y_set_name = 'field'
-        #         self.yAxis_name_key = 'field_name'
-        #         self.yAxis_unit_key = 'field_unit'
-        #     case "current":
-        #         self.yAxisData = self.current
-        #         self.y_set_name = 'current'
-        #         self.yAxis_name_key = 'current_name'
-        #         self.yAxis_unit_key = 'current_unit'
-        #     case "time":
-        #         self.yAxisData = self.time
-        #         self.y_set_name = 'time'
-        #         self.yAxis_name_key = 'time_name'
-        #         self.yAxis_unit_key = 'time_unit'
+       
          # [/]
         
         # [Plot Window Related Variables (layouts, comboboxes, buttons)]
@@ -715,17 +489,6 @@ class oldPlotWidget(QWidget):
             self.previous_viewbox = None
             self.main_layout = self.plot_item.layout
             
-            
-
-            # if not self.xAxis == 'time':
-            #     xAxisChannel_unit = self.experiment_parameters[self.xAxis_unit_key][xAxisChannel_name]
-            # else:
-            #     xAxisChannel_unit = "-"
-                
-            # if not self.yAxis == 'time':    
-            #     yAxisChannel_unit = self.experiment_parameters[self.yAxis_unit_key][yAxisChannel_name]
-            # else:
-            #     yAxisChannel_unit = "-"
             
             plot_name = f"{yAxisChannel_name} ({yAxisChannel_unit}) vs {xAxisChannel_name} ({xAxisChannel_unit})"
             plot_channels = xAxisChannel_name + " vs " + yAxisChannel_name

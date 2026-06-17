@@ -1,0 +1,39 @@
+{
+    "data_type": {
+        "temperature": [
+            "ch_A",
+            "ch_B",
+            "ch_C",
+            "ch_D"
+        ],
+        "resistance": [
+            "ch_A",
+            "ch_B",
+            "ch_C",
+            "ch_D"
+        ]
+    },
+    "data_label": {
+        "temperature": "Temperature",
+        "resistance": "Resistance"
+    },
+    "data_unit": {
+        "temperature": "K",
+        "resistance": "Ohms"
+    },
+    "initial_state": {},
+    "methods": {
+        "read_temp": {
+            "module": "read_temp_method",
+            "function": "read_temp",
+            "command_type": "READ",
+            "command_text": "KRDG? {Data1}",
+            "communication_syntax": "ASCII",
+            "desired_data_type": "string",
+            "command_linked_data": {
+                "data_function": false,
+                "data_type": null
+            }
+        }
+    }
+}

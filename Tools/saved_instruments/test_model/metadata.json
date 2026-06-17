@@ -1,21 +1,20 @@
 {
-    "data_type" : {},
-    "data_label" : {},
-    "data_unit" : {},
-    "initial_state" : {},
-    "methods" : {
-        "ser" : {
-            "command_name" : "ser",
-            "command_text" : "ser",
-            "data_list" : {},
-            "command_type" : "read",
-            "command_linked_data" : {
-                "data_function" : "false",
+    "data_type": {},
+    "data_label": {},
+    "data_unit": {},
+    "initial_state": {},
+    "methods": {
+        "ser": {
+            "module": "",
+            "function": "",
+            "command_type": "",
+            "command_text": "",
+            "communication_syntax": "",
+            "desired_data_type": "",
+            "command_linked_data": {
+                "data_function": "",
                 "data_type": ""
-            },
-            "communication_syntax" : "ASCII",
-            "desired_data_type" : "string"
+            }
         }
     }
-    
 }

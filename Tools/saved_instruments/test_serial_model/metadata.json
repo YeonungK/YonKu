@@ -5,15 +5,15 @@
     "initial_state": {},
     "methods": {
         "ser": {
-            "module": "ser",
-            "function": "run",
-            "command_type": "READ",
-            "command_text": "ser",
-            "communication_syntax": "ASCII",
-            "desired_data_type": "string",
+            "module": "",
+            "function": "",
+            "command_type": "",
+            "command_text": "",
+            "communication_syntax": "",
+            "desired_data_type": "",
             "command_linked_data": {
-                "data_function": false,
-                "data_type": null
+                "data_function": "",
+                "data_type": ""
             }
         }
     }

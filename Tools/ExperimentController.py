@@ -37,17 +37,6 @@ class PlotWorker(QObject):
         
         print("Acquirable instruments:", self.instruments)
         
-        # self.instruments = instruments
-        # self.omitted_instruments = []
-        # for device_key, instrument in self.instruments.items():
-        #     if not instrument.data_type:
-        #         self.omitted_instruments.append(device_key)
-        #     if isinstance(instrument, pressureGauge.pressureGauge):
-        #         self.omitted_instruments.append(device_key)
-        
-        # for device_key in self.omitted_instruments:
-        #     del self.instruments[device_key]
-        # print(self.instruments)
         
         self.plot_widgets = plot_widgets
         self.period = period
@@ -109,44 +98,6 @@ class PlotWorker(QObject):
             self.instruments,
             self.experimentSettingWid
         )
-        # def add_group(group_name, keys):
-        #     for key in keys:
-        #         name = params[f"{group_name}_name"][key]
-        #         unit = params.get(f"{group_name}_unit", {}).get(key, "")
-
-        #         schema_key = f"{group_name}_{key}"
-        #         data_schema[schema_key] = {
-        #             "label": name,
-        #             "unit": unit
-        #         }
-
-        # # Temperature
-        # add_group("temperature", ["ch_A", "ch_B", "ch_C", "ch_D"])
-
-        # # Resistance
-        # add_group("resistance", ["ch_A", "ch_B", "ch_C", "ch_D"])
-
-        # # Lock-in 1
-        # add_group("lockIn", ["x", "y", "r", "theta"])
-
-        # # Lock-in 2
-        # add_group("lockIn2", ["x", "y", "r", "theta"])
-
-        # # Single values
-        # data_schema["field"] = {
-        #     "label": params["field_name"]["field"],
-        #     "unit": params["field_unit"]["field"]
-        # }
-
-        # data_schema["current"] = {
-        #     "label": params["current_name"]["current"],
-        #     "unit": params["current_unit"]["current"]
-        # }
-
-        # data_schema["time"] = {
-        #     "label": params["time_name"]["time"],
-        #     "unit": "s"
-        # }
 
 
         # --- Final structure ---
@@ -164,77 +115,6 @@ class PlotWorker(QObject):
         with open(self.file_path, "w", encoding="utf-8") as f:
             json.dump(experiment_json, f, indent=4)
         
-#     def log_experiment_parameters(self):
-
-#         self.file_path = Path(f"C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_parameters/{self.experiment_title}.txt")
-#         self.experimentSettingWid.save_all_values()
-        
-#         self.experiment_parameters = f"""startDatetime:{self.experiment_datetime}
-# name:{self.experiment_name}
-# measurementPeriod:{self.period}
-
-
-# temperature_ch_A_name:{self.experimentSettingWid.experiment_parameters['temperature_name']['ch_A']}
-# temperature_ch_B_name:{self.experimentSettingWid.experiment_parameters['temperature_name']['ch_B']}
-# temperature_ch_C_name:{self.experimentSettingWid.experiment_parameters['temperature_name']['ch_C']}
-# temperature_ch_D_name:{self.experimentSettingWid.experiment_parameters['temperature_name']['ch_D']}
-
-# temperature_ch_A_unit:{self.experimentSettingWid.experiment_parameters['temperature_unit']['ch_A']}
-# temperature_ch_B_unit:{self.experimentSettingWid.experiment_parameters['temperature_unit']['ch_B']}
-# temperature_ch_C_unit:{self.experimentSettingWid.experiment_parameters['temperature_unit']['ch_C']}
-# temperature_ch_D_unit:{self.experimentSettingWid.experiment_parameters['temperature_unit']['ch_D']}
-
-
-# resistance_ch_A_name:{self.experimentSettingWid.experiment_parameters['resistance_name']['ch_A']}
-# resistance_ch_B_name:{self.experimentSettingWid.experiment_parameters['resistance_name']['ch_B']}
-# resistance_ch_C_name:{self.experimentSettingWid.experiment_parameters['resistance_name']['ch_C']}
-# resistance_ch_D_name:{self.experimentSettingWid.experiment_parameters['resistance_name']['ch_D']}
-
-# resistance_ch_A_unit:{self.experimentSettingWid.experiment_parameters['resistance_unit']['ch_A']}
-# resistance_ch_B_unit:{self.experimentSettingWid.experiment_parameters['resistance_unit']['ch_B']}
-# resistance_ch_C_unit:{self.experimentSettingWid.experiment_parameters['resistance_unit']['ch_C']}
-# resistance_ch_D_unit:{self.experimentSettingWid.experiment_parameters['resistance_unit']['ch_D']}
-
-
-# lockIn_x_name:{self.experimentSettingWid.experiment_parameters['lockIn_name']['x']}
-# lockIn_y_name:{self.experimentSettingWid.experiment_parameters['lockIn_name']['y']}
-# lockIn_r_name:{self.experimentSettingWid.experiment_parameters['lockIn_name']['r']}
-# lockIn_theta_name:{self.experimentSettingWid.experiment_parameters['lockIn_name']['theta']}
-
-# lockIn_x_unit:{self.experimentSettingWid.experiment_parameters['lockIn_unit']['x']}
-# lockIn_y_unit:{self.experimentSettingWid.experiment_parameters['lockIn_unit']['y']}
-# lockIn_r_unit:{self.experimentSettingWid.experiment_parameters['lockIn_unit']['r']}
-# lockIn_theta_unit:{self.experimentSettingWid.experiment_parameters['lockIn_unit']['theta']}
-
-
-# lockIn2_x_name:{self.experimentSettingWid.experiment_parameters['lockIn2_name']['x']}
-# lockIn2_y_name:{self.experimentSettingWid.experiment_parameters['lockIn2_name']['y']}
-# lockIn2_r_name:{self.experimentSettingWid.experiment_parameters['lockIn2_name']['r']}
-# lockIn2_theta_name:{self.experimentSettingWid.experiment_parameters['lockIn2_name']['theta']}
-
-# lockIn2_x_unit:{self.experimentSettingWid.experiment_parameters['lockIn2_unit']['x']}
-# lockIn2_y_unit:{self.experimentSettingWid.experiment_parameters['lockIn2_unit']['y']}
-# lockIn2_r_unit:{self.experimentSettingWid.experiment_parameters['lockIn2_unit']['r']}
-# lockIn2_theta_unit:{self.experimentSettingWid.experiment_parameters['lockIn2_unit']['theta']}
-
-
-# field_name:{self.experimentSettingWid.experiment_parameters['field_name']['field']}
-# field_unit:{self.experimentSettingWid.experiment_parameters['field_unit']['field']}
-
-
-# current_name:{self.experimentSettingWid.experiment_parameters['current_name']['current']}
-# current_unit:{self.experimentSettingWid.experiment_parameters['current_unit']['current']}
-
-
-# time_name:{self.experimentSettingWid.experiment_parameters['time_name']['time']}
-
-# {list(self.instruments.keys())}\n"""
-        
-        
-#         with open(self.file_path, "w") as f:
-#             f.write(self.experiment_parameters)
-#             f.close()
-    
 
             
     def plot_update(self):
@@ -243,9 +123,6 @@ class PlotWorker(QObject):
         
         self.update.emit()
         
-        # for index, plt_wid in self.plot_widgets.items():
-        #     if isinstance(plt_wid, PlotUi.plotWidget):
-        #         plt_wid.plot_data()
     
     def instrument_read_data(self):
         

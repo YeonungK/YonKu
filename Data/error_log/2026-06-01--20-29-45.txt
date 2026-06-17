@@ -1,0 +1,59 @@
+Szkopek Lab Error Log Book - 2026-06-01--20-29-45
+
+2026-06-01--20-30-08 Exception: Traceback (most recent call last):
+  File "C:\Users\user\Desktop\YonKu\main_gui.py", line 1328, in <module>
+    UIWindow = UI()
+  File "C:\Users\user\Desktop\YonKu\main_gui.py", line 84, in __init__
+    self.add_windows()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Desktop\YonKu\main_gui.py", line 309, in add_windows
+    self.experimentSettingWid = esu.ExperimentSettingUi(self.instruments)
+                                ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\YonKu\GUI\ExperimentSettingUi.py", line 11, in __init__
+    uic.loadUi(f"{GUI_DIR}/ui_files/experiment_setting.ui", self)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\__init__.py", line 241, in loadUi
+    return DynamicUILoader(package).loadUi(uifile, baseinstance, resource_suffix)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\Loader\loader.py", line 66, in loadUi
+    return self.parse(filename, resource_suffix)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 1037, in parse
+    actor(elem)
+    ~~~~~^^^^^^
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 828, in createUserInterface
+    self.traverseWidgetTree(elem)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 806, in traverseWidgetTree
+    handler(self, child)
+    ~~~~~~~^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 503, in createLayout
+    self.traverseWidgetTree(elem)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 806, in traverseWidgetTree
+    handler(self, child)
+    ~~~~~~~^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 546, in handleItem
+    self.traverseWidgetTree(elem)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 806, in traverseWidgetTree
+    handler(self, child)
+    ~~~~~~~^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 264, in createWidget
+    self.stack.push(self.setupObject(widget_class, parent, elem))
+                    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\uiparser.py", line 230, in setupObject
+    self.wprops.setProperties(obj, branch)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\properties.py", line 415, in setProperties
+    prop_value = self.convert(prop, widget)
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\properties.py", line 378, in convert
+    return func(prop[0], **args)
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\properties.py", line 129, in _enum
+    return self._pyEnumMember(prop.text)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\Lib\site-packages\PyQt5\uic\properties.py", line 111, in _pyEnumMember
+    return getattr(QtCore.Qt, membername)
+AttributeError: type object 'Qt' has no attribute 'QFrame::Shape::StyledPanel'
+
+
