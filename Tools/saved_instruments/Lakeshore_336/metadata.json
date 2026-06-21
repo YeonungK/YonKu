@@ -14,12 +14,32 @@
         ]
     },
     "data_label": {
-        "temperature": "Temperature",
-        "resistance": "Resistance"
+        "temperature": {
+            "ch_A": "ch_A",
+            "ch_B": "ch_B",
+            "ch_C": "ch_C",
+            "ch_D": "ch_D"
+        },
+        "resistance": {
+            "ch_A": "ch_A",
+            "ch_B": "ch_B",
+            "ch_C": "ch_C",
+            "ch_D": "ch_D"
+        }
     },
     "data_unit": {
-        "temperature": "K",
-        "resistance": "Ohms"
+        "temperature": {
+            "ch_A": "K",
+            "ch_B": "K",
+            "ch_C": "K",
+            "ch_D": "K"
+        },
+        "resistance": {
+            "ch_A": "Ohms",
+            "ch_B": "Ohms",
+            "ch_C": "Ohms",
+            "ch_D": "Ohms"
+        }
     },
     "initial_state": {},
     "methods": {

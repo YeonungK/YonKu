@@ -7,9 +7,21 @@
             "theta"
         ]
     },
-    "data_label": {},
+    "data_label": {
+        "lockIn2": {
+            "x": "x",
+            "y": "y",
+            "r": "r",
+            "theta": "theta"
+        }
+    },
     "data_unit": {
-        "lockIn2": "manual"
+        "lockIn2": {
+            "x": "manual",
+            "y": "manual",
+            "r": "manual",
+            "theta": "manual"
+        }
     },
     "initial_state": {},
     "methods": {

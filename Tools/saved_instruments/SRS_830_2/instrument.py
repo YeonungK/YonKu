@@ -7,15 +7,19 @@ import sys
 sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 from Tools.Instrument import GPIBInstrument
+from Tools.saved_instruments.SRS_830_2 import attributes
 
 
 class lockInAmplifier2(GPIBInstrument):
     def __init__(self, name, address):
         super().__init__(name, 'SRS_844', address)
-        
-        self.data_type = {'lockIn2':['x', 'y', 'r', 'theta']}
-        self.data_unit = {'lockIn2':'manual'}
-        self.data_function = {'lockIn2': self.get_all}
+        self.data_type = attributes.data_type
+        self.data_label = attributes.data_label
+        self.data_unit = attributes.data_unit
+        self.data_function = attributes.data_functions
+        self.read_functions = attributes.read_functions
+        self.write_functions = attributes.write_functions
+        self.initial_state = attributes.initial_state
         
         
         self.tauset={

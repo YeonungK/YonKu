@@ -1,5 +1,6 @@
 #{'name': 'lockInAmplifier1', 'interface': 'gpib', 'model': 'SRS_830', 'address': '8'}        
 
+
 import pyvisa
 import time
 import sys
@@ -7,15 +8,19 @@ import sys
 sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 from Tools.Instrument import GPIBInstrument
+from Tools.saved_instruments.SRS_830 import attributes
 
 
 class lockInAmplifier1(GPIBInstrument):
     def __init__(self, name, address):
         super().__init__(name, 'SRS_830', address)
-        
-        self.data_type = {'lockIn':['x', 'y', 'r', 'theta']}
-        self.data_unit = {'lockIn':'manual'}
-        self.data_function = {'lockIn': self.get_all}
+        self.data_type = attributes.data_type
+        self.data_label = attributes.data_label
+        self.data_unit = attributes.data_unit
+        self.data_function = attributes.data_functions
+        self.read_functions = attributes.read_functions
+        self.write_functions = attributes.write_functions
+        self.initial_state = attributes.initial_state
         
         
         self.tauset={

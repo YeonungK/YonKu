@@ -5,10 +5,14 @@
         ]
     },
     "data_label": {
-        "pressure": "Pressure"
+        "pressure": {
+            "ch_A": "ch_A"
+        }
     },
     "data_unit": {
-        "pressure": "mBar"
+        "pressure": {
+            "ch_A": "mBar"
+        }
     },
     "initial_state": {},
     "methods": {

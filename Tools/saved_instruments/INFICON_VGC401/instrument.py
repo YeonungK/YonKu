@@ -19,9 +19,12 @@ class pressureGauge(SerialInstrument):
         
         self.connected = self.check_connection()
         self.data_type = attributes.data_type
-        self.data_unit = attributes.data_unit
         self.data_label = attributes.data_label
-        self.data_function = attributes.functions
+        self.data_unit = attributes.data_unit
+        self.data_function = attributes.data_functions
+        self.read_functions = attributes.read_functions
+        self.write_functions = attributes.write_functions
+        self.initial_state = attributes.initial_state
         
     def check_connection(self):
         try:
