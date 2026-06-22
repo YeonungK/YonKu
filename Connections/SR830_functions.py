@@ -178,13 +178,8 @@ class device:
               
 if (__name__ == '__main__'):
     lockin=device()
-    #f = open('test.dat','wb');
     X = lockin.identify()
     print(X)
     
     R = lockin.get_all()
     print(R)
-    # x=float(data.split(',')[0])
-    # y=float(data.split(',')[1])
-    # r=float(data.split(',')[2])
-    # theta=float(data.split(',')[3])

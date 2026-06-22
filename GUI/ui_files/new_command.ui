@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>885</width>
-    <height>833</height>
+    <width>881</width>
+    <height>825</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,31 +26,31 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>848</width>
-        <height>1239</height>
+        <y>-268</y>
+        <width>874</width>
+        <height>1284</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_28">
        <item>
         <widget class="QFrame" name="frame_38">
          <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+          <enum>QFrame::Shape::StyledPanel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Shadow::Raised</enum>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_18">
           <property name="spacing">
            <number>20</number>
           </property>
-          <item alignment="Qt::AlignLeft">
+          <item alignment="Qt::AlignmentFlag::AlignLeft">
            <widget class="QFrame" name="frame">
             <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+             <enum>QFrame::Shape::StyledPanel</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout">
              <property name="leftMargin">
@@ -85,10 +85,10 @@
           <item>
            <widget class="QFrame" name="frame_7">
             <property name="frameShape">
-             <enum>QFrame::WinPanel</enum>
+             <enum>QFrame::Shape::WinPanel</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <property name="lineWidth">
              <number>1</number>
@@ -100,13 +100,13 @@
              <property name="spacing">
               <number>20</number>
              </property>
-             <item alignment="Qt::AlignLeft">
+             <item alignment="Qt::AlignmentFlag::AlignLeft">
               <widget class="QFrame" name="frame_41">
                <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
+                <enum>QFrame::Shape::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_25">
                 <property name="leftMargin">
@@ -148,10 +148,10 @@
              <item>
               <widget class="QFrame" name="frame_3">
                <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
+                <enum>QFrame::Shape::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_2">
                 <property name="leftMargin">
@@ -166,7 +166,7 @@
                 <property name="bottomMargin">
                  <number>0</number>
                 </property>
-                <item alignment="Qt::AlignTop">
+                <item alignment="Qt::AlignmentFlag::AlignTop">
                  <widget class="QLabel" name="label">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -182,10 +182,10 @@
                 <item>
                  <widget class="QFrame" name="frame_2">
                   <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
+                   <enum>QFrame::Shape::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
+                   <enum>QFrame::Shadow::Raised</enum>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout">
                    <property name="leftMargin">
@@ -203,10 +203,10 @@
                    <item>
                     <widget class="QFrame" name="frame_40">
                      <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
+                      <enum>QFrame::Shape::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
+                      <enum>QFrame::Shadow::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_24">
                       <property name="leftMargin">
@@ -241,7 +241,7 @@
                    <item>
                     <widget class="QLabel" name="commandNameInstr">
                      <property name="text">
-                      <string>Write the desired command as provided by the instrument manual. Write '{Data#}' to substitute the text with customizable data.</string>
+                      <string>Write the desired command as provided by the instrument manual. Write '{Parameter#}' to substitute the text with customizable data.</string>
                      </property>
                     </widget>
                    </item>
@@ -254,10 +254,10 @@
              <item>
               <widget class="QFrame" name="frame_4">
                <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
+                <enum>QFrame::Shape::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_3">
                 <property name="leftMargin">
@@ -281,22 +281,22 @@
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>Write Data:</string>
+                   <string>Write Parameters:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="dataAddButton">
+                 <widget class="QPushButton" name="parameterAddButton">
                   <property name="text">
                    <string>Add</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="dataComboBox"/>
+                 <widget class="QComboBox" name="parameterComboBox"/>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="dataDefaultValue">
+                 <widget class="QLineEdit" name="parameterDefaultValue">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -309,14 +309,14 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="dataSaveButton">
+                 <widget class="QPushButton" name="parameterSaveButton">
                   <property name="text">
                    <string>Save</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="dataRemoveButton">
+                 <widget class="QPushButton" name="parameterRemoveButton">
                   <property name="text">
                    <string>Remove</string>
                   </property>
@@ -325,7 +325,7 @@
                 <item>
                  <spacer name="horizontalSpacer">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -341,10 +341,10 @@
              <item>
               <widget class="QFrame" name="frame_6">
                <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
+                <enum>QFrame::Shape::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <property name="leftMargin">
@@ -359,7 +359,7 @@
                 <property name="bottomMargin">
                  <number>0</number>
                 </property>
-                <item alignment="Qt::AlignTop">
+                <item alignment="Qt::AlignmentFlag::AlignTop">
                  <widget class="QLabel" name="label_4">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -375,10 +375,10 @@
                 <item>
                  <widget class="QFrame" name="frame_5">
                   <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
+                   <enum>QFrame::Shape::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
+                   <enum>QFrame::Shadow::Raised</enum>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_2">
                    <property name="leftMargin">
@@ -393,13 +393,13 @@
                    <property name="bottomMargin">
                     <number>0</number>
                    </property>
-                   <item alignment="Qt::AlignLeft">
+                   <item alignment="Qt::AlignmentFlag::AlignLeft">
                     <widget class="QFrame" name="frame_42">
                      <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
+                      <enum>QFrame::Shape::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
+                      <enum>QFrame::Shadow::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_26">
                       <property name="leftMargin">
@@ -463,17 +463,17 @@
           <item>
            <widget class="Line" name="line_2">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QFrame" name="frame_8">
             <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+             <enum>QFrame::Shape::StyledPanel</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <property name="leftMargin">
@@ -508,10 +508,10 @@
           <item>
            <widget class="QFrame" name="frame_27">
             <property name="frameShape">
-             <enum>QFrame::WinPanel</enum>
+             <enum>QFrame::Shape::WinPanel</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_13">
              <property name="spacing">
@@ -520,10 +520,10 @@
              <item>
               <widget class="QFrame" name="frame_22">
                <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
+                <enum>QFrame::Shape::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_10">
                 <property name="leftMargin">
@@ -541,10 +541,10 @@
                 <item>
                  <widget class="QFrame" name="frame_10">
                   <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
+                   <enum>QFrame::Shape::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
+                   <enum>QFrame::Shadow::Raised</enum>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_5">
                    <property name="leftMargin">
@@ -559,7 +559,7 @@
                    <property name="bottomMargin">
                     <number>0</number>
                    </property>
-                   <item alignment="Qt::AlignTop">
+                   <item alignment="Qt::AlignmentFlag::AlignTop">
                     <widget class="QLabel" name="label_11">
                      <property name="text">
                       <string>Communication Syntax: </string>
@@ -569,10 +569,10 @@
                    <item>
                     <widget class="QFrame" name="frame_9">
                      <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
+                      <enum>QFrame::Shape::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
+                      <enum>QFrame::Shadow::Raised</enum>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_5">
                       <property name="leftMargin">
@@ -590,10 +590,10 @@
                       <item>
                        <widget class="QFrame" name="frame_43">
                         <property name="frameShape">
-                         <enum>QFrame::StyledPanel</enum>
+                         <enum>QFrame::Shape::StyledPanel</enum>
                         </property>
                         <property name="frameShadow">
-                         <enum>QFrame::Raised</enum>
+                         <enum>QFrame::Shadow::Raised</enum>
                         </property>
                         <layout class="QHBoxLayout" name="horizontalLayout_27">
                          <property name="leftMargin">
@@ -651,7 +651,7 @@
                    <item>
                     <spacer name="horizontalSpacer_2">
                      <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
+                      <enum>Qt::Orientation::Horizontal</enum>
                      </property>
                      <property name="sizeHint" stdset="0">
                       <size>
@@ -667,10 +667,10 @@
                 <item>
                  <widget class="QFrame" name="frame_21">
                   <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
+                   <enum>QFrame::Shape::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
+                   <enum>QFrame::Shadow::Raised</enum>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_12">
                    <property name="leftMargin">
@@ -688,10 +688,10 @@
                    <item>
                     <widget class="QFrame" name="frame_17">
                      <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
+                      <enum>QFrame::Shape::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
+                      <enum>QFrame::Shadow::Raised</enum>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_8">
                       <property name="spacing">
@@ -700,10 +700,10 @@
                       <item>
                        <widget class="QFrame" name="frame_12">
                         <property name="frameShape">
-                         <enum>QFrame::StyledPanel</enum>
+                         <enum>QFrame::Shape::StyledPanel</enum>
                         </property>
                         <property name="frameShadow">
-                         <enum>QFrame::Raised</enum>
+                         <enum>QFrame::Shadow::Raised</enum>
                         </property>
                         <layout class="QHBoxLayout" name="horizontalLayout_6">
                          <property name="leftMargin">
@@ -718,7 +718,7 @@
                          <property name="bottomMargin">
                           <number>0</number>
                          </property>
-                         <item alignment="Qt::AlignTop">
+                         <item alignment="Qt::AlignmentFlag::AlignTop">
                           <widget class="QLabel" name="label_9">
                            <property name="text">
                             <string>WRITE</string>
@@ -728,10 +728,10 @@
                          <item>
                           <widget class="QFrame" name="frame_11">
                            <property name="frameShape">
-                            <enum>QFrame::StyledPanel</enum>
+                            <enum>QFrame::Shape::StyledPanel</enum>
                            </property>
                            <property name="frameShadow">
-                            <enum>QFrame::Raised</enum>
+                            <enum>QFrame::Shadow::Raised</enum>
                            </property>
                            <layout class="QVBoxLayout" name="verticalLayout_6">
                             <property name="leftMargin">
@@ -769,7 +769,7 @@
                            </layout>
                           </widget>
                          </item>
-                         <item alignment="Qt::AlignTop">
+                         <item alignment="Qt::AlignmentFlag::AlignTop">
                           <widget class="QPushButton" name="writeAddButton">
                            <property name="text">
                             <string>Add</string>
@@ -782,10 +782,10 @@
                       <item>
                        <widget class="QFrame" name="frame_16">
                         <property name="frameShape">
-                         <enum>QFrame::StyledPanel</enum>
+                         <enum>QFrame::Shape::StyledPanel</enum>
                         </property>
                         <property name="frameShadow">
-                         <enum>QFrame::Raised</enum>
+                         <enum>QFrame::Shadow::Raised</enum>
                         </property>
                         <layout class="QHBoxLayout" name="horizontalLayout_9">
                          <property name="leftMargin">
@@ -833,10 +833,10 @@
                       <item>
                        <widget class="QFrame" name="frame_13">
                         <property name="frameShape">
-                         <enum>QFrame::StyledPanel</enum>
+                         <enum>QFrame::Shape::StyledPanel</enum>
                         </property>
                         <property name="frameShadow">
-                         <enum>QFrame::Raised</enum>
+                         <enum>QFrame::Shadow::Raised</enum>
                         </property>
                         <layout class="QHBoxLayout" name="horizontalLayout_7">
                          <property name="leftMargin">
@@ -851,7 +851,7 @@
                          <property name="bottomMargin">
                           <number>0</number>
                          </property>
-                         <item alignment="Qt::AlignTop">
+                         <item alignment="Qt::AlignmentFlag::AlignTop">
                           <widget class="QLabel" name="label_26">
                            <property name="text">
                             <string>QUERY</string>
@@ -861,10 +861,10 @@
                          <item>
                           <widget class="QFrame" name="frame_14">
                            <property name="frameShape">
-                            <enum>QFrame::StyledPanel</enum>
+                            <enum>QFrame::Shape::StyledPanel</enum>
                            </property>
                            <property name="frameShadow">
-                            <enum>QFrame::Raised</enum>
+                            <enum>QFrame::Shadow::Raised</enum>
                            </property>
                            <layout class="QVBoxLayout" name="verticalLayout_7">
                             <property name="leftMargin">
@@ -899,14 +899,14 @@
                            </layout>
                           </widget>
                          </item>
-                         <item alignment="Qt::AlignTop">
+                         <item alignment="Qt::AlignmentFlag::AlignTop">
                           <widget class="QLineEdit" name="queryVariableLineEdit">
                            <property name="placeholderText">
                             <string>Variable Name</string>
                            </property>
                           </widget>
                          </item>
-                         <item alignment="Qt::AlignTop">
+                         <item alignment="Qt::AlignmentFlag::AlignTop">
                           <widget class="QPushButton" name="queryAddButton">
                            <property name="text">
                             <string>Add</string>
@@ -919,10 +919,10 @@
                       <item>
                        <widget class="QFrame" name="frame_15">
                         <property name="frameShape">
-                         <enum>QFrame::StyledPanel</enum>
+                         <enum>QFrame::Shape::StyledPanel</enum>
                         </property>
                         <property name="frameShadow">
-                         <enum>QFrame::Raised</enum>
+                         <enum>QFrame::Shadow::Raised</enum>
                         </property>
                         <layout class="QHBoxLayout" name="horizontalLayout_8">
                          <property name="leftMargin">
@@ -964,10 +964,10 @@
                       <item>
                        <widget class="QFrame" name="frame_44">
                         <property name="frameShape">
-                         <enum>QFrame::StyledPanel</enum>
+                         <enum>QFrame::Shape::StyledPanel</enum>
                         </property>
                         <property name="frameShadow">
-                         <enum>QFrame::Raised</enum>
+                         <enum>QFrame::Shadow::Raised</enum>
                         </property>
                         <layout class="QHBoxLayout" name="horizontalLayout_21">
                          <property name="leftMargin">
@@ -1012,10 +1012,10 @@
                    <item>
                     <widget class="QFrame" name="frame_20">
                      <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
+                      <enum>QFrame::Shape::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
+                      <enum>QFrame::Shadow::Raised</enum>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_9">
                       <item>
@@ -1028,10 +1028,10 @@
                       <item>
                        <widget class="QFrame" name="frame_18">
                         <property name="frameShape">
-                         <enum>QFrame::StyledPanel</enum>
+                         <enum>QFrame::Shape::StyledPanel</enum>
                         </property>
                         <property name="frameShadow">
-                         <enum>QFrame::Raised</enum>
+                         <enum>QFrame::Shadow::Raised</enum>
                         </property>
                         <layout class="QHBoxLayout" name="horizontalLayout_10">
                          <property name="leftMargin">
@@ -1073,10 +1073,10 @@
                       <item>
                        <widget class="QFrame" name="frame_19">
                         <property name="frameShape">
-                         <enum>QFrame::StyledPanel</enum>
+                         <enum>QFrame::Shape::StyledPanel</enum>
                         </property>
                         <property name="frameShadow">
-                         <enum>QFrame::Raised</enum>
+                         <enum>QFrame::Shadow::Raised</enum>
                         </property>
                         <layout class="QHBoxLayout" name="horizontalLayout_11">
                          <property name="leftMargin">
@@ -1127,10 +1127,10 @@
              <item>
               <widget class="QFrame" name="frame_26">
                <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
+                <enum>QFrame::Shape::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_12">
                 <property name="spacing">
@@ -1151,10 +1151,10 @@
                 <item>
                  <widget class="QFrame" name="frame_23">
                   <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
+                   <enum>QFrame::Shape::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
+                   <enum>QFrame::Shadow::Raised</enum>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_11">
                    <property name="leftMargin">
@@ -1196,10 +1196,10 @@
                 <item>
                  <widget class="QFrame" name="frame_24">
                   <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
+                   <enum>QFrame::Shape::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
+                   <enum>QFrame::Shadow::Raised</enum>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_13">
                    <property name="leftMargin">
@@ -1217,7 +1217,7 @@
                    <item>
                     <widget class="QLabel" name="label_20">
                      <property name="text">
-                      <string>Test Data:</string>
+                      <string>Test Parameter:</string>
                      </property>
                     </widget>
                    </item>
@@ -1244,10 +1244,10 @@
                 <item>
                  <widget class="QFrame" name="frame_25">
                   <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
+                   <enum>QFrame::Shape::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
+                   <enum>QFrame::Shadow::Raised</enum>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_14">
                    <property name="leftMargin">
@@ -1288,17 +1288,17 @@
           <item>
            <widget class="Line" name="line">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QFrame" name="frame_28">
             <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+             <enum>QFrame::Shape::StyledPanel</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_14">
              <property name="leftMargin">
@@ -1347,19 +1347,19 @@
           <item>
            <widget class="QFrame" name="frame_37">
             <property name="frameShape">
-             <enum>QFrame::WinPanel</enum>
+             <enum>QFrame::Shape::WinPanel</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_17">
              <item>
               <widget class="QFrame" name="frame_36">
                <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
+                <enum>QFrame::Shape::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Shadow::Raised</enum>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_20">
                 <property name="leftMargin">
@@ -1377,10 +1377,10 @@
                 <item>
                  <widget class="QFrame" name="frame_35">
                   <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
+                   <enum>QFrame::Shape::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
+                   <enum>QFrame::Shadow::Raised</enum>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_16">
                    <property name="spacing">
@@ -1398,13 +1398,13 @@
                    <property name="bottomMargin">
                     <number>0</number>
                    </property>
-                   <item alignment="Qt::AlignLeft">
+                   <item alignment="Qt::AlignmentFlag::AlignLeft">
                     <widget class="QFrame" name="frame_29">
                      <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
+                      <enum>QFrame::Shape::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
+                      <enum>QFrame::Shadow::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_15">
                       <property name="leftMargin">
@@ -1419,7 +1419,7 @@
                       <property name="bottomMargin">
                        <number>0</number>
                       </property>
-                      <item alignment="Qt::AlignLeft">
+                      <item alignment="Qt::AlignmentFlag::AlignLeft">
                        <widget class="QLabel" name="label_25">
                         <property name="text">
                          <string>Required data type:</string>
@@ -1461,13 +1461,13 @@
                      </layout>
                     </widget>
                    </item>
-                   <item alignment="Qt::AlignLeft">
+                   <item alignment="Qt::AlignmentFlag::AlignLeft">
                     <widget class="QFrame" name="frame_30">
                      <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
+                      <enum>QFrame::Shape::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
+                      <enum>QFrame::Shadow::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_16">
                       <property name="leftMargin">
@@ -1482,7 +1482,7 @@
                       <property name="bottomMargin">
                        <number>0</number>
                       </property>
-                      <item alignment="Qt::AlignLeft">
+                      <item alignment="Qt::AlignmentFlag::AlignLeft">
                        <widget class="QPushButton" name="dataManAddButton">
                         <property name="text">
                          <string>Add</string>
@@ -1556,10 +1556,10 @@
                    <item>
                     <widget class="QFrame" name="frame_31">
                      <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
+                      <enum>QFrame::Shape::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
+                      <enum>QFrame::Shadow::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_17">
                       <property name="leftMargin">
@@ -1574,14 +1574,14 @@
                       <property name="bottomMargin">
                        <number>0</number>
                       </property>
-                      <item alignment="Qt::AlignLeft">
+                      <item alignment="Qt::AlignmentFlag::AlignLeft">
                        <widget class="QPushButton" name="dataManCheckButton">
                         <property name="text">
                          <string>Check</string>
                         </property>
                        </widget>
                       </item>
-                      <item alignment="Qt::AlignLeft">
+                      <item alignment="Qt::AlignmentFlag::AlignLeft">
                        <widget class="QLabel" name="label_24">
                         <property name="text">
                          <string>Current Response:</string>
@@ -1610,10 +1610,10 @@
                 <item>
                  <widget class="QFrame" name="frame_32">
                   <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
+                   <enum>QFrame::Shape::StyledPanel</enum>
                   </property>
                   <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
+                   <enum>QFrame::Shadow::Raised</enum>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_15">
                    <item>
@@ -1622,10 +1622,10 @@
                    <item>
                     <widget class="QFrame" name="frame_33">
                      <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
+                      <enum>QFrame::Shape::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
+                      <enum>QFrame::Shadow::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_18">
                       <property name="leftMargin">
@@ -1667,10 +1667,10 @@
                    <item>
                     <widget class="QFrame" name="frame_34">
                      <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
+                      <enum>QFrame::Shape::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
+                      <enum>QFrame::Shadow::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_19">
                       <property name="leftMargin">
@@ -1718,13 +1718,13 @@
             </layout>
            </widget>
           </item>
-          <item alignment="Qt::AlignRight">
+          <item alignment="Qt::AlignmentFlag::AlignRight">
            <widget class="QFrame" name="frame_39">
             <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+             <enum>QFrame::Shape::StyledPanel</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_23">
              <property name="leftMargin">

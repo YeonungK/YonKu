@@ -76,10 +76,8 @@ class pressureGauge(SerialInstrument):
     def pressure_read(self):
         command = "PR1"
         pressure = self.query(command)
-        # print(pressure)
         pressure_list = []
         
-        #pressure = self.read()
         try:
             pressure = pressure.split()
             pressure = pressure[1]
@@ -103,7 +101,6 @@ class pressureGauge(SerialInstrument):
             msg = "None"
             pressure_list.append(msg)
         
-        # print(pressure_list)
         return pressure_list
         
         

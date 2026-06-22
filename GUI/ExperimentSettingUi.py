@@ -19,7 +19,6 @@ class ExperimentSettingUi(QWidget):
 
         # Optional: load base UI if it works.
         # If your .ui keeps causing Qt enum errors, comment this out.
-        # uic.loadUi(f"{GUI_DIR}/ui_files/experiment_setting.ui", self)
 
         self.instruments = instruments or {}
         self.setting_widgets = {}

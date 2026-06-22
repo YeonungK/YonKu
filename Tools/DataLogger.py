@@ -9,7 +9,6 @@ from project_paths import EXPERIMENT_DATA_DIR, DATA_DIR
 class DataLogger:
     def __init__(self, instruments, data_set, title):
         
-        # try:
         self.title = title
         self.instruments = instruments
         self.concat_list = []
@@ -80,8 +79,6 @@ class ErrorLogger:
         self.title = title
         self.heading = heading
         self.file_path = Path(f"{DATA_DIR}/error_log/{self.title}.txt")
-        # self.file_path.mkdir(parents=True, exist_ok=True)
-        # self.file = open(self.file_path, "x")
         with open(self.file_path, "w") as f:
             f.write(self.heading)
             f.close()

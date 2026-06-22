@@ -19,19 +19,15 @@ class temperatureController_widget(QWidget):
         uic.loadUi(f"{INSTRUMENT_CONTROL_UIS_DIR}/Lakeshore_336_ui.ui", self)
         
         self.chA_line_sub = chs.chABigLineUi()
-        # self.chA_line_sub.move(100,100)
         self.chA_line_sub.hide()
         
         self.chB_line_sub = chs.chBBigLineUi()
-        # self.chB_line_sub.move(100,100)
         self.chB_line_sub.hide()
         
         self.chC_line_sub = chs.chCBigLineUi()
-        # self.chC_line_sub.move(100,100)
         self.chC_line_sub.hide()
         
         self.chD_line_sub = chs.chDBigLineUi()
-        # self.chD_line_sub.move(100,100)
         self.chD_line_sub.hide()
         
         

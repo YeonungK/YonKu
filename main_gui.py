@@ -421,7 +421,6 @@ class UI(QMainWindow):
             
             
 
-            # self.plot_worker for data acquisition
             self.plot_worker = ExperimentController.PlotWorker(self.acquirable_instruments, self.plot_widgets, self.datasets['primary'].set, self.experiment_period, 
                                         self.pausePushButton, self.experimentNameLineEdit,
                                         self.lockInAmplifier1Wid.xLineEdit, self.lockInAmplifier1Wid.yLineEdit, self.lockInAmplifier1Wid.rLineEdit, self.lockInAmplifier1Wid.thetaLineEdit, 
@@ -454,11 +453,9 @@ class UI(QMainWindow):
             
     def pause_resume_experiment_thread(self):
         self.plot_worker.pause_resume_experiment()
-        # self.plot_update_worker.pause_resume_experiment()
     
     def end_experiment_worker(self):
         self.plot_worker.end_experiment()
-        # self.plot_update_worker.end_experiment()
         
     def plot_thread_finished(self):
         print("plot thread_finished")
@@ -572,8 +569,6 @@ class UI(QMainWindow):
         print("Available live plot data types:", self.get_live_available_data_types())
 
         self.newPlotSettingWid = nps.create_plot_setting_ui(available_data_types=available_data_types)
-        # self.Wid = QWidget()
-        # uic.loadUi("GUI/create_plot_setting.ui", self.Wid)
         self.nps_window.setCentralWidget(self.newPlotSettingWid)
         self.nps_window.setWindowTitle("Plot Setting")
         self.nps_window.resize(440, 320)
@@ -606,9 +601,7 @@ class UI(QMainWindow):
         self.plot_sub.move(0,0)
         self.plot_sub.show()
         
-        # self.check_newPlotB_clicked(self.plot_count)
         
-        # print(self.plot_widgets)
         
         self.plot_widget_count += 1 
         
@@ -621,8 +614,6 @@ class UI(QMainWindow):
     def open_plot_setting(self):
         self.ops_window = QMainWindow()
         self.openPlotSettingWid = ops.create_plot_setting_ui()
-        # self.Wid = QWidget()
-        # uic.loadUi("GUI/create_plot_setting.ui", self.Wid)
         self.ops_window.setCentralWidget(self.openPlotSettingWid)
         self.ops_window.setWindowTitle("Plot Setting")
         self.ops_window.resize(440, 370)

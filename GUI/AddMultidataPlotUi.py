@@ -68,35 +68,9 @@ class add_multidata_plot_ui(QWidget):
                 
                 
                 # # check if the dataset includes the xaxis and yaxis data type
-                # try:
-                #     param_file = open(self.experimentParamLink)    
-                #     param_file_content = param_file.readlines()
-                #     connected_instruments = eval(param_file_content[59].replace("\n",""))
-                #     print(connected_instruments)
                 # except SyntaxError: # in case we are opening databases from before the latest version
-                #     print(e)
-                #     connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
-                # except FileNotFoundError as e:
-                #     print(e)
-                #     print("Error detected at the nested level")
-                #     connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
-                # except UnboundLocalError as e:
-                #     print(e)
-                #     connected_instruments = ['Lakeshore_336', 'Oxford_MercuryiPS', 'SRS_830', 'SRS_830_2']
                 
-                # for instrument in connected_instruments:
-                #     for data_type in list(self.instruments[instrument].data_type.keys()):
-                #         print(data_type)
-                #         if data_type == self.xAxis:
-                #             self.xAxis_exists = True
-                #         if data_type == self.yAxis:
-                #             self.yAxis_exists = True
-                #         print([self.xAxis_exists,self.yAxis_exists])
                 
-                # if self.xAxis == 'time':
-                #     self.xAxis_exists = True
-                # if self.yAxis == 'time':
-                #     self.yAxis_exists = True
                 
                 # if they do, proceed to set names in the 
                 if self.xAxis_exists and self.yAxis_exists:

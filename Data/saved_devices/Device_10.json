@@ -1,0 +1,7 @@
+{
+    "name": "TestPressureController",
+    "interface": "ethernet",
+    "model": "Pseudo_1353",
+    "instIP": "111.111.111.111",
+    "port": "13"
+}

@@ -128,7 +128,6 @@ class SerialInstrument(ScientificInstrument):
         self.device.write(b'\x05\n')
         time.sleep(0.5)
         response2 = self.read()
-        #print(response2)
         return response2
     
     def close(self):
@@ -148,7 +147,6 @@ class GPIBInstrument(ScientificInstrument):
     def connect(self):
         device = None
         device_list = self.rm.list_resources()
-        # print(device_list)
         if self.address in device_list:
             device = self.rm.open_resource(self.address)
             print(f"connected: {self.model}.{self.name}")
@@ -227,24 +225,8 @@ if __name__ == "__main__":
     
     
     """pressure gauge test"""
-    # pressureGauge = SerialInstrument('INFICON Pressure Gauge', 'COM5', 
-    #                                   baudrate=9600, 
-    #                                   bytesize=serial.EIGHTBITS, 
-    #                                   parity=serial.PARITY_NONE, 
-    #                                   stopbits = serial.STOPBITS_ONE)
     
-    # response = pressureGauge.queryB("PR1")
-    # print(response)
-    # pressureGauge.close()
     
     """gas valve test"""
-    # gasValve = NidaqmxInstrument('Gas Valve', "Dev1", "port0", "line0:2")
-    # data = [False, False, False]
-    # gasValve.write(data)
-    # gasValve.close()
     
     """SR830 Lock in Amp test"""
-    # lockInAmplifier = GPIBInstrument('SR830 Lock In Amplifier', 8)
-    # response = lockInAmplifier.query("*IDN?")
-    # print(response)
-    # lockInAmplifier.close()

@@ -32,35 +32,13 @@ else:
     print("no response")
     device.close()
 
-# enquiry = "PR1\n"
-# device.write(enquiry.encode('ascii'))
-# time.sleep(1)
-
-# if device.in_waiting > 0:
-#     response = device.readline()
-#     print(response)
-
-# else: 
-#     print("No response")
 
 
 
-# response = device.read()
-# print(f"Response: {response}")
-# device.write(b'\x05')
-# response2 = device.readline().decode('utf-8').strip()
-# print(f"Response: {response2}")
 
 
-# if device.in_waiting > 0:
-#     response = device.read()
-#     print(f"Response: {response}")
-#     device.write(b'\x05')
-#     if device.in_waiting > 0:
-#         response2 = device.read()
-#         print(f"Response: {response}")
-# else:
-#     print("No response received")
+
+
     
    
 device.close()

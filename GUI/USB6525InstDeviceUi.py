@@ -51,7 +51,6 @@ class usb6525InstDeviceUi(QWidget):
             
             self.newCommandWin.show()
         
-        # self.newCommandWid.newCommandSaveButton.clicked.connect(self.save_new_command)
     
     
     def open_command_list(self):

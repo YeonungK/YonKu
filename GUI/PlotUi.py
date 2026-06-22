@@ -182,8 +182,6 @@ class plotWidget(QWidget):
             
         # create a new trace with the extracted trace info
         if not plot_key in self.plots:
-            # data = np.array([self.xAxisData[xAxisChannel],self.yAxisData[yAxisChannel]], dtype=float)
-            # data = data.transpose()
             self.plots[plot_key] = self.plot_widget.plot(
                 self.xAxisData[x_channel],
                 self.yAxisData[y_channel],
@@ -194,7 +192,6 @@ class plotWidget(QWidget):
         else:
             pass
         
-        #print(self.plots.keys())
     
     def create_combo_box(self, axis):
         combo_box = QComboBox()
@@ -214,9 +211,6 @@ class plotWidget(QWidget):
         for plt_channels, plts in self.plots.items():
             plt_channels = plt_channels.split(" vs ")
             print(plt_channels)
-            # data = np.array([self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]]], dtype=float)
-            # data = data.transpose()
-            # plts.setData(data)
             plts.setData(self.xAxisData[plt_channels[1]],self.yAxisData[plt_channels[0]])
 
     def closeEvent(self, event:QCloseEvent):
@@ -640,70 +634,21 @@ class oldPlotWidget(QWidget):
                 viewbox.enableAutoRange(axis=pg.ViewBox.XYAxes, enable=False)
 
                 self.secondary_viewboxes.append(viewbox)
-                # if self.xAxis == 'time' or self.xAxis == 'field':
                     
-                #     self.plots[plot_channels] = pg.PlotDataItem(self.xAxisData[xAxisChannel_name], 
-                #                                                 self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
-                #     self.plot_legend.addItem(self.plots[plot_channels], self.plots[plot_channels].name())
                     
-                #     if self.xAxis == 'time':
-                #         self.axes[plot_channels] = pg.DateAxisItem(orientation='bottom',
-                #                                                     utcOffset=14400,               # set to your timezone offset if desired
-                #                                                     showValues=True,
-                #                                                     autoScale=True)
-                #     elif self.xAxis == 'field':
-                #         self.axes[plot_channels] = pg.AxisItem(orientation='bottom',
-                #                                                     showValues=True,
-                #                                                     autoScale=True)
-                #     self.axes[plot_channels].setTextPen(self.colors[self.plot_count % 5])
-                #     self.axes[plot_channels].setLabel(plot_name)
-                #     self.main_layout.addItem(self.axes[plot_channels], 2+self.plot_count, 1)
-                #     self.main_layout.setRowStretchFactor(2+self.plot_count, 2)
                     
-                #     viewbox = pg.ViewBox()  # create ViewBox
-                #     viewbox.setYLink(self.main_viewbox)  # link to previous
-                #     self.previous_viewbox = viewbox
-                #     self.axes[plot_channels].linkToView(viewbox)  # link axis with viewbox
-                #     self.graphics_layout.scene().addItem(viewbox)  # add viewbox to layout
-                #     viewbox.enableAutoRange(axis=pg.ViewBox.XYAxes, enable=True)  # autorange once to fit views at start
 
-                #     self.secondary_viewboxes.append(viewbox)
                 
-                # if self.yAxis == 'time' or self.yAxis == 'field':
                     
-                #     self.plots[plot_channels] = pg.PlotDataItem(self.xAxisData[xAxisChannel_name], 
-                #                                                 self.yAxisData[yAxisChannel_name], name = plot_name, pen = self.colors[self.plot_count % 5])
-                #     self.plot_legend.addItem(self.plots[plot_channels], self.plots[plot_channels].name())
                     
-                #     if self.yAxis == 'time':
-                #         self.axes[plot_channels] = pg.DateAxisItem(orientation='right',
-                #                                                     utcOffset=14400,               # set to your timezone offset if desired
-                #                                                     showValues=True,
-                #                                                     autoScale=True)
-                #     elif self.yAxis == 'field':
-                #         self.axes[plot_channels] = pg.AxisItem(orientation='right',
-                #                                                     showValues=True,
-                #                                                     autoScale=True)
-                #     self.axes[plot_channels].setTextPen(self.colors[self.plot_count % 5])
                     
-                #     self.axes[plot_channels].setLabel(plot_name)
-                #     self.main_layout.addItem(self.axes[plot_channels], 1, 1+self.plot_count)
-                #     #self.main_layout.setColumnStretchFactor(-1, 2)
                     
-                #     viewbox = pg.ViewBox()  # create ViewBox
-                #     viewbox.setXLink(self.main_viewbox)  # link to previous
-                #     self.previous_viewbox = viewbox
-                #     self.axes[plot_channels].linkToView(viewbox)  # link axis with viewbox
-                #     self.graphics_layout.scene().addItem(viewbox)  # add viewbox to layout
-                #     viewbox.enableAutoRange(axis=pg.ViewBox.XYAxes, enable=True)  # autorange once to fit views at start
 
-                #     self.secondary_viewboxes.append(viewbox)
                     
                     
 
             
             self.main_viewbox.sigResized.connect(self.updateViews)
-            # self.updateViews()
             
             viewbox.addItem(self.plots[plot_channels])
             self.plot_count += 1
@@ -782,8 +727,6 @@ class oldPlotWidget(QWidget):
             
         # create a new trace with the extracted trace info
         if not plot_key in self.plots:
-            # data = np.array([self.xAxisData[xAxisChannel],self.yAxisData[yAxisChannel]], dtype=float)
-            # data = data.transpose()
             self.plots[plot_key] = self.plot_widget.plot(
                 self.xAxisData[x_channel],
                 self.yAxisData[y_channel],
@@ -795,7 +738,6 @@ class oldPlotWidget(QWidget):
             pass
         
         
-        #print(self.plots.keys())
      
     def create_combo_box(self, axis):
         

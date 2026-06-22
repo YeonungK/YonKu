@@ -106,18 +106,9 @@ class command_list_ui(QWidget):
             self.remove_layout.addItem(self.vertical_spacer)
             
     def edit_function(self, command_name):
-        # self.newCommandWin = QMainWindow()
-        # self.newCommandWid = ncsu.edit_command_setting_ui(self.instrument, "ETHERNET", self.newCommandWin, command_name)
-        # self.newCommandWin.setCentralWidget(self.newCommandWid)
-        # self.newCommandWin.closeEvent = self.newCommandWid.closeEvent
         
-        # self.newCommandWin.setWindowTitle("Build a new command")
-        # self.newCommandWin.resize(1000, 800)
-        # self.newCommandWin.move(200, 200)
         
-        # self.newCommandWin.show()
         
-        # self.newCommandWid.newCommandSaveButton.clicked.connect(self.update_command_table)
         print("Command editing is temporarily disabled during metadata refactor.")
     
     def update_command_table(self):

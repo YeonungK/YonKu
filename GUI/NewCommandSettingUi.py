@@ -29,18 +29,15 @@ class new_command_setting_ui(QWidget):
         self.interface = str(interface)
         self.window = window
         
-        # ===== QLabel contents =====
         self.comInterfaceLabel.setText(self.interface)
-        # self.commandTypeInstr = self.commandTypeInstr.text()
 
-        # ===== QLineEdit contents =====
         self.command_name = self.nameLineEdit.text()
         self.command_text = self.commandText.text()
-        self.old_data_list = {}
-        self.new_data_list = {}
+        self.old_parameter_list = {}
+        self.new_parameter_list = {}
         
-        self.old_test_data_list = {}
-        self.new_test_data_list = {}
+        self.old_test_parameter_list = {}
+        self.new_test_parameter_list = {}
         
         self.command_type = self.commandTypeComboBox.currentText()
         self.communication_syntax = self.comSystemComboBox.currentText()
@@ -53,7 +50,7 @@ class new_command_setting_ui(QWidget):
         
         self.writeCommandCheckBox.stateChanged.connect(self.writeCommandCheckBox_method)
         self.queryCommandCheckBox.stateChanged.connect(self.queryCommandCheckBox_method)
-        self.dataComboBox.currentIndexChanged.connect(self.change_data_default)
+        self.parameterComboBox.currentIndexChanged.connect(self.change_data_default)
         self.testComboBox.currentIndexChanged.connect(self.change_test_data_default)
         self.dataManComboBox.currentIndexChanged.connect(self.change_data_man_line_setting)
         
@@ -83,25 +80,10 @@ class new_command_setting_ui(QWidget):
         self.method_path = None
         self.test_method_path = self.methods_folder / "__draft_test__.py"
         
-        # self.method_name = "temporary_command"
-        # index = self.try_make_method_file(self.method_name, 0)
-        # self.method_name = f"{self.method_name}_{index}"
         
         
-#         with open(self.method_path, "w") as f:
-#             script = f"""
-# command_name = "{self.command_name}"
-# command_text = "{self.command_text}"
-# data_list = {self.old_data_list}
-# command_type = "{self.command_type}"
-# communication_syntax = "{self.communication_syntax}"
-# desired_data_type = "{self.desiredDataComboBox.currentText()}"
 
-# function_code = \"\"\"{self.old_function_code}\"\"\"
-# data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
 # """
-#             f.write(script)
-#             f.close()
         
         
         
@@ -200,75 +182,37 @@ class new_command_setting_ui(QWidget):
         self.command_name = command_name
         self.method_path = method_path
         
-        # new_method_path = pathlib.Path(f"{SAVED_INSTRUMENTS_DIR}/Members/{self.instrument.model}/{self.nameLineEdit.text()}.py")
-        # try:
-        #     self.method_path.rename(new_method_path)
             
-        #     with open(new_method_path, "r") as f:
-        #         current_content = f.read()
-        #         print(current_content)
-        #         old_string = f'command_name = "{self.command_name}"'
-        #         new_string = f'command_name = "{self.nameLineEdit.text()}"'
                 
-        #         if old_string not in current_content:
-        #             print(f'"{old_string}" not found. No changes made.')
-        #             return
                 
-        #         new_content = current_content.replace(old_string, new_string)
-        #         print(f'Successfully changed "{old_string}" to "{new_string}".')
                 
-        #     with open(new_method_path, "w") as f:    
-        #         f.write(new_content)
             
-        #     self.command_name = self.nameLineEdit.text()
-        #     self.method_path = new_method_path
                 
-        # except FileNotFoundError:
-        #     print(f"Error: The file '{self.method_path}' was not found.")
-        # except FileExistsError:
-        #     self.nameLineEdit.setText(f"This name already exists.")
-        #     print(f"Error: The file '{self.command_name}' already exists.")
         
         
     def commandTextSaveButton_method(self):
         self.command_text = self.commandText.text()
-        # try:
-        #     with open(self.method_path, "r") as f:
-        #         current_content = f.read()
-        #         print(current_content)
-        #         old_string = f'command_text = "{self.command_text}"'
-        #         new_string = f'command_text = "{self.commandText.text()}"'
                 
-        #         if old_string not in current_content:
-        #                 print(f'"{old_string}" not found. No changes made.')
-        #                 return
 
-        #         new_content = current_content.replace(old_string, new_string)
-        #         print(f'Successfully changed "{old_string}" to "{new_string}".')
             
-        #     with open(self.method_path, "w") as f:    
-        #             f.write(new_content)
             
-        #     self.command_text = self.commandText.text()
         
-        # except FileNotFoundError:
-        #     print(f"Error: The file '{self.method_path}' was not found.")
         
     # -------------------------------
     # Data type buttons
     # -------------------------------
-    def dataAddButton_method(self):
-        data_name = "Data" + str(self.dataComboBox.count())
-        self.dataComboBox.addItem(data_name)
-        self.testComboBox.addItem(data_name)
-        self.new_data_list[data_name] = ""
-        self.new_test_data_list[data_name] = ""
+    def parameterAddButton_method(self):
+        parameter_name = "Data" + str(self.parameterComboBox.count())
+        self.parameterComboBox.addItem(parameter_name)
+        self.testComboBox.addItem(parameter_name)
+        self.new_parameter_list[parameter_name] = ""
+        self.new_test_parameter_list[parameter_name] = ""
         try:
             with open(self.method_path, "r") as f:
                 current_content = f.read()
                 print(current_content)
-                old_string = f'data_list = {self.old_data_list}'
-                new_string = f'data_list = {self.new_data_list}'
+                old_string = f'data_list = {self.old_parameter_list}'
+                new_string = f'data_list = {self.new_parameter_list}'
                 
                 if old_string not in current_content:
                         print(f'"{old_string}" not found. No changes made.')
@@ -280,21 +224,21 @@ class new_command_setting_ui(QWidget):
             with open(self.method_path, "w") as f:    
                     f.write(new_content)
             
-            self.old_data_list = self.new_data_list
+            self.old_parameter_list = self.new_parameter_list
         
         except FileNotFoundError:
             print(f"Error: The file '{self.method_path}' was not found.")
 
-    def dataSaveButton_method(self):
-        data_name = self.dataComboBox.currentText()
-        self.new_data_list[data_name] = self.dataDefaultValue.text()
-        self.new_test_data_list[data_name] = self.dataDefaultValue.text()
+    def parameterSaveButton_method(self):
+        parameter_name = self.parameterComboBox.currentText()
+        self.new_parameter_list[parameter_name] = self.parameterDefaultValue.text()
+        self.new_test_parameter_list[parameter_name] = self.parameterDefaultValue.text()
         try:
             with open(self.method_path, "r") as f:
                 current_content = f.read()
                 print(current_content)
-                old_string = f'data_list = {self.old_data_list}'
-                new_string = f'data_list = {self.new_data_list}'
+                old_string = f'data_list = {self.old_parameter_list}'
+                new_string = f'data_list = {self.new_parameter_list}'
                 
                 if old_string not in current_content:
                         print(f'"{old_string}" not found. No changes made.')
@@ -306,29 +250,29 @@ class new_command_setting_ui(QWidget):
             with open(self.method_path, "w") as f:    
                     f.write(new_content)
             
-            self.old_data_list = self.new_data_list
+            self.old_parameter_list = self.new_parameter_list
         
         except FileNotFoundError:
             print(f"Error: The file '{self.method_path}' was not found.")
     
     def change_data_default(self):
         try:
-            self.dataDefaultValue.setText(self.old_data_list[self.dataComboBox.currentText()])
+            self.parameterDefaultValue.setText(self.old_parameter_list[self.parameterComboBox.currentText()])
         except KeyError:
             pass
 
-    def dataRemoveButton_method(self):
-        data_name = self.dataComboBox.currentText()
-        self.dataComboBox.removeItem(self.dataComboBox.currentIndex())
-        index = self.testComboBox.findText(data_name)
+    def parameterRemoveButton_method(self):
+        parameter_name = self.parameterComboBox.currentText()
+        self.parameterComboBox.removeItem(self.parameterComboBox.currentIndex())
+        index = self.testComboBox.findText(parameter_name)
         self.testComboBox.removeItem(index)
-        del self.new_data_list[data_name]
+        del self.new_parameter_list[parameter_name]
         try:
             with open(self.method_path, "r") as f:
                 current_content = f.read()
                 print(current_content)
-                old_string = f'data_list = {self.old_data_list}'
-                new_string = f'data_list = {self.new_data_list}'
+                old_string = f'data_list = {self.old_parameter_list}'
+                new_string = f'data_list = {self.new_parameter_list}'
                 
                 if old_string not in current_content:
                         print(f'"{old_string}" not found. No changes made.')
@@ -340,7 +284,7 @@ class new_command_setting_ui(QWidget):
             with open(self.method_path, "w") as f:    
                     f.write(new_content)
             
-            self.old_data_list = self.new_data_list
+            self.old_parameter_list = self.new_parameter_list
         
         except FileNotFoundError:
             print(f"Error: The file '{self.method_path}' was not found.")
@@ -374,25 +318,10 @@ class new_command_setting_ui(QWidget):
     
     def comSystemSaveButton_method(self):
         self.communication_syntax = self.comSystemComboBox.currentText()
-        # try:
-        #     with open(self.method_path, "r") as f:
-        #         current_content = f.read()
-        #         print(current_content)
-        #         old_string = f'communication_syntax = "{self.communication_syntax}"'
-        #         new_string = f'communication_syntax = "{self.comSystemComboBox.currentText()}"'
                 
-        #         if old_string not in current_content:
-        #                 print(f'"{old_string}" not found. No changes made.')
-        #                 return
 
-        #         new_content = current_content.replace(old_string, new_string)
-        #         print(f'Successfully changed "{old_string}" to "{new_string}".')
             
-        #     with open(self.method_path, "w") as f:    
-        #             f.write(new_content)
         
-        # except FileNotFoundError:
-        #     print(f"Error: The file '{self.method_path}' was not found.")
     
     def writeCommandCheckBox_method(self):
         if self.writeCommandCheckBox.isChecked():
@@ -514,12 +443,12 @@ class new_command_setting_ui(QWidget):
     # Test section buttons
     # -------------------------------
     def testSave_method(self):
-        data_name = self.self.testComboBox.currentText()
-        self.new_test_data_list[data_name] = self.testValue.text()
+        parameter_name = self.self.testComboBox.currentText()
+        self.new_test_parameter_list[parameter_name] = self.testValue.text()
     
     def change_test_data_default(self):
         try:
-            self.testValue.setText(self.new_test_data_list[self.testComboBox.currentText()])
+            self.testValue.setText(self.new_test_parameter_list[self.testComboBox.currentText()])
         except KeyError:
             pass
 
@@ -534,8 +463,8 @@ class new_command_setting_ui(QWidget):
         for line in function_code_list:
             function_code += "        " + line + "\n"
 
-        for data_name, data_value in self.new_test_data_list.items():
-            function_code = function_code.replace(f"{{{data_name}}}", data_value)
+        for parameter_name, data_value in self.new_test_parameter_list.items():
+            function_code = function_code.replace(f"{{{parameter_name}}}", data_value)
 
 # ADD THE DRAFT TEST FUNCTION
         draft_script = f'''def run(self):
@@ -589,8 +518,6 @@ class new_command_setting_ui(QWidget):
     # -------------------------------
     # Data manipulation buttons
     # -------------------------------
-    # def dataManCheckButton_method(self):
-    #     self.man_response = self.response
     
     def change_data_man_line_setting(self):
         index_number = self.dataManComboBox.currentIndex()
@@ -758,8 +685,8 @@ class new_command_setting_ui(QWidget):
         for line in saving_function_code_list:
             saving_function_code += "        " + line + "\n"
 
-        for data_name, data_value in self.new_data_list.items():
-            saving_function_code = saving_function_code.replace(f"{{{data_name}}}", data_value)
+        for parameter_name, data_value in self.new_parameter_list.items():
+            saving_function_code = saving_function_code.replace(f"{{{parameter_name}}}", data_value)
 
         method_file_text = self.build_method_file_text(saving_function_code)
 
@@ -774,51 +701,21 @@ class new_command_setting_ui(QWidget):
         except Exception as e:
             self.testResponse.setText(str(e))
             print(str(e))
-#         saving_function_code = ""
-#         if self.new_function_code == "":
-#             self.new_function_code = "return None"
-#         saving_function_code_list = self.new_function_code.split("\n")
         
-#         data_manipulation_code_list = self.new_data_manipulation_code.split("\n")
         
 # # PUTTING THE FUNCTION AND DATA MANIPULATION TOGETHER
-#         last_code_line = saving_function_code_list.pop()
-#         saving_function_code_list.extend(data_manipulation_code_list)
-#         saving_function_code_list.append(last_code_line)
-#         n = len(saving_function_code_list)
         
-#         for i in range(0,n):
-#             saving_function_code = saving_function_code + "        " + saving_function_code_list[i] + "\n"
         
-#         for data_name, data_value in self.new_data_list.items():
-#             saving_function_code = saving_function_code.replace(f"{{{data_name}}}", data_value)
 
 # # ADD THE TEST FUNCTION
-#         try:
-#             with open(self.method_path, "a") as f:
-#                 self.method_script = f"""def run(self):
-#     try:
 # {saving_function_code}
-#     except Exception as e:
-#         print("Something went wrong: " + e)
 # """
-#                 print(self.method_script)
-#                 f.write(self.method_script)     
-#         except FileNotFoundError:
-#             print(f"Error: The file '{self.method_path}' was not found.")
             
 # # update the metadata
-#         self.command_name = self.nameLineEdit.text()
-#         self.command_text = self.command_text
-#         self.command_type = self.commandTypeComboBox.currentText()
-#         self.communication_syntax = self.comSystemComboBox.currentText()
 
-#         self.update_metadata_for_command()
 
-#         importlib.invalidate_caches()
         
             
-#         self.window.hide()
     
     def dataManSaveAsTemplate_method(self):
         pass
@@ -839,7 +736,7 @@ class new_command_setting_ui(QWidget):
     def build_method_file_text(self, saving_function_code):
         return f'''command_name = "{self.command_name}"
 command_text = "{self.command_text}"
-data_list = {self.new_data_list}
+data_list = {self.new_parameter_list}
 command_type = "{self.command_type}"
 communication_syntax = "{self.communication_syntax}"
 desired_data_type = "{self.desiredDataComboBox.currentText()}"
@@ -976,11 +873,11 @@ class edit_command_setting_ui(QWidget):
             self.command_name = getattr(self.method_module, "command_name")
             self.command_text = getattr(self.method_module, "command_text")
             
-            self.old_data_list = getattr(self.method_module, "data_list")
-            self.new_data_list = getattr(self.method_module, "data_list")
+            self.old_parameter_list = getattr(self.method_module, "data_list")
+            self.new_parameter_list = getattr(self.method_module, "data_list")
                    
-            self.old_test_data_list = getattr(self.method_module, "data_list")
-            self.new_test_data_list = getattr(self.method_module, "data_list")
+            self.old_test_parameter_list = getattr(self.method_module, "data_list")
+            self.new_test_parameter_list = getattr(self.method_module, "data_list")
             
             self.command_type = getattr(self.method_module, "command_type")
             self.communication_syntax = getattr(self.method_module, "communication_syntax")
@@ -995,12 +892,12 @@ class edit_command_setting_ui(QWidget):
             self.nameLineEdit.setText(self.command_name)
             self.commandText.setText(self.command_text)
             
-            for data_name, default_value in self.old_data_list.items():
-                self.dataComboBox.addItem(data_name)
-                self.testComboBox.addItem(data_name)
-            if self.old_data_list:
-                self.dataDefaultValue.setText(self.old_data_list[self.dataComboBox.currentText()])
-                self.testValue.setText(self.old_data_list[self.testComboBox.currentText()])
+            for parameter_name, default_value in self.old_parameter_list.items():
+                self.parameterComboBox.addItem(parameter_name)
+                self.testComboBox.addItem(parameter_name)
+            if self.old_parameter_list:
+                self.parameterDefaultValue.setText(self.old_parameter_list[self.parameterComboBox.currentText()])
+                self.testValue.setText(self.old_parameter_list[self.testComboBox.currentText()])
             
             match self.command_type:
                 case 'READ':
@@ -1028,7 +925,7 @@ class edit_command_setting_ui(QWidget):
             
             self.writeCommandCheckBox.stateChanged.connect(self.writeCommandCheckBox_method)
             self.queryCommandCheckBox.stateChanged.connect(self.queryCommandCheckBox_method)
-            self.dataComboBox.currentIndexChanged.connect(self.change_data_default)
+            self.parameterComboBox.currentIndexChanged.connect(self.change_data_default)
             self.testComboBox.currentIndexChanged.connect(self.change_test_data_default)
             self.dataManComboBox.currentIndexChanged.connect(self.change_data_man_line_setting)
             
@@ -1132,18 +1029,18 @@ class edit_command_setting_ui(QWidget):
     # -------------------------------
     # Data type buttons
     # -------------------------------
-    def dataAddButton_method(self):
-        data_name = "Data" + str(self.dataComboBox.count())
-        self.dataComboBox.addItem(data_name)
-        self.testComboBox.addItem(data_name)
-        self.new_data_list[data_name] = ""
-        self.new_test_data_list[data_name] = ""
+    def parameterAddButton_method(self):
+        parameter_name = "Data" + str(self.parameterComboBox.count())
+        self.parameterComboBox.addItem(parameter_name)
+        self.testComboBox.addItem(parameter_name)
+        self.new_parameter_list[parameter_name] = ""
+        self.new_test_parameter_list[parameter_name] = ""
         try:
             with open(self.method_path, "r") as f:
                 current_content = f.read()
                 print(current_content)
-                old_string = f'data_list = {self.old_data_list}'
-                new_string = f'data_list = {self.new_data_list}'
+                old_string = f'data_list = {self.old_parameter_list}'
+                new_string = f'data_list = {self.new_parameter_list}'
                 
                 if old_string not in current_content:
                         print(f'"{old_string}" not found. No changes made.')
@@ -1155,21 +1052,21 @@ class edit_command_setting_ui(QWidget):
             with open(self.method_path, "w") as f:    
                     f.write(new_content)
             
-            self.old_data_list = self.new_data_list
+            self.old_parameter_list = self.new_parameter_list
         
         except FileNotFoundError:
             print(f"Error: The file '{self.method_path}' was not found.")
 
-    def dataSaveButton_method(self):
-        data_name = self.dataComboBox.currentText()
-        self.new_data_list[data_name] = self.dataDefaultValue.text()
-        self.new_test_data_list[data_name] = self.dataDefaultValue.text()
+    def parameterSaveButton_method(self):
+        parameter_name = self.parameterComboBox.currentText()
+        self.new_parameter_list[parameter_name] = self.parameterDefaultValue.text()
+        self.new_test_parameter_list[parameter_name] = self.parameterDefaultValue.text()
         try:
             with open(self.method_path, "r") as f:
                 current_content = f.read()
                 print(current_content)
-                old_string = f'data_list = {self.old_data_list}'
-                new_string = f'data_list = {self.new_data_list}'
+                old_string = f'data_list = {self.old_parameter_list}'
+                new_string = f'data_list = {self.new_parameter_list}'
                 
                 if old_string not in current_content:
                         print(f'"{old_string}" not found. No changes made.')
@@ -1181,29 +1078,29 @@ class edit_command_setting_ui(QWidget):
             with open(self.method_path, "w") as f:    
                     f.write(new_content)
             
-            self.old_data_list = self.new_data_list
+            self.old_parameter_list = self.new_parameter_list
         
         except FileNotFoundError:
             print(f"Error: The file '{self.method_path}' was not found.")
     
     def change_data_default(self):
         try:
-            self.dataDefaultValue.setText(self.old_data_list[self.dataComboBox.currentText()])
+            self.parameterDefaultValue.setText(self.old_parameter_list[self.parameterComboBox.currentText()])
         except KeyError:
             pass
 
-    def dataRemoveButton_method(self):
-        data_name = self.dataComboBox.currentText()
-        self.dataComboBox.removeItem(self.dataComboBox.currentIndex())
-        index = self.testComboBox.findText(data_name)
+    def parameterRemoveButton_method(self):
+        parameter_name = self.parameterComboBox.currentText()
+        self.parameterComboBox.removeItem(self.parameterComboBox.currentIndex())
+        index = self.testComboBox.findText(parameter_name)
         self.testComboBox.removeItem(index)
-        del self.new_data_list[data_name]
+        del self.new_parameter_list[parameter_name]
         try:
             with open(self.method_path, "r") as f:
                 current_content = f.read()
                 print(current_content)
-                old_string = f'data_list = {self.old_data_list}'
-                new_string = f'data_list = {self.new_data_list}'
+                old_string = f'data_list = {self.old_parameter_list}'
+                new_string = f'data_list = {self.new_parameter_list}'
                 
                 if old_string not in current_content:
                         print(f'"{old_string}" not found. No changes made.')
@@ -1215,34 +1112,18 @@ class edit_command_setting_ui(QWidget):
             with open(self.method_path, "w") as f:    
                     f.write(new_content)
             
-            self.old_data_list = self.new_data_list
+            self.old_parameter_list = self.new_parameter_list
         
         except FileNotFoundError:
             print(f"Error: The file '{self.method_path}' was not found.")
     
     def commandTypeSaveButton_method(self):
         self.command_type = self.commandTypeComboBox.currentText()
-        # try:
-        #     with open(self.method_path, "r") as f:
-        #         current_content = f.read()
-        #         print(current_content)
-        #         old_string = f'command_type = "{self.command_type}"'
-        #         new_string = f'command_type = "{self.commandTypeComboBox.currentText()}"'
                 
-        #         if old_string not in current_content:
-        #                 print(f'"{old_string}" not found. No changes made.')
-        #                 return
 
-        #         new_content = current_content.replace(old_string, new_string)
-        #         print(f'Successfully changed "{old_string}" to "{new_string}".')
             
-        #     with open(self.method_path, "w") as f:    
-        #             f.write(new_content)
             
-        #     self.command_type = self.commandTypeComboBox.currentText()
         
-        # except FileNotFoundError:
-        #     print(f"Error: The file '{self.method_path}' was not found.")
 
     # -------------------------------
     # BUILD YOUR FUNCTION
@@ -1362,27 +1243,11 @@ class edit_command_setting_ui(QWidget):
         
     def functionSave_method(self):
         self.old_function_code = self.new_function_code
-        # try:
-        #     with open(self.method_path, "r") as f:
-        #         current_content = f.read()
-        #         print(current_content)
-        #         old_string = f'function_code = \"\"\"{self.old_function_code}\"\"\"'
-        #         new_string = f'function_code = \"\"\"{self.new_function_code}\"\"\"'
                 
-        #         if old_string not in current_content:
-        #                 print(f'"{old_string}" not found. No changes made.')
-        #                 return
 
-        #         new_content = current_content.replace(old_string, new_string)
-        #         print(f'Successfully changed.')
             
-        #     with open(self.method_path, "w") as f:    
-        #             f.write(new_content)
             
-        #     self.old_function_code = self.new_function_code
         
-        # except FileNotFoundError:
-        #     print(f"Error: The file '{self.method_path}' was not found.")
 
     def functionSaveAsTemplate_method(self):
         pass
@@ -1394,12 +1259,12 @@ class edit_command_setting_ui(QWidget):
     # Test section buttons
     # -------------------------------
     def testSave_method(self):
-        data_name = self.self.testComboBox.currentText()
-        self.new_test_data_list[data_name] = self.testValue.text()
+        parameter_name = self.self.testComboBox.currentText()
+        self.new_test_parameter_list[parameter_name] = self.testValue.text()
     
     def change_test_data_default(self):
         try:
-            self.testValue.setText(self.new_test_data_list[self.testComboBox.currentText()])
+            self.testValue.setText(self.new_test_parameter_list[self.testComboBox.currentText()])
         except KeyError:
             pass
 
@@ -1411,8 +1276,8 @@ class edit_command_setting_ui(QWidget):
         for i in range(0,n):
             function_code = function_code + "        " + function_code_list[i] + "\n"
         
-        for data_name, data_value in self.new_test_data_list.items():
-            function_code = function_code.replace(f"{{{data_name}}}", data_value)
+        for parameter_name, data_value in self.new_test_parameter_list.items():
+            function_code = function_code.replace(f"{{{parameter_name}}}", data_value)
 
 # ADD THE TEST FUNCTION
         try:
@@ -1478,8 +1343,6 @@ def run(self):
     # -------------------------------
     # Data manipulation buttons
     # -------------------------------
-    # def dataManCheckButton_method(self):
-    #     self.man_response = self.response
     
     def change_data_man_line_setting(self):
         index_number = self.dataManComboBox.currentIndex()
@@ -1558,27 +1421,11 @@ def run(self):
 
     def dataManSave_method(self):
         self.old_data_manipulation_code = self.new_data_manipulation_code
-        # try:
-        #     with open(self.method_path, "r") as f:
-        #         current_content = f.read()
-        #         print(current_content)
-        #         old_string = f'data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"'
-        #         new_string = f'data_manipulation_code = \"\"\"{self.new_data_manipulation_code}\"\"\"'
                 
-        #         if old_string not in current_content:
-        #                 print(f'"{old_string}" not found. No changes made.')
-        #                 return
 
-        #         new_content = current_content.replace(old_string, new_string)
-        #         print(f'Successfully changed.')
             
-        #     with open(self.method_path, "w") as f:    
-        #             f.write(new_content)
             
-        #     self.old_data_manipulation_code = self.new_data_manipulation_code
         
-        # except FileNotFoundError:
-        #     print(f"Error: The file '{self.method_path}' was not found.")
 
     def dataManDelete_method(self):
         self.new_data_manipulation_code = self.new_data_manipulation_code.split("\n")
@@ -1628,8 +1475,8 @@ def run(self):
         for i in range(0,n):
             saving_function_code = saving_function_code + "        " + saving_function_code_list[i] + "\n"
         
-        for data_name, data_value in self.new_data_list.items():
-            saving_function_code = saving_function_code.replace(f"{{{data_name}}}", data_value)
+        for parameter_name, data_value in self.new_parameter_list.items():
+            saving_function_code = saving_function_code.replace(f"{{{parameter_name}}}", data_value)
 
 # ADD THE TEST FUNCTION
         try:

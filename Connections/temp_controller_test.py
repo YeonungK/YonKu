@@ -24,9 +24,5 @@ else:
     print("No response received")
 
 
-# device.write("#IDN?\n".encode('ascii'))
-# time.sleep(0.1)
-# response = device.readline().decode('ascii').strip()
-# print(response)
 
 device.close()

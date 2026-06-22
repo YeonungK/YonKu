@@ -133,10 +133,8 @@ class widget(QWidget):
 
         except (ImportError, AttributeError) as e:
             print(f"Error: {e}")
-            # self.testResponse.setText(f"The file '{self.method_path}' was not found. Did you save your method name?")
         except IndentationError:
             print("IndentationError: Please check the indentation of your method code.")
-            # self.testResponse.setText("The function code is empty.")
         except Exception as e:
             print(e)
 
@@ -175,10 +173,8 @@ class widget(QWidget):
             
         except (ImportError, AttributeError) as e:
             print(f"Error: {e}")
-            # self.testResponse.setText(f"The file '{self.method_path}' was not found. Did you save your method name?")
         except IndentationError:
             print("IndentationError: Please check the indentation of your method code.")
-            # self.testResponse.setText("The function code is empty.")
         except Exception as e:
             print(f"Write failed for {category_name} / {component.get('name')}: {e}")
         
