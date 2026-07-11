@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-09-25--17-10-50
-
-2025-09-25--17-11-28 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\PlotUi.py", line 619, in open_multidataset_plot
-    self.amp_window.setCentralWidget(self.openPlotSettingWid)
-                                     ^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'oldPlotWidget' object has no attribute 'openPlotSettingWid'
-
-

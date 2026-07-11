@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-12-09--11-39-11
-
-2025-12-09--11-39-23 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1727, in create_old_plot
-    param_file = open(self.openPlotSettingWid.experimentParam)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: 'C:/Users/szkop/OneDrive/Desktop/YonKu/Data/experiment_parameters'
-
-

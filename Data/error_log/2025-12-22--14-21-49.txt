@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-12-22--14-21-49
-
-2025-12-22--14-21-57 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\EthernetInstDeviceUi.py", line 33, in new_command_setting
-    self.newCommandWid.newCommandSaveButton.clicked.connect(self.save_new_command)
-                                                            ^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'EthernetnstDeviceUi' object has no attribute 'save_new_command'
-
-

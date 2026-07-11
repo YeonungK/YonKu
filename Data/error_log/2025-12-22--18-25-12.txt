@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-12-22--18-25-12
-
-2025-12-22--18-25-18 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\EthernetInstDeviceUi.py", line 40, in open_command_list
-    self.CommandListWin.setCentralWidget(self.newCommandWid)
-                                         ^^^^^^^^^^^^^^^^^^
-AttributeError: 'EthernetnstDeviceUi' object has no attribute 'newCommandWid'
-
-

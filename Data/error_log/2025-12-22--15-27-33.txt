@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-12-22--15-27-33
-
-2025-12-22--15-28-49 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 722, in newCommandSaveButton_method
-    old_string = current_content_list[0]
-                 ~~~~~~~~~~~~~~~~~~~~^^^
-IndexError: list index out of range
-
-

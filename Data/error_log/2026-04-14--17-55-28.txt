@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2026-04-14--17-55-28
-
-2026-04-14--17-55-51 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\instrument_control_widgets\Oxford_MercuryiPS_widget.py", line 116, in magnetPowerSupply_thread
-    self.magnet_worker = magnetPowerSupply_worker(self.magnetPowerSupply, 1000, self.stopDisplay,
-                                                  ^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'magnetPowerSupply_widget' object has no attribute 'magnetPowerSupply'. Did you mean: 'magnetPowerSupply_thread'?
-
-

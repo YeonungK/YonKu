@@ -1,8 +1,0 @@
-
-
-2025-12-21--00-19-25 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 281, in closeEvent
-    pass
-AttributeError: 'str' object has no attribute 'unlink'
-
-

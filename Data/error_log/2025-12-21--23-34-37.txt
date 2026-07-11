@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-12-21--23-34-37
-
-2025-12-21--23-35-24 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 559, in change_data_man_line_setting
-    self.dataManLineEdit1.setPlaceHolderText("splitting text")
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'QLineEdit' object has no attribute 'setPlaceHolderText'. Did you mean: 'setPlaceholderText'?
-
-

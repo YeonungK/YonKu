@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-09-18--20-58-16
-
-2025-09-18--20-59-14 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\PlotUi.py", line 228, in create_new_plot
-    xAxisChannel_unit = self.experiment_parameters[self.xAxis_unit_key][xAxisChannel]
-                                                   ^^^^^^^^^^^^^^^^^^^
-AttributeError: 'plotWidget' object has no attribute 'xAxis_unit_key'. Did you mean: 'yAxis_unit_key'?
-
-

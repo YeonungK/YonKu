@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-12-21--00-21-33
-
-2025-12-21--00-21-52 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 290, in closeEvent
-    self.method_path.unlink()
-    ^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'str' object has no attribute 'unlink'
-
-

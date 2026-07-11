@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-10-13--17-14-00
-
-2025-10-13--17-15-40 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\PlotUi.py", line 763, in multidataset_update_all_time
-    self.main_layout.addItem(self.axes[plot_channels], 2+self.plot_count, 1)
-    ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'addItem'
-
-

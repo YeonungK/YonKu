@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-12-15--13-53-03
-
-2025-12-15--13-53-36 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1739, in read_field_rate
-    self.magnetPowerSupplyWid.targetFieldSpinBox.setValue(float(value))
-                                                          ^^^^^^^^^^^^
-ValueError: could not convert string to float: 'STAT:DEV:GRPZ:PSU:SIG:RFST:0.0050T/m\n'
-
-

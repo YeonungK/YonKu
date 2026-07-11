@@ -1,8 +1,0 @@
-Szkopek Lab Error Log Book - 2025-09-30--20-25-12
-
-2025-09-30--20-26-27 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\AddMultidataPlotUi.py", line 54, in x_dataset_search
-    self.set_names(self.x_experimentParamLink, self.xAxisChannelComboBox, self.xData, self.xAxis_name_key, self.xData)
-TypeError: add_multidata_plot_ui.set_names() takes 5 positional arguments but 6 were given
-
-

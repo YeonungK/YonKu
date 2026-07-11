@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-12-15--14-34-26
-
-2025-12-15--14-34-33 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\main_gui.py", line 1124, in magnetPowerSupply_thread
-    self.magnetPowwerSupplyWid.temperatureLineEdit,
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'UI' object has no attribute 'magnetPowwerSupplyWid'. Did you mean: 'magnetPowerSupplyWid'?
-
-

@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-10-13--17-01-15
-
-2025-10-13--17-02-05 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\PlotUi.py", line 758, in multidataset_update_all_time
-    viewbox.setYLink(previous_viewbox)  # link to previous
-                     ^^^^^^^^^^^^^^^^
-UnboundLocalError: cannot access local variable 'previous_viewbox' where it is not associated with a value
-
-

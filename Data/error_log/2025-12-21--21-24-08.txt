@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-12-21--21-24-08
-
-2025-12-21--21-24-57 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 472, in testExecute_method
-    for data_name, data_value in self.new_test_data_list.item():
-                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'dict' object has no attribute 'item'. Did you mean: 'items'?
-
-

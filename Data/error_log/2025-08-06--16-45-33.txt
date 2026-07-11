@@ -1,8 +1,0 @@
-Szkopek Lab Error Log Book - 2025-08-06--16-45-33
-
-2025-08-06--16-46-18 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\Desktop\YonKu_Editing\main_gui.py", line 1439, in gpib_save_device
-    self.gpib_instantiate(data_list)
-TypeError: UI.gpib_instantiate() missing 1 required positional argument: 'device_key'
-
-

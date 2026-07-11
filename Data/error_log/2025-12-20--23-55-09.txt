@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-12-20--23-55-09
-
-2025-12-20--23-55-17 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\SerialInstDeviceUi.py", line 26, in new_command_setting
-    self.newCommandWid = ncsu.new_command_setting_ui(self.instrument)
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-TypeError: new_command_setting_ui.__init__() missing 1 required positional argument: 'interface'
-
-

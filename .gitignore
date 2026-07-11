@@ -1,4 +1,6 @@
 /Data/error_log/
 /Data/experiment_data/
 /Data/experiment_parameters/
-__pycache__/
+# Python cache
+_pycache__/
+*.py[cod]

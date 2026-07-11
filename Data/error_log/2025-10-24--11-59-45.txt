@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-10-24--11-59-45
-
-2025-10-24--12-00-05 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\AddMultidataPlotUi.py", line 61, in dataset_search
-    self.expParam = self.set_names(self.x_experimentParamLink, self.xAxisChannelComboBox, self.xAxis_name_key, self.xData)
-                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'add_multidata_plot_ui' object has no attribute 'x_experimentParamLink'. Did you mean: 'experimentParamLink'?
-
-

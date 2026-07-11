@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-09-22--19-24-02
-
-2025-09-22--19-36-44 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\OpenPlotSettingUi.py", line 54, in dataset_search
-    self.experimentParam = self.expeirmentParam + "/" + self.datasetLink[n]
-                           ^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'create_plot_setting_ui' object has no attribute 'expeirmentParam'. Did you mean: 'experimentParam'?
-
-

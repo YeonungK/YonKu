@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-12-20--20-14-41
-
-2025-12-20--20-14-58 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\SerialInstDeviceUi.py", line 26, in new_command_setting
-    self.newCommandWid = NewCommandSettingUi(self.instrument)
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-TypeError: 'module' object is not callable
-
-

@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-12-21--20-41-26
-
-2025-12-21--20-43-05 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\OneDrive\Desktop\YonKu\GUI\NewCommandSettingUi.py", line 476, in testExecute_method
-    f.write(new_content)
-            ^^^^^^^^^^^
-NameError: name 'new_content' is not defined
-
-

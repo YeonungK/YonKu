@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-09-15--16-31-01
-
-2025-09-15--16-32-58 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\PlotUi.py", line 211, in create_new_plot
-    yAxisChannel_name = self.experiment_parameters[self.yAxis_name_key][yAxisChannel]
-                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
-KeyError: '1st_stage'
-
-

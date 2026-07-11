@@ -1,9 +1,0 @@
-Szkopek Lab Error Log Book - 2025-09-25--16-39-13
-
-2025-09-25--16-39-55 Exception: Traceback (most recent call last):
-  File "C:\Users\szkop\Desktop\YonKu_Editing\GUI\OpenPlotSettingUi.py", line 47, in dataset_search
-    self.datasetLink = self.datasetLink[:-3] + "txt"
-                       ^^^^^^^^^^^^^^^^
-AttributeError: 'create_plot_setting_ui' object has no attribute 'datasetLink'
-
-
