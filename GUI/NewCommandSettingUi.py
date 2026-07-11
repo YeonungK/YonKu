@@ -53,7 +53,7 @@ class new_command_setting_ui(QWidget):
         
         self.writeCommandCheckBox.stateChanged.connect(self.writeCommandCheckBox_method)
         self.queryCommandCheckBox.stateChanged.connect(self.queryCommandCheckBox_method)
-        self.dataComboBox.currentIndexChanged.connect(self.change_data_default)
+        self.parameterComboBox.currentIndexChanged.connect(self.change_data_default)
         self.testComboBox.currentIndexChanged.connect(self.change_test_data_default)
         self.dataManComboBox.currentIndexChanged.connect(self.change_data_man_line_setting)
         
@@ -95,7 +95,7 @@ class new_command_setting_ui(QWidget):
 # data_list = {self.old_data_list}
 # command_type = "{self.command_type}"
 # communication_syntax = "{self.communication_syntax}"
-# desired_data_type = "{self.desiredDataComboBox.currentText()}"
+# desired_data_type = "{self.desiredparameterComboBox.currentText()}"
 
 # function_code = \"\"\"{self.old_function_code}\"\"\"
 # data_manipulation_code = \"\"\"{self.old_data_manipulation_code}\"\"\"
@@ -257,9 +257,9 @@ class new_command_setting_ui(QWidget):
     # -------------------------------
     # Data type buttons
     # -------------------------------
-    def dataAddButton_method(self):
-        data_name = "Data" + str(self.dataComboBox.count())
-        self.dataComboBox.addItem(data_name)
+    def parameterAddButton_method(self):
+        data_name = "Data" + str(self.parameterComboBox.count())
+        self.parameterComboBox.addItem(data_name)
         self.testComboBox.addItem(data_name)
         self.new_data_list[data_name] = ""
         self.new_test_data_list[data_name] = ""
@@ -285,10 +285,10 @@ class new_command_setting_ui(QWidget):
         except FileNotFoundError:
             print(f"Error: The file '{self.method_path}' was not found.")
 
-    def dataSaveButton_method(self):
-        data_name = self.dataComboBox.currentText()
-        self.new_data_list[data_name] = self.dataDefaultValue.text()
-        self.new_test_data_list[data_name] = self.dataDefaultValue.text()
+    def parameterSaveButton_method(self):
+        data_name = self.parameterComboBox.currentText()
+        self.new_data_list[data_name] = self.parameterDefaultValue.text()
+        self.new_test_data_list[data_name] = self.parameterDefaultValue.text()
         try:
             with open(self.method_path, "r") as f:
                 current_content = f.read()
@@ -313,13 +313,13 @@ class new_command_setting_ui(QWidget):
     
     def change_data_default(self):
         try:
-            self.dataDefaultValue.setText(self.old_data_list[self.dataComboBox.currentText()])
+            self.parameterDefaultValue.setText(self.old_data_list[self.parameterComboBox.currentText()])
         except KeyError:
             pass
 
-    def dataRemoveButton_method(self):
-        data_name = self.dataComboBox.currentText()
-        self.dataComboBox.removeItem(self.dataComboBox.currentIndex())
+    def parameterRemoveButton_method(self):
+        data_name = self.parameterComboBox.currentText()
+        self.parameterComboBox.removeItem(self.parameterComboBox.currentIndex())
         index = self.testComboBox.findText(data_name)
         self.testComboBox.removeItem(index)
         del self.new_data_list[data_name]
@@ -996,10 +996,10 @@ class edit_command_setting_ui(QWidget):
             self.commandText.setText(self.command_text)
             
             for data_name, default_value in self.old_data_list.items():
-                self.dataComboBox.addItem(data_name)
+                self.parameterComboBox.addItem(data_name)
                 self.testComboBox.addItem(data_name)
             if self.old_data_list:
-                self.dataDefaultValue.setText(self.old_data_list[self.dataComboBox.currentText()])
+                self.parameterDefaultValue.setText(self.old_data_list[self.parameterComboBox.currentText()])
                 self.testValue.setText(self.old_data_list[self.testComboBox.currentText()])
             
             match self.command_type:
@@ -1028,7 +1028,7 @@ class edit_command_setting_ui(QWidget):
             
             self.writeCommandCheckBox.stateChanged.connect(self.writeCommandCheckBox_method)
             self.queryCommandCheckBox.stateChanged.connect(self.queryCommandCheckBox_method)
-            self.dataComboBox.currentIndexChanged.connect(self.change_data_default)
+            self.parameterComboBox.currentIndexChanged.connect(self.change_data_default)
             self.testComboBox.currentIndexChanged.connect(self.change_test_data_default)
             self.dataManComboBox.currentIndexChanged.connect(self.change_data_man_line_setting)
             
@@ -1132,9 +1132,9 @@ class edit_command_setting_ui(QWidget):
     # -------------------------------
     # Data type buttons
     # -------------------------------
-    def dataAddButton_method(self):
-        data_name = "Data" + str(self.dataComboBox.count())
-        self.dataComboBox.addItem(data_name)
+    def parameterAddButton_method(self):
+        data_name = "Data" + str(self.parameterComboBox.count())
+        self.parameterComboBox.addItem(data_name)
         self.testComboBox.addItem(data_name)
         self.new_data_list[data_name] = ""
         self.new_test_data_list[data_name] = ""
@@ -1160,10 +1160,10 @@ class edit_command_setting_ui(QWidget):
         except FileNotFoundError:
             print(f"Error: The file '{self.method_path}' was not found.")
 
-    def dataSaveButton_method(self):
-        data_name = self.dataComboBox.currentText()
-        self.new_data_list[data_name] = self.dataDefaultValue.text()
-        self.new_test_data_list[data_name] = self.dataDefaultValue.text()
+    def parameterSaveButton_method(self):
+        data_name = self.parameterComboBox.currentText()
+        self.new_data_list[data_name] = self.parameterDefaultValue.text()
+        self.new_test_data_list[data_name] = self.parameterDefaultValue.text()
         try:
             with open(self.method_path, "r") as f:
                 current_content = f.read()
@@ -1188,13 +1188,13 @@ class edit_command_setting_ui(QWidget):
     
     def change_data_default(self):
         try:
-            self.dataDefaultValue.setText(self.old_data_list[self.dataComboBox.currentText()])
+            self.parameterDefaultValue.setText(self.old_data_list[self.parameterComboBox.currentText()])
         except KeyError:
             pass
 
-    def dataRemoveButton_method(self):
-        data_name = self.dataComboBox.currentText()
-        self.dataComboBox.removeItem(self.dataComboBox.currentIndex())
+    def parameterRemoveButton_method(self):
+        data_name = self.parameterComboBox.currentText()
+        self.parameterComboBox.removeItem(self.parameterComboBox.currentIndex())
         index = self.testComboBox.findText(data_name)
         self.testComboBox.removeItem(index)
         del self.new_data_list[data_name]

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>885</width>
+    <width>1259</width>
     <height>833</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>848</width>
+        <width>1222</width>
         <height>1239</height>
        </rect>
       </property>
@@ -281,22 +281,22 @@
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>Write Data:</string>
+                   <string>Write Parameter:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="dataAddButton">
+                 <widget class="QPushButton" name="parameterAddButton">
                   <property name="text">
                    <string>Add</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="dataComboBox"/>
+                 <widget class="QComboBox" name="parameterComboBox"/>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="dataDefaultValue">
+                 <widget class="QLineEdit" name="parameterDefaultValue">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -309,14 +309,14 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="dataSaveButton">
+                 <widget class="QPushButton" name="parameterSaveButton">
                   <property name="text">
                    <string>Save</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="dataRemoveButton">
+                 <widget class="QPushButton" name="parameterRemoveButton">
                   <property name="text">
                    <string>Remove</string>
                   </property>
@@ -1217,7 +1217,7 @@
                    <item>
                     <widget class="QLabel" name="label_20">
                      <property name="text">
-                      <string>Test Data:</string>
+                      <string>Test Parameter:</string>
                      </property>
                     </widget>
                    </item>
