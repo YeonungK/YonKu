@@ -7,6 +7,7 @@ import sys
 sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 from Tools.Instrument import NidaqmxInstrument
+from . import attributes
 
 
 class gasValve(NidaqmxInstrument):
@@ -14,9 +15,14 @@ class gasValve(NidaqmxInstrument):
         super().__init__(name, 'usb6525_gasValve', device_number, port, range)
         
         self.data = [False, False, False]
-        self.data_type = {}
-        self.data_unit = {}
-        self.data_function = {}
+        self.data_type = attributes.data_type
+        self.data_label = attributes.data_label
+        self.data_unit = attributes.data_unit
+        self.value_format = attributes.value_format
+        self.data_function = attributes.data_functions
+        self.read_functions = attributes.read_functions
+        self.write_functions = attributes.write_functions
+        self.initial_state = attributes.initial_state
         if self.connected:
             self.initial_state = self.read()
         else:

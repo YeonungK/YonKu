@@ -1,0 +1,31 @@
+{
+    "data_type": {
+        "lockIn2": ["x", "y", "r", "theta"]
+    },
+    "data_label": {
+        "lockIn2": {
+            "x": "X",
+            "y": "Y",
+            "r": "R",
+            "theta": "Theta"
+        }
+    },
+    "data_unit": {
+        "lockIn2": {
+            "x": "manual",
+            "y": "manual",
+            "r": "manual",
+            "theta": "degrees"
+        }
+    },
+    "value_format": {
+        "lockIn2": {
+            "x": "float",
+            "y": "float",
+            "r": "float",
+            "theta": "float"
+        }
+    },
+    "initial_state": {},
+    "methods": {}
+}

@@ -120,6 +120,7 @@ class new_command_setting_ui(QWidget):
                 "data_type": {},
                 "data_label": {},
                 "data_unit": {},
+                "value_format": {},
                 "initial_state": {},
                 "methods": {}
             }
@@ -137,6 +138,7 @@ class new_command_setting_ui(QWidget):
         metadata.setdefault("data_type", {})
         metadata.setdefault("data_label", {})
         metadata.setdefault("data_unit", {})
+        metadata.setdefault("value_format", {})
         metadata.setdefault("initial_state", {})
         metadata.setdefault("methods", {})
 

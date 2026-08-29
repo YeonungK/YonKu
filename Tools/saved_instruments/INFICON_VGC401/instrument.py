@@ -7,7 +7,7 @@ import sys
 sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
 
 from Tools.Instrument import SerialInstrument
-from Tools.saved_instruments.test_model import attributes
+from . import attributes
 
 
 class pressureGauge(SerialInstrument):
@@ -19,9 +19,16 @@ class pressureGauge(SerialInstrument):
         
         self.connected = self.check_connection()
         self.data_type = attributes.data_type
-        self.data_unit = attributes.data_unit
         self.data_label = attributes.data_label
-        self.data_function = attributes.functions
+        self.data_unit = attributes.data_unit
+        self.value_format = attributes.value_format
+        self.data_function = {
+            data_type_id: function.__get__(self, type(self))
+            for data_type_id, function in attributes.data_functions.items()
+        }
+        self.read_functions = attributes.read_functions
+        self.write_functions = attributes.write_functions
+        self.initial_state = attributes.initial_state
         
     def check_connection(self):
         try:

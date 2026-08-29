@@ -1,10 +1,5 @@
-import sys
-sys.path.append('C:/Users/szkop/OneDrive/Desktop/YonKu')
-from Tools.saved_instruments.Oxford_MercuryiPS.methods import example_1_method
-data_type = {}
-data_unit = {}
-functions = {'example_1': example_1_method.example_1}
-read_functions = {'example_1': example_1_method.example_1}
-write_functions = {}
-data_functions = {}
-initial_state = {}
+from Tools.saved_instruments.metadata_loader import load_model_metadata
+
+
+_model = load_model_metadata("Oxford_MercuryiPS", __file__)
+globals().update(_model)

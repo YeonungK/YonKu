@@ -1,0 +1,45 @@
+{
+    "data_type": {
+        "field": ["field"],
+        "current": ["current"]
+    },
+    "data_label": {
+        "field": {
+            "field": "Field"
+        },
+        "current": {
+            "current": "Current"
+        }
+    },
+    "data_unit": {
+        "field": {
+            "field": "T"
+        },
+        "current": {
+            "current": "A"
+        }
+    },
+    "value_format": {
+        "field": {
+            "field": "float"
+        },
+        "current": {
+            "current": "float"
+        }
+    },
+    "initial_state": {},
+    "methods": {
+        "example_1": {
+            "module": "example_1_method",
+            "function": "example_1",
+            "command_type": "READ",
+            "command_text": "*IDN?",
+            "communication_syntax": "ASCII",
+            "desired_data_type": "text",
+            "command_linked_data": {
+                "data_function": false,
+                "data_type": null
+            }
+        }
+    }
+}

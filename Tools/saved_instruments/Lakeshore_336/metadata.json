@@ -1,0 +1,63 @@
+{
+    "data_type": {
+        "temperature": ["ch_A", "ch_B", "ch_C", "ch_D"],
+        "resistance": ["ch_A", "ch_B", "ch_C", "ch_D"]
+    },
+    "data_label": {
+        "temperature": {
+            "ch_A": "Ch_A",
+            "ch_B": "Ch_B",
+            "ch_C": "Ch_C",
+            "ch_D": "Ch_D"
+        },
+        "resistance": {
+            "ch_A": "Ch_A",
+            "ch_B": "Ch_B",
+            "ch_C": "Ch_C",
+            "ch_D": "Ch_D"
+        }
+    },
+    "data_unit": {
+        "temperature": {
+            "ch_A": "K",
+            "ch_B": "K",
+            "ch_C": "K",
+            "ch_D": "K"
+        },
+        "resistance": {
+            "ch_A": "Ohms",
+            "ch_B": "Ohms",
+            "ch_C": "Ohms",
+            "ch_D": "Ohms"
+        }
+    },
+    "value_format": {
+        "temperature": {
+            "ch_A": "float",
+            "ch_B": "float",
+            "ch_C": "float",
+            "ch_D": "float"
+        },
+        "resistance": {
+            "ch_A": "float",
+            "ch_B": "float",
+            "ch_C": "float",
+            "ch_D": "float"
+        }
+    },
+    "initial_state": {},
+    "methods": {
+        "read_temp": {
+            "module": "read_temp_method",
+            "function": "read_temp",
+            "command_type": "READ",
+            "command_text": "KRDG? {Data1}",
+            "communication_syntax": "ASCII",
+            "desired_data_type": "float",
+            "command_linked_data": {
+                "data_function": false,
+                "data_type": null
+            }
+        }
+    }
+}
