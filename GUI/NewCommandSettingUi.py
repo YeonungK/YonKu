@@ -17,6 +17,9 @@ from project_paths import GUI_DIR, SAVED_INSTRUMENTS_DIR, INSTRUMENT_CONTROL_UIS
 
 class new_command_setting_ui(QWidget):
     _GENERIC_NAME_RE = re.compile(r".*_\d+$")
+    _DATA_TYPE_PLACEHOLDER = "Select or search existing data types..."
+    _CREATE_DATA_TYPE = "Create new data type..."
+    _DEFAULT_RETURN_CHANNEL = "ch_A"
     
     def __init__(self, instrument, interface, window):
         super().__init__()
@@ -65,6 +68,7 @@ class new_command_setting_ui(QWidget):
         self.desiredDataInstr.setText("")
         
         self.create_member_folder()
+        self._initialize_returned_data_section()
         self._connect_pushbuttons()
     
     def create_member_folder(self):
@@ -143,6 +147,7 @@ class new_command_setting_ui(QWidget):
         metadata.setdefault("methods", {})
 
         command_name = self.command_name
+        linked_data = self._returned_data_metadata(metadata)
 
         metadata["methods"][command_name] = {
             "module": command_name,
@@ -151,13 +156,117 @@ class new_command_setting_ui(QWidget):
             "command_text": self.command_text,
             "communication_syntax": self.communication_syntax,
             "desired_data_type": self.desiredDataComboBox.currentText(),
-            "command_linked_data": {
-                "data_function": False,
-                "data_type": None
-            }
+            "command_linked_data": linked_data
         }
 
         self.save_metadata(metadata)
+
+    def _initialize_returned_data_section(self):
+        """Populate and maintain the READ command's metadata-backed output fields."""
+        self.dataTypeComboBox.currentTextChanged.connect(
+            self._returned_data_type_changed
+        )
+        self.commandTypeComboBox.currentTextChanged.connect(
+            self._update_returned_data_visibility
+        )
+        self._populate_returned_data_types()
+        self._update_returned_data_visibility(self.commandTypeComboBox.currentText())
+
+    def _populate_returned_data_types(self):
+        metadata = self.load_metadata()
+        data_type_ids = sorted(metadata.get("data_type", {}).keys())
+
+        self.dataTypeComboBox.blockSignals(True)
+        self.dataTypeComboBox.clear()
+        self.dataTypeComboBox.addItem(self._DATA_TYPE_PLACEHOLDER)
+        self.dataTypeComboBox.addItems(data_type_ids)
+        self.dataTypeComboBox.addItem(self._CREATE_DATA_TYPE)
+        self.dataTypeComboBox.blockSignals(False)
+        self._set_returned_data_fields_enabled(False)
+
+    def _update_returned_data_visibility(self, command_type):
+        is_read_command = command_type.upper() == "READ"
+        self.returnedDataFrame.setVisible(is_read_command)
+        if not is_read_command:
+            self._set_returned_data_fields_enabled(False)
+        elif self.dataTypeComboBox.currentText() == self._CREATE_DATA_TYPE:
+            self._set_returned_data_fields_enabled(True)
+
+    def _returned_data_type_changed(self, selection):
+        if selection in ("", self._DATA_TYPE_PLACEHOLDER):
+            self._clear_returned_data_fields()
+            self._set_returned_data_fields_enabled(False)
+            return
+
+        if selection == self._CREATE_DATA_TYPE:
+            self._clear_returned_data_fields()
+            self._set_returned_data_fields_enabled(True)
+            self.dataTypeIdLineEdit.setFocus()
+            return
+
+        metadata = self.load_metadata()
+        channels = metadata.get("data_type", {}).get(selection, [])
+        channel = channels[0] if channels else self._DEFAULT_RETURN_CHANNEL
+        self.dataTypeIdLineEdit.setText(selection)
+        self.dataTypeDisplayLabelLineEdit.setText(
+            metadata.get("data_label", {}).get(selection, {}).get(channel, selection)
+        )
+        self.dataTypeDefaultUnitLineEdit.setText(
+            metadata.get("data_unit", {}).get(selection, {}).get(channel, "")
+        )
+        value_format = metadata.get("value_format", {}).get(selection, {}).get(channel, "")
+        index = self.dataTypeValueFormatComboBox.findText(value_format.title())
+        self.dataTypeValueFormatComboBox.setCurrentIndex(max(index, 0))
+        self._set_returned_data_fields_enabled(False)
+
+    def _clear_returned_data_fields(self):
+        self.dataTypeIdLineEdit.clear()
+        self.dataTypeDisplayLabelLineEdit.clear()
+        self.dataTypeDefaultUnitLineEdit.clear()
+        self.dataTypeValueFormatComboBox.setCurrentIndex(0)
+
+    def _set_returned_data_fields_enabled(self, enabled):
+        for field in (
+            self.dataTypeIdLineEdit,
+            self.dataTypeDisplayLabelLineEdit,
+            self.dataTypeDefaultUnitLineEdit,
+            self.dataTypeValueFormatComboBox,
+        ):
+            field.setEnabled(enabled)
+
+    def _returned_data_metadata(self, metadata):
+        """Return command link metadata and add a newly defined type when needed."""
+        if self.command_type.upper() != "READ":
+            return {"data_function": False, "data_type": None}
+
+        selection = self.dataTypeComboBox.currentText().strip()
+        if selection in ("", self._DATA_TYPE_PLACEHOLDER):
+            return {"data_function": False, "data_type": None}
+
+        if selection != self._CREATE_DATA_TYPE:
+            if selection not in metadata["data_type"]:
+                raise ValueError(f"Unknown returned data type: {selection}")
+            return {"data_function": True, "data_type": selection}
+
+        data_type_id = self.dataTypeIdLineEdit.text().strip()
+        if not data_type_id.isidentifier():
+            raise ValueError("Returned Data Type ID must be a valid Python identifier.")
+        if data_type_id in metadata["data_type"]:
+            raise ValueError(f"Returned data type '{data_type_id}' already exists.")
+
+        channel = self._DEFAULT_RETURN_CHANNEL
+        label = self.dataTypeDisplayLabelLineEdit.text().strip() or data_type_id
+        unit = self.dataTypeDefaultUnitLineEdit.text().strip()
+        value_format = self.dataTypeValueFormatComboBox.currentText().lower()
+        metadata["data_type"][data_type_id] = [channel]
+        metadata["data_label"][data_type_id] = {channel: label}
+        metadata["data_unit"][data_type_id] = {channel: unit}
+        metadata["value_format"][data_type_id] = {channel: value_format}
+        return {"data_function": True, "data_type": data_type_id}
+
+    def _validate_returned_data_selection(self):
+        """Validate output data before creating the command module."""
+        self._returned_data_metadata(self.load_metadata())
         
     def _connect_pushbuttons(self):
         """
@@ -744,6 +853,12 @@ class new_command_setting_ui(QWidget):
         self.command_text = self.commandText.text()
         self.command_type = self.commandTypeComboBox.currentText()
         self.communication_syntax = self.comSystemComboBox.currentText()
+
+        try:
+            self._validate_returned_data_selection()
+        except ValueError as error:
+            self.testResponse.setText(str(error))
+            return
 
         saving_function_code = ""
 
