@@ -1,1 +1,13 @@
-{}
+{
+    "test1": [
+        {
+            "name": "test1",
+            "type": 1,
+            "read": true,
+            "read_command": "ser",
+            "write": true,
+            "write_command": "ser",
+            "exp_readonly": false
+        }
+    ]
+}

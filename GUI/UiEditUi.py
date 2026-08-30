@@ -69,6 +69,10 @@ class ui_edit_setting_ui(QWidget):
         self.add_component_pushButton.clicked.connect(self.add_component)
         self.save_pushButton.clicked.connect(self.save_instrument_definition)
         self.choose_category_comboBox.currentTextChanged.connect(self.update_component_combobox)
+        self.widget_type_comboBox.currentIndexChanged.connect(
+            self.update_display_during_plotting_availability
+        )
+        self.update_display_during_plotting_availability()
         
     def enable_read_command(self):
         if self.add_read_checkBox.isChecked():
@@ -81,6 +85,13 @@ class ui_edit_setting_ui(QWidget):
             self.write_command_frame.setEnabled(True)
         else:
             self.write_command_frame.setEnabled(False)
+
+    def update_display_during_plotting_availability(self):
+        """Only a LineEdit can receive a continuously displayed measurement."""
+        is_line_edit = self.widget_type_comboBox.currentIndex() == 0
+        self.read_only_checkBox.setEnabled(is_line_edit)
+        if not is_line_edit:
+            self.read_only_checkBox.setChecked(False)
         
     def update_category_combobox(self):
         self.choose_category_comboBox.clear()
@@ -186,7 +197,7 @@ class ui_edit_setting_ui(QWidget):
         read_command_name = self.read_command_name_label.text()
         add_write = self.add_write_checkBox.isChecked()
         write_command_name = self.write_command_name_label.text()
-        exp_readonly = self.read_only_checkBox.isChecked()
+        display_during_plotting = self.read_only_checkBox.isChecked()
         
         if category_name not in self.ui_definition:
             self.add_category_lineEdit.setText("The category doesn't exist. Something is wrong.")
@@ -205,7 +216,7 @@ class ui_edit_setting_ui(QWidget):
             "read_command": read_command_name,
             "write": add_write,
             "write_command": write_command_name,
-            "exp_readonly": exp_readonly
+            "display_during_plotting": display_during_plotting
         }
         self.ui_definition[category_name].append(component_info)
         print(self.ui_definition)
@@ -272,7 +283,6 @@ class ui_edit_setting_ui(QWidget):
             comp_type = component.get("type", 1)
             allow_write = component.get("write", False)
             allow_read = component.get("read", False)
-            exp_readonly = component.get("exp_readonly", False)
 
             cat = sanitize_name(category_name)
             comp = sanitize_name(component_name)
@@ -302,13 +312,6 @@ class ui_edit_setting_ui(QWidget):
 
             if comp_type == 1:
                 widget = SubElement(input_item, "widget", {
-                    "class": "QLineEdit",
-                    "name": f"{base}_lineEdit"
-                })
-                add_bool_property(widget, "readOnly", exp_readonly)
-
-            elif comp_type == 2:
-                widget = SubElement(input_item, "widget", {
                     "class": "QComboBox",
                     "name": f"{base}_comboBox"
                 })
@@ -318,7 +321,6 @@ class ui_edit_setting_ui(QWidget):
                     "class": "QLineEdit",
                     "name": f"{base}_lineEdit"
                 })
-                add_bool_property(widget, "readOnly", exp_readonly)
 
             # Read button
             if allow_read:
@@ -448,6 +450,3 @@ class ui_edit_setting_ui(QWidget):
                 f.write(xml)
 
         return xml
-                
-            
-            

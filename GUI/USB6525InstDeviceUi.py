@@ -2,20 +2,19 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QM
 from PyQt5 import uic
 import sys
 from GUI import NewCommandSettingUi as ncsu, CommandListUi as clu, ConnectWarningUi as cwu, UiEditUi as udu
-import os
-import shutil
-import stat
-
-from project_paths import GUI_DIR, SAVED_INSTRUMENTS_DIR, INSTRUMENT_CONTROL_UIS_DIR, INSTRUMENT_WIDGETS_DIR
+from pathlib import Path
+from project_paths import GUI_DIR
+from Tools.DeviceRemover import remove_device
 
 class usb6525InstDeviceUi(QWidget):
-    def __init__(self, data_list):
+    def __init__(self, data_list, config_path=None):
         super().__init__()
         
         uic.loadUi(f"{GUI_DIR}/ui_files/usb_6525_instrument_device_wid.ui", self)
         
         self.instrument = None
         self.data_list = data_list
+        self.config_path = Path(config_path) if config_path else None
         self.nameLabel.setText("Name: " + data_list['name'])
         self.modelLabel.setText("Model: " + data_list['model'])
         
@@ -95,51 +94,14 @@ class usb6525InstDeviceUi(QWidget):
         self.removeInstrumentWin.move(600, 400)
         self.removeInstrumentWin.show()
         
-        self.removeInstrumentWin.removeInstButton.clicked.connect(self.remove_instrument)
-        self.removeInstrumentWin.cancelButton.clicked.connect(self.removeInstrumentWin.hide)
-        
-    def remove_readonly(self, func, path, _):
-        "Clear the readonly bit and reattempt the removal"
-        os.chmod(path, stat.S_IWRITE)
-        func(path)
+        removeInstrumentWid.removeInstButton.clicked.connect(self.remove_instrument)
+        removeInstrumentWid.cancelButton.clicked.connect(self.removeInstrumentWin.hide)
 
 
     
     def remove_instrument(self):
-        instrument_model = self.data_list['model']
-        
-        # remove the instrument related files
-        
-        #1. the instrument object python file
-        
-        path = f"{SAVED_INSTRUMENTS_DIR}/{instrument_model}.py"
-        if os.path.isfile(path):
-            os.remove(path)
-        else:
-            print("Error: %s file not found" % path)
-        
-        #2. the command/attribute folder of the instrument
-        
-        path = f"{SAVED_INSTRUMENTS_DIR}/Members/{instrument_model}"
-        if os.path.isdir(path):
-            shutil.rmtree(path, onerror=self.remove_readonly)
-        else:
-            print("Error: %s file not found" % path)
-            
-        #3. the instrument widget python file
-        
-        path = f"{INSTRUMENT_WIDGETS_DIR}/{instrument_model}_widget.py"
-        if os.path.isfile(path):
-            os.remove(path)
-        else:
-            print("Error: %s file not found" % path)
-        
-        #4. the instrument ui file
-        
-        path = f"{INSTRUMENT_CONTROL_UIS_DIR}/{instrument_model}_ui.ui"
-        if os.path.isfile(path):
-            os.remove(path)
-        else:
-            print("Error: %s file not found" % path)
-            
+        if self.config_path is None:
+            print("Error: saved-device config path is unavailable")
+            return
+        remove_device(self.data_list['model'], self.config_path)
         self.removeInstrumentWin.close()

@@ -94,8 +94,6 @@ class widget(QWidget):
         comp_type = component.get("type", 1)
 
         if comp_type == 1:
-            return self.findChild(QLineEdit, f"{base}_lineEdit")
-        if comp_type == 2:
             return self.findChild(QComboBox, f"{base}_comboBox")
 
         return self.findChild(QLineEdit, f"{base}_lineEdit")

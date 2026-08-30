@@ -565,7 +565,7 @@
                <item>
                 <widget class="QCheckBox" name="read_only_checkBox">
                  <property name="text">
-                  <string>READ only during an experiment</string>
+                  <string>Display Measured Data during plotting</string>
                  </property>
                 </widget>
                </item>

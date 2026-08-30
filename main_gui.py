@@ -221,18 +221,18 @@ class UI(QMainWindow):
                 # actually instantiating each instrument
                 match data_list['interface']:
                     case 'serial': 
-                        self.instrument_wid[device_key] = sidu.SerialInstDeviceUi(data_list)
+                        self.instrument_wid[device_key] = sidu.SerialInstDeviceUi(data_list, file_path)
                         self.instantiate_device(data_list, device_key, 'serial')
                     case 'gpib': 
-                        self.instrument_wid[device_key] = gidu.GPIBInstDeviceUi(data_list)
+                        self.instrument_wid[device_key] = gidu.GPIBInstDeviceUi(data_list, file_path)
                         self.instantiate_device(data_list, device_key, 'gpib')
                     case 'ethernet':
-                        self.instrument_wid[device_key] = eidu.EthernetInstDeviceUi(data_list)
+                        self.instrument_wid[device_key] = eidu.EthernetInstDeviceUi(data_list, file_path)
                         self.instantiate_device(data_list, device_key, 'ethernet')
                     case 'usb6525':
-                        self.instrument_wid[device_key] = uidu.usb6525InstDeviceUi(data_list)
+                        self.instrument_wid[device_key] = uidu.usb6525InstDeviceUi(data_list, file_path)
                         self.instantiate_device(data_list, device_key, 'usb6525')
-                    case _: self.instrument_wid[device_key] = sidu.SerialInstDeviceUi(data_list)
+                    case _: self.instrument_wid[device_key] = sidu.SerialInstDeviceUi(data_list, file_path)
                     
                 print(data_list)
                 
@@ -1101,7 +1101,7 @@ globals().update(_model)"""
             "usb6525": uidu.usb6525InstDeviceUi,
         }
 
-        self.instrument_wid[device_key] = ui_class_map[interface_type](data_list)
+        self.instrument_wid[device_key] = ui_class_map[interface_type](data_list, device_path)
 
         # --- Instantiate instrument ---
         self.instantiate_device(data_list, device_key, interface_type)
