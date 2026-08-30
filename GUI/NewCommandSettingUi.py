@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QComboBox, QHBoxLayout, QLineEdit
 from PyQt5.QtGui import QCloseEvent
 from PyQt5 import uic
 import sys
@@ -17,9 +17,6 @@ from project_paths import GUI_DIR, SAVED_INSTRUMENTS_DIR, INSTRUMENT_CONTROL_UIS
 
 class new_command_setting_ui(QWidget):
     _GENERIC_NAME_RE = re.compile(r".*_\d+$")
-    _DATA_TYPE_PLACEHOLDER = "Select or search existing data types..."
-    _CREATE_DATA_TYPE = "Create new data type..."
-    _DEFAULT_RETURN_CHANNEL = "ch_A"
     
     def __init__(self, instrument, interface, window):
         super().__init__()
@@ -162,91 +159,82 @@ class new_command_setting_ui(QWidget):
         self.save_metadata(metadata)
 
     def _initialize_returned_data_section(self):
-        """Populate and maintain the READ command's metadata-backed output fields."""
-        self.dataTypeComboBox.currentTextChanged.connect(
-            self._returned_data_type_changed
+        """Configure optional, new-only data-function output metadata."""
+        self.associateReturnedDataCheckBox.toggled.connect(
+            self._update_returned_data_controls
+        )
+        self.returnedDataChannelCountSpinBox.valueChanged.connect(
+            self._build_returned_data_channel_fields
         )
         self.commandTypeComboBox.currentTextChanged.connect(
             self._update_returned_data_visibility
         )
-        self._populate_returned_data_types()
+        self.returnedDataChannelCountSpinBox.setMinimum(1)
+        self.returnedDataChannelCountSpinBox.setMaximum(64)
+        self.returnedDataChannelCountSpinBox.setValue(1)
+        self._build_returned_data_channel_fields()
         self._update_returned_data_visibility(self.commandTypeComboBox.currentText())
-
-    def _populate_returned_data_types(self):
-        metadata = self.load_metadata()
-        data_type_ids = sorted(metadata.get("data_type", {}).keys())
-
-        self.dataTypeComboBox.blockSignals(True)
-        self.dataTypeComboBox.clear()
-        self.dataTypeComboBox.addItem(self._DATA_TYPE_PLACEHOLDER)
-        self.dataTypeComboBox.addItems(data_type_ids)
-        self.dataTypeComboBox.addItem(self._CREATE_DATA_TYPE)
-        self.dataTypeComboBox.blockSignals(False)
-        self._set_returned_data_fields_enabled(False)
 
     def _update_returned_data_visibility(self, command_type):
         is_read_command = command_type.upper() == "READ"
         self.returnedDataFrame.setVisible(is_read_command)
-        if not is_read_command:
-            self._set_returned_data_fields_enabled(False)
-        elif self.dataTypeComboBox.currentText() == self._CREATE_DATA_TYPE:
-            self._set_returned_data_fields_enabled(True)
-
-    def _returned_data_type_changed(self, selection):
-        if selection in ("", self._DATA_TYPE_PLACEHOLDER):
-            self._clear_returned_data_fields()
-            self._set_returned_data_fields_enabled(False)
-            return
-
-        if selection == self._CREATE_DATA_TYPE:
-            self._clear_returned_data_fields()
-            self._set_returned_data_fields_enabled(True)
-            self.dataTypeIdLineEdit.setFocus()
-            return
-
-        metadata = self.load_metadata()
-        channels = metadata.get("data_type", {}).get(selection, [])
-        channel = channels[0] if channels else self._DEFAULT_RETURN_CHANNEL
-        self.dataTypeIdLineEdit.setText(selection)
-        self.dataTypeDisplayLabelLineEdit.setText(
-            metadata.get("data_label", {}).get(selection, {}).get(channel, selection)
+        self.associateReturnedDataCheckBox.setEnabled(is_read_command)
+        self._update_returned_data_controls(
+            is_read_command and self.associateReturnedDataCheckBox.isChecked()
         )
-        self.dataTypeDefaultUnitLineEdit.setText(
-            metadata.get("data_unit", {}).get(selection, {}).get(channel, "")
-        )
-        value_format = metadata.get("value_format", {}).get(selection, {}).get(channel, "")
-        index = self.dataTypeValueFormatComboBox.findText(value_format.title())
-        self.dataTypeValueFormatComboBox.setCurrentIndex(max(index, 0))
-        self._set_returned_data_fields_enabled(False)
 
-    def _clear_returned_data_fields(self):
-        self.dataTypeIdLineEdit.clear()
-        self.dataTypeDisplayLabelLineEdit.clear()
-        self.dataTypeDefaultUnitLineEdit.clear()
-        self.dataTypeValueFormatComboBox.setCurrentIndex(0)
+    def _update_returned_data_controls(self, enabled):
+        enabled = bool(enabled) and self.commandTypeComboBox.currentText().upper() == "READ"
+        self.dataTypeIdLineEdit.setEnabled(enabled)
+        self.returnedDataChannelCountSpinBox.setEnabled(enabled)
+        self.returnedDataChannelsFrame.setEnabled(enabled)
+        self.desiredDataComboBox.setEnabled(not enabled)
+        if enabled:
+            self.desiredDataInstr.setText(
+                "Returned data must be a list matching the configured channels and formats."
+            )
+        else:
+            self.desiredDataInstr.setText("")
 
-    def _set_returned_data_fields_enabled(self, enabled):
-        for field in (
-            self.dataTypeIdLineEdit,
-            self.dataTypeDisplayLabelLineEdit,
-            self.dataTypeDefaultUnitLineEdit,
-            self.dataTypeValueFormatComboBox,
-        ):
-            field.setEnabled(enabled)
+    def _build_returned_data_channel_fields(self):
+        while self.returnedDataChannelsLayout.count():
+            item = self.returnedDataChannelsLayout.takeAt(0)
+            if item.widget():
+                item.widget().deleteLater()
+            elif item.layout():
+                while item.layout().count():
+                    child = item.layout().takeAt(0)
+                    if child.widget():
+                        child.widget().deleteLater()
+
+        self.returned_data_channel_fields = []
+        for index in range(self.returnedDataChannelCountSpinBox.value()):
+            row = QHBoxLayout()
+            channel_id = QLineEdit(f"ch_{chr(ord('A') + index)}" if index < 26 else f"ch_{index + 1}")
+            label = QLineEdit()
+            unit = QLineEdit()
+            value_format = QComboBox()
+            value_format.addItems(["Float", "Integer", "Text", "Boolean"])
+            row.addWidget(QLabel(f"Channel {index + 1}:"))
+            row.addWidget(channel_id)
+            row.addWidget(QLabel("Label:"))
+            row.addWidget(label)
+            row.addWidget(QLabel("Unit:"))
+            row.addWidget(unit)
+            row.addWidget(QLabel("Format:"))
+            row.addWidget(value_format)
+            self.returnedDataChannelsLayout.addLayout(row)
+            self.returned_data_channel_fields.append(
+                (channel_id, label, unit, value_format)
+            )
 
     def _returned_data_metadata(self, metadata):
         """Return command link metadata and add a newly defined type when needed."""
         if self.command_type.upper() != "READ":
             return {"data_function": False, "data_type": None}
 
-        selection = self.dataTypeComboBox.currentText().strip()
-        if selection in ("", self._DATA_TYPE_PLACEHOLDER):
+        if not self.associateReturnedDataCheckBox.isChecked():
             return {"data_function": False, "data_type": None}
-
-        if selection != self._CREATE_DATA_TYPE:
-            if selection not in metadata["data_type"]:
-                raise ValueError(f"Unknown returned data type: {selection}")
-            return {"data_function": True, "data_type": selection}
 
         data_type_id = self.dataTypeIdLineEdit.text().strip()
         if not data_type_id.isidentifier():
@@ -254,19 +242,65 @@ class new_command_setting_ui(QWidget):
         if data_type_id in metadata["data_type"]:
             raise ValueError(f"Returned data type '{data_type_id}' already exists.")
 
-        channel = self._DEFAULT_RETURN_CHANNEL
-        label = self.dataTypeDisplayLabelLineEdit.text().strip() or data_type_id
-        unit = self.dataTypeDefaultUnitLineEdit.text().strip()
-        value_format = self.dataTypeValueFormatComboBox.currentText().lower()
-        metadata["data_type"][data_type_id] = [channel]
-        metadata["data_label"][data_type_id] = {channel: label}
-        metadata["data_unit"][data_type_id] = {channel: unit}
-        metadata["value_format"][data_type_id] = {channel: value_format}
+        channels = []
+        labels = {}
+        units = {}
+        formats = {}
+        for channel_id, label, unit, value_format in self.returned_data_channel_fields:
+            channel = channel_id.text().strip()
+            if not channel.isidentifier():
+                raise ValueError("Each Returned Data channel ID must be a valid Python identifier.")
+            if channel in channels:
+                raise ValueError("Returned Data channel IDs must be unique.")
+            channels.append(channel)
+            labels[channel] = label.text().strip() or channel
+            units[channel] = unit.text().strip()
+            formats[channel] = value_format.currentText().lower()
+
+        metadata["data_type"][data_type_id] = channels
+        metadata["data_label"][data_type_id] = labels
+        metadata["data_unit"][data_type_id] = units
+        metadata["value_format"][data_type_id] = formats
         return {"data_function": True, "data_type": data_type_id}
 
     def _validate_returned_data_selection(self):
         """Validate output data before creating the command module."""
         self._returned_data_metadata(self.load_metadata())
+
+    def _returned_data_validation_code(self, return_line):
+        """Convert a final return expression into a validated channel-value list."""
+        if not self.associateReturnedDataCheckBox.isChecked():
+            return [return_line]
+
+        return_line = return_line.strip()
+        if not return_line.startswith("return "):
+            raise ValueError(
+                "A data-function READ command must end with 'return <value>'."
+            )
+
+        formats = [
+            value_format.currentText().lower()
+            for _, _, _, value_format in self.returned_data_channel_fields
+        ]
+        lines = [f"_returned_data = {return_line[7:]}"]
+        lines.extend([
+            "if not isinstance(_returned_data, list):",
+            "    raise ValueError('Returned data must be a list.')",
+            f"if len(_returned_data) != {len(formats)}:",
+            "    raise ValueError('Returned data length does not match its data type channels.')",
+            f"_returned_formats = {formats!r}",
+            "for _returned_value, _returned_format in zip(_returned_data, _returned_formats):",
+            "    if _returned_format == 'integer' and (not isinstance(_returned_value, int) or isinstance(_returned_value, bool)):",
+            "        raise ValueError('Returned channel value must be an integer.')",
+            "    if _returned_format == 'float' and not isinstance(_returned_value, (int, float)):",
+            "        raise ValueError('Returned channel value must be numeric.')",
+            "    if _returned_format == 'text' and not isinstance(_returned_value, str):",
+            "        raise ValueError('Returned channel value must be text.')",
+            "    if _returned_format == 'boolean' and not isinstance(_returned_value, bool):",
+            "        raise ValueError('Returned channel value must be boolean.')",
+            "return _returned_data",
+        ])
+        return lines
         
     def _connect_pushbuttons(self):
         """
@@ -870,7 +904,13 @@ class new_command_setting_ui(QWidget):
 
         last_code_line = saving_function_code_list.pop()
         saving_function_code_list.extend(data_manipulation_code_list)
-        saving_function_code_list.append(last_code_line)
+        try:
+            saving_function_code_list.extend(
+                self._returned_data_validation_code(last_code_line)
+            )
+        except ValueError as error:
+            self.testResponse.setText(str(error))
+            return
 
         for line in saving_function_code_list:
             saving_function_code += "        " + line + "\n"

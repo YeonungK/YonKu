@@ -446,6 +446,9 @@ class UI(QMainWindow):
             self.plot_worker_thread.start()
             
             self.plot_worker.update.connect(self.update_plot)
+            self.plot_worker.measurement_ready.connect(
+                self.route_plot_measurement_to_dynamic_widgets
+            )
         
         except ValueError:
             self.experimentWid.MeasureFreqLineEdit.setText("You can only put integers here.")
@@ -479,6 +482,18 @@ class UI(QMainWindow):
         for index, plt_wid in self.plot_widgets.items():
             if isinstance(plt_wid, PlotUi.plotWidget):
                 plt_wid.plot_data()
+
+    def route_plot_measurement_to_dynamic_widgets(
+        self, device_key, data_type, channel, value
+    ):
+        """Deliver generic measurement updates without replacing legacy UI support."""
+        device_info = self.devices.get(device_key)
+        if not device_info:
+            return
+        widget = getattr(self, f"{device_info['name']}Wid", None)
+        handler = getattr(widget, "handle_plot_measurement", None)
+        if handler:
+            handler(device_key, data_type, channel, value)
     
 
         

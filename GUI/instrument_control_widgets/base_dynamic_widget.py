@@ -22,6 +22,7 @@ class widget(QWidget):
         self.device_key = device_key
         self.parent = parent
         self.ui_path = ui_path
+        self.display_components = []
         uic.loadUi(ui_path, self)
         
         self.bind_dynamic_signals()
@@ -59,6 +60,9 @@ class widget(QWidget):
                 safe_component = self.sanitize_name(component_name)
 
                 base = f"{safe_category}_{safe_component}"
+
+                if component.get("display_during_plotting", False):
+                    self.display_components.append((category_name, component))
 
                 # READ BUTTON
                 if component.get("read", False):
@@ -179,6 +183,21 @@ class widget(QWidget):
             # self.testResponse.setText("The function code is empty.")
         except Exception as e:
             print(f"Write failed for {category_name} / {component.get('name')}: {e}")
+
+    def handle_plot_measurement(self, device_key, data_type, channel, value):
+        """Display matching plotting measurements in display-only LineEdits."""
+        if device_key != self.device_key:
+            return
+
+        for category_name, component in self.display_components:
+            if (
+                component.get("display_data_type") != data_type
+                or component.get("display_channel") != channel
+            ):
+                continue
+            widget = self.get_component_widget(category_name, component)
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
         
     def initialize_widget(self):
         pass

@@ -29,6 +29,22 @@ def _validate_metadata(model_name, metadata):
                     f"{model_name}: {field}.{data_type_id} must be keyed by channel"
                 )
 
+    data_function_types = set()
+    for command_name, info in metadata.get("methods", {}).items():
+        linked_data = info.get("command_linked_data", {})
+        if not linked_data.get("data_function", False):
+            continue
+        data_type_id = linked_data.get("data_type")
+        if data_type_id not in data_type:
+            raise ValueError(
+                f"{model_name}: {command_name} links to unknown data type {data_type_id!r}"
+            )
+        if data_type_id in data_function_types:
+            raise ValueError(
+                f"{model_name}: more than one data function is linked to {data_type_id!r}"
+            )
+        data_function_types.add(data_type_id)
+
 
 def load_model_metadata(model_name, model_file):
     model_dir = Path(model_file).resolve().parent

@@ -14,6 +14,7 @@ class PlotWorker(QObject):
     finished = pyqtSignal()
     error = pyqtSignal()
     update = pyqtSignal()
+    measurement_ready = pyqtSignal(str, str, str, object)
 
     def __init__(self, instruments, plot_widgets, dataset, period, pausePushButton, 
                  titleLineEdit, xLineEdit, yLineEdit, rLineEdit, thetaLineEdit,
@@ -279,7 +280,9 @@ class PlotWorker(QObject):
 
                 for channel, value in zip(channels, values):
                     self.dataset[data_type][channel].append(value)
+                    self.measurement_ready.emit(device_key, data_type, channel, value)
 
+                # Compatibility bridge for legacy, model-specific widgets.
                 self.update_known_widget_fields(data_type, values)
             
             
@@ -387,4 +390,3 @@ class PlotWorker(QObject):
         print("worker_finished")
         
         self.finished.emit()
-        

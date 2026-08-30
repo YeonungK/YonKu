@@ -72,7 +72,14 @@ class ui_edit_setting_ui(QWidget):
         self.widget_type_comboBox.currentIndexChanged.connect(
             self.update_display_during_plotting_availability
         )
-        self.update_display_during_plotting_availability()
+        self.add_read_checkBox.stateChanged.connect(self.update_component_mode_availability)
+        self.add_write_checkBox.stateChanged.connect(self.update_component_mode_availability)
+        self.read_only_checkBox.toggled.connect(self.update_component_mode_availability)
+        self.display_data_type_comboBox.currentTextChanged.connect(
+            self.update_display_channel_combobox
+        )
+        self._populate_display_data_types()
+        self.update_component_mode_availability()
         
     def enable_read_command(self):
         if self.add_read_checkBox.isChecked():
@@ -87,10 +94,43 @@ class ui_edit_setting_ui(QWidget):
             self.write_command_frame.setEnabled(False)
 
     def update_display_during_plotting_availability(self):
-        """Only a LineEdit can receive a continuously displayed measurement."""
+        self.update_component_mode_availability()
+
+    def _populate_display_data_types(self):
+        data_functions = getattr(self.instrument, "data_function", {})
+        data_types = [
+            data_type
+            for data_type in getattr(self.instrument, "data_type", {})
+            if data_type in data_functions
+        ]
+        self.display_data_type_comboBox.clear()
+        self.display_data_type_comboBox.addItem("Select data type...")
+        self.display_data_type_comboBox.addItems(sorted(data_types))
+        self.update_display_channel_combobox()
+
+    def update_display_channel_combobox(self):
+        data_type = self.display_data_type_comboBox.currentText()
+        channels = getattr(self.instrument, "data_type", {}).get(data_type, [])
+        self.display_channel_comboBox.clear()
+        self.display_channel_comboBox.addItem("Select channel...")
+        self.display_channel_comboBox.addItems(channels)
+
+    def update_component_mode_availability(self):
+        """A component is either an interactive control or a plot display."""
         is_line_edit = self.widget_type_comboBox.currentIndex() == 0
-        self.read_only_checkBox.setEnabled(is_line_edit)
-        if not is_line_edit:
+        is_display = self.read_only_checkBox.isChecked()
+        has_manual_command = (
+            self.add_read_checkBox.isChecked() or self.add_write_checkBox.isChecked()
+        )
+
+        self.read_only_checkBox.setEnabled(is_line_edit and not has_manual_command)
+        self.display_data_type_comboBox.setEnabled(is_line_edit and is_display)
+        self.display_channel_comboBox.setEnabled(is_line_edit and is_display)
+
+        self.add_read_checkBox.setEnabled(not is_display)
+        self.add_write_checkBox.setEnabled(not is_display)
+
+        if not is_line_edit and is_display:
             self.read_only_checkBox.setChecked(False)
         
     def update_category_combobox(self):
@@ -198,6 +238,16 @@ class ui_edit_setting_ui(QWidget):
         add_write = self.add_write_checkBox.isChecked()
         write_command_name = self.write_command_name_label.text()
         display_during_plotting = self.read_only_checkBox.isChecked()
+
+        if display_during_plotting:
+            display_data_type = self.display_data_type_comboBox.currentText()
+            display_channel = self.display_channel_comboBox.currentText()
+            if display_data_type == "Select data type..." or display_channel == "Select channel...":
+                self.component_lineEdit.setText("Select a data type and channel")
+                return
+        else:
+            display_data_type = None
+            display_channel = None
         
         if category_name not in self.ui_definition:
             self.add_category_lineEdit.setText("The category doesn't exist. Something is wrong.")
@@ -216,7 +266,9 @@ class ui_edit_setting_ui(QWidget):
             "read_command": read_command_name,
             "write": add_write,
             "write_command": write_command_name,
-            "display_during_plotting": display_during_plotting
+            "display_during_plotting": display_during_plotting,
+            "display_data_type": display_data_type,
+            "display_channel": display_channel,
         }
         self.ui_definition[category_name].append(component_info)
         print(self.ui_definition)

@@ -563,10 +563,27 @@
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="read_only_checkBox">
+               <widget class="QCheckBox" name="read_only_checkBox">
                  <property name="text">
                   <string>Display Measured Data during plotting</string>
                  </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QFrame" name="display_data_frame">
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
+                 </property>
+                 <layout class="QHBoxLayout" name="display_data_layout">
+                  <property name="leftMargin"><number>0</number></property>
+                  <property name="topMargin"><number>0</number></property>
+                  <property name="rightMargin"><number>0</number></property>
+                  <property name="bottomMargin"><number>0</number></property>
+                  <item><widget class="QLabel" name="display_data_type_label"><property name="text"><string>Data Type:</string></property></widget></item>
+                  <item><widget class="QComboBox" name="display_data_type_comboBox"/></item>
+                  <item><widget class="QLabel" name="display_channel_label"><property name="text"><string>Channel:</string></property></widget></item>
+                  <item><widget class="QComboBox" name="display_channel_comboBox"/></item>
+                 </layout>
                 </widget>
                </item>
                <item>
