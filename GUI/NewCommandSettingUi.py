@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QComboBox, QHBoxLayout, QLineEdit
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMdiSubWindow, QMdiArea, QPushButton, QTextEdit, QWidget, QComboBox, QHBoxLayout, QLineEdit, QMessageBox
 from PyQt5.QtGui import QCloseEvent
 from PyQt5 import uic
 import sys
@@ -9,6 +9,8 @@ import importlib
 import shutil
 import os
 import json
+import ast
+import builtins
 
 from GUI import ManualEditUi as meu
 
@@ -301,6 +303,96 @@ class new_command_setting_ui(QWidget):
             "return _returned_data",
         ])
         return lines
+
+    def _show_invalid_command(self, message):
+        self.testResponse.setText(message)
+        QMessageBox.warning(self, "Invalid command", message)
+
+    def _validate_generated_method(self, method_file_text):
+        """Reject generated methods with syntax or obvious local-name errors."""
+        try:
+            module = ast.parse(method_file_text)
+        except SyntaxError as error:
+            raise ValueError(
+                f"Generated command has invalid Python syntax: {error.msg} "
+                f"(line {error.lineno})."
+            ) from error
+
+        run_method = next(
+            (
+                node for node in module.body
+                if isinstance(node, ast.FunctionDef) and node.name == "run"
+            ),
+            None,
+        )
+        if run_method is None:
+            raise ValueError("Generated command does not define run(self).")
+
+        known_names = {argument.arg for argument in run_method.args.args}
+        known_names.update(dir(builtins))
+
+        def loaded_names(node):
+            return {
+                child.id for child in ast.walk(node)
+                if isinstance(child, ast.Name) and isinstance(child.ctx, ast.Load)
+            }
+
+        def target_names(node):
+            if isinstance(node, ast.Name):
+                return {node.id}
+            if isinstance(node, (ast.Tuple, ast.List)):
+                return set().union(*(target_names(item) for item in node.elts))
+            return set()
+
+        def validate_block(statements, known):
+            for statement in statements:
+                if isinstance(statement, ast.Assign):
+                    missing = loaded_names(statement.value) - known
+                    if missing:
+                        raise ValueError(
+                            "Generated command uses an undefined variable: "
+                            + ", ".join(sorted(missing))
+                        )
+                    for target in statement.targets:
+                        known.update(target_names(target))
+                elif isinstance(statement, ast.AugAssign):
+                    missing = loaded_names(statement.value) | loaded_names(statement.target)
+                    missing -= known
+                    if missing:
+                        raise ValueError(
+                            "Generated command uses an undefined variable: "
+                            + ", ".join(sorted(missing))
+                        )
+                    known.update(target_names(statement.target))
+                elif isinstance(statement, ast.Return):
+                    missing = loaded_names(statement.value) - known
+                    if missing:
+                        raise ValueError(
+                            "Generated command returns an undefined variable: "
+                            + ", ".join(sorted(missing))
+                        )
+                elif isinstance(statement, ast.If):
+                    missing = loaded_names(statement.test) - known
+                    if missing:
+                        raise ValueError(
+                            "Generated command uses an undefined variable: "
+                            + ", ".join(sorted(missing))
+                        )
+                    validate_block(statement.body, known.copy())
+                    validate_block(statement.orelse, known.copy())
+                elif isinstance(statement, ast.For):
+                    missing = loaded_names(statement.iter) - known
+                    if missing:
+                        raise ValueError(
+                            "Generated command uses an undefined variable: "
+                            + ", ".join(sorted(missing))
+                        )
+                    loop_known = known | target_names(statement.target)
+                    validate_block(statement.body, loop_known)
+                elif isinstance(statement, ast.Try):
+                    validate_block(statement.body, known)
+
+        validate_block(run_method.body, known_names)
         
     def _connect_pushbuttons(self):
         """
@@ -669,26 +761,24 @@ class new_command_setting_ui(QWidget):
             pass
 
     def testExecute_method(self):
-        function_code = ""
-
         if self.new_function_code == "":
             self.new_function_code = "return None"
 
-        function_code_list = self.new_function_code.split("\n")
-
-        for line in function_code_list:
-            function_code += "        " + line + "\n"
+        function_code = "".join(
+            f"        {line}\n" for line in self.new_function_code.split("\n")
+        )
 
         for data_name, data_value in self.new_test_data_list.items():
             function_code = function_code.replace(f"{{{data_name}}}", data_value)
 
 # ADD THE DRAFT TEST FUNCTION
-        draft_script = f'''def run(self):
-            try:
-        {function_code}
-            except Exception as e:
-                print("Something went wrong: " + str(e))
-        '''
+        draft_script = (
+            "def run(self):\n"
+            "    try:\n"
+            f"{function_code}"
+            "    except Exception as e:\n"
+            "        print(\"Something went wrong: \" + str(e))\n"
+        )
         module_path = (
             f"Tools.saved_instruments."
             f"{self.instrument.model}."
@@ -713,8 +803,8 @@ class new_command_setting_ui(QWidget):
         except (ImportError, AttributeError) as e:
             print(f"Error: {e}")
             self.testResponse.setText(f"The file '{self.method_path}' was not found. Did you save your method name?")
-        except IndentationError:
-            self.testResponse.setText("The function code is empty.")
+        except (IndentationError, SyntaxError) as error:
+            self.testResponse.setText(f"Invalid function code: {error.msg}")
         except Exception as e:
             self.testResponse.setText(str(e))
             print(str(e))
@@ -921,6 +1011,12 @@ class new_command_setting_ui(QWidget):
         method_file_text = self.build_method_file_text(saving_function_code)
 
         try:
+            self._validate_generated_method(method_file_text)
+        except ValueError as error:
+            self._show_invalid_command(str(error))
+            return
+
+        try:
             with open(self.method_path, "w", encoding="utf-8") as f:
                 f.write(method_file_text)
 
@@ -994,15 +1090,15 @@ class new_command_setting_ui(QWidget):
         self.window.close()
     
     def build_method_file_text(self, saving_function_code):
-        return f'''command_name = "{self.command_name}"
-command_text = "{self.command_text}"
+        return f'''command_name = {self.command_name!r}
+command_text = {self.command_text!r}
 data_list = {self.new_data_list}
-command_type = "{self.command_type}"
-communication_syntax = "{self.communication_syntax}"
-desired_data_type = "{self.desiredDataComboBox.currentText()}"
+command_type = {self.command_type!r}
+communication_syntax = {self.communication_syntax!r}
+desired_data_type = {self.desiredDataComboBox.currentText()!r}
 
-function_code = """{self.new_function_code}"""
-data_manipulation_code = """{self.new_data_manipulation_code}"""
+function_code = {self.new_function_code!r}
+data_manipulation_code = {self.new_data_manipulation_code!r}
 
 def run(self):
     try:
