@@ -69,18 +69,6 @@
                 "data_type": null
             }
         },
-        "test_print": {
-            "module": "test_print",
-            "function": "run",
-            "command_type": "READ",
-            "command_text": "hello",
-            "communication_syntax": "ASCII",
-            "desired_data_type": "string",
-            "command_linked_data": {
-                "data_function": true,
-                "data_type": "greeting"
-            }
-        },
         "test_hi": {
             "module": "test_hi",
             "function": "run",

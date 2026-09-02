@@ -8,6 +8,17 @@
             "write": true,
             "write_command": "ser",
             "exp_readonly": false
+        },
+        {
+            "name": "hi",
+            "type": 0,
+            "read": false,
+            "read_command": "Choose a command from the command list",
+            "write": false,
+            "write_command": "Choose a command from the command list",
+            "display_during_plotting": true,
+            "display_data_type": "greetings",
+            "display_channel": "ch_A"
         }
     ]
 }

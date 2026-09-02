@@ -27,4 +27,5 @@ class test_serial(SerialInstrument):
         self.read_functions = attributes.read_functions
         self.write_functions = attributes.write_functions
         self.initial_state = attributes.initial_state
+        self.connected = True
         

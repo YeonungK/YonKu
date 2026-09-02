@@ -53,11 +53,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="test1_test1_lineEdit">
-               <property name="readOnly">
-                <bool>false</bool>
-               </property>
-              </widget>
+              <widget class="QComboBox" name="test1_test1_comboBox"/>
              </item>
              <item>
               <widget class="QPushButton" name="test1_test1_readButton">
@@ -72,6 +68,22 @@
                 <string>Write</string>
                </property>
               </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="test1_hi_rowWidget">
+            <layout class="QHBoxLayout" name="test1_hi_rowLayout">
+             <item>
+              <widget class="QLabel" name="test1_hi_label">
+               <property name="text">
+                <string>hi</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="test1_hi_lineEdit"/>
              </item>
             </layout>
            </widget>

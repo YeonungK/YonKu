@@ -17,7 +17,8 @@ class DataLogger:
         
         
         for device_key, instrument in self.instruments.items():
-            for data_type in instrument.data_type.keys():
+            # Log only data types that the PlotWorker actually measures.
+            for data_type in instrument.data_function.keys():
                 print(f"instrument data type: {data_type}")
                 logging_data = setattr(self, f"df_{data_type}", pd.DataFrame.from_dict(data_set[f'{data_type}']))
                 logging_data = getattr(self, f"df_{data_type}")
@@ -48,7 +49,8 @@ class DataLogger:
         # print(self.instruments)
         
         for device_key, instrument in self.instruments.items():
-            for data_type in instrument.data_type.keys():
+            # Keep this ordering identical to PlotWorker.instrument_read_data.
+            for data_type in instrument.data_function.keys():
                 data_index = 0
                 appending_dict = setattr(self, f'appending_{data_type}', {})
                 appending_dict = getattr(self, f'appending_{data_type}')
